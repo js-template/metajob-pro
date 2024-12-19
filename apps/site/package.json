@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@padmadev/blank-theme": "0.0.1-alpha.3",
+    "@padmadev/metajob-theme": "file:../../packages/metajob-theme",
     "@padmadev/padma": "^0.0.4"
   }
 }
