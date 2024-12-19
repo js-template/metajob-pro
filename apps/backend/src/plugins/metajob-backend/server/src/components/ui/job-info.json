@@ -1,0 +1,28 @@
+{
+  "collectionName": "ui_job-info",
+  "info": {
+    "displayName": "Job Info",
+    "icon": "user",
+    "description": "Job details for the article"
+  },
+  "category": "ui",
+  "modelName": "job-info",
+  "globalId": "UiJobInfo",
+  "uid": "ui.job-info",
+  "modelType": "component",
+  "options": {},
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "bio": {
+      "type": "text"
+    },
+    "profilePicture": {
+      "type": "media",
+      "allowedTypes": ["images"]
+    }
+  }
+}

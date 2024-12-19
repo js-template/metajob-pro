@@ -1,0 +1,83 @@
+{
+  "kind": "collectionType",
+  "collectionName": "job",
+  "info": {
+    "singularName": "job",
+    "pluralName": "jobs",
+    "displayName": "Job",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "startDate": {
+      "type": "date",
+      "required": true
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.job-category"
+    },
+    "type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.job-type"
+    },
+    "vacancy": {
+      "type": "integer"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "company": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.company"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["open", "closed", "draft"],
+      "default": "draft",
+      "required": true
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "endDate": {
+      "type": "date",
+      "required": true
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "skills": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::metajob-backend.skill"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

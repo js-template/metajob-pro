@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_block_bookmarks",
+  "info": {
+    "displayName": "Bookmark",
+    "icon": "bell",
+    "description": ""
+  },
+  "category": "block",
+  "modelName": "bookmark",
+  "uid": "block.bookmark",
+  "globalId": "ComponentsBlockBookmark",
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "enableSearch": {
+      "type": "boolean"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    },
+    "tableConfig": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.header-config"
+    }
+  }
+}

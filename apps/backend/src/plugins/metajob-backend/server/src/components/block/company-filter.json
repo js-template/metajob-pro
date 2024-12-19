@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_block_company_filters",
+  "info": {
+    "displayName": "Company Filter",
+    "icon": "collapse",
+    "description": "Company Filter block"
+  },
+  "category": "block",
+  "modelName": "company-filter",
+  "uid": "block.company-filter",
+  "globalId": "ComponentsBlockCompanyFilter",
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "search": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.search-config"
+    },
+    "show_filter": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    }
+  }
+}

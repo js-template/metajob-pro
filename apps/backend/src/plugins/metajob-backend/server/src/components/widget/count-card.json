@@ -1,0 +1,46 @@
+{
+  "collectionName": "components_widget_count_card",
+  "info": {
+    "displayName": "Count Card",
+    "icon": "apps",
+    "description": "Count card widget component"
+  },
+  "category": "widget",
+  "modelName": "count-card",
+  "globalId": "ComponentsWidgetCountCard",
+  "uid": "widget.count-card",
+  "modelType": "component",
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "count": {
+      "type": "biginteger"
+    },
+    "dynamicCount": {
+      "type": "boolean"
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "enableStats": {
+      "type": "boolean"
+    },
+    "model": {
+      "type": "string"
+    },
+    "isLink": {
+      "type": "boolean",
+      "default": false
+    },
+    "link": {
+      "type": "string"
+    },
+    "target": {
+      "type": "enumeration",
+      "enum": ["_self", "_blank", "_parent", "_top"],
+      "default": "_self"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_widget_favorite_lists",
+  "info": {
+    "displayName": "Favorite List",
+    "icon": "arrowRight",
+    "description": "Favorite list widget component"
+  },
+  "category": "widget",
+  "modelName": "favorite-list",
+  "uid": "widget.favorite-list",
+  "globalId": "ComponentsWidgetFavoriteList",
+  "modelType": "component",
+  "options": {},
+  "attributes": {
+    "details": {
+      "type": "component",
+      "repeatable": false,
+      "component": "widget.count-card"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}

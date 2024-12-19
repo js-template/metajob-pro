@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_block_candidate_filters",
+  "info": {
+    "displayName": "Candidate Filter",
+    "icon": "collapse",
+    "description": "Candidate Filter block"
+  },
+  "category": "block",
+  "modelName": "candidate-filter",
+  "uid": "block.candidate-filter",
+  "globalId": "ComponentsBlockCandidateFilter",
+  "pluginOptions": {},
+  "attributes": {
+    "show_filter": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "search": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.search-config"
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    }
+  }
+}

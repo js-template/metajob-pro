@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "salary_type",
+  "info": {
+    "singularName": "salary-type",
+    "pluralName": "salary-types",
+    "displayName": "Salary Type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "value": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    }
+  }
+}

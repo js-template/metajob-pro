@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_single_type_resume_details",
+  "info": {
+    "displayName": "Resume Details",
+    "icon": "arrowRight",
+    "description": "Resume Details single type component"
+  },
+  "category": "single-type",
+  "modelName": "resume-details",
+  "uid": "single-type.resume-details",
+  "globalId": "ComponentsSingleTypeResumeDetails",
+  "modelType": "component",
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "styles": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    }
+  }
+}

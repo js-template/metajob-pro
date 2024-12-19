@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_config_relation",
+  "info": {
+    "displayName": "Relations",
+    "icon": "apps",
+    "description": "Relation with id"
+  },
+  "category": "config",
+  "modelName": "relations",
+  "uid": "config.relations",
+  "globalId": "ComponentsConfigRelations",
+  "pluginOptions": {},
+  "attributes": {
+    "relationId": {
+      "type": "integer",
+      "required": false
+    }
+  }
+}

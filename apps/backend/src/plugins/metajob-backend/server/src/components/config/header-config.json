@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_config_header_configs",
+  "info": {
+    "displayName": "Header Config",
+    "icon": "arrowRight",
+    "description": ""
+  },
+  "category": "config",
+  "modelName": "header-config",
+  "uid": "config.header-config",
+  "globalId": "ComponentsConfigHeaderConfig",
+  "pluginOptions": {},
+  "attributes": {
+    "enableEdit": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "enableDelete": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_widget_open_job",
+  "info": {
+    "displayName": "Open Job",
+    "icon": "arrowRight",
+    "description": "Open job widget component"
+  },
+  "category": "widget",
+  "modelName": "open-job",
+  "globalId": "ComponentsWidgetOpenJob",
+  "uid": "widget.open-job",
+  "modelType": "component",
+  "attributes": {
+    "details": {
+      "type": "component",
+      "repeatable": false,
+      "component": "widget.count-card"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}

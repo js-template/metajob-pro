@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_widget_total_job",
+  "info": {
+    "displayName": "Total Job",
+    "icon": "arrowRight",
+    "description": "Total job widget component"
+  },
+  "category": "widget",
+  "modelName": "total-job",
+  "globalId": "ComponentsWidgetTotalJob",
+  "uid": "widget.total-job",
+  "modelType": "component",
+  "pluginOptions": {},
+  "attributes": {
+    "details": {
+      "type": "component",
+      "repeatable": false,
+      "component": "widget.count-card"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_widget_applied_lists",
+  "info": {
+    "displayName": "Applied List",
+    "icon": "oneToOne"
+  },
+  "category": "widget",
+  "modelName": "applied-list",
+  "globalId": "ComponentsWidgetAppliedList",
+  "uid": "widget.applied-list",
+  "modelType": "component",
+  "attributes": {
+    "details": {
+      "type": "component",
+      "repeatable": false,
+      "component": "widget.count-card"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}

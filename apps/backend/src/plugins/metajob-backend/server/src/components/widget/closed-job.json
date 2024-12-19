@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_widget_closed_job",
+  "info": {
+    "displayName": "Closed Job",
+    "icon": "arrowRight",
+    "description": "Closed job widget component"
+  },
+  "category": "widget",
+  "modelName": "closed-job",
+  "globalId": "ComponentsWidgetClosedJob",
+  "uid": "widget.closed-job",
+  "modelType": "component",
+  "attributes": {
+    "details": {
+      "type": "component",
+      "repeatable": false,
+      "component": "widget.count-card"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}

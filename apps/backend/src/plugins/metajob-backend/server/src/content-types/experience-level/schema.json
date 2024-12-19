@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "experience_level",
+  "info": {
+    "singularName": "experience-level",
+    "pluralName": "experience-levels",
+    "displayName": "Experience Level",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "value": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    }
+  }
+}

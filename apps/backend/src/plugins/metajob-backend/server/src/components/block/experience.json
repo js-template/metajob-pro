@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_block_experiences",
+  "info": {
+    "displayName": "Experience / Education",
+    "description": ""
+  },
+  "category": "block",
+  "modelName": "experience",
+  "uid": "block.experience",
+  "globalId": "ComponentsBlockExperience",
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "institution": {
+      "type": "string"
+    }
+  }
+}

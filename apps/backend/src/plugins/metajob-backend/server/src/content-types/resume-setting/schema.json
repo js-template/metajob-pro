@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "resume_setting",
+  "info": {
+    "singularName": "resume-setting",
+    "pluralName": "resume-setting",
+    "displayName": "Resume Setting",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": ["single-type.resume-details"]
+    }
+  }
+}

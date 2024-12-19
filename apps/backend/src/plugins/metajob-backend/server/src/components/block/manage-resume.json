@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_block_manage_resumes",
+  "info": {
+    "displayName": "Manage Resume",
+    "icon": "arrowRight",
+    "description": "Manage resume block"
+  },
+  "category": "block",
+  "modelName": "manage-resume",
+  "uid": "block.manage-resume",
+  "globalId": "ComponentsManageResume",
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}

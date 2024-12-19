@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "company_setting",
+  "info": {
+    "singularName": "company-setting",
+    "pluralName": "company-settings",
+    "displayName": "Company Setting",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": ["shared.empty", "single-type.company-details"]
+    }
+  }
+}

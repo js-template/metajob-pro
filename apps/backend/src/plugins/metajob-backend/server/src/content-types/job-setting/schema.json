@@ -1,0 +1,24 @@
+{
+  "kind": "singleType",
+  "collectionName": "job_setting",
+  "info": {
+    "singularName": "job-setting",
+    "pluralName": "job-settings",
+    "displayName": "Job Setting",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": ["single-type.job-details"],
+      "required": true,
+      "min": 1
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_banner_job_banner",
+  "info": {
+    "displayName": "Job Banner",
+    "icon": "arrowRight",
+    "description": "Job banner block"
+  },
+  "category": "block",
+  "modelName": "job-banner",
+  "uid": "block.job-banner",
+  "globalId": "ComponentsBlockJobBanner",
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.section-title"
+    },
+    "search": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.search-config"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company",
+  "info": {
+    "singularName": "company",
+    "pluralName": "companies",
+    "displayName": "Company",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "company_size": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.company-size"
+    },
+    "revenue": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.revenue"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "industry": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.job-category"
+    },
+    "slug": {
+      "type": "uid",
+      "required": true
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "social_links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.social-medias"
+    },
+    "about": {
+      "type": "richtext"
+    },
+    "avg_salary": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.avg-salary"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

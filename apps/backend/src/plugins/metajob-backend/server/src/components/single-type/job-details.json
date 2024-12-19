@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_single_type_job_details",
+  "info": {
+    "displayName": "Job Details",
+    "icon": "arrowRight",
+    "description": "Job Details single type component"
+  },
+  "category": "single-type",
+  "modelName": "job-details",
+  "uid": "single-type.job-details",
+  "globalId": "ComponentsSingleTypeJobDetails",
+  "modelType": "component",
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "styles": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    },
+    "related_lists": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}
