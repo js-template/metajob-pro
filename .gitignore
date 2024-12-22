@@ -4,7 +4,7 @@
 node_modules
 .pnp
 .pnp.js
-core 
+core/*
 core/
 .yarn
 # Local env files
@@ -13,6 +13,7 @@ core/
 .env.development.local
 .env.test.local
 .env.production.local
+core
 
 # Testing
 coverage
