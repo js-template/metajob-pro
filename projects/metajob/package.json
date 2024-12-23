@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@padmadev/blank-theme": "0.0.1-alpha.3"
+    "@padmadev/blank-theme": "0.0.1-alpha.3",
+    "@jstemplate/metajob-theme": "workspace:*"
   }
 }
