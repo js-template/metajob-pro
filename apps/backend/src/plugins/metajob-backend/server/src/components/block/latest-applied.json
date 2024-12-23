@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_block_latest_applieds",
   "info": {
     "displayName": "Latest Applied",
     "icon": "bulletList"
@@ -7,7 +6,6 @@
   "category": "block",
   "modelName": "latest-applied",
   "uid": "block.latest-applied",
-  "globalId": "ComponentsBlockLatestApplied",
   "attributes": {
     "title": {
       "type": "string"

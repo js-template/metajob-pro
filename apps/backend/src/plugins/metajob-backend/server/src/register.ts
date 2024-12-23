@@ -1,14 +1,16 @@
 import type { Core } from "@strapi/strapi";
-import Components from "./components";
+import { registerComponents } from "./utils/register-components";
 
-const register = ({ strapi }: { strapi: Core.Strapi }) => {
+const register = async ({ strapi }: { strapi: Core.Strapi }) => {
   // register phase
+  try {
+    await registerComponents({ strapi });
 
-  // *** get the plugin all components and add the new component
-
-  Object.values(Components).forEach((data) => {
-    strapi.components[data.uid] = data;
-  });
+    strapi.log.info("Components registered successfully");
+  } catch (error) {
+    strapi.log.error("Error registering components:", error);
+    throw error;
+  }
 };
 
 export default register;

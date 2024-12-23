@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_widget_favorite_lists",
   "info": {
     "displayName": "Favorite List",
     "icon": "arrowRight",
@@ -8,7 +7,6 @@
   "category": "widget",
   "modelName": "favorite-list",
   "uid": "widget.favorite-list",
-  "globalId": "ComponentsWidgetFavoriteList",
   "modelType": "component",
   "options": {},
   "attributes": {

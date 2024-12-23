@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_block_manage_resumes",
   "info": {
     "displayName": "Manage Resume",
     "icon": "arrowRight",
@@ -8,7 +7,6 @@
   "category": "block",
   "modelName": "manage-resume",
   "uid": "block.manage-resume",
-  "globalId": "ComponentsManageResume",
   "pluginOptions": {},
   "attributes": {
     "title": {
