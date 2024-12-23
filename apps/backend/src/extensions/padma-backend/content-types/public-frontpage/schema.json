@@ -49,7 +49,12 @@
         "block.review-block",
         "block.image-carousel",
         "block.image-gallery",
-        "block.job-card"
+        "block.job-card",
+        "block.pricing",
+        "block.portfolio",
+        "block.job-banner",
+        "block.company-filter",
+        "block.candidate-filter"
       ]
     },
     "seo": {
