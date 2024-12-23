@@ -1,13 +1,12 @@
 {
-  "collectionName": "components_block_experiences",
   "info": {
-    "displayName": "Experience / Education",
+    "displayName": "Experience",
+    "icon": "arrowRight",
     "description": ""
   },
   "category": "block",
   "modelName": "experience",
   "uid": "block.experience",
-  "globalId": "ComponentsBlockExperience",
   "attributes": {
     "title": {
       "type": "string"

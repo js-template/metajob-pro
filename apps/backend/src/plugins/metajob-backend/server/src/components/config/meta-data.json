@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_config_meta_datas",
   "info": {
     "displayName": "Meta Data",
     "icon": "chartBubble",
@@ -7,7 +6,6 @@
   },
   "category": "config",
   "modelName": "meta-data",
-  "globalId": "ComponentsComponentMetaDatas",
   "uid": "config.meta-data",
   "modelType": "component",
   "options": {},

@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_block_bookmark_lists",
   "info": {
     "displayName": "Bookmark List",
     "icon": "bulletList",
@@ -8,7 +7,6 @@
   "category": "block",
   "modelName": "bookmark-list",
   "uid": "block.bookmark-list",
-  "globalId": "ComponentsBlockBookmarkList",
   "pluginOptions": {},
   "attributes": {
     "title": {

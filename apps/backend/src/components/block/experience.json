@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_block_experiences",
+  "info": {
+    "displayName": "Experience",
+    "icon": "arrowRight"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "institution": {
+      "type": "string"
+    }
+  }
+}

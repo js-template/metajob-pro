@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_widget_total_job",
   "info": {
     "displayName": "Total Job",
     "icon": "arrowRight",
@@ -7,7 +6,6 @@
   },
   "category": "widget",
   "modelName": "total-job",
-  "globalId": "ComponentsWidgetTotalJob",
   "uid": "widget.total-job",
   "modelType": "component",
   "pluginOptions": {},

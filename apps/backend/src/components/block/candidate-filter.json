@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_block_candidate_filters",
+  "info": {
+    "displayName": "Candidate Filter",
+    "icon": "collapse"
+  },
+  "options": {},
+  "attributes": {
+    "show_filter": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "search": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.search-config"
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    }
+  }
+}

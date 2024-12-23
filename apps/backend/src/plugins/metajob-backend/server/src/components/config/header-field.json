@@ -1,13 +1,14 @@
 {
-  "collectionName": "components_config_header_fields",
   "info": {
     "displayName": "Header Field",
+    "icon": "arrowRight",
     "description": ""
   },
   "category": "config",
   "modelName": "header-field",
   "uid": "config.header-field",
-  "globalId": "ComponentsConfigHeaderField",
+  "options": {},
+  "pluginOptions": {},
   "attributes": {
     "label": {
       "type": "string",

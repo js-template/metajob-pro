@@ -1,12 +1,11 @@
 {
-  "collectionName": "components_search_config",
   "info": {
     "displayName": "Search Config",
+    "icon": "arrowRight",
     "description": ""
   },
   "category": "config",
   "modelName": "search-config",
-  "globalId": "ComponentsSearchConfig",
   "uid": "config.search-config",
   "modelType": "component",
   "options": {},

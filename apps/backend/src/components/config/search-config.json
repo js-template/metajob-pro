@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_config_search_configs",
+  "info": {
+    "displayName": "Search Config",
+    "icon": "arrowRight"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "search_placeholder": {
+      "type": "string"
+    },
+    "location_placeholder": {
+      "type": "string"
+    },
+    "category_placeholder": {
+      "type": "string"
+    },
+    "sort_placeholder": {
+      "type": "string"
+    },
+    "button_placeholder": {
+      "type": "string"
+    }
+  }
+}

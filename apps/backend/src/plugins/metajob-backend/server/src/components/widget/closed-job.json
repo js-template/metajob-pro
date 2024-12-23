@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_widget_closed_job",
   "info": {
     "displayName": "Closed Job",
     "icon": "arrowRight",
@@ -7,7 +6,6 @@
   },
   "category": "widget",
   "modelName": "closed-job",
-  "globalId": "ComponentsWidgetClosedJob",
   "uid": "widget.closed-job",
   "modelType": "component",
   "attributes": {

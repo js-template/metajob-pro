@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_block_pricings",
   "info": {
     "displayName": "Pricing",
     "icon": "bulletList",
@@ -8,7 +7,6 @@
   "category": "block",
   "modelName": "pricing",
   "uid": "block.pricing",
-  "globalId": "ComponentsBlockPricing",
   "attributes": {
     "button": {
       "type": "component",

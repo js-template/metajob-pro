@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_block_company_filters",
   "info": {
     "displayName": "Company Filter",
     "icon": "collapse",
@@ -8,7 +7,6 @@
   "category": "block",
   "modelName": "company-filter",
   "uid": "block.company-filter",
-  "globalId": "ComponentsBlockCompanyFilter",
   "pluginOptions": {},
   "attributes": {
     "title": {

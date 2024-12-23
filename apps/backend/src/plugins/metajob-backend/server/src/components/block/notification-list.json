@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_block_notification_lists",
   "info": {
     "displayName": "Notification List",
     "icon": "bulletList",
@@ -8,7 +7,6 @@
   "category": "block",
   "modelName": "notification-list",
   "uid": "block.notification-list",
-  "globalId": "ComponentsBlockNotificationList",
   "pluginOptions": {},
   "attributes": {
     "title": {

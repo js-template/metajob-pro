@@ -1,5 +1,21 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BlockAppliedJobs extends Struct.ComponentSchema {
+  collectionName: 'components_block_applied_jobs';
+  info: {
+    displayName: 'Applied Jobs';
+    icon: 'bulletList';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    tableConfig: Schema.Attribute.Component<'config.header-config', false>;
+    tableHead: Schema.Attribute.Component<'config.header-field', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlockBanner extends Struct.ComponentSchema {
   collectionName: 'components_block_banners';
   info: {
@@ -41,6 +57,40 @@ export interface BlockBlogCard extends Struct.ComponentSchema {
   };
 }
 
+export interface BlockBookmark extends Struct.ComponentSchema {
+  collectionName: 'components_block_bookmarks';
+  info: {
+    displayName: 'Bookmark';
+    icon: 'bell';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    enableSearch: Schema.Attribute.Boolean;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    tableConfig: Schema.Attribute.Component<'config.header-config', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlockBookmarkList extends Struct.ComponentSchema {
+  collectionName: 'components_block_bookmark_lists';
+  info: {
+    displayName: 'Bookmark List';
+    icon: 'bulletList';
+  };
+  attributes: {
+    column_1: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Title'>;
+    column_2: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Type'>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlockBreadcrumbs extends Struct.ComponentSchema {
   collectionName: 'components_block_breadcrumbs';
   info: {
@@ -56,6 +106,21 @@ export interface BlockBreadcrumbs extends Struct.ComponentSchema {
     style: Schema.Attribute.Component<'config.style-section', false>;
     variation: Schema.Attribute.Enumeration<['default', 'simple', 'minimal']> &
       Schema.Attribute.DefaultTo<'default'>;
+  };
+}
+
+export interface BlockCandidateFilter extends Struct.ComponentSchema {
+  collectionName: 'components_block_candidate_filters';
+  info: {
+    displayName: 'Candidate Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    search: Schema.Attribute.Component<'config.search-config', false>;
+    show_filter: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
   };
 }
 
@@ -78,6 +143,35 @@ export interface BlockCategoryCard extends Struct.ComponentSchema {
   };
 }
 
+export interface BlockCompanyFilter extends Struct.ComponentSchema {
+  collectionName: 'components_block_company_filters';
+  info: {
+    displayName: 'Company Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    search: Schema.Attribute.Component<'config.search-config', false>;
+    show_filter: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlockContact extends Struct.ComponentSchema {
+  collectionName: 'components_block_contacts';
+  info: {
+    displayName: 'Contact';
+    icon: 'phone';
+  };
+  attributes: {
+    friendlyAddress: Schema.Attribute.String;
+    location: Schema.Attribute.String;
+  };
+}
+
 export interface BlockContentBox extends Struct.ComponentSchema {
   collectionName: 'components_block_content_boxes';
   info: {
@@ -90,6 +184,21 @@ export interface BlockContentBox extends Struct.ComponentSchema {
     empty: Schema.Attribute.Component<'shared.empty', false>;
     icon_box: Schema.Attribute.Component<'component.icon-box', true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface BlockExperience extends Struct.ComponentSchema {
+  collectionName: 'components_block_experiences';
+  info: {
+    displayName: 'Experience';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    endDate: Schema.Attribute.Date;
+    institution: Schema.Attribute.String;
+    startDate: Schema.Attribute.Date;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -129,6 +238,188 @@ export interface BlockImageGallery extends Struct.ComponentSchema {
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'grid'>;
+  };
+}
+
+export interface BlockJobBanner extends Struct.ComponentSchema {
+  collectionName: 'components_block_job_banners';
+  info: {
+    displayName: 'Job Banner';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    search: Schema.Attribute.Component<'config.search-config', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface BlockJobCard extends Struct.ComponentSchema {
+  collectionName: 'components_block_job_cards';
+  info: {
+    displayName: 'Job Card';
+    icon: 'collapse';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'config.link', false>;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface BlockJobFilter extends Struct.ComponentSchema {
+  collectionName: 'components_block_job_filters';
+  info: {
+    displayName: 'Job Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    search: Schema.Attribute.Component<'config.search-config', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlockLatestApplied extends Struct.ComponentSchema {
+  collectionName: 'components_block_latest_applieds';
+  info: {
+    displayName: 'Latest Applied';
+    icon: 'bulletList';
+  };
+  attributes: {
+    column_1: Schema.Attribute.String;
+    column_2: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlockManageCompany extends Struct.ComponentSchema {
+  collectionName: 'components_block_manage_companies';
+  info: {
+    displayName: 'Manage Company';
+    icon: 'bulletList';
+  };
+  attributes: {
+    addButtonText: Schema.Attribute.String;
+    editButtonText: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    enableDelete: Schema.Attribute.Boolean;
+    enableEdit: Schema.Attribute.Boolean;
+    enableSearch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    form: Schema.Attribute.Component<'config.relations', false>;
+    perPageText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Showing per page'>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    subTitle: Schema.Attribute.String;
+    tableConfig: Schema.Attribute.Component<'config.header-config', false> &
+      Schema.Attribute.Required;
+    tableHead: Schema.Attribute.Component<'config.header-field', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 4;
+          min: 4;
+        },
+        number
+      >;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlockManageJob extends Struct.ComponentSchema {
+  collectionName: 'components_block_manage_jobs';
+  info: {
+    displayName: 'Manage Job';
+    icon: 'bulletList';
+  };
+  attributes: {
+    addButtonText: Schema.Attribute.String;
+    editButtonText: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false> &
+      Schema.Attribute.Required;
+    enableSearch: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    form: Schema.Attribute.Component<'config.relations', false>;
+    perPageText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Showing per page'>;
+    tableConfig: Schema.Attribute.Component<'config.header-config', false> &
+      Schema.Attribute.Required;
+    tableHead: Schema.Attribute.Component<'config.header-field', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 6;
+          min: 6;
+        },
+        number
+      >;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Manage Lists'>;
+  };
+}
+
+export interface BlockManageResume extends Struct.ComponentSchema {
+  collectionName: 'components_block_manage_resumes';
+  info: {
+    displayName: 'Manage Resume';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlockNotificationList extends Struct.ComponentSchema {
+  collectionName: 'components_block_notification_lists';
+  info: {
+    displayName: 'Notification List';
+    icon: 'bulletList';
+  };
+  attributes: {
+    column_1: Schema.Attribute.String & Schema.Attribute.Required;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlockPortfolio extends Struct.ComponentSchema {
+  collectionName: 'components_block_portfolios';
+  info: {
+    displayName: 'Portfolio';
+    icon: 'clock';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    link: Schema.Attribute.Component<'config.link', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlockPricing extends Struct.ComponentSchema {
+  collectionName: 'components_block_pricings';
+  info: {
+    displayName: 'Pricing';
+    icon: 'bulletList';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'config.link', false>;
+    description: Schema.Attribute.Text;
+    price: Schema.Attribute.String;
+    table: Schema.Attribute.Component<'config.meta-data', true>;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -230,6 +521,39 @@ export interface ConfigCarouselCard extends Struct.ComponentSchema {
   };
 }
 
+export interface ConfigHeaderConfig extends Struct.ComponentSchema {
+  collectionName: 'components_config_header_configs';
+  info: {
+    displayName: 'Header Config';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    enableDelete: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    enableEdit: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface ConfigHeaderField extends Struct.ComponentSchema {
+  collectionName: 'components_config_header_fields';
+  info: {
+    displayName: 'Header Field';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    align: Schema.Attribute.Enumeration<['left', 'right', 'center']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'left'>;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Name'>;
+    sort: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+  };
+}
+
 export interface ConfigLink extends Struct.ComponentSchema {
   collectionName: 'components_config_links';
   info: {
@@ -305,6 +629,67 @@ export interface ConfigMenu extends Struct.ComponentSchema {
   };
 }
 
+export interface ConfigMessage extends Struct.ComponentSchema {
+  collectionName: 'components_config_messages';
+  info: {
+    displayName: 'Message';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    cancelButtonText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Cancel'>;
+    copyActionText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Copy'>;
+    editActionText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Edit'>;
+    empty_chat: Schema.Attribute.Component<'shared.empty', false> &
+      Schema.Attribute.Required;
+    empty_messages: Schema.Attribute.Component<'shared.empty', false> &
+      Schema.Attribute.Required;
+    enableSearch: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    saveButtonText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Save'>;
+    searchPlaceholder: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Search'>;
+    sendMessagePlaceholder: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Type Something'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Messages'>;
+  };
+}
+
+export interface ConfigMetaData extends Struct.ComponentSchema {
+  collectionName: 'components_config_meta_data';
+  info: {
+    displayName: 'Meta Data';
+    icon: 'chartBubble';
+  };
+  attributes: {
+    key: Schema.Attribute.String;
+    value: Schema.Attribute.String;
+  };
+}
+
+export interface ConfigRelations extends Struct.ComponentSchema {
+  collectionName: 'components_config_relations';
+  info: {
+    displayName: 'Relations';
+    icon: 'apps';
+  };
+  attributes: {
+    relationId: Schema.Attribute.Integer;
+  };
+}
+
 export interface ConfigReviewCard extends Struct.ComponentSchema {
   collectionName: 'components_review_cards';
   info: {
@@ -331,6 +716,22 @@ export interface ConfigReviewCard extends Struct.ComponentSchema {
     reviewer: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'John Doe'>;
+  };
+}
+
+export interface ConfigSearchConfig extends Struct.ComponentSchema {
+  collectionName: 'components_config_search_configs';
+  info: {
+    displayName: 'Search Config';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    button_placeholder: Schema.Attribute.String;
+    category_placeholder: Schema.Attribute.String;
+    location_placeholder: Schema.Attribute.String;
+    search_placeholder: Schema.Attribute.String;
+    sort_placeholder: Schema.Attribute.String;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -636,6 +1037,86 @@ export interface SingleTypeBlogDetails extends Struct.ComponentSchema {
   };
 }
 
+export interface SingleTypeCompanyDetails extends Struct.ComponentSchema {
+  collectionName: 'components_single_type_company_details';
+  info: {
+    displayName: 'Company Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    open_jobs: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SingleTypeJobDetails extends Struct.ComponentSchema {
+  collectionName: 'components_single_type_job_details';
+  info: {
+    displayName: 'Job Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    related_lists: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SingleTypeResumeDetails extends Struct.ComponentSchema {
+  collectionName: 'components_single_type_resume_details';
+  info: {
+    displayName: 'Resume Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface UiJobInfo extends Struct.ComponentSchema {
+  collectionName: 'components_ui_job_infos';
+  info: {
+    displayName: 'Job Info';
+    icon: 'user';
+  };
+  attributes: {
+    bio: Schema.Attribute.Text;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    profilePicture: Schema.Attribute.Media<'images'>;
+  };
+}
+
+export interface WidgetAppliedList extends Struct.ComponentSchema {
+  collectionName: 'components_widget_applied_lists';
+  info: {
+    displayName: 'Applied List';
+    icon: 'oneToOne';
+  };
+  attributes: {
+    details: Schema.Attribute.Component<'widget.count-card', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface WidgetClosedJob extends Struct.ComponentSchema {
+  collectionName: 'components_widget_closed_jobs';
+  info: {
+    displayName: 'Closed Job';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    details: Schema.Attribute.Component<'widget.count-card', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
 export interface WidgetContactWidget extends Struct.ComponentSchema {
   collectionName: 'components_footer_contact_widgets';
   info: {
@@ -666,6 +1147,52 @@ export interface WidgetCopyrightBar extends Struct.ComponentSchema {
   };
 }
 
+export interface WidgetCountCard extends Struct.ComponentSchema {
+  collectionName: 'components_widget_count_cards';
+  info: {
+    displayName: 'Count Card';
+    icon: 'apps';
+  };
+  attributes: {
+    count: Schema.Attribute.BigInteger;
+    dynamicCount: Schema.Attribute.Boolean;
+    enableStats: Schema.Attribute.Boolean;
+    isLink: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    link: Schema.Attribute.String;
+    model: Schema.Attribute.String;
+    subTitle: Schema.Attribute.String;
+    target: Schema.Attribute.Enumeration<
+      ['_self', '_blank', '_parent', '_top']
+    > &
+      Schema.Attribute.DefaultTo<'_self'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface WidgetFavoriteList extends Struct.ComponentSchema {
+  collectionName: 'components_widget_favorite_lists';
+  info: {
+    displayName: 'Favorite List';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    details: Schema.Attribute.Component<'widget.count-card', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface WidgetMatchedList extends Struct.ComponentSchema {
+  collectionName: 'components_widget_matched_lists';
+  info: {
+    displayName: 'Matched List';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    details: Schema.Attribute.Component<'widget.count-card', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
 export interface WidgetMenuWidget extends Struct.ComponentSchema {
   collectionName: 'components_footer_menu_widgets';
   info: {
@@ -679,24 +1206,71 @@ export interface WidgetMenuWidget extends Struct.ComponentSchema {
   };
 }
 
+export interface WidgetOpenJob extends Struct.ComponentSchema {
+  collectionName: 'components_widget_open_jobs';
+  info: {
+    displayName: 'Open Job';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    details: Schema.Attribute.Component<'widget.count-card', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface WidgetTotalJob extends Struct.ComponentSchema {
+  collectionName: 'components_widget_total_jobs';
+  info: {
+    displayName: 'Total Job';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    details: Schema.Attribute.Component<'widget.count-card', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'block.applied-jobs': BlockAppliedJobs;
       'block.banner': BlockBanner;
       'block.blog-card': BlockBlogCard;
+      'block.bookmark': BlockBookmark;
+      'block.bookmark-list': BlockBookmarkList;
       'block.breadcrumbs': BlockBreadcrumbs;
+      'block.candidate-filter': BlockCandidateFilter;
       'block.category-card': BlockCategoryCard;
+      'block.company-filter': BlockCompanyFilter;
+      'block.contact': BlockContact;
       'block.content-box': BlockContentBox;
+      'block.experience': BlockExperience;
       'block.image-carousel': BlockImageCarousel;
       'block.image-gallery': BlockImageGallery;
+      'block.job-banner': BlockJobBanner;
+      'block.job-card': BlockJobCard;
+      'block.job-filter': BlockJobFilter;
+      'block.latest-applied': BlockLatestApplied;
+      'block.manage-company': BlockManageCompany;
+      'block.manage-job': BlockManageJob;
+      'block.manage-resume': BlockManageResume;
+      'block.notification-list': BlockNotificationList;
+      'block.portfolio': BlockPortfolio;
+      'block.pricing': BlockPricing;
       'block.review-block': BlockReviewBlock;
       'component.grid-container': ComponentGridContainer;
       'component.icon-box': ComponentIconBox;
       'config.carousel-card': ConfigCarouselCard;
+      'config.header-config': ConfigHeaderConfig;
+      'config.header-field': ConfigHeaderField;
       'config.link': ConfigLink;
       'config.logo': ConfigLogo;
       'config.menu': ConfigMenu;
+      'config.message': ConfigMessage;
+      'config.meta-data': ConfigMetaData;
+      'config.relations': ConfigRelations;
       'config.review-card': ConfigReviewCard;
+      'config.search-config': ConfigSearchConfig;
       'config.section-title': ConfigSectionTitle;
       'config.single-page': ConfigSinglePage;
       'config.style-section': ConfigStyleSection;
@@ -710,9 +1284,20 @@ declare module '@strapi/strapi' {
       'shared.social-medias': SharedSocialMedias;
       'shared.spacing': SharedSpacing;
       'single-type.blog-details': SingleTypeBlogDetails;
+      'single-type.company-details': SingleTypeCompanyDetails;
+      'single-type.job-details': SingleTypeJobDetails;
+      'single-type.resume-details': SingleTypeResumeDetails;
+      'ui.job-info': UiJobInfo;
+      'widget.applied-list': WidgetAppliedList;
+      'widget.closed-job': WidgetClosedJob;
       'widget.contact-widget': WidgetContactWidget;
       'widget.copyright-bar': WidgetCopyrightBar;
+      'widget.count-card': WidgetCountCard;
+      'widget.favorite-list': WidgetFavoriteList;
+      'widget.matched-list': WidgetMatchedList;
       'widget.menu-widget': WidgetMenuWidget;
+      'widget.open-job': WidgetOpenJob;
+      'widget.total-job': WidgetTotalJob;
     }
   }
 }

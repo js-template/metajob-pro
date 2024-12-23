@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_block_manage_jobs",
   "info": {
     "displayName": "Manage Job",
     "icon": "bulletList",
@@ -8,7 +7,6 @@
   "category": "block",
   "modelName": "manage-job",
   "uid": "block.manage-job",
-  "globalId": "ComponentsManageJob",
   "attributes": {
     "title": {
       "type": "string",

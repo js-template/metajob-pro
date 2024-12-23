@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_widget_count_card",
   "info": {
     "displayName": "Count Card",
     "icon": "apps",
@@ -7,7 +6,6 @@
   },
   "category": "widget",
   "modelName": "count-card",
-  "globalId": "ComponentsWidgetCountCard",
   "uid": "widget.count-card",
   "modelType": "component",
   "pluginOptions": {},

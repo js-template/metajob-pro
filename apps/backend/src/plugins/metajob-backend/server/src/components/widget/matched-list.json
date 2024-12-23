@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_widget_matched_lists",
   "info": {
     "displayName": "Matched List",
     "icon": "arrowRight",
@@ -8,7 +7,6 @@
   "category": "widget",
   "modelName": "matched-list",
   "uid": "widget.matched-list",
-  "globalId": "ComponentsWidgetMatchedList",
   "modelType": "component",
   "attributes": {
     "details": {

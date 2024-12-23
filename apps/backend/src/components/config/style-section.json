@@ -5,7 +5,7 @@
     "icon": "arrowUp",
     "description": ""
   },
-  "category": "component",
+  "category": "config",
   "modelName": "style-section",
   "globalId": "ComponentsComponentStyleSections",
   "uid": "config.style-section",

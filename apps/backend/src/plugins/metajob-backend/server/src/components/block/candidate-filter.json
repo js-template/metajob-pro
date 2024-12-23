@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_block_candidate_filters",
   "info": {
     "displayName": "Candidate Filter",
     "icon": "collapse",
@@ -8,7 +7,6 @@
   "category": "block",
   "modelName": "candidate-filter",
   "uid": "block.candidate-filter",
-  "globalId": "ComponentsBlockCandidateFilter",
   "pluginOptions": {},
   "attributes": {
     "show_filter": {

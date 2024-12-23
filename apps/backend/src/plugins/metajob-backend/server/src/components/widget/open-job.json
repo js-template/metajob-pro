@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_widget_open_job",
   "info": {
     "displayName": "Open Job",
     "icon": "arrowRight",
@@ -7,7 +6,6 @@
   },
   "category": "widget",
   "modelName": "open-job",
-  "globalId": "ComponentsWidgetOpenJob",
   "uid": "widget.open-job",
   "modelType": "component",
   "attributes": {

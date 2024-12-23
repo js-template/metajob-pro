@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_block_pricings",
+  "info": {
+    "displayName": "Pricing",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
+    "price": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "table": {
+      "type": "component",
+      "repeatable": true,
+      "component": "config.meta-data"
+    }
+  }
+}

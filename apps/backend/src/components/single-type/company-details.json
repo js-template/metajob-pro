@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_single_type_company_details",
+  "info": {
+    "displayName": "Company Details",
+    "icon": "arrowRight"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "styles": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    },
+    "open_jobs": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@jstemplate/metajob",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "core"
+  ],
+  "scripts": {
+    "dev": "npx padma dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@padmadev/blank-theme": "0.0.1-alpha.3",
+    "@jstemplate/metajob-theme": "workspace:*"
+  }
+}

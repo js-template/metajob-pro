@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_config_messages",
   "info": {
     "displayName": "Message",
     "icon": "arrowRight",
@@ -8,7 +7,6 @@
   "category": "config",
   "modelName": "message",
   "uid": "config.message",
-  "globalId": "ComponentsConfigMessage",
   "options": {},
   "attributes": {
     "title": {

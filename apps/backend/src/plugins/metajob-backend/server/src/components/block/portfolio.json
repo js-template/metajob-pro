@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_block_portfolios",
   "info": {
     "displayName": "Portfolio",
     "icon": "clock",
@@ -8,7 +7,6 @@
   "category": "block",
   "modelName": "portfolio",
   "uid": "block.portfolio",
-  "globalId": "ComponentsBlockPortfolio",
   "attributes": {
     "title": {
       "type": "string"

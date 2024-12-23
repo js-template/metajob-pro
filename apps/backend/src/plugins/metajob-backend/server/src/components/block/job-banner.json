@@ -1,5 +1,4 @@
 {
-  "collectionName": "components_banner_job_banner",
   "info": {
     "displayName": "Job Banner",
     "icon": "arrowRight",
@@ -8,7 +7,6 @@
   "category": "block",
   "modelName": "job-banner",
   "uid": "block.job-banner",
-  "globalId": "ComponentsBlockJobBanner",
   "pluginOptions": {},
   "attributes": {
     "content": {

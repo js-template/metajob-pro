@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_block_job_cards",
+  "info": {
+    "displayName": "Job Card",
+    "icon": "collapse"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.section-title"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}

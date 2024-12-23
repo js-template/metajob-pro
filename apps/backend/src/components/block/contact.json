@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_block_contacts",
+  "info": {
+    "displayName": "Contact",
+    "icon": "phone"
+  },
+  "options": {},
+  "attributes": {
+    "friendlyAddress": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+"use client"
+import { Box, CircularProgress, Grid, Paper } from "@mui/material"
+import { Suspense } from "react"
+import ChatSection from "./chats"
+import { IUserSession } from "../../types/user"
+
+export const MessageLayout = ({
+   block,
+   session
+}: {
+   block: any
+   session?: IUserSession | null | any
+   data?: any
+   language?: string
+}) => {
+   // session data destructuring
+   const { user } = session || {}
+   const { id: userId, role: userRole } = user || {}
+   const role = userRole?.type || ""
+
+   // *** If the user role is not an candidate or employer, redirect to the dashboard
+   // if (role?.type !== "candidate" && role?.type !== "employer") {
+   //    redirect("/dashboard")
+   // }
+
+   return (
+      <Grid item xs={12}>
+         <Paper
+            elevation={0}
+            sx={{
+               position: "relative",
+               overflow: "hidden",
+               width: "100%",
+               height: "calc(100vh - 123px)",
+               border: "1px solid",
+               borderColor: "divider",
+               borderRadius: "12px",
+               p: 0
+            }}>
+            <Suspense
+               fallback={
+                  <Box
+                     sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        width: "100%",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        zIndex: 1000
+                     }}>
+                     {/* Overlay */}
+                     <CircularProgress
+                        sx={{
+                           position: "relative",
+                           zIndex: 3
+                        }}
+                        disableShrink
+                     />
+                     <Box
+                        sx={{
+                           position: "absolute",
+                           top: 0,
+                           left: 0,
+                           height: "100%",
+                           width: "100%",
+                           display: "flex",
+                           alignItems: "center",
+                           justifyContent: "center",
+                           filter: "blur(2px)",
+                           backdropFilter: "blur(2px)",
+                           zIndex: 1
+                        }}
+                     />
+                  </Box>
+               }>
+               <ChatSection data={block} role={role} userId={userId} />
+            </Suspense>
+         </Paper>
+      </Grid>
+   )
+}
