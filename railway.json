@@ -12,8 +12,7 @@
           ]
         },
         "install": {
-          "dependsOn": ["setup", "npm:config"],
-          "cmds": ["npm install --omit=dev"]
+          "dependsOn": ["setup", "npm:config"]
         }
       }
     }
