@@ -4,6 +4,6 @@ export default () => ({
   },
   "metajob-backend": {
     enabled: true,
-    //resolve: "./src/plugins/metajob-backend",
+    resolve: "./src/plugins/metajob-backend",
   },
 });

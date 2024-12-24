@@ -1,5 +1,3 @@
-// padma.settings.ts
-
 export const settings = {
   activeTheme: "@jstemplate/metajob-theme", // Default active theme
 };

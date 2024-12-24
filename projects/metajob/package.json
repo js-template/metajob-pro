@@ -7,7 +7,7 @@
     "core"
   ],
   "scripts": {
-    "dev": "npx padma dev",
+    "dev": "padma dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
