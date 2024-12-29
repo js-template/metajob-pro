@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "pnpm --filter core build",
-    "dev": "turbo run dev --parallel",
+    "dev": "pnpm --filter core dev",
     "start": "pmpm -F core start",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
