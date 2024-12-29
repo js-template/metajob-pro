@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npx padma generate core",
-    "build": "pnpm --filter core build && cp -r core/.next/standalone",
+    "build": "pnpm --filter core build",
     "dev": "turbo run dev --parallel",
     "start": "pmpm -F core start",
     "lint": "turbo run lint",
