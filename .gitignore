@@ -4,8 +4,6 @@
 node_modules
 .pnp
 .pnp.js
-core/*
-core/
 .yarn
 .turbo
 # Local env files
