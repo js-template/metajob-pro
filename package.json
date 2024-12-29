@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npx padma generate core",
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "start": "pmpm -F core start",
