@@ -11,8 +11,9 @@ export const registerComponents = async ({
   const existingComponents = strapi.components;
 
   // Construct the path to the `components` directory
-  const componentsDir = path.join(__dirname, "../../server/src/components");
+  const componentsDir = path.join(__dirname, "./src/components");
 
+  //console.log("componentsDir", __dirname);
   // Read all entries (files and directories) in the components directory
   const entries = await fs.readdir(componentsDir, { withFileTypes: true });
 

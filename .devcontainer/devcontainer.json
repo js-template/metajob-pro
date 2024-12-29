@@ -1,0 +1,14 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "pnpm.pnpm-vscode" 
+      ]
+    }
+  },
+  "postCreateCommand": "pnpm install && pnpm dev"
+}
