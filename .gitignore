@@ -48,4 +48,3 @@ yarn-error.log*
 .DS_Store
 *.pem
 .tmp
-pnpm-lock.yaml
