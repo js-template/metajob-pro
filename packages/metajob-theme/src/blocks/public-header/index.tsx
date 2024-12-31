@@ -135,7 +135,7 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
    const userName = session?.user?.name || ""
 
    const handleMouseEnterButton = (event: React.MouseEvent<HTMLElement>, index: number) => {
-      setAnchorEl(event.currentTarget) // Open menu on button hover
+      setAnchorEl(event?.currentTarget) // Open menu on button hover
       setActiveMenu(index)
    }
 
@@ -143,7 +143,7 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
       const relatedTarget = event.relatedTarget as HTMLElement
 
       // Only close if the mouse isn't moving to the menu
-      if (!relatedTarget || !relatedTarget.closest("#dropdown-menu")) {
+      if (!relatedTarget || !relatedTarget?.closest("#dropdown-menu")) {
          setAnchorEl(null)
          setActiveMenu(null)
       }
@@ -153,7 +153,7 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
       const relatedTarget = event.relatedTarget as HTMLElement
 
       // Only close if the mouse isn't moving to the button
-      if (!relatedTarget || !relatedTarget.closest("button")) {
+      if (!relatedTarget || !relatedTarget?.closest("button")) {
          setAnchorEl(null)
          setActiveMenu(null)
       }
@@ -273,8 +273,9 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
                                     alignItems: "center",
                                     cursor: "pointer"
                                  }}
-                                 onMouseEnter={(event: any) => handleMouseEnterButton(event, index)}
-                                 onMouseLeave={handleMouseLeaveButton}>
+                                 // onMouseEnter={(event: any) => handleMouseEnterButton(event, index)}
+                                 // onMouseLeave={handleMouseLeaveButton}
+                              >
                                  {item?.label ?? "No title"}
                                  {item?.child && item?.child?.length > 0 && (
                                     <CIcon
