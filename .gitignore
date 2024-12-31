@@ -4,8 +4,6 @@
 node_modules
 .pnp
 .pnp.js
-core/*
-core/
 .yarn
 .turbo
 # Local env files
@@ -14,7 +12,6 @@ core/
 .env.development.local
 .env.test.local
 .env.production.local
-core
 .env
 license.txt
 exports
@@ -48,4 +45,3 @@ yarn-error.log*
 .DS_Store
 *.pem
 .tmp
-pnpm-lock.yaml

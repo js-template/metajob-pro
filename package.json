@@ -4,20 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
+    "build": "pnpm --filter core build",
+    "dev": "pnpm --filter core dev",
+    "start": "pmpm -F core start",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@padmadev/blank-theme": "0.0.1-alpha.3",
+    "@jstemplate/metajob-theme": "workspace:*",
+    "@padmadev/padma": "0.0.4-alpha.1"
+  },
   "devDependencies": {
     "prettier": "latest",
     "turbo": "latest"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=20.0.0"
   },
-  "dependencies": {},
   "packageManager": "pnpm@9.15.1"
 }
