@@ -11,3 +11,8 @@ locate the `apps/site` folders, create an `.env` file and add the required envir
 ### Step 3: Run the Frontend
 In another terminal, navigate to the apps/site directory and run:
 
+```bash
+pnpm install
+pnpm dev
+```
+This will launch the frontend, and the site will be accessible at http://localhost:3000.

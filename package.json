@@ -15,7 +15,7 @@
   "dependencies": {
     "@padmadev/blank-theme": "0.0.1-alpha.3",
     "@jstemplate/metajob-theme": "workspace:*",
-    "@padmadev/padma": "0.0.4-alpha.0"
+    "@padmadev/padma": "0.0.4-alpha.1"
   },
   "devDependencies": {
     "prettier": "latest",
