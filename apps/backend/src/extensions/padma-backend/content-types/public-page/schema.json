@@ -36,7 +36,10 @@
         "block.review-block",
         "block.image-carousel",
         "block.image-gallery",
-        "block.job-banner"
+        "block.job-banner",
+        "block.job-filter",
+        "block.company-filter",
+        "block.candidate-filter"
       ]
     },
     "seo": {
