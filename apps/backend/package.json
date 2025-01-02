@@ -15,6 +15,7 @@
     "@jstemplate/metajob-backend": "^0.0.2",
     "@strapi/plugin-cloud": "5.6.0",
     "@strapi/plugin-users-permissions": "5.6.0",
+    "@strapi/provider-upload-cloudinary": "^5.4.1",
     "@strapi/strapi": "5.6.0",
     "better-sqlite3": "11.3.0",
     "pg": "^8.13.1",
