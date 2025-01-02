@@ -15,8 +15,11 @@ importers:
         specifier: 0.0.1-alpha.3
         version: 0.0.1-alpha.3(@emotion/cache@11.14.0)(typescript@5.7.2)
       '@padmadev/padma':
-        specifier: 0.0.4-alpha.0
-        version: 0.0.4-alpha.0(@types/node@22.10.2)(eslint@8.36.0)(typescript@5.7.2)
+        specifier: 0.0.4-alpha.1
+        version: 0.0.4-alpha.1(@types/node@22.10.2)(eslint@8.36.0)(typescript@5.7.2)
+      next:
+        specifier: ^14.1.0
+        version: 14.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       prettier:
         specifier: latest
@@ -1314,8 +1317,8 @@ packages:
   '@padmadev/blank-theme@0.0.1-alpha.3':
     resolution: {integrity: sha512-vClLbwWg4MRZzeKnKRBOIrKM8E2Ne/S/vtVC0GOGibguCP6S6oJ4yc5PSmkpZd0ifoZ5MDEM5GX+YjTvAcPqfg==}
 
-  '@padmadev/padma@0.0.4-alpha.0':
-    resolution: {integrity: sha512-cU/EjsS46ztmE7V5ESOuZcMjd5OC9tbnNFMaWmfg8t3dFm11V3bfYAe9EBCivYCVE7wSXUEI2eai2b5GlVEbSA==}
+  '@padmadev/padma@0.0.4-alpha.1':
+    resolution: {integrity: sha512-txzNO1BoN7ZoC0GYQW2RsWBlog6e5uAQ9Dug98uQk0/Ds9s/HMv9b4uT7cCRL1CQdMQ58AkOta/98tqch5E6/A==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -6371,7 +6374,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@padmadev/padma@0.0.4-alpha.0(@types/node@22.10.2)(eslint@8.36.0)(typescript@5.7.2)':
+  '@padmadev/padma@0.0.4-alpha.1(@types/node@22.10.2)(eslint@8.36.0)(typescript@5.7.2)':
     dependencies:
       '@inquirer/prompts': 7.2.1(@types/node@22.10.2)
       '@oclif/core': 4.2.0
