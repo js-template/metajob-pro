@@ -75,6 +75,7 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
    const [anchorElSub, setAnchorElSub] = useState<null | HTMLElement>(null)
    const [activeMenu, setActiveMenu] = useState<number | null>(null)
 
+   // FIXME: can we all function to hook.ts
    //===start submenu functions
    // Handle opening the menu on hover
    const handleSubMenuOpen = (event: MouseEvent<HTMLElement>, index: number) => {
@@ -125,6 +126,7 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
       locale: ["en"]
    }
 
+   // FIXME: Why client side api for user
    // fetch user avatar data
    const userId = session?.user?.id
    const queryString = encodeURIComponent(JSON.stringify(queryParams))
@@ -134,11 +136,13 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
    const userAvatar = userData?.avatar?.url || ""
    const userName = session?.user?.name || ""
 
+   // FIXME: remove unused code please
    const handleMouseEnterButton = (event: React.MouseEvent<HTMLElement>, index: number) => {
       setAnchorEl(event?.currentTarget) // Open menu on button hover
       setActiveMenu(index)
    }
 
+   // FIXME: remove unused code please
    const handleMouseLeaveButton = (event: React.MouseEvent<HTMLElement>) => {
       const relatedTarget = event.relatedTarget as HTMLElement
 
@@ -164,6 +168,7 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
          position='static'
          sx={{
             backgroundColor: "background.paper",
+            // FIXME: Why shadow hard coded, should be manage form design style
             shadow: "0px 4px 8px 0px rgba(19, 22, 28, 0.12)",
             py: "6px",
             backgroundImage: "none"
