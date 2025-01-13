@@ -102,12 +102,7 @@ const ManageCompaniesTableItem = ({
                      alignItems: "center",
                      gap: 2
                   }}>
-                  <Image
-                     src={imageUrl || "https://via.placeholder.com/150"}
-                     alt='company logo'
-                     width={50}
-                     height={50}
-                  />
+                  <Image src={imageUrl || "https://placehold.co/150"} alt='company logo' width={50} height={50} />
                   <Box dir={direction}>
                      <Typography variant='body1' dir={direction}>
                         {name}

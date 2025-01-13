@@ -41,7 +41,7 @@ const BlockItem = ({ attributes }: ISingleCategory) => {
                   transition: "transform 0.3s ease-in-out"
                }}>
                <Image
-                  src={image?.data?.attributes?.url || "https://via.placeholder.com/50"}
+                  src={image?.data?.attributes?.url || "https://placehold.co/50"}
                   alt={title}
                   width={50}
                   height={50}

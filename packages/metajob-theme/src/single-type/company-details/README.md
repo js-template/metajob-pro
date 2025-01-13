@@ -73,7 +73,7 @@ const data = {
       value: "1-100000"
    },
    logo: {
-      url: "https://via.placeholder.com/100"
+      url: "https://placehold.co/100"
    },
    industry: {
       id: 2,

@@ -39,7 +39,7 @@ export const CardItem = ({ data }: { data: ISingleCategory }) => {
                   p: 2,
                   transition: "transform 0.3s ease-in-out"
                }}>
-               <Image src={logo || "https://via.placeholder.com/20"} alt='icon' height={20} width={20} />
+               <Image src={logo || "https://placehold.co/20"} alt='icon' height={20} width={20} />
             </Box>
 
             <Stack>
