@@ -8,7 +8,7 @@ import { ISinglePost } from "./types"
 
 const CardItem = ({ data }: { data: ISinglePost }) => {
    const { title, slug, featuredImage, short_description, publishedAt } = data || {}
-   const image = featuredImage?.url || "https://via.placeholder.com/300x250"
+   const image = featuredImage?.url || "https://placehold.co/300x250"
    return (
       <Stack
          sx={{

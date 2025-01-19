@@ -11,7 +11,7 @@ export const loadActiveTheme = async (): Promise<ThemeComponents | null> => {
          throw new Error("Active theme is not defined in the settings.")
       }
 
-      console.log("Active theme:", settings.activeTheme)
+      // console.log("Active theme:", settings.activeTheme)
 
       const themeModuleLoader = themeResolver[settings.activeTheme]
 

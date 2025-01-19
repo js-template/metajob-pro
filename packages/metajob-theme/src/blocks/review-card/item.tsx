@@ -9,7 +9,7 @@ const CardItem = ({ data }: { data: ISingleReview }) => {
    const theme = useTheme()
 
    const { reviewer, review, avatar, rating } = data || {}
-   const url = avatar?.url || "https://via.placeholder.com/64"
+   const url = avatar?.url || "https://placehold.co/64"
 
    return (
       <Stack

@@ -67,7 +67,7 @@ const RecentPost = ({ language }: { language?: string }) => {
                               component={Link}
                               href={`/blog/${item?.slug}`}>
                               <Image
-                                 src={item?.featuredImage?.url || "https://via.placeholder.com/200x100"}
+                                 src={item?.featuredImage?.url || "https://placehold.co/200x100"}
                                  alt={item?.title}
                                  fill={true}
                               />

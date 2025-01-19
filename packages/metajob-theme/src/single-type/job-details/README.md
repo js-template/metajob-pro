@@ -74,7 +74,7 @@ const jobData = {
       slug: "company-one",
       about: "Company about",
       logo: {
-         url: "https://via.placeholder.com/150"
+         url: "https://placehold.co/150"
       }
    },
    owner: {
