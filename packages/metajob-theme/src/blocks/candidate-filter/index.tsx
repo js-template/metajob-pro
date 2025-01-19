@@ -46,7 +46,15 @@ export const CandidateFilter = ({ block, language }: Props) => {
          //     $containsi: formData.rate || undefined, // Apply filter dynamically
          //   },
       },
-      populate: "*",
+      populate: {
+         user: {
+            populate: {
+               avatar: {
+                  fields: ["url"]
+               }
+            }
+         }
+      },
       // populate: {
       //    user: {
       //       fields: ["avatar"],
@@ -81,8 +89,6 @@ export const CandidateFilter = ({ block, language }: Props) => {
    //     setPage(1);
    //   };
 
-   console.log("CandidateFilter block1", block)
-   console.log("CandidateFilter resumeData2", resumeData)
    return (
       <Stack>
          <Container maxWidth='lg' sx={{ py: 6 }}>

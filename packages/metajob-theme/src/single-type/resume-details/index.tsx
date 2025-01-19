@@ -31,7 +31,31 @@ export const ResumeDetails = ({
             $eq: itemSlug
          }
       },
-      populate: "*",
+      // populate: "*",
+      populate: {
+         user: {
+            populate: {
+               avatar: {
+                  fields: ["url"]
+               }
+            }
+         },
+         experience: {
+            populate: "*"
+         },
+         education: {
+            populate: "*"
+         },
+         portfolio: {
+            populate: "*"
+         },
+         experience_time: {
+            populate: "*"
+         },
+         category: {
+            populate: "*"
+         }
+      },
       publicationState: "live",
       locale: language ? [language] : ["en"]
    }
