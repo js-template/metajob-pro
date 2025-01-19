@@ -8,7 +8,8 @@ import { ISinglePost } from "./types"
 
 const CardItem = ({ data }: { data: ISinglePost }) => {
    const { title, slug, featuredImage, short_description, publishedAt } = data || {}
-   const image = featuredImage?.url || "https://placehold.co/300x250"
+   // const image = featuredImage?.url || "https://placehold.co/300x250/png"
+   const image = featuredImage?.url
    return (
       <Stack
          sx={{
@@ -28,7 +29,7 @@ const CardItem = ({ data }: { data: ISinglePost }) => {
          spacing={2}>
          <Box
             sx={{
-               display: "flex",
+               display: image ? "flex" : "none",
                justifyContent: "center",
                alignItems: "center",
                overflow: "hidden",
@@ -40,7 +41,8 @@ const CardItem = ({ data }: { data: ISinglePost }) => {
             component={Link}
             href={`blog/${slug}`}>
             <Image
-               src={image}
+               // src={image}
+               src={image || "https://placehold.co/300x250/png"}
                alt={title}
                style={{
                   transition: "transform 0.3s ease-in-out"
