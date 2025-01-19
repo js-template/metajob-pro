@@ -7,6 +7,7 @@ import { ISingleCategory } from "./types"
 
 export const CardItem = ({ data }: { data: ISingleCategory }) => {
    const { title, image } = data || {}
+   // const logo = image?.url || "https://placehold.co/60/png"
    const logo = image?.url
 
    return (
@@ -29,7 +30,7 @@ export const CardItem = ({ data }: { data: ISingleCategory }) => {
                justifyContent: "center",
                alignItems: "center"
             }}>
-            <Box
+            {/* <Box
                className='iconBox'
                sx={{
                   color: (theme) => theme.palette.primary.main,
@@ -39,7 +40,16 @@ export const CardItem = ({ data }: { data: ISingleCategory }) => {
                   p: 2,
                   transition: "transform 0.3s ease-in-out"
                }}>
-               <Image src={logo || "https://placehold.co/20"} alt='icon' height={20} width={20} />
+               <Image src={logo} alt='icon' height={20} width={20} />
+            </Box> */}
+            <Box
+               className='iconBox'
+               sx={{
+                  overflow: "hidden",
+                  width: "fit-content",
+                  transition: "transform 0.3s ease-in-out"
+               }}>
+               {logo && <Image src={logo || "https://placehold.co/60/png"} alt='icon' height={60} width={60} />}
             </Box>
 
             <Stack>
