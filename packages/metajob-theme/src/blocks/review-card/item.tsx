@@ -9,7 +9,8 @@ const CardItem = ({ data }: { data: ISingleReview }) => {
    const theme = useTheme()
 
    const { reviewer, review, avatar, rating } = data || {}
-   const url = avatar?.url || "https://placehold.co/64"
+   // const url = avatar?.url || "https://placehold.co/64/png"
+   const url = avatar?.url
 
    return (
       <Stack
@@ -21,15 +22,17 @@ const CardItem = ({ data }: { data: ISingleReview }) => {
          }}>
          <Stack gap={2}>
             <Stack direction={"row"} spacing={2} alignItems={"center"}>
-               <Image
-                  height={64}
-                  width={64}
-                  style={{
-                     borderRadius: 32
-                  }}
-                  alt='Remy Sharp'
-                  src={url}
-               />
+               {url && (
+                  <Image
+                     height={64}
+                     width={64}
+                     style={{
+                        borderRadius: 32
+                     }}
+                     alt='Remy Sharp'
+                     src={url || "https://placehold.co/64/png"}
+                  />
+               )}
                <Stack>
                   {reviewer && (
                      <Typography color='text.primary' fontWeight={400} fontSize={20}>
