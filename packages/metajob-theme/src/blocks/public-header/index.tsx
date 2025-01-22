@@ -697,12 +697,24 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
                                                 : theme.palette.background.default,
                                           color:
                                              setting?.label === "Logout"
-                                                ? theme.palette.error.dark
-                                                : theme.palette.primary.main
+                                                ? theme.palette.text.primary
+                                                : theme.palette.primary.main,
+                                          "& .user-menu-icon": {
+                                             color:
+                                                setting?.label === "Logout"
+                                                   ? theme.palette.text.primary
+                                                   : theme.palette.primary.main
+                                          }
                                        }
                                     }}>
                                     {setting?.icon && (
-                                       <CIcon icon={setting?.icon} sx={{ color: theme.palette.text.primary + "60" }} />
+                                       <CIcon
+                                          className='user-menu-icon'
+                                          icon={setting?.icon}
+                                          sx={{
+                                             color: theme.palette.text.primary + "60"
+                                          }}
+                                       />
                                     )}
                                     <Typography variant='body1'>{setting?.label}</Typography>
                                  </MenuItem>
