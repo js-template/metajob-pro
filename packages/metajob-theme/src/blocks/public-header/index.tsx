@@ -50,7 +50,7 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
 
    const {
       main_menu,
-      user_menu,
+      profile_menu: user_menu,
       language: langMenu,
       light_logo,
       dark_logo,
@@ -578,11 +578,11 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
                               </>
                            )}
                            {/* notification-button  */}
-                           {notification && (
+                           {/* {notification && (
                               <IconButton size='large' color='inherit'>
                                  <CIcon icon='tabler:bell' />
                               </IconButton>
-                           )}
+                           )} */}
                            {/* user-avatar  */}
                            <Stack direction='row' gap={1} alignItems={"center"}>
                               <Tooltip title='Open settings'>

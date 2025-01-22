@@ -30,7 +30,7 @@ export type IPublicHeaderBlock = {
    }
    main_menu: MenuItemProps[]
    language: MenuItemProps[]
-   user_menu: MenuItemProps[]
+   profile_menu: MenuItemProps[]
    button: ButtonItemProps[]
 }
 
