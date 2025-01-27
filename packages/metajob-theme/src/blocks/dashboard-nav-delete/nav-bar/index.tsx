@@ -11,18 +11,19 @@ import toast from "react-hot-toast"
 import { SharedMenuList } from "./type"
 import CustomAppBar from "../app-bar"
 import MobileNav from "./MobileNav"
-import { PublicHeaderDataProps } from "../../header/types"
+// import { PublicHeaderDataProps } from "../../header/types"
+import { signOut, useSession } from "next-auth/react"
 
 type IProps = {
-   SignOut: () => Promise<void>
+   // SignOut: () => Promise<void>
    sidebarMenus: SharedMenuList
-   headerData: PublicHeaderDataProps
+   headerData: any
    language?: "ar" | "en" | "es" | ""
    changeLang: (lang: string) => void
    changeDirection: (dir: "rtl" | "ltr") => void
    children: React.ReactNode
-   useSession: any
-   signOut: () => Promise<void>
+   // useSession: any
+   // signOut: () => Promise<void>
 }
 
 const drawerWidth = 260
@@ -78,15 +79,15 @@ export const DrawerHeader: React.FC = styled("div")(({ theme }) => ({
 }))
 
 export const NavBar = ({
-   SignOut,
+   // SignOut,
    headerData,
    sidebarMenus,
    changeDirection,
    changeLang,
    language = "en",
-   children,
-   signOut,
-   useSession
+   children
+   // signOut
+   // useSession
 }: IProps) => {
    const { data: session } = useSession()
    const theme = useTheme()
@@ -125,24 +126,32 @@ export const NavBar = ({
    const LogOutHandler = async () => {
       setLoading(true)
       await signOut().then(() => {
-         SignOut().then(() => {
-            toast.success("Logout successfully", {
-               duration: 5000
-            })
-            setLoading(false)
+         toast.success("Logout successfully", {
+            duration: 5000
          })
+         setLoading(false)
       })
+
+      // await signOut().then(() => {
+      //    SignOut().then(() => {
+      //       toast.success("Logout successfully", {
+      //          duration: 5000
+      //       })
+      //       setLoading(false)
+      //    })
+      // })
    }
 
    return (
       <Box sx={{ display: "flex" }}>
+         {/* main nav */}
          <CustomAppBar
             open={open}
             handleDrawerOpen={handleDrawerOpen}
             handleOpenUserMenu={handleOpenUserMenu}
             handleCloseUserMenu={handleCloseUserMenu}
             anchorElUser={anchorElUser}
-            SignOut={SignOut}
+            // SignOut={SignOut}
             headerData={headerData}
             changeLang={changeLang}
             lang={language}
@@ -150,19 +159,12 @@ export const NavBar = ({
             signOut={signOut}
             useSession={useSession}
          />
-         {/* Desktop */}
-         {!isTablet && (
-            <Drawer anchor={theme.direction === "rtl" ? "right" : "left"} variant='permanent' open={open}>
-               <List sx={{ py: 2, px: 1.5 }}>{NavItems(sidebarMenu, open, theme.direction as any, signOut)}</List>
-            </Drawer>
-         )}
-
-         {/* Mobile  */}
+         {/* Mobile main nav  */}
          {isTablet && (
             <MobileNav
                open={open}
                setOpen={setOpen}
-               SignOut={SignOut}
+               // SignOut={SignOut}
                headerData={headerData}
                changeDirection={changeDirection}
                changeLang={changeLang}
@@ -172,8 +174,34 @@ export const NavBar = ({
                useSession={useSession}
             />
          )}
+         {/* Desktop side nav */}
+         {!isTablet && (
+            <Drawer anchor={theme.direction === "rtl" ? "right" : "left"} variant='permanent' open={open}>
+               <List sx={{ py: 2, px: 1.5 }}>{NavItems(sidebarMenu, open, theme.direction as any, signOut)}</List>
+            </Drawer>
+         )}
+
          <Box sx={{ width: "100%" }}>
-            <DrawerHeader />
+            {/* <DrawerHeader /> */}
+            {/* <Box
+               sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: theme.spacing(0, 5),
+                  ...theme.mixins.toolbar
+               }}
+            /> */}
+            <Box
+               sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "0px 45px",
+                  minHeight: "60px"
+                  // ...theme.mixins.toolbar
+               }}
+            />
             <Box component='main' sx={{ flexGrow: 1, p: 3, pb: 0 }}>
                {children}
             </Box>
