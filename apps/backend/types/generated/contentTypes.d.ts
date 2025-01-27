@@ -1601,6 +1601,14 @@ export interface PluginPadmaBackendLayout extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    footer: Schema.Attribute.DynamicZone<
+      ['widget.menu-widget', 'widget.copyright-bar', 'widget.contact-widget']
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     header: Schema.Attribute.DynamicZone<
       ['header.top-bar', 'header.main-menu', 'header.header-bottom']
     > &
@@ -1618,14 +1626,6 @@ export interface PluginPadmaBackendLayout extends Struct.SingleTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    widget: Schema.Attribute.DynamicZone<
-      ['widget.menu-widget', 'widget.copyright-bar', 'widget.contact-widget']
-    > &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
   };
 }
 
@@ -1725,7 +1725,9 @@ export interface PluginPadmaBackendPostSetting extends Struct.SingleTypeSchema {
     };
   };
   attributes: {
-    blocks: Schema.Attribute.DynamicZone<['shared.spacing']> &
+    blocks: Schema.Attribute.DynamicZone<
+      ['shared.spacing', 'single-type.blog-details']
+    > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1962,8 +1964,6 @@ export interface PluginPadmaBackendPublicFrontpage
         'block.pricing',
         'block.portfolio',
         'block.job-banner',
-        'block.company-filter',
-        'block.candidate-filter',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -2029,6 +2029,9 @@ export interface PluginPadmaBackendPublicPage
         'block.image-carousel',
         'block.image-gallery',
         'block.job-banner',
+        'block.job-filter',
+        'block.company-filter',
+        'block.candidate-filter',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -2371,20 +2374,23 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
+    avatar: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    first_name: Schema.Attribute.String;
+    last_name: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -2396,6 +2402,7 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    phone: Schema.Attribute.String;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
