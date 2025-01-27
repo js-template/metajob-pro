@@ -3,6 +3,8 @@ import PlaceholderComponent from "./utils/placeholder"
 
 // header import
 import { PublicHeader } from "./blocks/public-header"
+import { PrivateHeader } from "./blocks/private-header"
+
 // footer import
 import { ContactWidget } from "./widgets/contact-widget"
 import { MenuWidget } from "./widgets/menu-widget"
@@ -57,13 +59,15 @@ import { AppliedList } from "./widgets/applied-list"
 import { FavoriteList } from "./widgets/favorite-list"
 import { MatchedList } from "./widgets/matched-list"
 
-import { NavBar } from "./blocks/dashboard-nav/nav-bar"
-
 import { AddResumeForm } from "./blocks/resume-block"
 import { MyProfile } from "./blocks/profile"
 
 // *** get the private components from the mapping
 export const getPrivateComponents = {
+   // header mapping
+   // "block.private-header": { component: NavBar },
+   "header.private-header": { component: PrivateHeader },
+
    // ?? Widget mapping
    "widget.total-list": { component: TotalList },
    "widget.open-list": { component: OpenList },
@@ -82,7 +86,6 @@ export const getPrivateComponents = {
    "block.manage-lists": { component: ManageLists },
    "block.manage-companies": { component: ManageCompanies },
    "table.applied-jobs": { component: AppliedJobs },
-   "block.private-header": { component: NavBar },
    "block.manage-resume": { component: AddResumeForm },
    "block.auth-profile": { component: MyProfile }
 }
