@@ -8,20 +8,11 @@ import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles"
 import React, { useEffect } from "react"
 import NavItems from "./NavItems"
 import toast from "react-hot-toast"
-import { IPrivateHeaderProps, SharedMenuList } from "./type"
+import { IPrivateHeaderProps } from "./type"
 import CustomAppBar from "./app-bar"
 import MobileNav from "./MobileNav"
-// import { PublicHeaderDataProps } from "../../header/types"
 import { signOut, useSession } from "next-auth/react"
 import { useChangeDirection, useChangeLang } from "./utils"
-
-type IProps = {
-   block: IPrivateHeaderProps
-   // SignOut: () => Promise<void>
-   sidebarMenus: SharedMenuList
-   headerData: any
-   language?: "ar" | "en" | "es" | ""
-}
 
 const drawerWidth = 260
 
@@ -71,13 +62,7 @@ export const DrawerHeader: React.FC = styled("div")(({ theme }) => ({
    ...theme.mixins.toolbar
 }))
 
-export const PrivateHeader = ({
-   block,
-   // SignOut,
-   //    headerData,
-   //    sidebarMenus,
-   language = "en"
-}: IPrivateHeaderProps) => {
+export const PrivateHeader = ({ block, language = "en" }: IPrivateHeaderProps) => {
    const { data: session } = useSession()
    const theme = useTheme()
    const isTablet = useMediaQuery(theme.breakpoints.down("md"))
