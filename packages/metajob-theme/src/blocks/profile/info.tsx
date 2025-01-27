@@ -59,7 +59,6 @@ export const ProfileInfo = () => {
 
    const { data, error, isLoading } = useSWR(apiUrl, fetcher)
    const documentId = data?.documentId
-   console.log({ data })
 
    const [isEditMode, setIsEditMode] = useState(false)
    const [loading, setLoading] = useState(false)
@@ -118,7 +117,6 @@ export const ProfileInfo = () => {
             ...(avatarId && { avatar: avatarId?.id }),
             ...formData
          }
-         console.log({ userInput })
 
          const userResponse = await updateOne("users", Number(userId), userInput, "/dashboard/my-profile/", "page")
          // Check if the response has any errors

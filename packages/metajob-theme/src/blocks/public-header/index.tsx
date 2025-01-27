@@ -50,7 +50,7 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
 
    const {
       main_menu,
-      user_menu,
+      profile_menu: user_menu,
       language: langMenu,
       light_logo,
       dark_logo,
@@ -578,11 +578,11 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
                               </>
                            )}
                            {/* notification-button  */}
-                           {notification && (
+                           {/* {notification && (
                               <IconButton size='large' color='inherit'>
                                  <CIcon icon='tabler:bell' />
                               </IconButton>
-                           )}
+                           )} */}
                            {/* user-avatar  */}
                            <Stack direction='row' gap={1} alignItems={"center"}>
                               <Tooltip title='Open settings'>
@@ -697,12 +697,24 @@ export const PublicHeader = ({ block, language }: IPublicHeaderProps) => {
                                                 : theme.palette.background.default,
                                           color:
                                              setting?.label === "Logout"
-                                                ? theme.palette.error.dark
-                                                : theme.palette.primary.main
+                                                ? theme.palette.text.primary
+                                                : theme.palette.primary.main,
+                                          "& .user-menu-icon": {
+                                             color:
+                                                setting?.label === "Logout"
+                                                   ? theme.palette.text.primary
+                                                   : theme.palette.primary.main
+                                          }
                                        }
                                     }}>
                                     {setting?.icon && (
-                                       <CIcon icon={setting?.icon} sx={{ color: theme.palette.text.primary + "60" }} />
+                                       <CIcon
+                                          className='user-menu-icon'
+                                          icon={setting?.icon}
+                                          sx={{
+                                             color: theme.palette.text.primary + "60"
+                                          }}
+                                       />
                                     )}
                                     <Typography variant='body1'>{setting?.label}</Typography>
                                  </MenuItem>
