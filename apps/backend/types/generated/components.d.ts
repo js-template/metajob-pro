@@ -892,7 +892,7 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
   attributes: {
     content: Schema.Attribute.Component<'config.section-title', false>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    search: Schema.Attribute.Component<'config.search-config', false>;
+    search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
