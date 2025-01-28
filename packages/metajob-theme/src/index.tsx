@@ -104,7 +104,7 @@ export const getPublicComponents = {
    "widget.copyright-bar": { component: CopyrightWidget },
 
    // block mapping
-   "block.job-banner": { component: JobBanner },
+   "metajob-block.job-banner": { component: JobBanner },
    "block.category-list": { component: CategoryBlock },
    "block.job-card": { component: JobCard },
    "block.blog-card": { component: BlogCard },
