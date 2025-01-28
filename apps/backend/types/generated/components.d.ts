@@ -897,6 +897,20 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_categories';
+  info: {
+    displayName: 'Job Category';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'config.link', false>;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
 export interface MetajobConfigHeaderConfig extends Struct.ComponentSchema {
   collectionName: 'components_metajob_config_header_configs';
   info: {
@@ -1402,6 +1416,7 @@ declare module '@strapi/strapi' {
       'header.main-menu': HeaderMainMenu;
       'header.top-bar': HeaderTopBar;
       'metajob-block.job-banner': MetajobBlockJobBanner;
+      'metajob-block.job-category': MetajobBlockJobCategory;
       'metajob-config.header-config': MetajobConfigHeaderConfig;
       'metajob-config.header-field': MetajobConfigHeaderField;
       'metajob-config.message': MetajobConfigMessage;

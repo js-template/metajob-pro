@@ -52,7 +52,8 @@
         "block.job-card",
         "block.pricing",
         "block.portfolio",
-        "metajob-block.job-banner"
+        "metajob-block.job-banner",
+        "metajob-block.job-category"
       ]
     },
     "seo": {

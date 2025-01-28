@@ -1,0 +1,34 @@
+{
+  "info": {
+    "displayName": "Job Category",
+    "icon": "arrowRight",
+    "description": ""
+  },
+  "uid": "metajob-block.job-category",
+  "category": "metajob-block",
+  "modelName": "job-category",
+  "options": {},
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.section-title"
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}
