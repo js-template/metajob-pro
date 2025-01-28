@@ -883,6 +883,20 @@ export interface HeaderTopBar extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_banners';
+  info: {
+    displayName: 'Job Banner';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    search: Schema.Attribute.Component<'config.search-config', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
 export interface SharedEmpty extends Struct.ComponentSchema {
   collectionName: 'components_shared_empties';
   info: {
@@ -1277,6 +1291,7 @@ declare module '@strapi/strapi' {
       'header.header-bottom': HeaderHeaderBottom;
       'header.main-menu': HeaderMainMenu;
       'header.top-bar': HeaderTopBar;
+      'metajob-block.job-banner': MetajobBlockJobBanner;
       'shared.empty': SharedEmpty;
       'shared.meta-social': SharedMetaSocial;
       'shared.seo': SharedSeo;
