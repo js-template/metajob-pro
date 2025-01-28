@@ -17,7 +17,7 @@ type Props = {
    session?: IUserSession | null | any
 }
 
-export const CategoryCard = ({ block, language }: Props) => {
+export const JobCategory = ({ block, language }: Props) => {
    const theme = useTheme()
 
    // destructure the block

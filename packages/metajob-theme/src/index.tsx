@@ -12,10 +12,10 @@ import { CopyrightWidget } from "./widgets/copyright-widget"
 
 // blocks import
 import { JobBanner } from "./blocks/job-banner"
+import { JobCategory } from "./blocks/job-category"
 import { JobCard } from "./blocks/job-card"
 import { BlogCard } from "./blocks/blog-card"
 import { ReviewCard } from "./blocks/review-card"
-import { CategoryCard } from "./blocks/category-card"
 import { JobFilter } from "./blocks/job-filter"
 import CompanyFilter from "./blocks/company-filter"
 import { CandidateFilter } from "./blocks/candidate-filter"
@@ -105,11 +105,12 @@ export const getPublicComponents = {
 
    // block mapping
    "metajob-block.job-banner": { component: JobBanner },
-   "block.category-list": { component: CategoryBlock },
+   "metajob-block.job-category": { component: JobCategory },
+   "block.category-card": { component: PlaceholderComponent },
    "block.job-card": { component: JobCard },
+   "block.category-list": { component: CategoryBlock },
    "block.blog-card": { component: BlogCard },
    "block.review-block": { component: ReviewCard },
-   "block.category-card": { component: CategoryCard },
    "block.job-filter": { component: JobFilter },
    "block.company-filter": { component: CompanyFilter },
    "block.candidate-filter": { component: CandidateFilter },
