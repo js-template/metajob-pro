@@ -1963,7 +1963,7 @@ export interface PluginPadmaBackendPublicFrontpage
         'block.job-card',
         'block.pricing',
         'block.portfolio',
-        'block.job-banner',
+        'metajob-block.job-banner',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
