@@ -4,9 +4,9 @@
     "icon": "arrowRight",
     "description": "Job banner block"
   },
-  "category": "block",
+  "category": "metajob-block",
   "modelName": "job-banner",
-  "uid": "block.job-banner",
+  "uid": "metajob-block.job-banner",
   "pluginOptions": {},
   "attributes": {
     "content": {
@@ -17,7 +17,7 @@
     "search": {
       "type": "component",
       "repeatable": false,
-      "component": "config.search-config"
+      "component": "metajob-config.search-config"
     },
     "image": {
       "type": "media",

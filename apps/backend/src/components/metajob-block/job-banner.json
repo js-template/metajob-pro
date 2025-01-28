@@ -14,13 +14,18 @@
     "search": {
       "type": "component",
       "repeatable": false,
-      "component": "config.search-config"
+      "component": "metajob-config.search-config"
     },
     "image": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images", "files", "videos", "audios"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "style": {
       "type": "component",
