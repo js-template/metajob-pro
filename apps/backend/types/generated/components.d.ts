@@ -897,6 +897,116 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobConfigHeaderConfig extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_header_configs';
+  info: {
+    displayName: 'Header Config';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    enableDelete: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    enableEdit: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface MetajobConfigHeaderField extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_header_fields';
+  info: {
+    displayName: 'Header Field';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    align: Schema.Attribute.Enumeration<['left', 'right', 'center']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'left'>;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Name'>;
+    sort: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+  };
+}
+
+export interface MetajobConfigMessage extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_messages';
+  info: {
+    displayName: 'Message';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    cancelButtonText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Cancel'>;
+    copyActionText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Copy'>;
+    editActionText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Edit'>;
+    empty_chat: Schema.Attribute.Component<'shared.empty', false> &
+      Schema.Attribute.Required;
+    empty_messages: Schema.Attribute.Component<'shared.empty', false> &
+      Schema.Attribute.Required;
+    enableSearch: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    saveButtonText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Save'>;
+    searchPlaceholder: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Search'>;
+    sendMessagePlaceholder: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Type Something'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Messages'>;
+  };
+}
+
+export interface MetajobConfigMetaData extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_meta_data';
+  info: {
+    displayName: 'Meta Data';
+    icon: 'chartBubble';
+  };
+  attributes: {
+    key: Schema.Attribute.String;
+    value: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobConfigRelations extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_relations';
+  info: {
+    displayName: 'Relations';
+    icon: 'apps';
+  };
+  attributes: {
+    relationId: Schema.Attribute.Integer;
+  };
+}
+
+export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_search_configs';
+  info: {
+    displayName: 'Search Config';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    button_placeholder: Schema.Attribute.String;
+    category_placeholder: Schema.Attribute.String;
+    location_placeholder: Schema.Attribute.String;
+    search_placeholder: Schema.Attribute.String;
+    sort_placeholder: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SharedEmpty extends Struct.ComponentSchema {
   collectionName: 'components_shared_empties';
   info: {
@@ -1292,6 +1402,12 @@ declare module '@strapi/strapi' {
       'header.main-menu': HeaderMainMenu;
       'header.top-bar': HeaderTopBar;
       'metajob-block.job-banner': MetajobBlockJobBanner;
+      'metajob-config.header-config': MetajobConfigHeaderConfig;
+      'metajob-config.header-field': MetajobConfigHeaderField;
+      'metajob-config.message': MetajobConfigMessage;
+      'metajob-config.meta-data': MetajobConfigMetaData;
+      'metajob-config.relations': MetajobConfigRelations;
+      'metajob-config.search-config': MetajobConfigSearchConfig;
       'shared.empty': SharedEmpty;
       'shared.meta-social': SharedMetaSocial;
       'shared.seo': SharedSeo;
