@@ -1,0 +1,23 @@
+{
+  "info": {
+    "displayName": "Header Config",
+    "icon": "arrowRight",
+    "description": ""
+  },
+  "category": "metajob-config",
+  "modelName": "header-config",
+  "uid": "metajob-config.header-config",
+  "pluginOptions": {},
+  "attributes": {
+    "enableEdit": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "enableDelete": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    }
+  }
+}
