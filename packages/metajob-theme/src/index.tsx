@@ -113,7 +113,7 @@ export const getPublicComponents = {
    "block.review-block": { component: ReviewCard },
    "block.job-filter": { component: JobFilter },
    "metajob-block.job-filter": { component: JobFilter },
-   "block.company-filter": { component: CompanyFilter },
+   "metajob-block.company-filter": { component: CompanyFilter },
    "metajob-block.candidate-filter": { component: CandidateFilter },
 
    // single-type mapping
