@@ -22,8 +22,8 @@ import { CandidateFilter } from "./blocks/candidate-filter"
 import { BlogFilter } from "./blocks/blog-filter"
 
 // single-type import
-import JobDetails from "./single-type/job-details"
-import CompanyDetails from "./single-type/company-details"
+import { JobDetails } from "./single-type/job-details"
+import { CompanyDetails } from "./single-type/company-details"
 import { ResumeDetails } from "./single-type/resume-details"
 import { BlogDetails } from "./single-type/blog-details"
 
@@ -66,7 +66,6 @@ import { MyProfile } from "./blocks/profile"
 // *** get the private components from the mapping
 export const getPrivateComponents = {
    // header mapping
-   // "block.private-header": { component: NavBar },
    "header.private-header": { component: PrivateHeader },
 
    // ?? Widget mapping
@@ -119,8 +118,8 @@ export const getPublicComponents = {
    "block.blog-filter": { component: BlogFilter },
 
    // single-type mapping
-   "single-type.job-details": { component: JobDetails },
-   "single-type.company-details": { component: CompanyDetails },
-   "single-type.resume-details": { component: ResumeDetails },
+   "metajob-single-type.job-details": { component: JobDetails },
+   "metajob-single-type.company-details": { component: CompanyDetails },
+   "metajob-single-type.resume-details": { component: ResumeDetails },
    "single-type.blog-details": { component: BlogDetails }
 }
