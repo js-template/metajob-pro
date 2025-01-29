@@ -19,6 +19,7 @@ import { ReviewCard } from "./blocks/review-card"
 import { JobFilter } from "./blocks/job-filter"
 import CompanyFilter from "./blocks/company-filter"
 import { CandidateFilter } from "./blocks/candidate-filter"
+import { BlogFilter } from "./blocks/blog-filter"
 
 // single-type import
 import JobDetails from "./single-type/job-details"
@@ -115,6 +116,7 @@ export const getPublicComponents = {
    "metajob-block.job-filter": { component: JobFilter },
    "metajob-block.company-filter": { component: CompanyFilter },
    "metajob-block.candidate-filter": { component: CandidateFilter },
+   "block.blog-filter": { component: BlogFilter },
 
    // single-type mapping
    "single-type.job-details": { component: JobDetails },
