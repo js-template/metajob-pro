@@ -119,8 +119,8 @@ export const getPublicComponents = {
    "block.blog-filter": { component: BlogFilter },
 
    // single-type mapping
-   "single-type.job-details": { component: JobDetails },
-   "single-type.company-details": { component: CompanyDetails },
-   "single-type.resume-details": { component: ResumeDetails },
+   "metajob-single-type.job-details": { component: JobDetails },
+   "metajob-single-type.company-details": { component: CompanyDetails },
+   "metajob-single-type.resume-details": { component: ResumeDetails },
    "single-type.blog-details": { component: BlogDetails }
 }
