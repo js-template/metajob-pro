@@ -112,6 +112,7 @@ export const getPublicComponents = {
    "block.blog-card": { component: BlogCard },
    "block.review-block": { component: ReviewCard },
    "block.job-filter": { component: JobFilter },
+   "metajob-block.job-filter": { component: JobFilter },
    "block.company-filter": { component: CompanyFilter },
    "block.candidate-filter": { component: CandidateFilter },
 
