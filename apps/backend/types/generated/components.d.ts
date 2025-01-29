@@ -128,23 +128,6 @@ export interface BlockCategoryCard extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockCompanyFilter extends Struct.ComponentSchema {
-  collectionName: 'components_block_company_filters';
-  info: {
-    displayName: 'Company Filter';
-    icon: 'collapse';
-  };
-  attributes: {
-    description: Schema.Attribute.Text;
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    search: Schema.Attribute.Component<'config.search-config', false>;
-    show_filter: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlockContact extends Struct.ComponentSchema {
   collectionName: 'components_block_contacts';
   info: {
@@ -842,6 +825,23 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_company_filters';
+  info: {
+    displayName: 'Company Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    show_filter: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_job_banners';
   info: {
@@ -1364,7 +1364,6 @@ declare module '@strapi/strapi' {
       'block.bookmark-list': BlockBookmarkList;
       'block.breadcrumbs': BlockBreadcrumbs;
       'block.category-card': BlockCategoryCard;
-      'block.company-filter': BlockCompanyFilter;
       'block.contact': BlockContact;
       'block.content-box': BlockContentBox;
       'block.experience': BlockExperience;
@@ -1398,6 +1397,7 @@ declare module '@strapi/strapi' {
       'header.main-menu': HeaderMainMenu;
       'header.top-bar': HeaderTopBar;
       'metajob-block.candidate-filter': MetajobBlockCandidateFilter;
+      'metajob-block.company-filter': MetajobBlockCompanyFilter;
       'metajob-block.job-banner': MetajobBlockJobBanner;
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;

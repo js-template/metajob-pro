@@ -2030,7 +2030,7 @@ export interface PluginPadmaBackendPublicPage
         'block.image-carousel',
         'block.image-gallery',
         'metajob-block.job-filter',
-        'block.company-filter',
+        'metajob-block.company-filter',
         'metajob-block.candidate-filter',
       ]
     > &
