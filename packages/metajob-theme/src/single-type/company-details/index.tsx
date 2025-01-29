@@ -15,7 +15,7 @@ type Props = {
    block: ICompanyDetailsBlock
 }
 
-const CompanyDetails = ({ data, language, session, block }: Props) => {
+export const CompanyDetails = ({ data, language, session, block }: Props) => {
    const { title, empty, open_jobs } = block || {}
 
    if (!data) {
@@ -55,5 +55,3 @@ const CompanyDetails = ({ data, language, session, block }: Props) => {
       </Stack>
    )
 }
-
-export default CompanyDetails
