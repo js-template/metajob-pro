@@ -241,34 +241,6 @@ export interface BlockImageGallery extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockJobBanner extends Struct.ComponentSchema {
-  collectionName: 'components_block_job_banners';
-  info: {
-    displayName: 'Job Banner';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    content: Schema.Attribute.Component<'config.section-title', false>;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    search: Schema.Attribute.Component<'config.search-config', false>;
-    style: Schema.Attribute.Component<'config.style-section', false>;
-  };
-}
-
-export interface BlockJobCard extends Struct.ComponentSchema {
-  collectionName: 'components_block_job_cards';
-  info: {
-    displayName: 'Job Card';
-    icon: 'collapse';
-  };
-  attributes: {
-    button: Schema.Attribute.Component<'config.link', false>;
-    content: Schema.Attribute.Component<'config.section-title', false>;
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    style: Schema.Attribute.Component<'config.style-section', false>;
-  };
-}
-
 export interface BlockJobFilter extends Struct.ComponentSchema {
   collectionName: 'components_block_job_filters';
   info: {
@@ -897,6 +869,20 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockJobCard extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_cards';
+  info: {
+    displayName: 'Job Card';
+    icon: 'collapse';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'config.link', false>;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
 export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_job_categories';
   info: {
@@ -1385,8 +1371,6 @@ declare module '@strapi/strapi' {
       'block.experience': BlockExperience;
       'block.image-carousel': BlockImageCarousel;
       'block.image-gallery': BlockImageGallery;
-      'block.job-banner': BlockJobBanner;
-      'block.job-card': BlockJobCard;
       'block.job-filter': BlockJobFilter;
       'block.latest-applied': BlockLatestApplied;
       'block.manage-company': BlockManageCompany;
@@ -1416,6 +1400,7 @@ declare module '@strapi/strapi' {
       'header.main-menu': HeaderMainMenu;
       'header.top-bar': HeaderTopBar;
       'metajob-block.job-banner': MetajobBlockJobBanner;
+      'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
       'metajob-config.header-config': MetajobConfigHeaderConfig;
       'metajob-config.header-field': MetajobConfigHeaderField;

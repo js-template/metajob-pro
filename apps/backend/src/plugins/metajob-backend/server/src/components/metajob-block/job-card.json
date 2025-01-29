@@ -4,9 +4,9 @@
     "icon": "collapse",
     "description": "Job card block"
   },
-  "category": "block",
+  "category": "metajob-block.",
   "modelName": "job-card",
-  "uid": "block.job-card",
+  "uid": "metajob-block.job-card",
   "pluginOptions": {},
   "attributes": {
     "content": {
