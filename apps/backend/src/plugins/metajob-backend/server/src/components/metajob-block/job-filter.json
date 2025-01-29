@@ -4,9 +4,9 @@
     "icon": "collapse",
     "description": "Job Filter block"
   },
-  "category": "block",
+  "category": "metajob-block",
   "modelName": "job-filter",
-  "uid": "block.job-filter",
+  "uid": "metajob-block.job-filter",
   "pluginOptions": {},
   "attributes": {
     "title": {
@@ -18,7 +18,7 @@
     "search": {
       "type": "component",
       "repeatable": false,
-      "component": "config.search-config"
+      "component": "metajob-config.search-config"
     }
   }
 }
