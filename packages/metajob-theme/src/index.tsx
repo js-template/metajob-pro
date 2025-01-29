@@ -107,7 +107,7 @@ export const getPublicComponents = {
    "metajob-block.job-banner": { component: JobBanner },
    "metajob-block.job-category": { component: JobCategory },
    "block.category-card": { component: PlaceholderComponent },
-   "block.job-card": { component: JobCard },
+   "metajob-block.job-card": { component: JobCard },
    "block.category-list": { component: CategoryBlock },
    "block.blog-card": { component: BlogCard },
    "block.review-block": { component: ReviewCard },
