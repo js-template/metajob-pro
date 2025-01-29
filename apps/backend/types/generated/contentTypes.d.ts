@@ -736,7 +736,7 @@ export interface PluginMetajobBackendCompanySetting
   };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
-      ['shared.empty', 'single-type.company-details']
+      ['metajob-single-type.company-details']
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -997,7 +997,7 @@ export interface PluginMetajobBackendJobSetting
     draftAndPublish: true;
   };
   attributes: {
-    blocks: Schema.Attribute.DynamicZone<['single-type.job-details']> &
+    blocks: Schema.Attribute.DynamicZone<['metajob-single-type.job-details']> &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
@@ -1365,7 +1365,9 @@ export interface PluginMetajobBackendResumeSetting
     draftAndPublish: true;
   };
   attributes: {
-    blocks: Schema.Attribute.DynamicZone<['single-type.resume-details']>;
+    blocks: Schema.Attribute.DynamicZone<
+      ['metajob-single-type.resume-details']
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
