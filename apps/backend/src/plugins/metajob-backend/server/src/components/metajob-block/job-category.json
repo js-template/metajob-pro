@@ -1,31 +1,29 @@
 {
-  "collectionName": "components_block_job_banners",
   "info": {
-    "displayName": "Job Banner",
-    "icon": "arrowRight"
+    "displayName": "Job Category",
+    "icon": "arrowRight",
+    "description": ""
   },
+  "uid": "metajob-block.job-category",
+  "category": "metajob-block",
+  "modelName": "job-category",
   "options": {},
+  "pluginOptions": {},
   "attributes": {
     "content": {
       "type": "component",
       "repeatable": false,
       "component": "config.section-title"
     },
-    "search": {
+    "empty": {
       "type": "component",
       "repeatable": false,
-      "component": "config.search-config"
+      "component": "shared.empty"
     },
-    "image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
     },
     "style": {
       "type": "component",

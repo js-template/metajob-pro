@@ -2,44 +2,42 @@
 import { Box, Button, Divider, Drawer, IconButton, List, Menu, MenuItem, useTheme } from "@mui/material"
 import _ from "lodash"
 import { useState } from "react"
-import CIcon from "../../../components/common/icon"
+import CIcon from "../../components/common/icon"
 import NavItems from "./NavItems"
-import { SharedMenuList } from "./type"
+import { IPrivateHeaderBlock, MenuItemProps } from "./type"
 import { useTheme as modeUseTheme } from "next-themes"
-import { getLanguageValue } from "../../../utils"
-import { PublicHeaderDataProps } from "../../header/types"
+import { getLanguageValue } from "../../utils"
+import { signOut, useSession } from "next-auth/react"
+import { useChangeDirection, useChangeLang } from "./utils"
 
 type MobileNavProps = {
    open: boolean
    setOpen: (open: boolean) => void
-   SignOut: any
-   sidebarMenus: SharedMenuList
-   headerData: PublicHeaderDataProps
-   changeLang: (lang: string) => void
-   changeDirection: (dir: "rtl" | "ltr") => void
+   headerData: IPrivateHeaderBlock
    lang: string
-   useSession: any
-   signOut: () => Promise<void>
 }
 
-const MobileNav = ({
-   open,
-   setOpen,
-   SignOut,
-   sidebarMenus,
-   changeLang,
-   changeDirection,
-   lang,
-   headerData,
-   signOut,
-   useSession
-}: MobileNavProps) => {
+const MobileNav = ({ open, setOpen, lang, headerData }: MobileNavProps) => {
    const { data: session } = useSession()
    const { theme: mode, setTheme } = modeUseTheme()
    const toggleTheme = () => {
       setTheme(mode === "dark" ? "light" : "dark")
    }
    const theme = useTheme()
+
+   const { changeLang } = useChangeLang()
+   const { changeDirection } = useChangeDirection()
+
+   const {
+      main_menu,
+      profile_menu: user_menu,
+      side_menu: sidebarMenu,
+      language: langMenu,
+      light_logo,
+      dark_logo,
+      dark_mode,
+      notification
+   } = headerData || {}
 
    // *** Language Menu ***
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -51,12 +49,12 @@ const MobileNav = ({
       setAnchorEl(null)
    }
 
-   const sidebarMenu =
-      session?.user?.role?.type === "candidate"
-         ? ((sidebarMenus && sidebarMenus?.find((menu) => menu.role === "candidate")?.menus) ?? [])
-         : session?.user?.role?.type === "employer"
-           ? ((sidebarMenus && sidebarMenus?.find((menu) => menu.role === "employer")?.menus) ?? [])
-           : ((sidebarMenus && sidebarMenus?.find((menu) => menu.role === "candidate")?.menus) ?? [])
+   // const sidebarMenu =
+   //    session?.user?.role?.type === "candidate"
+   //       ? ((sidebarMenus && sidebarMenus?.find((menu) => menu.role === "candidate")?.menus) ?? [])
+   //       : session?.user?.role?.type === "employer"
+   //         ? ((sidebarMenus && sidebarMenus?.find((menu) => menu.role === "employer")?.menus) ?? [])
+   //         : ((sidebarMenus && sidebarMenus?.find((menu) => menu.role === "candidate")?.menus) ?? [])
 
    return (
       <Drawer
@@ -70,8 +68,8 @@ const MobileNav = ({
                bgcolor: "background.default"
             }
          }}>
-         {(headerData?.langMenu && headerData?.langMenu.length > 1) ||
-            (headerData?.dark_mode && (
+         {(langMenu && langMenu.length > 1) ||
+            (dark_mode && (
                <>
                   <Box
                      sx={{
@@ -84,7 +82,7 @@ const MobileNav = ({
                         gap: 1.5
                      }}>
                      {/* language-button  */}
-                     {headerData?.langMenu && headerData?.langMenu.length > 1 && (
+                     {langMenu && langMenu.length > 1 && (
                         <Box>
                            <Button
                               id='basic-button'
@@ -126,7 +124,7 @@ const MobileNav = ({
                               MenuListProps={{
                                  "aria-labelledby": "basic-button"
                               }}>
-                              {_.map(headerData?.langMenu, (lang, index) => (
+                              {_.map(langMenu, (lang, index) => (
                                  <MenuItem
                                     onClick={() => {
                                        if (lang?.link === "ar") {
@@ -169,7 +167,7 @@ const MobileNav = ({
                         </Box>
                      )}
                      {/* dark-light-theme-toggle  */}
-                     {headerData?.dark_mode && (
+                     {dark_mode && (
                         <IconButton size='large' color='inherit' onClick={toggleTheme}>
                            <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
                         </IconButton>

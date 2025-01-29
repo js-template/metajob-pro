@@ -26,7 +26,9 @@ import toast from "react-hot-toast"
 import { fetcher } from "./hook"
 import { getLanguageValue } from "../../../utils"
 import { useTheme as modeUseTheme } from "next-themes"
-import { MenuItemProps, PublicHeaderDataProps } from "../../header/types"
+import { signOut, useSession } from "next-auth/react"
+import { useChangeDirection, useChangeLang } from "../utils"
+import { IPrivateHeaderBlock } from "../type"
 
 interface AppBarProps extends MuiAppBarProps {
    open?: boolean
@@ -58,35 +60,43 @@ const CustomAppBar = ({
    handleOpenUserMenu,
    handleCloseUserMenu,
    anchorElUser,
-   SignOut,
-   changeLang,
    lang,
-   changeDirection,
-   headerData,
-   useSession,
-   signOut
+   headerData
 }: {
    open: boolean
    handleDrawerOpen: () => void
    handleOpenUserMenu: (event: React.MouseEvent<HTMLElement>) => void
    handleCloseUserMenu: () => void
    anchorElUser: null | HTMLElement
-   SignOut: () => Promise<void>
-   changeLang: (lang: string) => void
    lang: string
-   changeDirection?: (dir: "rtl" | "ltr") => void
-   headerData: PublicHeaderDataProps
-   useSession: any
-   signOut: () => Promise<void>
+   headerData: IPrivateHeaderBlock
 }) => {
    const theme = useTheme()
    const [loading, setLoading] = React.useState(false)
    const { data, status } = useSession()
+
    const { theme: mode, setTheme } = modeUseTheme()
    const toggleTheme = () => {
       setTheme(mode === "dark" ? "light" : "dark")
    }
    const isTablet = useMediaQuery(theme.breakpoints.down("sm"))
+
+   const { changeLang } = useChangeLang()
+   const { changeDirection } = useChangeDirection()
+
+   const {
+      main_menu,
+      profile_menu: user_menu,
+      language: langMenu,
+      light_logo,
+      dark_logo,
+      dark_mode,
+      notification
+   } = headerData || {}
+
+   const logo = mode === "light" ? light_logo?.logo?.url : dark_logo?.logo?.url
+
+   const dashboardLink = mode === "light" ? light_logo?.link : dark_logo?.link
 
    // *** Language Menu ***
    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -101,18 +111,28 @@ const CustomAppBar = ({
    const LogOutHandler = async () => {
       setLoading(true)
       await signOut().then(() => {
-         SignOut().then(() => {
-            toast.success("Logout successfully", {
-               duration: 5000
-            })
-            setLoading(false)
+         setLoading(false)
+         toast.success("Logout successfully", {
+            duration: 5000
          })
       })
+
+      // await signOut().then(() => {
+      //    SignOut().then(() => {
+      //       toast.success("Logout successfully", {
+      //          duration: 5000
+      //       })
+      //       setLoading(false)
+      //    })
+      // })
    }
 
+   // const queryParams = {
+   //    populate: "avatar, role",
+   //    publicationState: "live"
+   // }
    const queryParams = {
-      populate: "avatar, role",
-      publicationState: "live"
+      populate: "*"
    }
 
    // fetch user avatar data
@@ -123,13 +143,6 @@ const CustomAppBar = ({
    const { data: userData, error } = useSWR(apiUrl, fetcher)
    const userAvatar = userData?.avatar?.url || ""
    const userName = data?.user?.name || ""
-
-   const logo =
-      mode === "light"
-         ? headerData?.light_logo?.logo?.data?.attributes?.url
-         : headerData?.dark_logo?.logo?.data?.attributes?.url
-
-   const dashboardLink = mode === "light" ? headerData?.light_logo?.link : headerData?.dark_logo?.link
 
    return (
       <AppBar
@@ -175,9 +188,9 @@ const CustomAppBar = ({
                         alt='logo'
                         sx={{
                            width: {
-                              xs: headerData?.light_logo?.xs_width ?? "auto",
-                              sm: headerData?.light_logo?.sm_width ?? "auto",
-                              md: headerData?.light_logo?.md_width ?? "auto"
+                              xs: light_logo?.xs_width ?? "auto",
+                              sm: light_logo?.sm_width ?? "auto",
+                              md: light_logo?.md_width ?? "auto"
                            }
                         }}
                      />
@@ -189,7 +202,7 @@ const CustomAppBar = ({
                {!isTablet && (
                   <>
                      {/* language-button  */}
-                     {headerData?.langMenu && headerData?.langMenu.length > 0 && (
+                     {langMenu && langMenu.length > 0 && (
                         <Box
                            sx={{
                               display: {
@@ -237,7 +250,7 @@ const CustomAppBar = ({
                               MenuListProps={{
                                  "aria-labelledby": "basic-button"
                               }}>
-                              {_.map(headerData?.langMenu, (lang, index) => (
+                              {_.map(langMenu, (lang, index) => (
                                  <MenuItem
                                     onClick={() => {
                                        if (lang?.link === "ar") {
@@ -280,7 +293,7 @@ const CustomAppBar = ({
                         </Box>
                      )}
                      {/* dark-light-theme-toggle  */}
-                     {headerData?.dark_mode && (
+                     {dark_mode && (
                         <IconButton
                            size='large'
                            color='inherit'
@@ -297,7 +310,7 @@ const CustomAppBar = ({
                   </>
                )}
                {/* notification-button  */}
-               {headerData?.notification && (
+               {notification && (
                   <IconButton size='large' color='inherit'>
                      <CIcon icon='tabler:bell' />
                   </IconButton>
@@ -307,8 +320,8 @@ const CustomAppBar = ({
                   <Tooltip title={status === "authenticated" ? "Open Settings" : "loading..."}>
                      <Box
                         {...(status === "authenticated" &&
-                           headerData?.userMenu &&
-                           headerData?.userMenu?.length > 0 && {
+                           user_menu &&
+                           user_menu?.length > 0 && {
                               onClick: handleOpenUserMenu
                            })}
                         sx={{ display: "flex", alignItems: "center", gap: 1, cursor: "pointer" }}>
@@ -323,7 +336,7 @@ const CustomAppBar = ({
                            )}
                         </IconButton>
                         {/* drop-menu-indicator icon  */}
-                        {status === "authenticated" && headerData?.userMenu && headerData?.userMenu?.length > 0 && (
+                        {status === "authenticated" && user_menu && user_menu?.length > 0 && (
                            <Box
                               sx={{
                                  display: "flex",
@@ -362,7 +375,7 @@ const CustomAppBar = ({
                      </Box>
                   </Tooltip>
                   {/* dropdown-menu  */}
-                  {status === "authenticated" && headerData?.userMenu && headerData?.userMenu?.length > 0 && (
+                  {status === "authenticated" && user_menu && user_menu?.length > 0 && (
                      <Menu
                         sx={{
                            mt: "54px",
@@ -388,7 +401,7 @@ const CustomAppBar = ({
                         }}
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}>
-                        {_.map(headerData?.userMenu, (setting: MenuItemProps, index: number) => {
+                        {_.map(user_menu, (setting: any, index: number) => {
                            return setting.link !== "/logout" ? (
                               <MenuItem
                                  key={index}
@@ -403,14 +416,20 @@ const CustomAppBar = ({
                                     color: theme.palette.text.primary,
                                     ":hover": {
                                        background: theme.palette.background.default,
-                                       color: theme.palette.primary.main
+                                       color: theme.palette.primary.main,
+                                       "& .user-icon": {
+                                          color: theme.palette.primary.main
+                                       }
                                     }
                                  }}>
                                  {setting?.icon && (
                                     <CIcon
+                                       className='user-icon'
                                        icon={setting?.icon}
                                        size={22}
-                                       sx={{ color: theme.palette.text.primary + "60" }}
+                                       sx={{
+                                          color: theme.palette.text.primary + "60"
+                                       }}
                                     />
                                  )}
                                  <Typography variant='body1'>{setting?.label}</Typography>

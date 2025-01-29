@@ -1,0 +1,17 @@
+{
+  "info": {
+    "displayName": "Relations",
+    "icon": "apps",
+    "description": "Relation with id"
+  },
+  "category": "metajob-config",
+  "modelName": "relations",
+  "uid": "metajob-config.relations",
+  "pluginOptions": {},
+  "attributes": {
+    "relationId": {
+      "type": "integer",
+      "required": false
+    }
+  }
+}

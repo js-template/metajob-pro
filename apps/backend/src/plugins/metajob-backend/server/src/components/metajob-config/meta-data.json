@@ -1,0 +1,21 @@
+{
+  "info": {
+    "displayName": "Meta Data",
+    "icon": "chartBubble",
+    "description": "Key value pair"
+  },
+  "category": "metajob-config",
+  "modelName": "meta-data",
+  "uid": "metajob-config.meta-data",
+  "modelType": "component",
+  "options": {},
+  "pluginOptions": {},
+  "attributes": {
+    "key": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    }
+  }
+}

@@ -3,6 +3,8 @@ import PlaceholderComponent from "./utils/placeholder"
 
 // header import
 import { PublicHeader } from "./blocks/public-header"
+import { PrivateHeader } from "./blocks/private-header"
+
 // footer import
 import { ContactWidget } from "./widgets/contact-widget"
 import { MenuWidget } from "./widgets/menu-widget"
@@ -10,10 +12,10 @@ import { CopyrightWidget } from "./widgets/copyright-widget"
 
 // blocks import
 import { JobBanner } from "./blocks/job-banner"
+import { JobCategory } from "./blocks/job-category"
 import { JobCard } from "./blocks/job-card"
 import { BlogCard } from "./blocks/blog-card"
 import { ReviewCard } from "./blocks/review-card"
-import { CategoryCard } from "./blocks/category-card"
 import { JobFilter } from "./blocks/job-filter"
 import CompanyFilter from "./blocks/company-filter"
 import { CandidateFilter } from "./blocks/candidate-filter"
@@ -57,13 +59,15 @@ import { AppliedList } from "./widgets/applied-list"
 import { FavoriteList } from "./widgets/favorite-list"
 import { MatchedList } from "./widgets/matched-list"
 
-import { NavBar } from "./blocks/dashboard-nav/nav-bar"
-
 import { AddResumeForm } from "./blocks/resume-block"
 import { MyProfile } from "./blocks/profile"
 
 // *** get the private components from the mapping
 export const getPrivateComponents = {
+   // header mapping
+   // "block.private-header": { component: NavBar },
+   "header.private-header": { component: PrivateHeader },
+
    // ?? Widget mapping
    "widget.total-list": { component: TotalList },
    "widget.open-list": { component: OpenList },
@@ -82,7 +86,6 @@ export const getPrivateComponents = {
    "block.manage-lists": { component: ManageLists },
    "block.manage-companies": { component: ManageCompanies },
    "table.applied-jobs": { component: AppliedJobs },
-   "block.private-header": { component: NavBar },
    "block.manage-resume": { component: AddResumeForm },
    "block.auth-profile": { component: MyProfile }
 }
@@ -101,12 +104,13 @@ export const getPublicComponents = {
    "widget.copyright-bar": { component: CopyrightWidget },
 
    // block mapping
-   "block.job-banner": { component: JobBanner },
+   "metajob-block.job-banner": { component: JobBanner },
+   "metajob-block.job-category": { component: JobCategory },
+   "block.category-card": { component: PlaceholderComponent },
+   "metajob-block.job-card": { component: JobCard },
    "block.category-list": { component: CategoryBlock },
-   "block.job-card": { component: JobCard },
    "block.blog-card": { component: BlogCard },
    "block.review-block": { component: ReviewCard },
-   "block.category-card": { component: CategoryCard },
    "block.job-filter": { component: JobFilter },
    "block.company-filter": { component: CompanyFilter },
    "block.candidate-filter": { component: CandidateFilter },

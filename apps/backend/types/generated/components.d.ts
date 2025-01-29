@@ -241,47 +241,6 @@ export interface BlockImageGallery extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockJobBanner extends Struct.ComponentSchema {
-  collectionName: 'components_block_job_banners';
-  info: {
-    displayName: 'Job Banner';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    content: Schema.Attribute.Component<'config.section-title', false>;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    search: Schema.Attribute.Component<'config.search-config', false>;
-    style: Schema.Attribute.Component<'config.style-section', false>;
-  };
-}
-
-export interface BlockJobCard extends Struct.ComponentSchema {
-  collectionName: 'components_block_job_cards';
-  info: {
-    displayName: 'Job Card';
-    icon: 'collapse';
-  };
-  attributes: {
-    button: Schema.Attribute.Component<'config.link', false>;
-    content: Schema.Attribute.Component<'config.section-title', false>;
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    style: Schema.Attribute.Component<'config.style-section', false>;
-  };
-}
-
-export interface BlockJobFilter extends Struct.ComponentSchema {
-  collectionName: 'components_block_job_filters';
-  info: {
-    displayName: 'Job Filter';
-    icon: 'collapse';
-  };
-  attributes: {
-    description: Schema.Attribute.Text;
-    search: Schema.Attribute.Component<'config.search-config', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlockLatestApplied extends Struct.ComponentSchema {
   collectionName: 'components_block_latest_applieds';
   info: {
@@ -883,6 +842,171 @@ export interface HeaderTopBar extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_banners';
+  info: {
+    displayName: 'Job Banner';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface MetajobBlockJobCard extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_cards';
+  info: {
+    displayName: 'Job Card';
+    icon: 'collapse';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'config.link', false>;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_categories';
+  info: {
+    displayName: 'Job Category';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'config.link', false>;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_filters';
+  info: {
+    displayName: 'Job Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobConfigHeaderConfig extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_header_configs';
+  info: {
+    displayName: 'Header Config';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    enableDelete: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    enableEdit: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface MetajobConfigHeaderField extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_header_fields';
+  info: {
+    displayName: 'Header Field';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    align: Schema.Attribute.Enumeration<['left', 'right', 'center']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'left'>;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Name'>;
+    sort: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+  };
+}
+
+export interface MetajobConfigMessage extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_messages';
+  info: {
+    displayName: 'Message';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    cancelButtonText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Cancel'>;
+    copyActionText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Copy'>;
+    editActionText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Edit'>;
+    empty_chat: Schema.Attribute.Component<'shared.empty', false> &
+      Schema.Attribute.Required;
+    empty_messages: Schema.Attribute.Component<'shared.empty', false> &
+      Schema.Attribute.Required;
+    enableSearch: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    saveButtonText: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Save'>;
+    searchPlaceholder: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Search'>;
+    sendMessagePlaceholder: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Type Something'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Messages'>;
+  };
+}
+
+export interface MetajobConfigMetaData extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_meta_data';
+  info: {
+    displayName: 'Meta Data';
+    icon: 'chartBubble';
+  };
+  attributes: {
+    key: Schema.Attribute.String;
+    value: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobConfigRelations extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_relations';
+  info: {
+    displayName: 'Relations';
+    icon: 'apps';
+  };
+  attributes: {
+    relationId: Schema.Attribute.Integer;
+  };
+}
+
+export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_search_configs';
+  info: {
+    displayName: 'Search Config';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    button_placeholder: Schema.Attribute.String;
+    category_placeholder: Schema.Attribute.String;
+    location_placeholder: Schema.Attribute.String;
+    search_placeholder: Schema.Attribute.String;
+    sort_placeholder: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SharedEmpty extends Struct.ComponentSchema {
   collectionName: 'components_shared_empties';
   info: {
@@ -1247,9 +1371,6 @@ declare module '@strapi/strapi' {
       'block.experience': BlockExperience;
       'block.image-carousel': BlockImageCarousel;
       'block.image-gallery': BlockImageGallery;
-      'block.job-banner': BlockJobBanner;
-      'block.job-card': BlockJobCard;
-      'block.job-filter': BlockJobFilter;
       'block.latest-applied': BlockLatestApplied;
       'block.manage-company': BlockManageCompany;
       'block.manage-job': BlockManageJob;
@@ -1277,6 +1398,16 @@ declare module '@strapi/strapi' {
       'header.header-bottom': HeaderHeaderBottom;
       'header.main-menu': HeaderMainMenu;
       'header.top-bar': HeaderTopBar;
+      'metajob-block.job-banner': MetajobBlockJobBanner;
+      'metajob-block.job-card': MetajobBlockJobCard;
+      'metajob-block.job-category': MetajobBlockJobCategory;
+      'metajob-block.job-filter': MetajobBlockJobFilter;
+      'metajob-config.header-config': MetajobConfigHeaderConfig;
+      'metajob-config.header-field': MetajobConfigHeaderField;
+      'metajob-config.message': MetajobConfigMessage;
+      'metajob-config.meta-data': MetajobConfigMetaData;
+      'metajob-config.relations': MetajobConfigRelations;
+      'metajob-config.search-config': MetajobConfigSearchConfig;
       'shared.empty': SharedEmpty;
       'shared.meta-social': SharedMetaSocial;
       'shared.seo': SharedSeo;
