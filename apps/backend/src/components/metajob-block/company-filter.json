@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_metajob_block_company_filters",
+  "info": {
+    "displayName": "Company Filter",
+    "icon": "collapse"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "search": {
+      "type": "component",
+      "repeatable": false,
+      "component": "metajob-config.search-config"
+    },
+    "show_filter": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    }
+  }
+}

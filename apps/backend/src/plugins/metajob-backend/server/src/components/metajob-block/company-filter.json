@@ -4,9 +4,9 @@
     "icon": "collapse",
     "description": "Company Filter block"
   },
-  "category": "block",
+  "category": "metajob-block",
   "modelName": "company-filter",
-  "uid": "block.company-filter",
+  "uid": "metajob-block.company-filter",
   "pluginOptions": {},
   "attributes": {
     "title": {
@@ -18,7 +18,7 @@
     "search": {
       "type": "component",
       "repeatable": false,
-      "component": "config.search-config"
+      "component": "metajob-config.search-config"
     },
     "show_filter": {
       "type": "boolean",
