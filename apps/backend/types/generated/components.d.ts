@@ -241,19 +241,6 @@ export interface BlockImageGallery extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockJobFilter extends Struct.ComponentSchema {
-  collectionName: 'components_block_job_filters';
-  info: {
-    displayName: 'Job Filter';
-    icon: 'collapse';
-  };
-  attributes: {
-    description: Schema.Attribute.Text;
-    search: Schema.Attribute.Component<'config.search-config', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlockLatestApplied extends Struct.ComponentSchema {
   collectionName: 'components_block_latest_applieds';
   info: {
@@ -897,6 +884,19 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_filters';
+  info: {
+    displayName: 'Job Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobConfigHeaderConfig extends Struct.ComponentSchema {
   collectionName: 'components_metajob_config_header_configs';
   info: {
@@ -1371,7 +1371,6 @@ declare module '@strapi/strapi' {
       'block.experience': BlockExperience;
       'block.image-carousel': BlockImageCarousel;
       'block.image-gallery': BlockImageGallery;
-      'block.job-filter': BlockJobFilter;
       'block.latest-applied': BlockLatestApplied;
       'block.manage-company': BlockManageCompany;
       'block.manage-job': BlockManageJob;
@@ -1402,6 +1401,7 @@ declare module '@strapi/strapi' {
       'metajob-block.job-banner': MetajobBlockJobBanner;
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
+      'metajob-block.job-filter': MetajobBlockJobFilter;
       'metajob-config.header-config': MetajobConfigHeaderConfig;
       'metajob-config.header-field': MetajobConfigHeaderField;
       'metajob-config.message': MetajobConfigMessage;
