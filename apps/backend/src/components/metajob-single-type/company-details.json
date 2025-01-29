@@ -1,7 +1,7 @@
 {
-  "collectionName": "components_single_type_resume_details",
+  "collectionName": "components_metajob_single_type_company_details",
   "info": {
-    "displayName": "Resume Details",
+    "displayName": "Company Details",
     "icon": "arrowRight"
   },
   "options": {},
@@ -18,6 +18,11 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.empty"
+    },
+    "open_jobs": {
+      "type": "boolean",
+      "required": true,
+      "default": true
     }
   }
 }

@@ -16,7 +16,7 @@
     },
     "blocks": {
       "type": "dynamiczone",
-      "components": ["single-type.job-details"],
+      "components": ["metajob-single-type.job-details"],
       "required": true,
       "min": 1
     }

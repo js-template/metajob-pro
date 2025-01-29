@@ -16,7 +16,7 @@
     },
     "blocks": {
       "type": "dynamiczone",
-      "components": ["shared.empty", "single-type.company-details"]
+      "components": ["metajob-single-type.company-details"]
     }
   }
 }

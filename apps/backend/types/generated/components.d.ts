@@ -1039,6 +1039,50 @@ export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobSingleTypeCompanyDetails
+  extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_single_type_company_details';
+  info: {
+    displayName: 'Company Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    open_jobs: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobSingleTypeJobDetails extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_single_type_job_details';
+  info: {
+    displayName: 'Job Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    related_lists: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobSingleTypeResumeDetails extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_single_type_resume_details';
+  info: {
+    displayName: 'Resume Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SharedEmpty extends Struct.ComponentSchema {
   collectionName: 'components_shared_empties';
   info: {
@@ -1180,7 +1224,6 @@ export interface SharedSpacing extends Struct.ComponentSchema {
 export interface SingleTypeBlogDetails extends Struct.ComponentSchema {
   collectionName: 'components_single_type_blog_details';
   info: {
-    description: '';
     displayName: 'Blog Details';
     icon: 'arrowRight';
   };
@@ -1189,49 +1232,6 @@ export interface SingleTypeBlogDetails extends Struct.ComponentSchema {
       ['Left Sidebar', 'Right Sidebar', 'Both Sidebar', 'No Sidebar']
     >;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SingleTypeCompanyDetails extends Struct.ComponentSchema {
-  collectionName: 'components_single_type_company_details';
-  info: {
-    displayName: 'Company Details';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    open_jobs: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    styles: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SingleTypeJobDetails extends Struct.ComponentSchema {
-  collectionName: 'components_single_type_job_details';
-  info: {
-    displayName: 'Job Details';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    related_lists: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    styles: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SingleTypeResumeDetails extends Struct.ComponentSchema {
-  collectionName: 'components_single_type_resume_details';
-  info: {
-    displayName: 'Resume Details';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -1442,6 +1442,9 @@ declare module '@strapi/strapi' {
       'metajob-config.meta-data': MetajobConfigMetaData;
       'metajob-config.relations': MetajobConfigRelations;
       'metajob-config.search-config': MetajobConfigSearchConfig;
+      'metajob-single-type.company-details': MetajobSingleTypeCompanyDetails;
+      'metajob-single-type.job-details': MetajobSingleTypeJobDetails;
+      'metajob-single-type.resume-details': MetajobSingleTypeResumeDetails;
       'shared.empty': SharedEmpty;
       'shared.meta-social': SharedMetaSocial;
       'shared.seo': SharedSeo;
@@ -1449,9 +1452,6 @@ declare module '@strapi/strapi' {
       'shared.social-medias': SharedSocialMedias;
       'shared.spacing': SharedSpacing;
       'single-type.blog-details': SingleTypeBlogDetails;
-      'single-type.company-details': SingleTypeCompanyDetails;
-      'single-type.job-details': SingleTypeJobDetails;
-      'single-type.resume-details': SingleTypeResumeDetails;
       'ui.job-info': UiJobInfo;
       'widget.applied-list': WidgetAppliedList;
       'widget.closed-job': WidgetClosedJob;

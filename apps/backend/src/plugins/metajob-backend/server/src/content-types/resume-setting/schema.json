@@ -16,7 +16,7 @@
     },
     "blocks": {
       "type": "dynamiczone",
-      "components": ["single-type.resume-details"]
+      "components": ["metajob-single-type.resume-details"]
     }
   }
 }

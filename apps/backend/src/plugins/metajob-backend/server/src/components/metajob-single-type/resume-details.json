@@ -1,13 +1,13 @@
 {
   "info": {
-    "displayName": "Job Details",
+    "displayName": "Resume Details",
     "icon": "arrowRight",
-    "description": "Job Details single type component"
+    "description": "Resume Details single type component"
   },
-  "category": "single-type",
-  "modelName": "job-details",
-  "uid": "single-type.job-details",
-  "globalId": "ComponentsSingleTypeJobDetails",
+  "category": "metajob-single-type",
+  "modelName": "resume-details",
+  "uid": "metajob-single-type.resume-details",
+  "globalId": "ComponentsSingleTypeResumeDetails",
   "modelType": "component",
   "pluginOptions": {},
   "attributes": {
@@ -23,10 +23,6 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.empty"
-    },
-    "related_lists": {
-      "type": "boolean",
-      "default": true
     }
   }
 }
