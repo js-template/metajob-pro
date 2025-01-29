@@ -1,10 +1,13 @@
 {
-  "collectionName": "components_block_candidate_filters",
   "info": {
     "displayName": "Candidate Filter",
-    "icon": "collapse"
+    "icon": "collapse",
+    "description": "Candidate Filter block"
   },
-  "options": {},
+  "category": "metajob-block",
+  "modelName": "candidate-filter",
+  "uid": "metajob-block.candidate-filter",
+  "pluginOptions": {},
   "attributes": {
     "show_filter": {
       "type": "boolean",
@@ -14,7 +17,7 @@
     "search": {
       "type": "component",
       "repeatable": false,
-      "component": "config.search-config"
+      "component": "metajob-config.search-config"
     },
     "empty": {
       "type": "component",
