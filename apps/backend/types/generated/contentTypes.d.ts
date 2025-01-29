@@ -1960,11 +1960,11 @@ export interface PluginPadmaBackendPublicFrontpage
         'block.review-block',
         'block.image-carousel',
         'block.image-gallery',
-        'block.job-card',
         'block.pricing',
         'block.portfolio',
         'metajob-block.job-banner',
         'metajob-block.job-category',
+        'metajob-block.job-card',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
