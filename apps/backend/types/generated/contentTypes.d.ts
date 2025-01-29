@@ -2031,7 +2031,7 @@ export interface PluginPadmaBackendPublicPage
         'block.image-gallery',
         'metajob-block.job-filter',
         'block.company-filter',
-        'block.candidate-filter',
+        'metajob-block.candidate-filter',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

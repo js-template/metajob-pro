@@ -109,21 +109,6 @@ export interface BlockBreadcrumbs extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockCandidateFilter extends Struct.ComponentSchema {
-  collectionName: 'components_block_candidate_filters';
-  info: {
-    displayName: 'Candidate Filter';
-    icon: 'collapse';
-  };
-  attributes: {
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    search: Schema.Attribute.Component<'config.search-config', false>;
-    show_filter: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-  };
-}
-
 export interface BlockCategoryCard extends Struct.ComponentSchema {
   collectionName: 'components_category_cards';
   info: {
@@ -842,6 +827,21 @@ export interface HeaderTopBar extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_candidate_filters';
+  info: {
+    displayName: 'Candidate Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    show_filter: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
 export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_job_banners';
   info: {
@@ -1363,7 +1363,6 @@ declare module '@strapi/strapi' {
       'block.bookmark': BlockBookmark;
       'block.bookmark-list': BlockBookmarkList;
       'block.breadcrumbs': BlockBreadcrumbs;
-      'block.candidate-filter': BlockCandidateFilter;
       'block.category-card': BlockCategoryCard;
       'block.company-filter': BlockCompanyFilter;
       'block.contact': BlockContact;
@@ -1398,6 +1397,7 @@ declare module '@strapi/strapi' {
       'header.header-bottom': HeaderHeaderBottom;
       'header.main-menu': HeaderMainMenu;
       'header.top-bar': HeaderTopBar;
+      'metajob-block.candidate-filter': MetajobBlockCandidateFilter;
       'metajob-block.job-banner': MetajobBlockJobBanner;
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
