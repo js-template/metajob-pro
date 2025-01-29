@@ -57,6 +57,21 @@ export interface BlockBlogCard extends Struct.ComponentSchema {
   };
 }
 
+export interface BlockBlogFilter extends Struct.ComponentSchema {
+  collectionName: 'components_block_blog_filters';
+  info: {
+    description: '';
+    displayName: 'Blog Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlockBookmark extends Struct.ComponentSchema {
   collectionName: 'components_block_bookmarks';
   info: {
@@ -125,6 +140,23 @@ export interface BlockCategoryCard extends Struct.ComponentSchema {
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface BlockCompanyFilter extends Struct.ComponentSchema {
+  collectionName: 'components_block_company_filters';
+  info: {
+    displayName: 'Company Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    search: Schema.Attribute.Component<'config.search-config', false>;
+    show_filter: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -1360,10 +1392,12 @@ declare module '@strapi/strapi' {
       'block.applied-jobs': BlockAppliedJobs;
       'block.banner': BlockBanner;
       'block.blog-card': BlockBlogCard;
+      'block.blog-filter': BlockBlogFilter;
       'block.bookmark': BlockBookmark;
       'block.bookmark-list': BlockBookmarkList;
       'block.breadcrumbs': BlockBreadcrumbs;
       'block.category-card': BlockCategoryCard;
+      'block.company-filter': BlockCompanyFilter;
       'block.contact': BlockContact;
       'block.content-box': BlockContentBox;
       'block.experience': BlockExperience;
