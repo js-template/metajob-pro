@@ -114,7 +114,7 @@ export const getPublicComponents = {
    "block.job-filter": { component: JobFilter },
    "metajob-block.job-filter": { component: JobFilter },
    "block.company-filter": { component: CompanyFilter },
-   "block.candidate-filter": { component: CandidateFilter },
+   "metajob-block.candidate-filter": { component: CandidateFilter },
 
    // single-type mapping
    "single-type.job-details": { component: JobDetails },
