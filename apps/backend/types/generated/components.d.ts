@@ -72,21 +72,6 @@ export interface BlockBlogFilter extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockBookmark extends Struct.ComponentSchema {
-  collectionName: 'components_block_bookmarks';
-  info: {
-    displayName: 'Bookmark';
-    icon: 'bell';
-  };
-  attributes: {
-    description: Schema.Attribute.String;
-    enableSearch: Schema.Attribute.Boolean;
-    style: Schema.Attribute.Component<'config.style-section', false>;
-    tableConfig: Schema.Attribute.Component<'config.header-config', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlockBookmarkList extends Struct.ComponentSchema {
   collectionName: 'components_block_bookmark_lists';
   info: {
@@ -140,23 +125,6 @@ export interface BlockCategoryCard extends Struct.ComponentSchema {
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-  };
-}
-
-export interface BlockCompanyFilter extends Struct.ComponentSchema {
-  collectionName: 'components_block_company_filters';
-  info: {
-    displayName: 'Company Filter';
-    icon: 'collapse';
-  };
-  attributes: {
-    description: Schema.Attribute.Text;
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    search: Schema.Attribute.Component<'config.search-config', false>;
-    show_filter: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    title: Schema.Attribute.String;
   };
 }
 
@@ -842,6 +810,24 @@ export interface HeaderTopBar extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockBookmark extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_bookmarks';
+  info: {
+    displayName: 'Bookmark';
+    icon: 'bell';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    table_config: Schema.Attribute.Component<
+      'metajob-config.table-config',
+      false
+    >;
+    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_candidate_filters';
   info: {
@@ -1036,6 +1022,38 @@ export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
     search_placeholder: Schema.Attribute.String;
     sort_placeholder: Schema.Attribute.String;
     title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobConfigTableConfig extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_table_configs';
+  info: {
+    displayName: 'Table Config';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    default_data_count: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 50;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    enable_delete: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    enable_edit: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    enable_search: Schema.Attribute.Boolean;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Name'>;
+    search_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Search'>;
+    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
   };
 }
 
@@ -1393,11 +1411,9 @@ declare module '@strapi/strapi' {
       'block.banner': BlockBanner;
       'block.blog-card': BlockBlogCard;
       'block.blog-filter': BlockBlogFilter;
-      'block.bookmark': BlockBookmark;
       'block.bookmark-list': BlockBookmarkList;
       'block.breadcrumbs': BlockBreadcrumbs;
       'block.category-card': BlockCategoryCard;
-      'block.company-filter': BlockCompanyFilter;
       'block.contact': BlockContact;
       'block.content-box': BlockContentBox;
       'block.experience': BlockExperience;
@@ -1430,6 +1446,7 @@ declare module '@strapi/strapi' {
       'header.header-bottom': HeaderHeaderBottom;
       'header.main-menu': HeaderMainMenu;
       'header.top-bar': HeaderTopBar;
+      'metajob-block.bookmark': MetajobBlockBookmark;
       'metajob-block.candidate-filter': MetajobBlockCandidateFilter;
       'metajob-block.company-filter': MetajobBlockCompanyFilter;
       'metajob-block.job-banner': MetajobBlockJobBanner;
@@ -1442,6 +1459,7 @@ declare module '@strapi/strapi' {
       'metajob-config.meta-data': MetajobConfigMetaData;
       'metajob-config.relations': MetajobConfigRelations;
       'metajob-config.search-config': MetajobConfigSearchConfig;
+      'metajob-config.table-config': MetajobConfigTableConfig;
       'metajob-single-type.company-details': MetajobSingleTypeCompanyDetails;
       'metajob-single-type.job-details': MetajobSingleTypeJobDetails;
       'metajob-single-type.resume-details': MetajobSingleTypeResumeDetails;
