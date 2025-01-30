@@ -92,20 +92,22 @@ export const JobCategory = ({ block, language }: Props) => {
                   </Grid>
                )}
 
-               <Box>
-                  <Button
-                     component={NextLink}
-                     href={link || "/all-category"}
-                     sx={{
-                        bgcolor: "secondary.dark",
-                        color: "white",
-                        "&:hover": {
-                           bgcolor: "primary.main"
-                        }
-                     }}>
-                     {label || "Browse All Category"}
-                  </Button>
-               </Box>
+               {button && (
+                  <Box>
+                     <Button
+                        component={NextLink}
+                        href={link || "/all-category"}
+                        sx={{
+                           bgcolor: "secondary.dark",
+                           color: "white",
+                           "&:hover": {
+                              bgcolor: "primary.main"
+                           }
+                        }}>
+                        {label || "Browse All Category"}
+                     </Button>
+                  </Box>
+               )}
             </Stack>
          </Container>
       </Stack>
