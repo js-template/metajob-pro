@@ -2,16 +2,16 @@
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import _ from "lodash"
 import PerfectScrollbar from "react-perfect-scrollbar"
-import AllBookmarkTableItem from "./item"
+import BookmarkTableItem from "./item"
 
 const AllBookmarkTable = ({
    headCells,
-   rows,
+   data,
    direction,
    mutateUrl
 }: {
-   headCells: string[]
-   rows: {
+   headCells: { value: string }[]
+   data: {
       title: string
       company: string
       location: string
@@ -20,6 +20,13 @@ const AllBookmarkTable = ({
    direction: "ltr" | "rtl"
    mutateUrl: string
 }) => {
+   const totalHeader = 5
+   if (headCells && headCells.length > 0 && headCells.length < totalHeader) {
+      const remainHeader = totalHeader - headCells.length
+      for (let i = 0; i < remainHeader; i++) {
+         headCells.push({ value: "" })
+      }
+   }
    return (
       <PerfectScrollbar>
          <Box
@@ -55,14 +62,14 @@ const AllBookmarkTable = ({
                                  py: 1.5,
                                  textTransform: "capitalize"
                               }}>
-                              {headCell}
+                              {headCell?.value}
                            </TableCell>
                         ))}
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {rows?.map((row: any) => (
-                        <AllBookmarkTableItem mutateUrl={mutateUrl} key={row?.id} row={row} direction={direction} />
+                     {data?.map((item: any, index: number) => (
+                        <BookmarkTableItem mutateUrl={mutateUrl} key={index} row={item} direction={direction} />
                      ))}
                   </TableBody>
                </Table>
