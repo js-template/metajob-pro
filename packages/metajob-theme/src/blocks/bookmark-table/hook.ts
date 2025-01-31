@@ -15,28 +15,21 @@ export const getItemValue = (data: IBookmarkAttribute) => {
    const { type, job, company, resume } = data || {}
 
    // job data for job bookmark
-   const jobAttributes = job?.data?.attributes
-   const { title: jobTitle, price: jobPrice, slug: jobSlug, status: jobStatus } = jobAttributes || {}
+   // const jobAttributes = job?.data?.attributes
+   const { title: jobTitle, price: jobPrice, slug: jobSlug, status: jobStatus } = job || {}
 
    // company data for company bookmark
-   const companyAttributes = company?.data?.attributes
-   const {
-      name: companyTitle,
-      avg_price: companyPrice,
-      slug: companySlug,
-      createdAt: companyCreate
-   } = companyAttributes || {}
+   const { name: companyTitle, avg_salary: companyPrice, slug: companySlug, createdAt: companyCreate } = company || {}
 
    // resume data for resume bookmark
-   const resumeAttributes = resume?.data?.attributes
-   const { name: resumeTitle, salary: resumePrice, slug: resumeSlug, createdAt: resumeCreate } = resumeAttributes || {}
+   const { name: resumeTitle, salary: resumePrice, slug: resumeSlug, createdAt: resumeCreate } = resume || {}
 
    const jobType = type === "job"
    const companyType = type === "company"
    const resumeType = type === "resume"
 
    const itemTitle = jobType ? jobTitle : companyType ? companyTitle : resumeType ? resumeTitle : ""
-   const itemPrice = jobType ? jobPrice : companyType ? companyPrice : resumeType ? resumePrice : "00"
+   const itemPrice = jobType ? jobPrice : companyType ? companyPrice?.title : resumeType ? resumePrice?.title : "00"
    const itemUrl = jobType
       ? `/job/${jobSlug}`
       : companyType
