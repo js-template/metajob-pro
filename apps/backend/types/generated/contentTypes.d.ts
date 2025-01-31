@@ -1888,7 +1888,7 @@ export interface PluginPadmaBackendPrivatePage
   };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
-      ['block.category-card', 'block.blog-card']
+      ['block.category-card', 'block.blog-card', 'metajob-block.bookmark']
     > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
