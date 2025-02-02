@@ -20,7 +20,6 @@ export * from "./widgets/matched-list"
 
 import ResumePreviewBox from "./blocks/resume-block/resumePreview"
 import { PageLoader } from "./components/loader/pageLoader"
-import { AppliedJobs } from "./blocks/applied-jobs"
 import { MessageLayout } from "./blocks/chats"
 import { LatestApplied } from "./blocks/latest-applied"
 import { LatestBookmarks } from "./blocks/latest-bookmarks"
@@ -65,6 +64,7 @@ import { BlogDetails } from "./single-type/blog-details"
  *          Private Components import
  -------------------------------------------------*/
 import { BookmarkTable } from "./blocks/bookmark-table"
+import { AppliedJobs } from "./blocks/applied-jobs"
 import { MyProfile } from "./blocks/profile"
 
 // *** get the private components from the mapping
