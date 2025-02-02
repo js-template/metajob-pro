@@ -46,7 +46,8 @@
       "components": [
         "block.category-card",
         "block.blog-card",
-        "metajob-block.bookmark"
+        "metajob-block.bookmark",
+        "metajob-block.applied-jobs"
       ]
     },
     "styles": {
