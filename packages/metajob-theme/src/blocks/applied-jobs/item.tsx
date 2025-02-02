@@ -1,30 +1,15 @@
 "use client"
 import { Chip, TableCell, TableRow, Typography, useTheme } from "@mui/material"
 import { Fragment } from "react"
-
 import { dateFormatter } from "../../lib/date-format"
-
-import { ManageListsDataProps } from "./type"
-
-import { KeyedMutator } from "swr"
-import { formProps } from "../../types/forms"
+import { IApplyJobData } from "./type"
 import Link from "next/link"
 
-const TableItem = ({
-   job
-}: {
-   job: any
-   listData: ManageListsDataProps
-   mutate: KeyedMutator<any>
-   formData: formProps
-   userId: number
-   selectAll: boolean
-   noteFunctionHandler: () => void
-}) => {
-   const { title, publishedAt, status, vacancy, startDate, endDate, slug } = job?.attributes.job?.data?.attributes || {}
-
+const TableItem = ({ application }: { application: IApplyJobData }) => {
    const theme = useTheme()
-   //const [show, setShow] = useState(false)
+
+   const { apply_status } = application || {}
+   const { title, vacancy, startDate, endDate, slug } = application?.job || {}
 
    return (
       <Fragment>
@@ -63,16 +48,17 @@ const TableItem = ({
                   </Typography>
                </Link>
             </TableCell>
-            <TableCell>{dateFormatter(publishedAt)}</TableCell>
+            <TableCell>{dateFormatter(startDate)}</TableCell>
             <TableCell>{dateFormatter(endDate)}</TableCell>
             <TableCell>{vacancy}</TableCell>
             <TableCell
                sx={{
-                  color: (theme) => theme.palette.primary.main
+                  color: (theme) => theme.palette.primary.main,
+                  textAlign: "center"
                }}>
                <Chip
-                  label={<Typography variant='body2'>{status}</Typography>}
-                  color={status === "open" ? "primary" : "error"}
+                  label={<Typography variant='body2'>{apply_status}</Typography>}
+                  color={apply_status === "Shortlisted" ? "primary" : apply_status === "Pending" ? "warning" : "error"}
                   variant='outlined'
                   size='small'
                   sx={{
@@ -81,19 +67,6 @@ const TableItem = ({
                />
             </TableCell>
          </TableRow>
-
-         {/* {show && (
-            <EditList
-               open={show}
-               handleClickOpen={handleClickOpen}
-               handleClose={handleClose}
-               formData={formData}
-               listID={listID}
-               mutate={mutate}
-               userId={userId}
-               data={listData}
-            />
-         )} */}
       </Fragment>
    )
 }

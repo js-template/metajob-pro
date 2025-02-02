@@ -1,45 +1,35 @@
 "use client"
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import _ from "lodash"
-import toast from "react-hot-toast"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import TableItem from "./item"
-
-import { KeyedMutator } from "swr"
-import { emptyProps } from "../../shared/type"
-import { formProps } from "../../types/forms"
-import { ManageListsDataProps } from "./type"
+import { IApplyJobData } from "./type"
 import { TableLoader } from "./loader"
 
 const ListsTable = ({
    headCells,
-   selectAll,
-   setSelectAll,
-   userId,
    data,
-   mutate,
    isLoading,
    empty,
-   formData,
-   pageSize,
-   listData
+   pageSize
 }: {
-   headCells: {
-      label: string
-      sort: boolean
-      align: "left" | "center" | "right"
-   }[]
-   selectAll: boolean
-   setSelectAll: (value: boolean) => void
-   data: any
-   listData: ManageListsDataProps
-   mutate: KeyedMutator<any>
+   headCells: { value: string }[]
+   data: IApplyJobData[]
    isLoading: boolean
-   empty: emptyProps
-   formData: formProps
-   userId: number
+   empty?: {
+      title: string
+      description: string
+   }
    pageSize: number
 }) => {
+   const totalHeader = 5
+   if (headCells && headCells.length > 0 && headCells.length < totalHeader) {
+      const remainHeader = totalHeader - headCells.length
+      for (let i = 0; i < remainHeader; i++) {
+         headCells.push({ value: "" })
+      }
+   }
+
    return (
       <PerfectScrollbar>
          <Box
@@ -67,7 +57,7 @@ const ListsTable = ({
                         <TableRow>
                            {_.map(headCells, (headCell, index) => (
                               <TableCell
-                                 align={headCell.align}
+                                 align={index === headCells?.length - 1 ? "center" : "left"}
                                  sx={{
                                     ...(index === 0 && {
                                        minWidth: "200px"
@@ -75,20 +65,7 @@ const ListsTable = ({
                                     py: 1.5
                                  }}
                                  key={index}>
-                                 {headCell.sort ? (
-                                    <Box
-                                       sx={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          gap: 1,
-                                          justifyContent: "space-between",
-                                          width: "100%"
-                                       }}>
-                                       <div>{headCell.label}</div>
-                                    </Box>
-                                 ) : (
-                                    headCell.label
-                                 )}
+                                 {headCell?.value}
                               </TableCell>
                            ))}
                         </TableRow>
@@ -97,23 +74,12 @@ const ListsTable = ({
                         <TableLoader numberOfRows={pageSize} />
                      ) : (
                         <TableBody>
-                           {data?.data?.map((job: any) => (
-                              <TableItem
-                                 key={job.id}
-                                 job={job}
-                                 selectAll={selectAll}
-                                 listData={listData}
-                                 mutate={mutate}
-                                 noteFunctionHandler={() => {
-                                    toast.error("Note function not implemented yet")
-                                 }}
-                                 formData={formData}
-                                 userId={userId}
-                              />
+                           {data?.map((item: IApplyJobData, index: number) => (
+                              <TableItem key={index} application={item} />
                            ))}
 
                            {/* Empty message */}
-                           {data?.data.length === 0 && (
+                           {data?.length === 0 && (
                               <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                                  <TableCell colSpan={headCells.length} sx={{ py: 9.7 }}>
                                     <Box

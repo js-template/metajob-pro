@@ -74,6 +74,7 @@ export const getPrivateComponents = {
 
    // block mapping
    "metajob-block.bookmark": { component: BookmarkTable },
+   "metajob-block.applied-jobs": { component: AppliedJobs },
 
    // ?? Widget mapping
    "widget.total-list": { component: TotalList },
@@ -92,7 +93,7 @@ export const getPrivateComponents = {
 
    "block.manage-lists": { component: ManageLists },
    "block.manage-companies": { component: ManageCompanies },
-   "table.applied-jobs": { component: AppliedJobs },
+
    "block.manage-resume": { component: AddResumeForm },
    "block.auth-profile": { component: MyProfile }
 }

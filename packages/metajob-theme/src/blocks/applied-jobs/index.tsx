@@ -1,26 +1,32 @@
 "use client"
+import { useState } from "react"
+import { useSession } from "next-auth/react"
+import _ from "lodash"
+import useSWR from "swr"
 import { FormControl, Grid, MenuItem, Pagination, Paper, Select, TextField, useTheme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import _ from "lodash"
-import { useState } from "react"
-
 import { boxHeaderData } from "./data"
 import CIcon from "../../components/common/icon"
 import ListsTable from "./table"
 import AccessError from "./error"
-import { ManageListsProps } from "./type"
-import useSWR from "swr"
+import { IAppliedJobsBlock } from "./type"
 
-export const AppliedJobs = ({ block, session }: ManageListsProps) => {
+type Props = {
+   block: IAppliedJobsBlock
+   language?: string
+}
+
+export const AppliedJobs = ({ block, language }: Props) => {
+   const theme = useTheme()
+
    // session data destructuring
+   const { data: session } = useSession()
    const { user } = session || {}
    const { id: userId, role: userRole } = user || {}
    const role = userRole?.type || ""
 
-   const theme = useTheme()
    //const [search, setSearch] = useState("")
-   const [selectAll, setSelectAll] = useState(false)
    const [pagination, setPagination] = useState<{
       page: number
       pageSize: number
@@ -33,7 +39,8 @@ export const AppliedJobs = ({ block, session }: ManageListsProps) => {
       total: 0
    })
 
-   const { title, enableSearch, tableHead, empty, form, perPageText } = block || {}
+   const { title, style, empty, table_config, table_head: tableHeader } = block || {}
+   const { label: tableLabel, enable_search: enableSearch, search_placeholder, default_data_count } = table_config || {}
 
    // *** fetcher function for SWR
    const fetcher = async (url: string) => {
@@ -48,7 +55,8 @@ export const AppliedJobs = ({ block, session }: ManageListsProps) => {
 
    // Fetcher function for SWR
    const queryParams = {
-      populate: "deep",
+      // populate: "deep",
+      populate: "*",
       pagination: {
          page: pagination.page,
          pageSize: pagination.pageSize,
@@ -81,13 +89,11 @@ export const AppliedJobs = ({ block, session }: ManageListsProps) => {
    const queryString = encodeURIComponent(JSON.stringify(queryParams))
 
    // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-strapi/applied-jobs&query=${queryString}&cache=no-store`
+   const apiUrl = `/api/find?model=api/metajob-backend/applied-jobs&query=${queryString}&cache=no-store`
 
    const { data: listsData, error, isLoading, mutate } = useSWR(apiUrl, fetcher)
 
-   // const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-   //    setSearch(e.target.value)
-   // }
+   const applicationData = listsData?.data || []
 
    return role === "candidate" ? (
       <Grid item xs={12}>
@@ -121,32 +127,8 @@ export const AppliedJobs = ({ block, session }: ManageListsProps) => {
                         sm: "1.5rem"
                      }}
                      lineHeight={"24px"}>
-                     {title}
+                     {tableLabel}
                   </Typography>
-                  {/* {form?.data && (
-                        <Button
-                           color='primary'
-                           variant='contained'
-                           onClick={handleAddList}
-                           sx={{
-                              display: "flex",
-                              gap: 1,
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "8px",
-                              textTransform: "capitalize",
-                              boxShadow: "none",
-                              px: 1.5,
-                              minWidth: "auto",
-                              color: (theme) => theme.palette.primary.contrastText + "!important",
-                              "& svg": {
-                                 color: theme.palette.primary.contrastText + " !important"
-                              }
-                           }}>
-                           <CIcon icon={"mdi:plus"} size={24} />
-                           {addButtonText && addButtonText}
-                        </Button>
-                     )} */}
                </Box>
                {/* table data filter actions input fields */}
                {/* {enableSearch && (
@@ -195,16 +177,10 @@ export const AppliedJobs = ({ block, session }: ManageListsProps) => {
 
                {/* Table */}
                <ListsTable
-                  headCells={tableHead}
-                  selectAll={selectAll}
-                  setSelectAll={setSelectAll}
-                  data={listsData}
-                  listData={block}
-                  mutate={mutate}
+                  headCells={tableHeader}
+                  data={applicationData}
                   isLoading={isLoading}
                   empty={empty}
-                  userId={userId}
-                  formData={form?.data?.attributes}
                   pageSize={pagination.pageSize}
                />
 
@@ -225,17 +201,15 @@ export const AppliedJobs = ({ block, session }: ManageListsProps) => {
                         gap: 1,
                         alignItems: "center"
                      }}>
-                     {perPageText && (
-                        <Typography variant='body1' fontWeight={500} lineHeight={"24px"}>
-                           {perPageText}
-                        </Typography>
-                     )}
+                     {/* <Typography variant='body1' fontWeight={500} lineHeight={"24px"}>
+                        Per page
+                     </Typography> */}
                      <FormControl size='small'>
                         <Select
                            labelId='per_page'
                            id='per_page'
                            autoWidth
-                           defaultValue={pagination.pageSize}
+                           defaultValue={default_data_count || 10}
                            onChange={(e) => {
                               setPagination({ ...pagination, pageSize: e.target.value as number })
                            }}
@@ -280,67 +254,65 @@ export const AppliedJobs = ({ block, session }: ManageListsProps) => {
                      </FormControl>
                   </Box>
                   <Box>
-                     {pagination.pageCount > 1 && (
-                        <Pagination
-                           count={pagination.pageCount}
-                           variant='text'
-                           shape='rounded'
-                           color='primary'
-                           size='large'
-                           siblingCount={0}
-                           onChange={(event, page) => {
-                              setPagination({ ...pagination, page })
-                           }}
-                           dir={theme.direction}
-                           sx={{
-                              "& li": {
-                                 borderRadius: 0,
-                                 height: "40px",
-                                 margin: 0
-                              },
-                              "& .MuiButtonBase-root": {
-                                 margin: 0,
-                                 border: "none",
-                                 borderLeft: "1px solid",
-                                 borderTop: "1px solid",
-                                 borderBottom: "1px solid",
-                                 borderColor: "divider",
-                                 borderRadius: 0,
-                                 "&:hover": {
-                                    backgroundColor: (theme) => theme.palette.action.hover
-                                 }
-                              },
-                              "& li:last-child .MuiButtonBase-root": {
-                                 borderRadius: theme.direction === "rtl" ? "6px 0px 0px 6px" : "0px 6px 6px 0px",
-                                 borderRight: "1px solid",
-                                 borderColor: "divider"
-                              },
-                              "& li:first-child .MuiButtonBase-root": {
-                                 borderRadius: theme.direction === "rtl" ? "0px 6px 6px 0px" : "6px 0px 0px 6px",
-                                 borderLeft: "1px solid",
-                                 borderColor: "divider"
-                              },
-                              "& .MuiPaginationItem-ellipsis": {
-                                 borderTop: "1px solid",
-                                 borderBottom: "1px solid",
-                                 borderLeft: "1px solid",
-                                 borderColor: "divider",
-                                 height: "100%",
-                                 margin: 0,
-                                 borderRadius: 0,
-                                 display: "flex",
-                                 justifyContent: "center",
-                                 alignItems: "center"
+                     <Pagination
+                        count={pagination.pageCount}
+                        variant='text'
+                        shape='rounded'
+                        color='primary'
+                        size='large'
+                        siblingCount={0}
+                        onChange={(event, page) => {
+                           setPagination({ ...pagination, page })
+                        }}
+                        dir={theme.direction}
+                        sx={{
+                           "& li": {
+                              borderRadius: 0,
+                              height: "40px",
+                              margin: 0
+                           },
+                           "& .MuiButtonBase-root": {
+                              margin: 0,
+                              border: "none",
+                              borderLeft: "1px solid",
+                              borderTop: "1px solid",
+                              borderBottom: "1px solid",
+                              borderColor: "divider",
+                              borderRadius: 0,
+                              "&:hover": {
+                                 backgroundColor: (theme) => theme.palette.action.hover
                               }
-                           }}
-                        />
-                     )}
+                           },
+                           "& li:last-child .MuiButtonBase-root": {
+                              borderRadius: theme.direction === "rtl" ? "6px 0px 0px 6px" : "0px 6px 6px 0px",
+                              borderRight: "1px solid",
+                              borderColor: "divider"
+                           },
+                           "& li:first-child .MuiButtonBase-root": {
+                              borderRadius: theme.direction === "rtl" ? "0px 6px 6px 0px" : "6px 0px 0px 6px",
+                              borderLeft: "1px solid",
+                              borderColor: "divider"
+                           },
+                           "& .MuiPaginationItem-ellipsis": {
+                              borderTop: "1px solid",
+                              borderBottom: "1px solid",
+                              borderLeft: "1px solid",
+                              borderColor: "divider",
+                              height: "100%",
+                              margin: 0,
+                              borderRadius: 0,
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center"
+                           }
+                        }}
+                     />
                   </Box>
                </Box>
             </>
          </Paper>
       </Grid>
    ) : (
-      <AccessError />
+      <AccessError roleValue={role} />
    )
 }
