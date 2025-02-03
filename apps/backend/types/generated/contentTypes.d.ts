@@ -1893,6 +1893,7 @@ export interface PluginPadmaBackendPrivatePage
         'block.blog-card',
         'metajob-block.bookmark',
         'metajob-block.applied-jobs',
+        'metajob-block.manage-resume',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

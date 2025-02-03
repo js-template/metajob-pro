@@ -4,9 +4,9 @@
     "icon": "arrowRight",
     "description": "Manage resume block"
   },
-  "category": "block",
+  "category": "metajob-block",
   "modelName": "manage-resume",
-  "uid": "block.manage-resume",
+  "uid": "metajob-block.manage-resume",
   "pluginOptions": {},
   "attributes": {
     "title": {
