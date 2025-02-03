@@ -75,21 +75,23 @@ const PortfolioPreview = ({ portfolioData, isLoading }: Props) => {
                            <Typography fontSize={20} fontWeight={500} color={(theme) => theme.palette.text.primary}>
                               {portfolioData?.length > 1 && index + 1 + "."} {item?.title}
                            </Typography>
-                           <Chip
-                              clickable
-                              component={NextLink}
-                              href={item?.link?.link}
-                              target={item?.link?.target}
-                              label={"Live Link"}
-                              size='small'
-                              sx={{
-                                 backgroundColor: hexToRGBA(theme.palette.primary.main, 0.1),
-                                 color: theme.palette.primary.main,
-                                 borderColor: theme.palette.primary.main,
-                                 borderRadius: "6px",
-                                 fontWeight: 500
-                              }}
-                           />
+                           {item?.link && (
+                              <Chip
+                                 clickable
+                                 component={NextLink}
+                                 href={item?.link?.link || "#"}
+                                 target={item?.link?.target}
+                                 label={item?.link?.label || "Live Link"}
+                                 size='small'
+                                 sx={{
+                                    backgroundColor: hexToRGBA(theme.palette.primary.main, 0.1),
+                                    color: theme.palette.primary.main,
+                                    borderColor: theme.palette.primary.main,
+                                    borderRadius: "6px",
+                                    fontWeight: 500
+                                 }}
+                              />
+                           )}
                            <Typography
                               fontSize={16}
                               fontWeight={400}

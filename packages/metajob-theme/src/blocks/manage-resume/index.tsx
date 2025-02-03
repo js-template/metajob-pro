@@ -1,12 +1,13 @@
 "use client"
 import { Fragment, useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
 import toast from "react-hot-toast"
 import useSWR from "swr"
 import { useForm, FormProvider, useFieldArray } from "react-hook-form"
 import { Box, Button, Grid, Step, StepButton, Stepper, Typography } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import ExperienceForm from "./experince"
-import { ResumeFormProps } from "./types"
+import { IManageResumeBlock, ResumeFormProps } from "./types"
 import EducationForm from "./education"
 import { ProfileForm } from "./profile"
 import { createEntry } from "../../lib/strapi"
@@ -15,21 +16,19 @@ import { fetcher } from "../../utils/swr-fetcher"
 import PortfolioForm from "./portfolio"
 import ResumeLoader from "./resumeLoader"
 import ResumePreviewBox from "./resumePreview"
-import { IUserSession } from "../../types/user"
 
 const steps = ["Profile", "Education", "Experience", "Portfolio", "Contact"]
 
 type Props = {
-   block: any
-   session?: IUserSession | null | any
+   block: IManageResumeBlock
    language?: string
-   data?: any
 }
 
-export const AddResumeForm = ({ block, session }: Props) => {
+export const ManageResume = ({ block, language }: Props) => {
    // session data destructuring
+   const { data: session } = useSession()
    const { user } = session || {}
-   const { id: userId, role } = user || {}
+   const { id: userId } = user || {}
 
    const [loading, setLoading] = useState(false)
    const [activeStep, setActiveStep] = useState(0)
@@ -169,25 +168,42 @@ export const AddResumeForm = ({ block, session }: Props) => {
    }
 
    const queryParams = {
-      populate: "deep",
       filters: {
          user: {
             id: userId
          }
-      }
+      },
+      //   populate: "*",
+      populate: [
+         "experience",
+         "education",
+         "contact",
+         "category",
+         "salary",
+         "salary_type",
+         "experience_time",
+         "qualification",
+         "portfolio",
+         "portfolio.link",
+         "user",
+         "user.avatar"
+      ]
    }
    // Convert queryParams to a string for the URL
    const queryString = encodeURIComponent(JSON.stringify(queryParams))
 
    // Construct the API URL
-   const apiUrl = userId ? `/api/find?model=api/metajob-strapi/resumes&query=${queryString}&cache=no-store` : null
+   const apiUrl = userId ? `/api/find?model=api/metajob-backend/resumes&query=${queryString}&cache=no-store` : null
 
-   const { data: myResumeData, error: myResumeError, isLoading } = useSWR(apiUrl, fetcher)
+   const { data: myResumeDataAll, error: myResumeError, isLoading } = useSWR(apiUrl, fetcher)
+
+   // const myResumeData = myResumeDataAll?.data?.[0]
+   const myResumeData = myResumeDataAll?.data?.[0]
 
    // fill data from db
    useEffect(() => {
-      if (myResumeData?.data && myResumeData?.data?.length > 0 && !myResumeError) {
-         const resumeDataValue = myResumeData?.data?.[0]?.attributes
+      if (myResumeData && !myResumeError) {
+         const resumeDataValue = myResumeData
          const categoryValue = resumeDataValue?.category?.data?.id
 
          setValue("name", resumeDataValue?.name || "")
@@ -221,11 +237,7 @@ export const AddResumeForm = ({ block, session }: Props) => {
          <Box>
             {isPreview ? (
                // resume preview
-               <ResumePreviewBox
-                  handleEdit={handleEdit}
-                  data={myResumeData?.data?.[0]?.attributes}
-                  isLoading={isLoading}
-               />
+               <ResumePreviewBox handleEdit={handleEdit} data={myResumeData} isLoading={isLoading} />
             ) : (
                // resume submit
                <Box
