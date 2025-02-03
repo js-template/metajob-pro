@@ -18,7 +18,6 @@ export * from "./widgets/applied-list"
 export * from "./widgets/favorite-list"
 export * from "./widgets/matched-list"
 
-import ResumePreviewBox from "./blocks/resume-block/resumePreview"
 import { PageLoader } from "./components/loader/pageLoader"
 import { MessageLayout } from "./blocks/chats"
 import { LatestApplied } from "./blocks/latest-applied"
@@ -30,7 +29,6 @@ import { ManageLists } from "./blocks/manage-list"
 import { AppliedList } from "./widgets/applied-list"
 import { FavoriteList } from "./widgets/favorite-list"
 import { MatchedList } from "./widgets/matched-list"
-import { AddResumeForm } from "./blocks/resume-block"
 
 import { CategoryBlock } from "./blocks/category-block"
 
@@ -65,6 +63,7 @@ import { BlogDetails } from "./single-type/blog-details"
  -------------------------------------------------*/
 import { BookmarkTable } from "./blocks/bookmark-table"
 import { AppliedJobs } from "./blocks/applied-jobs"
+import { ManageResume } from "./blocks/manage-resume"
 import { MyProfile } from "./blocks/profile"
 
 // *** get the private components from the mapping
@@ -75,6 +74,7 @@ export const getPrivateComponents = {
    // block mapping
    "metajob-block.bookmark": { component: BookmarkTable },
    "metajob-block.applied-jobs": { component: AppliedJobs },
+   "metajob-block.manage-resume": { component: ManageResume },
 
    // ?? Widget mapping
    "widget.total-list": { component: TotalList },
@@ -94,7 +94,6 @@ export const getPrivateComponents = {
    "block.manage-lists": { component: ManageLists },
    "block.manage-companies": { component: ManageCompanies },
 
-   "block.manage-resume": { component: AddResumeForm },
    "block.auth-profile": { component: MyProfile }
 }
 

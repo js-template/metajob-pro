@@ -1,4 +1,8 @@
-//Updated resume types
+export type IManageResumeBlock = {
+   __component: "metajob-block.manage-resume"
+   title?: string
+}
+
 export type ResumeFormProps = {
    name: ""
    tagline: ""

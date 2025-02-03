@@ -57,10 +57,7 @@ const PreviewHeader = ({ data, handleEdit, isLoading }: Props) => {
                               fontSize: "30px"
                            }}
                            alt={"resume-avatar"}
-                           src={
-                              data?.user?.data?.attributes?.avatar?.data?.attributes?.url ??
-                              "https://avatar.iran.liara.run/public/13"
-                           }
+                           src={data?.user?.avatar?.url ?? "https://avatar.iran.liara.run/public/13"}
                         />
                         <Box
                            component={NextLink}
@@ -137,7 +134,7 @@ const PreviewHeader = ({ data, handleEdit, isLoading }: Props) => {
                               {data?.name}
                            </Typography>
                         )}
-                        {isLoading ? (
+                        {/* {isLoading ? (
                            <Skeleton variant='circular' width={30} height={30} />
                         ) : (
                            <Tooltip title={"Offline"} placement='top'>
@@ -148,7 +145,7 @@ const PreviewHeader = ({ data, handleEdit, isLoading }: Props) => {
                                  }}
                               />
                            </Tooltip>
-                        )}
+                        )} */}
                      </Box>
                      {/* tagline */}
                      {isLoading ? (
@@ -222,7 +219,7 @@ const PreviewHeader = ({ data, handleEdit, isLoading }: Props) => {
                               gap: 2
                            }}>
                            {/* phone  */}
-                           {data?.user?.data?.attributes?.phone && (
+                           {data?.user?.phone && (
                               <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1, md: 1.5 } }}>
                                  <Box
                                     sx={{
@@ -250,12 +247,12 @@ const PreviewHeader = ({ data, handleEdit, isLoading }: Props) => {
                                        fontSize: { xs: "14px", md: "18px" },
                                        color: (theme) => theme.palette.text.secondary
                                     }}>
-                                    {data?.user?.data?.attributes?.phone ?? "N/A"}
+                                    {data?.user?.phone ?? "N/A"}
                                  </Typography>
                               </Box>
                            )}
                            {/* email  */}
-                           {data?.user?.data?.attributes?.email && (
+                           {data?.user?.email && (
                               <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1, md: 1.5 } }}>
                                  <Box
                                     sx={{
@@ -283,7 +280,7 @@ const PreviewHeader = ({ data, handleEdit, isLoading }: Props) => {
                                        fontSize: { xs: "14px", md: "18px" },
                                        color: (theme) => theme.palette.text.secondary
                                     }}>
-                                    {data?.user?.data?.attributes?.email ?? "N/A"}
+                                    {data?.user?.email ?? "N/A"}
                                  </Typography>
                               </Box>
                            )}

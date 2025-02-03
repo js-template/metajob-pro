@@ -10,8 +10,8 @@ import PreviewHeader from "./previewHeader"
 import PreviewActions from "./previewActions"
 
 type Props = {
-   handleEdit: () => void
    data: ResumeFormProps
+   handleEdit: () => void
    isLoading?: boolean
 }
 
