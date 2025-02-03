@@ -36,8 +36,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "strapi-plugin build && cp -R server/src/components dist/server/src/components",
-    "watch": "strapi-plugin watch && cp -R server/src/components dist/server/src/components",
+    "build": "strapi-plugin build",
+    "watch": "strapi-plugin watch",
     "watch:link": "strapi-plugin watch:link",
     "verify": "strapi-plugin verify",
     "test:ts:front": "run -T tsc -p admin/tsconfig.json",
