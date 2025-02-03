@@ -19,14 +19,8 @@ export const TableLoader = ({ numberOfRows }: { numberOfRows?: number }) => {
          <TableCell sx={{ py: "12px" }}>
             <Skeleton variant='text' width={100} height={20} />
          </TableCell>
-         <TableCell sx={{ py: "12px" }}>
+         <TableCell sx={{ py: "12px", textAlign: "center" }}>
             <Skeleton variant='text' width={100} height={20} />
-         </TableCell>
-         <TableCell align='center'>
-            <Stack direction='row' justifyContent={"center"} alignItems={"center"} spacing={1}>
-               <Skeleton variant='circular' width={35} height={35} />
-               <Skeleton variant='circular' width={35} height={35} />
-            </Stack>
          </TableCell>
       </TableRow>
    ))

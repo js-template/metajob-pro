@@ -1,5 +1,5 @@
-export type IAppliedJobsBlock = {
-   __component: "metajob-block.applied-jobs"
+export type IBookmarkTableBock = {
+   __component: "metajob-block.bookmark"
    title?: string
    description?: string
    table_config: {
@@ -27,19 +27,33 @@ export type IAppliedJobsBlock = {
    }
 }
 
-export type IApplyJobData = {
-   id: string
-   documentId: number
-   apply_status: "Pending" | "Shortlisted" | "Rejected"
-   cover_letter?: string
-   job: {
-      id: string
+export type IBookmarkItem = {
+   id: number
+   documentId: string
+} & IBookmarkAttribute
+
+export type IBookmarkAttribute = {
+   job?: {
       title: string
+      price: string
       slug: string
-      documentId: number
-      createdAt: string
-      startDate: string
-      endDate: string
-      vacancy: number
+      status: string
    }
+   company?: {
+      name: string
+      avg_salary: {
+         title: string
+      }
+      slug: string
+      createdAt: string
+   }
+   resume?: {
+      name: string
+      salary: {
+         title: string
+      }
+      slug: string
+      createdAt: string
+   }
+   type: "job" | "company" | "resume"
 }

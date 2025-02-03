@@ -1,0 +1,33 @@
+{
+  "info": {
+    "displayName": "Applied Jobs",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "category": "metajob-block",
+  "modelName": "applied-jobs",
+  "uid": "metajob-block.applied-jobs",
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "table_config": {
+      "type": "component",
+      "repeatable": false,
+      "component": "metajob-config.table-config"
+    },
+    "table_head": {
+      "type": "component",
+      "repeatable": true,
+      "component": "metajob-config.meta-data"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}

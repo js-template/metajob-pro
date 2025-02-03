@@ -129,24 +129,26 @@ export const find = async (
  * const { data, error } = await deleteEntry("restaurants", "1");
  */
 
-export const deleteEntry = async (model: string, id: number) => {
+export const deleteEntry = async (model: string, id: number | string) => {
    try {
+      const cookieStore = await cookies()
+      const jwtToken = cookieStore.get("jwt")
+      const token = jwtToken ? jwtToken.value : { value: "" }
+
       const response = await fetch(`${apiUrl}/${model}/${id}`, {
          method: "DELETE",
          headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.STRAPI_AUTH_TOKEN}` // Replace with your token
+            Authorization: `Bearer ${token}` // Replace with your token
          }
       })
 
-      if (!response.ok) {
+      if (response.status === 204) {
+         return { success: true, error: null }
+      } else {
          throw new Error(`Failed to delete entry: ${response.statusText}`)
       }
-
-      const data = await response.json()
-      return { data, error: null }
    } catch (error: any) {
-      console.error(`Error during API call: ${error.message}`)
       return {
          data: null,
          error: error.message || "An error occurred during delete request"

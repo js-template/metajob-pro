@@ -521,6 +521,9 @@ export interface PluginMetajobBackendAppliedJob
     draftAndPublish: true;
   };
   attributes: {
+    apply_status: Schema.Attribute.Enumeration<
+      ['Shortlisted', 'Pending', 'Rejected']
+    >;
     cover_letter: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -537,9 +540,6 @@ export interface PluginMetajobBackendAppliedJob
       'plugin::users-permissions.user'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<
-      ['Shortlisted', 'Pending', 'Rejected']
-    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -736,7 +736,7 @@ export interface PluginMetajobBackendCompanySetting
   };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
-      ['shared.empty', 'single-type.company-details']
+      ['metajob-single-type.company-details']
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -997,7 +997,7 @@ export interface PluginMetajobBackendJobSetting
     draftAndPublish: true;
   };
   attributes: {
-    blocks: Schema.Attribute.DynamicZone<['single-type.job-details']> &
+    blocks: Schema.Attribute.DynamicZone<['metajob-single-type.job-details']> &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
@@ -1365,7 +1365,9 @@ export interface PluginMetajobBackendResumeSetting
     draftAndPublish: true;
   };
   attributes: {
-    blocks: Schema.Attribute.DynamicZone<['single-type.resume-details']>;
+    blocks: Schema.Attribute.DynamicZone<
+      ['metajob-single-type.resume-details']
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1886,7 +1888,13 @@ export interface PluginPadmaBackendPrivatePage
   };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
-      ['block.category-card', 'block.blog-card']
+      [
+        'block.category-card',
+        'block.blog-card',
+        'metajob-block.bookmark',
+        'metajob-block.applied-jobs',
+        'metajob-block.manage-resume',
+      ]
     > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -2022,7 +2030,7 @@ export interface PluginPadmaBackendPublicPage
       [
         'block.banner',
         'block.content-box',
-        'block.blog-card',
+        'block.blog-filter',
         'block.breadcrumbs',
         'shared.empty',
         'block.category-card',
@@ -2030,8 +2038,8 @@ export interface PluginPadmaBackendPublicPage
         'block.image-carousel',
         'block.image-gallery',
         'metajob-block.job-filter',
-        'block.company-filter',
-        'block.candidate-filter',
+        'metajob-block.company-filter',
+        'metajob-block.candidate-filter',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

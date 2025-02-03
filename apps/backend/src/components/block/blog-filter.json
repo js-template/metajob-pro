@@ -1,12 +1,16 @@
 {
+  "collectionName": "components_block_blog_filters",
   "info": {
-    "displayName": "Applied Jobs",
-    "icon": "bulletList",
+    "displayName": "Blog Filter",
+    "icon": "collapse",
     "description": ""
   },
+  "options": {},
   "category": "block",
-  "modelName": "applied-jobs",
-  "uid": "block.applied-jobs",
+  "modelName": "blog-filter",
+  "uid": "block.blog-filter",
+  "globalId": "ComponentsBlockBlogFilter",
+  "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string"
@@ -14,20 +18,10 @@
     "description": {
       "type": "text"
     },
-    "tableConfig": {
-      "type": "component",
-      "repeatable": false,
-      "component": "config.header-config"
-    },
     "empty": {
       "type": "component",
       "repeatable": false,
       "component": "shared.empty"
-    },
-    "tableHead": {
-      "type": "component",
-      "repeatable": true,
-      "component": "config.header-field"
     },
     "style": {
       "type": "component",

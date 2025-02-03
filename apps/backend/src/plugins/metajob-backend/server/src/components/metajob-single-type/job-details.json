@@ -1,13 +1,13 @@
 {
   "info": {
-    "displayName": "Company Details",
+    "displayName": "Job Details",
     "icon": "arrowRight",
-    "description": "Company Details single type component"
+    "description": "Job Details single type component"
   },
-  "category": "single-type",
-  "modelName": "company-details",
-  "uid": "single-type.company-details",
-  "globalId": "ComponentsSingleTypeCompanyDetails",
+  "category": "metajob-single-type",
+  "modelName": "job-details",
+  "uid": "metajob-single-type.job-details",
+  "globalId": "ComponentsSingleTypeJobDetails",
   "modelType": "component",
   "pluginOptions": {},
   "attributes": {
@@ -24,9 +24,8 @@
       "repeatable": false,
       "component": "shared.empty"
     },
-    "open_jobs": {
+    "related_lists": {
       "type": "boolean",
-      "required": true,
       "default": true
     }
   }

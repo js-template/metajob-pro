@@ -1,21 +1,5 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface BlockAppliedJobs extends Struct.ComponentSchema {
-  collectionName: 'components_block_applied_jobs';
-  info: {
-    displayName: 'Applied Jobs';
-    icon: 'bulletList';
-  };
-  attributes: {
-    description: Schema.Attribute.Text;
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    style: Schema.Attribute.Component<'config.style-section', false>;
-    tableConfig: Schema.Attribute.Component<'config.header-config', false>;
-    tableHead: Schema.Attribute.Component<'config.header-field', true>;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlockBanner extends Struct.ComponentSchema {
   collectionName: 'components_block_banners';
   info: {
@@ -57,17 +41,17 @@ export interface BlockBlogCard extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockBookmark extends Struct.ComponentSchema {
-  collectionName: 'components_block_bookmarks';
+export interface BlockBlogFilter extends Struct.ComponentSchema {
+  collectionName: 'components_block_blog_filters';
   info: {
-    displayName: 'Bookmark';
-    icon: 'bell';
+    description: '';
+    displayName: 'Blog Filter';
+    icon: 'collapse';
   };
   attributes: {
-    description: Schema.Attribute.String;
-    enableSearch: Schema.Attribute.Boolean;
+    description: Schema.Attribute.Text;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    tableConfig: Schema.Attribute.Component<'config.header-config', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -109,21 +93,6 @@ export interface BlockBreadcrumbs extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockCandidateFilter extends Struct.ComponentSchema {
-  collectionName: 'components_block_candidate_filters';
-  info: {
-    displayName: 'Candidate Filter';
-    icon: 'collapse';
-  };
-  attributes: {
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    search: Schema.Attribute.Component<'config.search-config', false>;
-    show_filter: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-  };
-}
-
 export interface BlockCategoryCard extends Struct.ComponentSchema {
   collectionName: 'components_category_cards';
   info: {
@@ -140,23 +109,6 @@ export interface BlockCategoryCard extends Struct.ComponentSchema {
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-  };
-}
-
-export interface BlockCompanyFilter extends Struct.ComponentSchema {
-  collectionName: 'components_block_company_filters';
-  info: {
-    displayName: 'Company Filter';
-    icon: 'collapse';
-  };
-  attributes: {
-    description: Schema.Attribute.Text;
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    search: Schema.Attribute.Component<'config.search-config', false>;
-    show_filter: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    title: Schema.Attribute.String;
   };
 }
 
@@ -322,17 +274,6 @@ export interface BlockManageJob extends Struct.ComponentSchema {
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Manage Lists'>;
-  };
-}
-
-export interface BlockManageResume extends Struct.ComponentSchema {
-  collectionName: 'components_block_manage_resumes';
-  info: {
-    displayName: 'Manage Resume';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    title: Schema.Attribute.String;
   };
 }
 
@@ -842,6 +783,74 @@ export interface HeaderTopBar extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockAppliedJobs extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_applied_jobs';
+  info: {
+    displayName: 'Applied Jobs';
+    icon: 'bulletList';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    table_config: Schema.Attribute.Component<
+      'metajob-config.table-config',
+      false
+    >;
+    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobBlockBookmark extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_bookmarks';
+  info: {
+    displayName: 'Bookmark';
+    icon: 'bell';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    table_config: Schema.Attribute.Component<
+      'metajob-config.table-config',
+      false
+    >;
+    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_candidate_filters';
+  info: {
+    displayName: 'Candidate Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    show_filter: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_company_filters';
+  info: {
+    displayName: 'Company Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    show_filter: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_job_banners';
   info: {
@@ -893,6 +902,17 @@ export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Text;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobBlockManageResume extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_manage_resumes';
+  info: {
+    displayName: 'Manage Resume';
+    icon: 'arrowRight';
+  };
+  attributes: {
     title: Schema.Attribute.String;
   };
 }
@@ -1003,6 +1023,82 @@ export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
     location_placeholder: Schema.Attribute.String;
     search_placeholder: Schema.Attribute.String;
     sort_placeholder: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobConfigTableConfig extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_config_table_configs';
+  info: {
+    displayName: 'Table Config';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    default_data_count: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 50;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    enable_delete: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    enable_edit: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    enable_search: Schema.Attribute.Boolean;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Name'>;
+    search_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Search'>;
+    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+  };
+}
+
+export interface MetajobSingleTypeCompanyDetails
+  extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_single_type_company_details';
+  info: {
+    displayName: 'Company Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    open_jobs: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobSingleTypeJobDetails extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_single_type_job_details';
+  info: {
+    displayName: 'Job Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    related_lists: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobSingleTypeResumeDetails extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_single_type_resume_details';
+  info: {
+    displayName: 'Resume Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -1148,7 +1244,6 @@ export interface SharedSpacing extends Struct.ComponentSchema {
 export interface SingleTypeBlogDetails extends Struct.ComponentSchema {
   collectionName: 'components_single_type_blog_details';
   info: {
-    description: '';
     displayName: 'Blog Details';
     icon: 'arrowRight';
   };
@@ -1157,49 +1252,6 @@ export interface SingleTypeBlogDetails extends Struct.ComponentSchema {
       ['Left Sidebar', 'Right Sidebar', 'Both Sidebar', 'No Sidebar']
     >;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SingleTypeCompanyDetails extends Struct.ComponentSchema {
-  collectionName: 'components_single_type_company_details';
-  info: {
-    displayName: 'Company Details';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    open_jobs: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    styles: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SingleTypeJobDetails extends Struct.ComponentSchema {
-  collectionName: 'components_single_type_job_details';
-  info: {
-    displayName: 'Job Details';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    related_lists: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    styles: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SingleTypeResumeDetails extends Struct.ComponentSchema {
-  collectionName: 'components_single_type_resume_details';
-  info: {
-    displayName: 'Resume Details';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -1357,15 +1409,12 @@ export interface WidgetTotalJob extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'block.applied-jobs': BlockAppliedJobs;
       'block.banner': BlockBanner;
       'block.blog-card': BlockBlogCard;
-      'block.bookmark': BlockBookmark;
+      'block.blog-filter': BlockBlogFilter;
       'block.bookmark-list': BlockBookmarkList;
       'block.breadcrumbs': BlockBreadcrumbs;
-      'block.candidate-filter': BlockCandidateFilter;
       'block.category-card': BlockCategoryCard;
-      'block.company-filter': BlockCompanyFilter;
       'block.contact': BlockContact;
       'block.content-box': BlockContentBox;
       'block.experience': BlockExperience;
@@ -1374,7 +1423,6 @@ declare module '@strapi/strapi' {
       'block.latest-applied': BlockLatestApplied;
       'block.manage-company': BlockManageCompany;
       'block.manage-job': BlockManageJob;
-      'block.manage-resume': BlockManageResume;
       'block.notification-list': BlockNotificationList;
       'block.portfolio': BlockPortfolio;
       'block.pricing': BlockPricing;
@@ -1398,16 +1446,25 @@ declare module '@strapi/strapi' {
       'header.header-bottom': HeaderHeaderBottom;
       'header.main-menu': HeaderMainMenu;
       'header.top-bar': HeaderTopBar;
+      'metajob-block.applied-jobs': MetajobBlockAppliedJobs;
+      'metajob-block.bookmark': MetajobBlockBookmark;
+      'metajob-block.candidate-filter': MetajobBlockCandidateFilter;
+      'metajob-block.company-filter': MetajobBlockCompanyFilter;
       'metajob-block.job-banner': MetajobBlockJobBanner;
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
       'metajob-block.job-filter': MetajobBlockJobFilter;
+      'metajob-block.manage-resume': MetajobBlockManageResume;
       'metajob-config.header-config': MetajobConfigHeaderConfig;
       'metajob-config.header-field': MetajobConfigHeaderField;
       'metajob-config.message': MetajobConfigMessage;
       'metajob-config.meta-data': MetajobConfigMetaData;
       'metajob-config.relations': MetajobConfigRelations;
       'metajob-config.search-config': MetajobConfigSearchConfig;
+      'metajob-config.table-config': MetajobConfigTableConfig;
+      'metajob-single-type.company-details': MetajobSingleTypeCompanyDetails;
+      'metajob-single-type.job-details': MetajobSingleTypeJobDetails;
+      'metajob-single-type.resume-details': MetajobSingleTypeResumeDetails;
       'shared.empty': SharedEmpty;
       'shared.meta-social': SharedMetaSocial;
       'shared.seo': SharedSeo;
@@ -1415,9 +1472,6 @@ declare module '@strapi/strapi' {
       'shared.social-medias': SharedSocialMedias;
       'shared.spacing': SharedSpacing;
       'single-type.blog-details': SingleTypeBlogDetails;
-      'single-type.company-details': SingleTypeCompanyDetails;
-      'single-type.job-details': SingleTypeJobDetails;
-      'single-type.resume-details': SingleTypeResumeDetails;
       'ui.job-info': UiJobInfo;
       'widget.applied-list': WidgetAppliedList;
       'widget.closed-job': WidgetClosedJob;

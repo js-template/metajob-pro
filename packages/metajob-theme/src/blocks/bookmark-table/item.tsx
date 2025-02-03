@@ -10,7 +10,7 @@ import { deleteEntry } from "../../lib/strapi"
 import { getItemValue } from "./hook"
 import { IBookmarkItem } from "./types"
 
-const AllBookmarkTableItem = ({
+const BookmarkTableItem = ({
    row,
    direction,
    mutateUrl
@@ -19,34 +19,24 @@ const AllBookmarkTableItem = ({
    direction: "ltr" | "rtl"
    mutateUrl: string
 }) => {
-   const { id: bookmarkId, attributes } = row || {}
-   const { type } = attributes || {}
-
-   const { itemTitle, itemPrice, itemUrl, itemStatus } = getItemValue(attributes)
-
-   const model = "api/metajob-strapi/bookmarks"
+   const { documentId, type } = row || {}
+   const { itemTitle, itemPrice, itemUrl, itemStatus } = getItemValue(row)
 
    const [loading, setLoading] = useState(false)
-   const [error, setError] = useState(null)
-   const [success, setSuccess] = useState(null) // New state to track success
 
    /**
     * Function to handle delete operation
     */
    const handleDelete = async () => {
       setLoading(true)
-      setError(null)
-      setSuccess(null) // Reset success message
-
       try {
-         const { data, error } = await deleteEntry(model, bookmarkId)
-
+         const model = "api/metajob-backend/bookmarks"
+         const { success, error } = await deleteEntry(model, documentId)
          if (error) {
             throw new Error(error)
          }
          // Set success message after successful deletion
          toast.success("Successfully deleted!")
-
          // Mutate the cache for the specific API URL
          mutate(mutateUrl || null)
       } catch (err: any) {
@@ -142,4 +132,4 @@ const AllBookmarkTableItem = ({
    )
 }
 
-export default AllBookmarkTableItem
+export default BookmarkTableItem

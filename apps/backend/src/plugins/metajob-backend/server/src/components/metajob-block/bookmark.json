@@ -4,9 +4,9 @@
     "icon": "bell",
     "description": ""
   },
-  "category": "block",
+  "category": "metajob-block",
   "modelName": "bookmark",
-  "uid": "block.bookmark",
+  "uid": "metajob-block.bookmark",
   "pluginOptions": {},
   "attributes": {
     "title": {
@@ -15,18 +15,20 @@
     "description": {
       "type": "string"
     },
-    "enableSearch": {
-      "type": "boolean"
+    "table_config": {
+      "type": "component",
+      "repeatable": false,
+      "component": "metajob-config.table-config"
+    },
+    "table_head": {
+      "type": "component",
+      "repeatable": true,
+      "component": "metajob-config.meta-data"
     },
     "style": {
       "type": "component",
       "repeatable": false,
       "component": "config.style-section"
-    },
-    "tableConfig": {
-      "type": "component",
-      "repeatable": false,
-      "component": "config.header-config"
     }
   }
 }
