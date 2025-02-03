@@ -152,11 +152,6 @@
       "relation": "oneToOne",
       "target": "plugin::metajob-backend.experience-level"
     },
-    "qualification": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::metajob-backend.qualification"
-    },
     "slug": {
       "type": "uid",
       "targetField": "name",

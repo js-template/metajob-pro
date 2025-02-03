@@ -14,6 +14,9 @@ import AppliedJobController from "./applied-job";
 import BookmarkController from "./bookmark";
 import ChatController from "./chat";
 import MessageController from "./message";
+import ExperienceLevelController from "./experience-level";
+import SalaryTypeController from "./salary-type";
+import AvgSalaryController from "./avg-salary";
 
 export default {
   "job-setting": JobSettingController,
@@ -30,6 +33,9 @@ export default {
   bookmark: BookmarkController,
   chat: ChatController,
   message: MessageController,
+  "experience-level": ExperienceLevelController,
+  "salary-type": SalaryTypeController,
+  "avg-salary": AvgSalaryController,
 
   controller,
 };

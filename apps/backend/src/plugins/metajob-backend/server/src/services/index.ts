@@ -14,6 +14,9 @@ import AppliedJobService from "./applied-job";
 import BookmarkService from "./bookmark";
 import ChatService from "./chat";
 import MessageService from "./message";
+import ExperienceLevelService from "./experience-level";
+import SalaryTypeService from "./salary-type";
+import AvgSalaryService from "./avg-salary";
 
 export default {
   service,
@@ -32,4 +35,7 @@ export default {
   bookmark: BookmarkService,
   chat: ChatService,
   message: MessageService,
+  "experience-level": ExperienceLevelService,
+  "salary-type": SalaryTypeService,
+  "avg-salary": AvgSalaryService,
 };

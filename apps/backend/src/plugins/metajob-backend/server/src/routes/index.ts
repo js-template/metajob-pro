@@ -12,6 +12,9 @@ import AppliedJobRoute from "./applied-job";
 import BookmarkRoute from "./bookmark";
 import ChatRoute from "./chat";
 import MessageRoute from "./message";
+import ExperienceLevelRoute from "./experience-level";
+import SalaryTypeRoute from "./salary-type";
+import AvgSalaryRoute from "./avg-salary";
 
 export default {
   "job-setting": JobSettingRoute,
@@ -28,4 +31,7 @@ export default {
   bookmark: BookmarkRoute,
   chat: ChatRoute,
   message: MessageRoute,
+  "experience-level": ExperienceLevelRoute,
+  "salary-type": SalaryTypeRoute,
+  "avg-salary": AvgSalaryRoute,
 };
