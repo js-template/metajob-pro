@@ -1,35 +1,45 @@
-import { IUserSession } from "../../types/user"
-import { formProps } from "../../types/forms"
-
-export type ManageListsProps = {
-   block: ManageListsDataProps
-   session?: IUserSession | null | any
-   language?: string
-   data?: any
-}
-
-export type ManageListsDataProps = {
-   title: string
-   enableSearch: boolean
-   tableConfig: {
-      enableEdit: boolean
-      enableDelete: boolean
+export type IAppliedJobsBlock = {
+   __component: "metajob-block.applied-jobs"
+   title?: string
+   description?: string
+   table_config: {
+      label: boolean
+      enable_delete: boolean
+      enable_edit: boolean
+      enable_search: boolean
+      search_placeholder?: string
+      default_data_count?: number
    }
-   empty: {
+   table_head: {
+      value: string
+   }[]
+   empty?: {
+      id: number
       title: string
       description: string
    }
-   tableHead: {
-      label: string
-      sort: boolean
-      align: "left" | "center" | "right"
-   }[]
-   form: {
-      data: {
-         attributes: formProps
-      }
+   style?: {
+      color?: any
+      backgroundColor?: any
+      mobile: number
+      tab: number
+      desktop: number
    }
-   addButtonText: string
-   editButtonText: string
-   perPageText: string
+}
+
+export type IApplyJobData = {
+   id: string
+   documentId: number
+   apply_status: "Pending" | "Shortlisted" | "Rejected"
+   cover_letter?: string
+   job: {
+      id: string
+      title: string
+      slug: string
+      documentId: number
+      createdAt: string
+      startDate: string
+      endDate: string
+      vacancy: number
+   }
 }
