@@ -277,17 +277,6 @@ export interface BlockManageJob extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockManageResume extends Struct.ComponentSchema {
-  collectionName: 'components_block_manage_resumes';
-  info: {
-    displayName: 'Manage Resume';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlockNotificationList extends Struct.ComponentSchema {
   collectionName: 'components_block_notification_lists';
   info: {
@@ -917,6 +906,17 @@ export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockManageResume extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_manage_resumes';
+  info: {
+    displayName: 'Manage Resume';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobConfigHeaderConfig extends Struct.ComponentSchema {
   collectionName: 'components_metajob_config_header_configs';
   info: {
@@ -1423,7 +1423,6 @@ declare module '@strapi/strapi' {
       'block.latest-applied': BlockLatestApplied;
       'block.manage-company': BlockManageCompany;
       'block.manage-job': BlockManageJob;
-      'block.manage-resume': BlockManageResume;
       'block.notification-list': BlockNotificationList;
       'block.portfolio': BlockPortfolio;
       'block.pricing': BlockPricing;
@@ -1455,6 +1454,7 @@ declare module '@strapi/strapi' {
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
       'metajob-block.job-filter': MetajobBlockJobFilter;
+      'metajob-block.manage-resume': MetajobBlockManageResume;
       'metajob-config.header-config': MetajobConfigHeaderConfig;
       'metajob-config.header-field': MetajobConfigHeaderField;
       'metajob-config.message': MetajobConfigMessage;
