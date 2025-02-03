@@ -521,6 +521,9 @@ export interface PluginMetajobBackendAppliedJob
     draftAndPublish: true;
   };
   attributes: {
+    apply_status: Schema.Attribute.Enumeration<
+      ['Shortlisted', 'Pending', 'Rejected']
+    >;
     cover_letter: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -537,9 +540,6 @@ export interface PluginMetajobBackendAppliedJob
       'plugin::users-permissions.user'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<
-      ['Shortlisted', 'Pending', 'Rejected']
-    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1888,7 +1888,12 @@ export interface PluginPadmaBackendPrivatePage
   };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
-      ['block.category-card', 'block.blog-card', 'metajob-block.bookmark']
+      [
+        'block.category-card',
+        'block.blog-card',
+        'metajob-block.bookmark',
+        'metajob-block.applied-jobs',
+      ]
     > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {

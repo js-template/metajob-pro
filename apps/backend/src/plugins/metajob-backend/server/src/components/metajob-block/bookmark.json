@@ -20,6 +20,11 @@
       "repeatable": false,
       "component": "metajob-config.table-config"
     },
+    "table_head": {
+      "type": "component",
+      "repeatable": true,
+      "component": "metajob-config.meta-data"
+    },
     "style": {
       "type": "component",
       "repeatable": false,

@@ -1,21 +1,5 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface BlockAppliedJobs extends Struct.ComponentSchema {
-  collectionName: 'components_block_applied_jobs';
-  info: {
-    displayName: 'Applied Jobs';
-    icon: 'bulletList';
-  };
-  attributes: {
-    description: Schema.Attribute.Text;
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    style: Schema.Attribute.Component<'config.style-section', false>;
-    tableConfig: Schema.Attribute.Component<'config.header-config', false>;
-    tableHead: Schema.Attribute.Component<'config.header-field', true>;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlockBanner extends Struct.ComponentSchema {
   collectionName: 'components_block_banners';
   info: {
@@ -810,6 +794,24 @@ export interface HeaderTopBar extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockAppliedJobs extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_applied_jobs';
+  info: {
+    displayName: 'Applied Jobs';
+    icon: 'bulletList';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    table_config: Schema.Attribute.Component<
+      'metajob-config.table-config',
+      false
+    >;
+    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobBlockBookmark extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_bookmarks';
   info: {
@@ -1407,7 +1409,6 @@ export interface WidgetTotalJob extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'block.applied-jobs': BlockAppliedJobs;
       'block.banner': BlockBanner;
       'block.blog-card': BlockBlogCard;
       'block.blog-filter': BlockBlogFilter;
@@ -1446,6 +1447,7 @@ declare module '@strapi/strapi' {
       'header.header-bottom': HeaderHeaderBottom;
       'header.main-menu': HeaderMainMenu;
       'header.top-bar': HeaderTopBar;
+      'metajob-block.applied-jobs': MetajobBlockAppliedJobs;
       'metajob-block.bookmark': MetajobBlockBookmark;
       'metajob-block.candidate-filter': MetajobBlockCandidateFilter;
       'metajob-block.company-filter': MetajobBlockCompanyFilter;
