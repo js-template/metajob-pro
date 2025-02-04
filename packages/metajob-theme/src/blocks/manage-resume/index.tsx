@@ -10,14 +10,15 @@ import ExperienceForm from "./experince"
 import { IManageResumeBlock, ResumeFormProps } from "./types"
 import EducationForm from "./education"
 import { ProfileForm } from "./profile"
-import { createEntry } from "../../lib/strapi"
+import { createEntry, updateOne } from "../../lib/strapi"
 import { ContactForm } from "./contact"
 import { fetcher } from "../../utils/swr-fetcher"
 import PortfolioForm from "./portfolio"
 import ResumeLoader from "./resumeLoader"
 import ResumePreviewBox from "./resumePreview"
-
-const steps = ["Profile", "Education", "Experience", "Portfolio", "Contact"]
+import { steps } from "./data"
+import { removeIdFromObjects } from "./hook"
+import { mutate } from "swr"
 
 type Props = {
    block: IManageResumeBlock
@@ -38,11 +39,11 @@ export const ManageResume = ({ block, language }: Props) => {
       defaultValues: {
          name: "",
          tagline: "",
-         qualification: "",
-         experienceTime: "",
+         // qualification: "",
+         experience_time: "",
          language: "",
-         salaryType: "",
-         salary: 1000,
+         salary_type: "",
+         salary: "",
          // category: "",
          about: "",
          education: [],
@@ -117,6 +118,36 @@ export const ManageResume = ({ block, language }: Props) => {
       handleNext()
    }
 
+   // fetch resume-data from db
+   const queryParams = {
+      filters: {
+         user: {
+            id: userId
+         }
+      },
+      //   populate: "*",
+      populate: [
+         "experience",
+         "education",
+         "contact",
+         "category",
+         "salary",
+         "salary_type",
+         "experience_time",
+         "portfolio",
+         "portfolio.link",
+         "user",
+         "user.avatar"
+      ]
+   }
+   // Convert queryParams to a string for the URL
+   const queryString = encodeURIComponent(JSON.stringify(queryParams))
+   // Construct the API URL
+   const apiUrl = userId ? `/api/find?model=api/metajob-backend/resumes&query=${queryString}&cache=no-store` : null
+   const { data: myResumeDataAll, error: myResumeError, isLoading } = useSWR(apiUrl, fetcher)
+   // const myResumeData = myResumeDataAll?.data?.[0]
+   const myResumeData = myResumeDataAll?.data?.[0]
+
    const handleReset = () => {
       setActiveStep(0)
       setCompleted({})
@@ -133,31 +164,93 @@ export const ManageResume = ({ block, language }: Props) => {
 
          setLoading(true) // Start loading
 
-         const resumeInput = {
-            data: {
-               ...data,
-               category: {
-                  id: data?.category
-               },
-               user: {
-                  id: userId || undefined
+         if (myResumeData) {
+            const updateInput = {
+               data: {
+                  ...data,
+                  show_profile: "Show",
+                  user: [
+                     {
+                        id: userId || undefined
+                     }
+                  ],
+                  category: {
+                     connect: [data?.category]
+                  },
+                  salary: {
+                     connect: [data?.salary]
+                  },
+                  salary_type: {
+                     connect: [data?.salary_type]
+                  },
+
+                  experience_time: {
+                     connect: [data?.experience_time]
+                  },
+                  education: removeIdFromObjects(data?.education),
+                  experience: removeIdFromObjects(data?.experience),
+                  portfolio: removeIdFromObjects(data?.portfolio)
                }
             }
-         } as any
+            const resumeResponse = await updateOne(
+               "metajob-backend/resumes",
+               myResumeData?.documentId,
+               updateInput,
+               "/dashboard/my-resume/",
+               "page"
+            )
 
-         const resumeResponse = await createEntry(
-            "metajob-strapi/resumes",
-            resumeInput,
-            "/dashboard/my-resume/",
-            "page"
-         )
-         // Check if the response has any errors
-         if (resumeResponse.error) {
-            toast.error(resumeResponse?.error)
+            // Check if the response has any errors
+            if (resumeResponse.error) {
+               toast.error(resumeResponse?.error)
+            } else {
+               mutate(apiUrl)
+               // Success case
+               toast.success("Resume updated successfully")
+               setIsPreview(true)
+               handleReset()
+            }
          } else {
-            // Success case
-            toast.success("Resume created successfully")
-            setIsPreview(true)
+            const createInput = {
+               data: {
+                  ...data,
+                  show_profile: "Show",
+                  user: [
+                     {
+                        id: userId || undefined
+                     }
+                  ],
+                  category: {
+                     connect: [data?.category]
+                  },
+                  salary: {
+                     connect: [data?.salary]
+                  },
+                  salary_type: {
+                     connect: [data?.salary_type]
+                  },
+
+                  experience_time: {
+                     connect: [data?.experience_time]
+                  }
+               }
+            }
+            const resumeResponse = await createEntry(
+               "metajob-backend/resumes",
+               createInput,
+               "/dashboard/my-resume/",
+               "page"
+            )
+            // Check if the response has any errors
+            if (resumeResponse.error) {
+               toast.error(resumeResponse?.error)
+            } else {
+               mutate(apiUrl)
+               // Success case
+               toast.success("Resume created successfully")
+               setIsPreview(true)
+               handleReset()
+            }
          }
       } catch (error: any) {
          toast.error(error?.message || "An unexpected error occurred. Please try again.")
@@ -167,62 +260,25 @@ export const ManageResume = ({ block, language }: Props) => {
       }
    }
 
-   const queryParams = {
-      filters: {
-         user: {
-            id: userId
-         }
-      },
-      //   populate: "*",
-      populate: [
-         "experience",
-         "education",
-         "contact",
-         "category",
-         "salary",
-         "salary_type",
-         "experience_time",
-         "qualification",
-         "portfolio",
-         "portfolio.link",
-         "user",
-         "user.avatar"
-      ]
-   }
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-
-   // Construct the API URL
-   const apiUrl = userId ? `/api/find?model=api/metajob-backend/resumes&query=${queryString}&cache=no-store` : null
-
-   const { data: myResumeDataAll, error: myResumeError, isLoading } = useSWR(apiUrl, fetcher)
-
-   // const myResumeData = myResumeDataAll?.data?.[0]
-   const myResumeData = myResumeDataAll?.data?.[0]
-
    // fill data from db
    useEffect(() => {
       if (myResumeData && !myResumeError) {
          const resumeDataValue = myResumeData
-         const categoryValue = resumeDataValue?.category?.data?.id
 
          setValue("name", resumeDataValue?.name || "")
          setValue("tagline", resumeDataValue?.tagline || "")
-         setValue("qualification", resumeDataValue?.qualification || "")
-         setValue("experienceTime", resumeDataValue?.experienceTime || "")
          setValue("language", resumeDataValue?.language || "")
-         setValue("salaryType", resumeDataValue?.salaryType || "")
-         setValue("salary", resumeDataValue?.salary || "")
          setValue("about", resumeDataValue?.about || "")
-         setValue("salary", resumeDataValue?.salary || "")
          setValue("education", resumeDataValue?.education || [])
          setValue("experience", resumeDataValue?.experience || [])
          setValue("portfolio", resumeDataValue?.portfolio || [])
          setValue("contact.friendlyAddress", resumeDataValue?.contact?.friendlyAddress || "")
          setValue("contact.location", resumeDataValue?.contact?.location || "")
-         setValue("category", categoryValue || "")
+         setValue("experience_time", resumeDataValue?.experience_time?.documentId || "")
+         setValue("salary_type", resumeDataValue?.salary_type?.documentId || "")
+         setValue("salary", resumeDataValue?.salary?.documentId || "")
+         setValue("category", resumeDataValue?.category?.documentId || "")
       }
-
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [myResumeData])
 

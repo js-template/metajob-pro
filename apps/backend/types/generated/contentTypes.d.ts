@@ -1200,7 +1200,6 @@ export interface PluginMetajobBackendResume
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
     education: Schema.Attribute.Component<'block.experience', true>;
     experience: Schema.Attribute.Component<'block.experience', true>;
     experience_time: Schema.Attribute.Relation<

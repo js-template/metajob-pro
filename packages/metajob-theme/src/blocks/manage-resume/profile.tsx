@@ -31,13 +31,45 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
       fields: ["title"]
    }
    const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
-   const categoryAPiUrl = `/api/find?model=api/metajob-strapi/job-categories&query=${categoryQueryString}`
-
+   const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
    const {
       data: categoryData,
       error: categoryError,
       isLoading: categoryIsLoading
    } = useSWR(categoryAPiUrl, fetcher, {
+      fallbackData: []
+   })
+
+   // fetch experience-level data
+   const experienceString = encodeURIComponent(JSON.stringify({}))
+   const experienceAPiUrl = `/api/find?model=api/metajob-backend/experience-levels&query=${experienceString}`
+   const {
+      data: experienceData,
+      error: experienceError,
+      isLoading: experienceIsLoading
+   } = useSWR(experienceAPiUrl, fetcher, {
+      fallbackData: []
+   })
+
+   // fetch avg-salary data
+   const avgSalaryString = encodeURIComponent(JSON.stringify({}))
+   const avgSalaryAPiUrl = `/api/find?model=api/metajob-backend/avg-salaries&query=${avgSalaryString}`
+   const {
+      data: avgSalaryData,
+      error: avgSalaryError,
+      isLoading: avgSalaryIsLoading
+   } = useSWR(avgSalaryAPiUrl, fetcher, {
+      fallbackData: []
+   })
+
+   // fetch salary-types data
+   const salaryTypesString = encodeURIComponent(JSON.stringify({}))
+   const salaryTypesAPiUrl = `/api/find?model=api/metajob-backend/salary-types&query=${salaryTypesString}`
+   const {
+      data: salaryTypesData,
+      error: salaryTypesError,
+      isLoading: salaryTypesIsLoading
+   } = useSWR(salaryTypesAPiUrl, fetcher, {
       fallbackData: []
    })
 
@@ -154,11 +186,10 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                </MenuItem>
                {categoryData &&
                   categoryData?.map((categoryItem: IJobCategory, index: number) => {
-                     const { attributes, id } = categoryItem || {}
-                     const { title } = attributes || {}
                      return (
-                        <MenuItem key={index} value={id}>
-                           {title}
+                        // <MenuItem key={index} value={index}>
+                        <MenuItem key={index} value={categoryItem?.documentId}>
+                           {categoryItem?.title}
                         </MenuItem>
                      )
                   })}
@@ -194,99 +225,28 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                displayEmpty
                size='small'
                placeholder='Select Time'
-               {...register("experienceTime", {
+               {...register("experience_time", {
                   required: "Experience Time is required"
                })}
-               error={Boolean(errors.experienceTime)}
-               defaultValue={watch("experienceTime") || ""}
-               value={watch("experienceTime") || ""}
-               // renderValue={(selected: any) => {
-               //   if (!selected) {
-               //     return (
-               //       <Box
-               //         component={"span"}
-               //         sx={{
-               //           color: "text.secondary",
-               //         }}
-               //       >
-               //         Select Time
-               //       </Box>
-               //     );
-               //   }
-               //   return selected;
-               // }}
-            >
+               error={Boolean(errors.experience_time)}
+               defaultValue={watch("experience_time") || ""}
+               value={watch("experience_time") || ""}>
                <MenuItem disabled value=''>
                   Select Time
                </MenuItem>
-               <MenuItem value='Freshers'>Freshers</MenuItem>
+               {experienceData?.length > 0 &&
+                  experienceData?.map(
+                     (expItem: { documentId: string; title: string; value: string }, index: number) => (
+                        <MenuItem key={index} value={expItem?.documentId}>
+                           {expItem?.title}
+                        </MenuItem>
+                     )
+                  )}
+               {/* <MenuItem value='Freshers'>Freshers</MenuItem>
                <MenuItem value='Junior'>Junior</MenuItem>
                <MenuItem value='Mid-Level'>Mid-Level</MenuItem>
                <MenuItem value='Senior'>Senior</MenuItem>
-               <MenuItem value='Lead'>Lead</MenuItem>
-            </Select>
-         </Grid>
-
-         {/* Qualification */}
-         <Grid item xs={12} sm={6}>
-            <Box
-               component={"label"}
-               htmlFor='resume-qualification'
-               sx={{
-                  display: "block",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  color: "text.primary",
-                  mb: 1
-               }}>
-               Qualification
-               <Box
-                  component={"span"}
-                  sx={{
-                     color: "error.main",
-                     ml: 0.5
-                  }}>
-                  *
-               </Box>
-            </Box>
-            <Select
-               fullWidth
-               variant='outlined'
-               id='resume-qualification'
-               displayEmpty
-               size='small'
-               placeholder='Select Qualification'
-               {...register("qualification", {
-                  required: "Qualification is required"
-               })}
-               error={Boolean(errors.qualification)}
-               defaultValue={watch("qualification") || ""}
-               value={watch("qualification") || ""}
-               // renderValue={(selected: any) => {
-               //   if (!selected) {
-               //     return (
-               //       <Box
-               //         component={"span"}
-               //         sx={{
-               //           color: "text.secondary",
-               //         }}
-               //       >
-               //         Select Qualification
-               //       </Box>
-               //     );
-               //   }
-               //   return selected;
-               // }}
-            >
-               <MenuItem disabled value=''>
-                  Select Qualification
-               </MenuItem>
-               <MenuItem value='Bachelor’s Degree'>Bachelor’s Degree</MenuItem>
-               <MenuItem value='Master’s Degree'>Master’s Degree</MenuItem>
-               <MenuItem value='Doctoral Degree (Ph.D.)'>Doctoral Degree (Ph.D.)</MenuItem>
-               <MenuItem value='Associate Degree'>Associate Degree</MenuItem>
-               <MenuItem value='Diploma'>Diploma</MenuItem>
-               <MenuItem value='Certificate'>Certificate</MenuItem>
+               <MenuItem value='Lead'>Lead</MenuItem> */}
             </Select>
          </Grid>
 
@@ -365,6 +325,53 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
             </Select>
          </Grid>
 
+         {/* Salary Amount */}
+         <Grid item xs={12} sm={6}>
+            <Box
+               component={"label"}
+               htmlFor='resume-salary'
+               sx={{
+                  display: "block",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                  color: "text.primary",
+                  mb: 1
+               }}>
+               Salary
+               <Box
+                  component={"span"}
+                  sx={{
+                     color: "error.main",
+                     ml: 0.5
+                  }}>
+                  *
+               </Box>
+            </Box>
+            <Select
+               fullWidth
+               variant='outlined'
+               id='resume-salary'
+               displayEmpty
+               size='small'
+               placeholder='Salary'
+               {...register("salary", {
+                  required: "Salary is required"
+               })}
+               error={Boolean(errors.salary)}
+               defaultValue={watch("salary") || ""}
+               value={watch("salary") || ""}>
+               <MenuItem disabled value=''>
+                  Select Average Salary
+               </MenuItem>
+               {avgSalaryData?.length > 0 &&
+                  avgSalaryData?.map((expItem: { documentId: string; title: string; value: string }, index: number) => (
+                     <MenuItem key={index} value={expItem?.documentId}>
+                        {expItem?.title}
+                     </MenuItem>
+                  ))}
+            </Select>
+         </Grid>
+
          {/* Salary Type */}
          <Grid item xs={12} sm={6}>
             <Box
@@ -394,76 +401,31 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                displayEmpty
                size='small'
                placeholder='Select Salary Type'
-               {...register("salaryType", {
+               {...register("salary_type", {
                   required: "Salary Type is required"
                })}
-               error={Boolean(errors.salaryType)}
-               defaultValue={watch("salaryType") || ""}
-               value={watch("salaryType") || ""}
-               // renderValue={(selected: any) => {
-               //   if (!selected) {
-               //     return (
-               //       <Box
-               //         component={"span"}
-               //         sx={{
-               //           color: "text.secondary",
-               //         }}
-               //       >
-               //         Select Salary Type
-               //       </Box>
-               //     );
-               //   }
-               //   return selected;
-               // }}
-            >
+               error={Boolean(errors.salary_type)}
+               defaultValue={watch("salary_type") || ""}
+               value={watch("salary_type") || ""}>
                <MenuItem disabled value=''>
                   Select Salary Type
                </MenuItem>
-               <MenuItem value='Monthly'>Monthly</MenuItem>
+               {salaryTypesData?.length > 0 &&
+                  salaryTypesData?.map(
+                     (expItem: { documentId: string; title: string; value: string }, index: number) => (
+                        <MenuItem key={index} value={expItem?.documentId}>
+                           {expItem?.title}
+                        </MenuItem>
+                     )
+                  )}
+               {/* <MenuItem value='Monthly'>Monthly</MenuItem>
                <MenuItem value='Weekly'>Weekly</MenuItem>
                <MenuItem value='Hourly'>Hourly</MenuItem>
                <MenuItem value='Daily'>Daily</MenuItem>
                <MenuItem value='Annually'>Annually</MenuItem>
                <MenuItem value='Per Project'>Per Project</MenuItem>
-               <MenuItem value='Commission-based'>Commission-based</MenuItem>
+               <MenuItem value='Commission-based'>Commission-based</MenuItem> */}
             </Select>
-         </Grid>
-
-         {/* Salary Amount */}
-         <Grid item xs={12} sm={6}>
-            <Box
-               component={"label"}
-               htmlFor='resume-salary-type'
-               sx={{
-                  display: "block",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  color: "text.primary",
-                  mb: 1
-               }}>
-               Salary
-               <Box
-                  component={"span"}
-                  sx={{
-                     color: "error.main",
-                     ml: 0.5
-                  }}>
-                  *
-               </Box>
-            </Box>
-            {/* use number salary field */}
-            <TextField
-               id='resume-salary'
-               fullWidth
-               variant='outlined'
-               size='small'
-               type='number'
-               placeholder='Salary'
-               {...register("salary", {
-                  required: "Salary is required"
-               })}
-               error={Boolean(errors.salary)}
-            />
          </Grid>
 
          {/* About me */}

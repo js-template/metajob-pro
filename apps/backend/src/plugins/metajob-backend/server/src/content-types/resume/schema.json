@@ -21,9 +21,6 @@
       "repeatable": true,
       "component": "block.experience"
     },
-    "description": {
-      "type": "richtext"
-    },
     "user": {
       "type": "relation",
       "relation": "oneToOne",

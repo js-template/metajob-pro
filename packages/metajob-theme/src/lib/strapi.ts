@@ -176,20 +176,15 @@ export const createEntry = async (
       //const Lang = cookieStore.get("lang");
       //const language = Lang ? Lang.value : "en";
 
-      const requestData = await fetch(
-         // `${process.env.STRAPI_ENDPOINT}/api/resumes/`,
-         `${process.env.STRAPI_ENDPOINT}/api/${model}`,
-         {
-            method: "POST",
-            body: JSON.stringify(postInput),
-            headers: {
-               "Content-Type": "application/json",
-               // FIXME: This token should be replaced with JWT token
-               Authorization: `Bearer ${token}`
-            },
-            cache: "no-store"
-         }
-      )
+      const requestData = await fetch(`${process.env.STRAPI_ENDPOINT}/api/${model}`, {
+         method: "POST",
+         body: JSON.stringify(postInput),
+         headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+         },
+         cache: "no-store"
+      })
 
       const resData = await requestData.json()
 
@@ -230,16 +225,20 @@ export const createEntry = async (
  */
 export const updateOne = async (
    model: string,
-   id: number,
+   id: string | number,
    updatedData: any,
    revalidatePath?: string,
    revalidateType?: "page" | "layout"
 ) => {
-   const cookie = await cookies()
-   const jwt = cookie.get("jwt")
-   const token = jwt?.value as string
+   // const cookie = await cookies()
+   // const jwt = cookie.get("jwt")
+   // const token = jwt?.value as string
 
-   if (!jwt) {
+   const cookieStore = await cookies()
+   const jwtToken = cookieStore.get("jwt")
+   const token = jwtToken ? jwtToken.value : { value: "" }
+
+   if (!token) {
       return {
          data: null,
          error: "You are not authenticated"
