@@ -1178,37 +1178,6 @@ export interface PluginMetajobBackendPackage
   };
 }
 
-export interface PluginMetajobBackendQualification
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'qualification';
-  info: {
-    description: '';
-    displayName: 'Qualification';
-    pluralName: 'qualifications';
-    singularName: 'qualification';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'plugin::metajob-backend.qualification'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    value: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-  };
-}
-
 export interface PluginMetajobBackendResume
   extends Struct.CollectionTypeSchema {
   collectionName: 'resumes';
@@ -1231,7 +1200,6 @@ export interface PluginMetajobBackendResume
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
     education: Schema.Attribute.Component<'block.experience', true>;
     experience: Schema.Attribute.Component<'block.experience', true>;
     experience_time: Schema.Attribute.Relation<
@@ -1326,10 +1294,6 @@ export interface PluginMetajobBackendResume
     name: Schema.Attribute.String;
     portfolio: Schema.Attribute.Component<'block.portfolio', true>;
     publishedAt: Schema.Attribute.DateTime;
-    qualification: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::metajob-backend.qualification'
-    >;
     salary: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.avg-salary'
@@ -2457,7 +2421,6 @@ declare module '@strapi/strapi' {
       'plugin::metajob-backend.membership': PluginMetajobBackendMembership;
       'plugin::metajob-backend.message': PluginMetajobBackendMessage;
       'plugin::metajob-backend.package': PluginMetajobBackendPackage;
-      'plugin::metajob-backend.qualification': PluginMetajobBackendQualification;
       'plugin::metajob-backend.resume': PluginMetajobBackendResume;
       'plugin::metajob-backend.resume-setting': PluginMetajobBackendResumeSetting;
       'plugin::metajob-backend.revenue': PluginMetajobBackendRevenue;

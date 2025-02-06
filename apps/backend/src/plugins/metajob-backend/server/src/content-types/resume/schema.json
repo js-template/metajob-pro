@@ -21,9 +21,6 @@
       "repeatable": true,
       "component": "block.experience"
     },
-    "description": {
-      "type": "richtext"
-    },
     "user": {
       "type": "relation",
       "relation": "oneToOne",
@@ -151,11 +148,6 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::metajob-backend.experience-level"
-    },
-    "qualification": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::metajob-backend.qualification"
     },
     "slug": {
       "type": "uid",

@@ -1,13 +1,17 @@
-//Updated resume types
+export type IManageResumeBlock = {
+   __component: "metajob-block.manage-resume"
+   title?: string
+}
+
 export type ResumeFormProps = {
    name: ""
    tagline: ""
    qualification: ""
-   experienceTime: ""
    language: ""
-   salaryType: ""
-   salary: number
-   category: number
+   experience_time: string | ""
+   salary_type: string | ""
+   salary: string | ""
+   category: string | ""
    about: string
    education: {
       title: string
@@ -43,7 +47,6 @@ export type ResumeFormProps = {
 
 export type IJobCategory = {
    id: number
-   attributes: {
-      title: string
-   }
+   documentId: string
+   title: string
 }

@@ -20,7 +20,6 @@ import AvgSalary from "./avg-salary/schema.json";
 import JobType from "./job-type/schema.json";
 import SalaryType from "./salary-type/schema.json";
 import ExperienceLevel from "./experience-level/schema.json";
-import Qualification from "./qualification/schema.json";
 
 export default {
   "job-setting": {
@@ -88,8 +87,5 @@ export default {
   },
   "experience-level": {
     schema: ExperienceLevel,
-  },
-  qualification: {
-    schema: Qualification,
   },
 };
