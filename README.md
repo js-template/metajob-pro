@@ -1,70 +1,82 @@
-# Turborepo starter
 
-This is an official starter Turborepo.
+# Metajob- Job Board App with Nextjs & Strapi
 
-## Using this example
+<a href="https://metajob.vercel.app/" target="_blank">
+    <img src="https://github.com/user-attachments/assets/bddc9e5b-7f94-4950-b5bc-44c73fccf534" alt="thumbspng" />
+</a>
 
-Run the following command:
+### Get the production license from [Metajob- Job Board App with Nextjs & Strapi](https://jstemplate.net/item/job-board-app-with-nextjs-strapi?utm_source=github&utm_medium=social&utm_campaign=job_board_app)
 
-```sh
-npx create-turbo@latest
+## **Getting Started:**
+
+Here’s the complete documentation in markdown format for easy copying and pasting:
+
+
+## Prerequisites
+Before starting, ensure you have the following installed on your machine:
+
+- **Node.js** (v20 or higher)
+- **pnpm** (Recommended for managing dependencies)
+
+
+To install `pnpm`, you can run the following command:
+```bash
+npm install -g pnpm
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## Step-by-Step Guide
 
-### Apps and Packages
+### Step 1: Download Code  
+When you purchase the license, you will receive the codebase and an activation token in your email.
+2. **Open the project** in your preferred code editor (e.g., [VS Code](https://code.visualstudio.com/))
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### Step 2: Configure Environment Variables
+2. **Rename these files** to `.env`:
+   - `apps/backend/.env.example` → `apps/backend/.env`
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
+```bash
+export LICENSE_TOKEN='You will recive license on confirmation email'
 ```
-cd my-turborepo
-pnpm build
+```bash
+ @padma:registry=https://api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/
+ //api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/:_authToken=$LICENSE_TOKEN
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
+### Step 3: Install Dependencies
+From the root of your project directory, run the following command to install all dependencies:
+```bash
+pnpm install
 ```
 
-### Remote Caching
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+### Step 4: Run the Frontend
+1. In a new terminal, run the frontend application:
+   ```bash
+   pnpm -F @padma/frontend dev
+   ```
+2. **Next.js frontend** will be running at `http://localhost:3000`.
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+---
+### Step 5: Run the Backend
+1. Navigate to the root directory and run the backend using the following command:
+   ```bash
+   pnpm -F @padma/backend dev
+   ```
+2. **Strapi backend** will now be running at `http://localhost:1337`.
 
-```
-cd my-turborepo
-npx turbo login
-```
+## How to Customize
+*To be added later.*
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+---
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## How to Deploy
+*To be added later.*
 
-```
-npx turbo link
-```
+## **Tech Stack:**
+
+- **Backend:**  Powered by a headless Strapi CMS with PostgreSQL as the database. [Learn more about Strapi](https://strapi.io/documentation)
+   
+- **Frontend:**  Built with Next.js for fast rendering and MUI for a modern, responsive user interface.
+
