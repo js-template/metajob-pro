@@ -1,16 +1,15 @@
 import type { Core } from "@strapi/strapi";
-import { registerComponents } from "./utils/register-components";
+//import { registerComponents } from "./utils/register-components";
 
 const register = async ({ strapi }: { strapi: Core.Strapi }) => {
   // register phase
-  try {
-    await registerComponents({ strapi });
-
-    strapi.log.info("Components registered successfully");
-  } catch (error) {
-    strapi.log.error("Error registering components:", error);
-    throw error;
-  }
+  //   try {
+  //     await registerComponents({ strapi });
+  //     strapi.log.info("Components registered successfully");
+  //   } catch (error) {
+  //     strapi.log.error("Error registering components:", error);
+  //     throw error;
+  //   }
 };
 
 export default register;
