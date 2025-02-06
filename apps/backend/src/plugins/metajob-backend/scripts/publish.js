@@ -46,7 +46,7 @@ async function createRelease() {
           type: "release",
           attributes: {
             version: PACKAGE_VERSION,
-            channel: "stable",
+            channel: "alpha",
           },
           relationships: {
             product: {
