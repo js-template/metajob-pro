@@ -4,9 +4,10 @@ import CIcon from "../../components/common/icon"
 interface Props {
    handleEdit: () => void
    isLoading?: boolean
+   noResume?: boolean
 }
 
-const PreviewActions = ({ handleEdit, isLoading }: Props) => {
+const PreviewActions = ({ handleEdit, isLoading, noResume }: Props) => {
    const theme = useTheme()
 
    return (
@@ -49,7 +50,7 @@ const PreviewActions = ({ handleEdit, isLoading }: Props) => {
                      }
                   }}
                   color='secondary'>
-                  Edit Resume
+                  {noResume ? "Add" : "Edit"} Resume
                </Button>
             )}
             {/* <Box

@@ -81,7 +81,7 @@ const ExperienceForm = ({ index, exp, removeHandler, register, errors }: Props) 
                      display: "block",
                      color: (theme) => theme.palette.text.primary
                   }}>
-                  Position
+                  Institution
                   <Box
                      component='span'
                      sx={{
