@@ -48,7 +48,8 @@
         "block.blog-card",
         "metajob-block.bookmark",
         "metajob-block.applied-jobs",
-        "metajob-block.manage-resume"
+        "metajob-block.manage-resume",
+        "metajob-block.manage-company"
       ]
     },
     "styles": {
