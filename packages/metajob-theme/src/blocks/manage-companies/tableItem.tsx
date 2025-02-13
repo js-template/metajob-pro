@@ -10,6 +10,8 @@ import toast from "react-hot-toast"
 import { KeyedMutator } from "swr"
 import dynamic from "next/dynamic"
 import { formProps } from "@/types/forms"
+import { getValueFromWebsite } from "./hook"
+import { ISingleCompany } from "./type"
 
 // import EditCompany from "./edit-company"
 const EditCompany = dynamic(() => import("./edit-company"))
@@ -20,32 +22,28 @@ const ManageCompaniesTableItem = ({
    noteFunctionHandler,
    direction,
    mutate,
-   formData,
-   userId
+   formData
 }: {
-   row: any
+   row: ISingleCompany
    direction: "ltr" | "rtl"
    selectAll: boolean
    noteFunctionHandler: () => void
    mutate: KeyedMutator<any>
    formData: formProps
-   userId: number
 }) => {
    const [show, setShow] = useState(false)
    const [loading, setLoading] = useState(false)
 
-   const { name, email, phone, website, logo } = row?.attributes
-   const imageUrl = _.get(logo, "data.attributes.url", "")
+   const { name, email, phone, website, logo, documentId } = row || {}
+   const imageUrl = logo?.url || "https://placehold.co/150/png"
 
    const companyID = row?.id as number
-   const model = "api/metajob-strapi/companies"
+   const model = "api/metajob-backend/companies"
 
-   const companySite = _.chain(website)
-      .replace(/^https?:\/\/(www\.)?/, "") // Remove http://, https://, and www.
-      .trimEnd("/") // Remove trailing slash
-      .value()
+   const companySiteValue = getValueFromWebsite(website)
 
    const handleClickOpen = () => {
+      toast.error("This feature is under development")
       setShow(true)
    }
 
@@ -58,12 +56,10 @@ const ManageCompaniesTableItem = ({
       setLoading(true)
 
       try {
-         const { data, error } = await deleteEntry(model, companyID)
-
+         const { data, error } = await deleteEntry(model, documentId)
          if (error) {
             throw new Error(error)
          }
-
          // Set success message after successful deletion
          mutate().finally(() => {
             toast.success("Successfully deleted!")
@@ -102,20 +98,22 @@ const ManageCompaniesTableItem = ({
                      alignItems: "center",
                      gap: 2
                   }}>
-                  <Image src={imageUrl || "https://placehold.co/150"} alt='company logo' width={50} height={50} />
+                  <Image src={imageUrl} alt='company logo' width={50} height={50} />
                   <Box dir={direction}>
                      <Typography variant='body1' dir={direction}>
                         {name}
                      </Typography>
-                     <Typography variant='body2' dir={direction}>
-                        {email}
-                     </Typography>
+                     {email && (
+                        <Typography variant='body2' dir={direction}>
+                           {email}
+                        </Typography>
+                     )}
                   </Box>
                </Box>
             </TableCell>
             <TableCell dir={direction}>
                <Link href={website || ""} dir={direction} target='_blank' rel='noopener noreferrer'>
-                  {companySite}
+                  {companySiteValue}
                </Link>
             </TableCell>
             <TableCell>{phone}</TableCell>
@@ -156,16 +154,15 @@ const ManageCompaniesTableItem = ({
                </Stack>
             </TableCell>
          </TableRow>
-
-         <EditCompany
+         {/* TODO: Need To update EditCompany */}
+         {/* <EditCompany
             open={show}
             handleClickOpen={handleClickOpen}
             handleClose={handleClose}
             formData={formData}
-            companyID={companyID}
+            companyDocID={documentId}
             mutate={mutate}
-            userId={userId}
-         />
+         /> */}
       </Fragment>
    )
 }
