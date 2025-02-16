@@ -208,40 +208,6 @@ export interface BlockLatestApplied extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockManageCompany extends Struct.ComponentSchema {
-  collectionName: 'components_block_manage_companies';
-  info: {
-    displayName: 'Manage Company';
-    icon: 'bulletList';
-  };
-  attributes: {
-    addButtonText: Schema.Attribute.String;
-    editButtonText: Schema.Attribute.String;
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    enableDelete: Schema.Attribute.Boolean;
-    enableEdit: Schema.Attribute.Boolean;
-    enableSearch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    form: Schema.Attribute.Component<'config.relations', false>;
-    perPageText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Showing per page'>;
-    style: Schema.Attribute.Component<'config.style-section', false>;
-    subTitle: Schema.Attribute.String;
-    tableConfig: Schema.Attribute.Component<'config.header-config', false> &
-      Schema.Attribute.Required;
-    tableHead: Schema.Attribute.Component<'config.header-field', true> &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 4;
-          min: 4;
-        },
-        number
-      >;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlockManageJob extends Struct.ComponentSchema {
   collectionName: 'components_block_manage_jobs';
   info: {
@@ -945,6 +911,26 @@ export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockManageCompany extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_manage_companies';
+  info: {
+    displayName: 'Manage Company';
+    icon: 'bulletList';
+  };
+  attributes: {
+    add_button_placeholder: Schema.Attribute.String;
+    description: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    table_config: Schema.Attribute.Component<
+      'metajob-config.table-config',
+      false
+    >;
+    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobBlockManageResume extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_manage_resumes';
   info: {
@@ -1092,6 +1078,8 @@ export interface MetajobConfigTableConfig extends Struct.ComponentSchema {
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Name'>;
+    per_page_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Showing per page'>;
     search_placeholder: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Search'>;
     table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
@@ -1460,7 +1448,6 @@ declare module '@strapi/strapi' {
       'block.image-carousel': BlockImageCarousel;
       'block.image-gallery': BlockImageGallery;
       'block.latest-applied': BlockLatestApplied;
-      'block.manage-company': BlockManageCompany;
       'block.manage-job': BlockManageJob;
       'block.notification-list': BlockNotificationList;
       'block.portfolio': BlockPortfolio;
@@ -1494,6 +1481,7 @@ declare module '@strapi/strapi' {
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
       'metajob-block.job-filter': MetajobBlockJobFilter;
+      'metajob-block.manage-company': MetajobBlockManageCompany;
       'metajob-block.manage-resume': MetajobBlockManageResume;
       'metajob-config.header-config': MetajobConfigHeaderConfig;
       'metajob-config.header-field': MetajobConfigHeaderField;
