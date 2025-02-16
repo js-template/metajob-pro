@@ -49,9 +49,6 @@
         "metajob-block.bookmark",
         "metajob-block.applied-jobs",
         "metajob-block.manage-resume",
-<<<<<<< Updated upstream
-        "metajob-block.manage-company"
-=======
         "widget.total-job",
         "widget.open-job",
         "widget.menu-widget",
@@ -61,8 +58,8 @@
         "widget.copyright-bar",
         "widget.contact-widget",
         "widget.closed-job",
-        "widget.applied-list"
->>>>>>> Stashed changes
+        "widget.applied-list",
+        "metajob-block.manage-company"
       ]
     },
     "styles": {

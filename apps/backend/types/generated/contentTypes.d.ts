@@ -1909,9 +1909,6 @@ export interface PluginPadmaBackendPrivatePage
         'metajob-block.bookmark',
         'metajob-block.applied-jobs',
         'metajob-block.manage-resume',
-<<<<<<< Updated upstream
-        'metajob-block.manage-company',
-=======
         'widget.total-job',
         'widget.open-job',
         'widget.menu-widget',
@@ -1922,7 +1919,7 @@ export interface PluginPadmaBackendPrivatePage
         'widget.contact-widget',
         'widget.closed-job',
         'widget.applied-list',
->>>>>>> Stashed changes
+        'metajob-block.manage-company',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
