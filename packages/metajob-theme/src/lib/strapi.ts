@@ -18,7 +18,7 @@ const apiUrl = process.env.STRAPI_ENDPOINT || ""
  */
 export const findOne = async (
    model: string,
-   id: number,
+   id: number | string,
    query: any = {},
    cache: "force-cache" | "no-cache" | "no-store" = "force-cache",
    revalidate?: number

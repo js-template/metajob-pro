@@ -1,26 +1,48 @@
 "use client"
 import { Box, Grid, Paper } from "@mui/material"
 import { Button, FormControl, MenuItem, Pagination, Select, TextField, useTheme } from "@mui/material"
-
+import { useSession } from "next-auth/react"
 import Typography from "@mui/material/Typography"
 import _ from "lodash"
 import { useState } from "react"
-
-import { boxHeaderData, rows } from "./data"
 import ManageCompaniesTable from "./table"
 import CIcon from "../../components/common/icon"
 import { AccessError } from "../../shared/error-table"
 import AddCompany from "./add-company"
 import useSWR from "swr"
-import { ManageCompaniesProps } from "./type"
+import { IManageCompanyBock } from "./type"
+import toast from "react-hot-toast"
 
-export const ManageCompanies = ({ block, session }: ManageCompaniesProps) => {
+type Props = {
+   block: IManageCompanyBock
+   language?: string
+}
+
+export const ManageCompanies = ({ block }: Props) => {
    // session data destructuring
+   const { data: session } = useSession()
    const { user } = session || {}
    const { id: userId, role: userRole } = user || {}
    const role = userRole?.type || ""
 
-   const { title, enableSearch, tableHead, empty, form, addButtonText, editButtonText, perPageText } = block || {}
+   // TODO: need to update table form
+   const formData = {
+      title: "a",
+      slug: "s",
+      formStep: 1,
+      stepLabels: [{ id: 1, title: "a" }],
+      buttonsText: "B",
+      fields: [{ label: "L", name: "A" }]
+   } as any
+   const { title, style, empty, table_config, table_head: tableHeader, add_button_placeholder } = block || {}
+   const {
+      label: tableLabel,
+      enable_search,
+      search_placeholder,
+      default_data_count,
+      per_page_placeholder
+   } = table_config || {}
+
    const [addCompany, setAddCompany] = useState(false)
    const theme = useTheme()
    const [search, setSearch] = useState("")
@@ -50,7 +72,7 @@ export const ManageCompanies = ({ block, session }: ManageCompaniesProps) => {
 
    // Fetcher function for SWR
    const queryParams = {
-      populate: "deep",
+      populate: "*",
       pagination: {
          page: pagination.page,
          pageSize: pagination.pageSize,
@@ -80,12 +102,14 @@ export const ManageCompanies = ({ block, session }: ManageCompaniesProps) => {
    const queryString = encodeURIComponent(JSON.stringify(queryParams))
 
    // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-strapi/companies&query=${queryString}&cache=no-store`
+   const apiUrl = `/api/find?model=api/metajob-backend/companies&query=${queryString}&cache=no-store`
 
    const { data: companyData, error, isLoading, mutate } = useSWR(apiUrl, fetcher)
 
    // *** open add company popup
    const handleAddCompany = () => {
+      toast.error("This feature is under development")
+      return
       setAddCompany(true)
    }
 
@@ -112,7 +136,7 @@ export const ManageCompanies = ({ block, session }: ManageCompaniesProps) => {
                      open={addCompany}
                      handleClose={() => setAddCompany(false)}
                      userId={userId}
-                     data={form?.data?.attributes}
+                     data={formData}
                      mutate={mutate}
                   />
                ) : (
@@ -138,33 +162,31 @@ export const ManageCompanies = ({ block, session }: ManageCompaniesProps) => {
                            lineHeight={"24px"}>
                            {title}
                         </Typography>
-                        {form?.data && (
-                           <Button
-                              color='primary'
-                              variant='contained'
-                              onClick={handleAddCompany}
-                              sx={{
-                                 display: "flex",
-                                 gap: 1,
-                                 justifyContent: "center",
-                                 alignItems: "center",
-                                 borderRadius: "8px",
-                                 textTransform: "capitalize",
-                                 boxShadow: "none",
-                                 px: 1.5,
-                                 minWidth: "auto",
-                                 color: (theme) => theme.palette.primary.contrastText + "!important",
-                                 "& svg": {
-                                    color: theme.palette.primary.contrastText + " !important"
-                                 }
-                              }}>
-                              <CIcon icon={"mdi:plus"} size={24} />
-                              {addButtonText && addButtonText}
-                           </Button>
-                        )}
+                        <Button
+                           color='primary'
+                           variant='contained'
+                           onClick={handleAddCompany}
+                           sx={{
+                              display: "flex",
+                              gap: 1,
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "8px",
+                              textTransform: "capitalize",
+                              boxShadow: "none",
+                              px: 1.5,
+                              minWidth: "auto",
+                              color: (theme) => theme.palette.primary.contrastText + "!important",
+                              "& svg": {
+                                 color: theme.palette.primary.contrastText + " !important"
+                              }
+                           }}>
+                           <CIcon icon={"mdi:plus"} size={24} />
+                           {add_button_placeholder || "Add Company"}
+                        </Button>
                      </Box>
                      {/* table data filter actions input fields */}
-                     {enableSearch && (
+                     {enable_search && (
                         <Box
                            sx={{
                               px: 3,
@@ -180,7 +202,7 @@ export const ManageCompanies = ({ block, session }: ManageCompaniesProps) => {
                            <FormControl size='small'>
                               <TextField
                                  id='outlined-basic'
-                                 placeholder={boxHeaderData?.searchPlaceholder}
+                                 placeholder={search_placeholder}
                                  variant='outlined'
                                  onChange={handleSearch}
                                  InputProps={{
@@ -210,8 +232,7 @@ export const ManageCompanies = ({ block, session }: ManageCompaniesProps) => {
 
                      {/* Table */}
                      <ManageCompaniesTable
-                        headCells={tableHead}
-                        rows={rows}
+                        headCells={tableHeader}
                         selectAll={selectAll}
                         setSelectAll={setSelectAll}
                         direction={theme.direction as "ltr" | "rtl"}
@@ -219,8 +240,8 @@ export const ManageCompanies = ({ block, session }: ManageCompaniesProps) => {
                         mutate={mutate}
                         isLoading={isLoading}
                         empty={empty}
-                        userId={userId}
-                        formData={form?.data?.attributes}
+                        // formData={form?.data?.attributes}
+                        formData={formData}
                         pageSize={pagination.pageSize}
                      />
 
@@ -241,9 +262,9 @@ export const ManageCompanies = ({ block, session }: ManageCompaniesProps) => {
                               gap: 1,
                               alignItems: "center"
                            }}>
-                           {perPageText && (
+                           {per_page_placeholder && (
                               <Typography variant='body1' fontWeight={500} lineHeight={"24px"}>
-                                 {perPageText}
+                                 {per_page_placeholder}
                               </Typography>
                            )}
                            <FormControl size='small'>
@@ -287,7 +308,7 @@ export const ManageCompanies = ({ block, session }: ManageCompaniesProps) => {
                                        py: 1
                                     }
                                  }}>
-                                 {_.map(boxHeaderData?.showingPerPage?.options, (option, index) => (
+                                 {_.map([10, 20, 30, 40, 50], (option, index) => (
                                     <MenuItem key={index} value={option}>
                                        {option}
                                     </MenuItem>

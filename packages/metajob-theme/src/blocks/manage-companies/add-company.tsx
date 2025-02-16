@@ -10,7 +10,7 @@ type addCompanyProps = {
    open: boolean
    handleClose: () => void
    data: formProps
-   userId: number
+   userId?: number
    mutate: KeyedMutator<any>
 }
 
