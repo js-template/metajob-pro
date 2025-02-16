@@ -1178,6 +1178,37 @@ export interface PluginMetajobBackendPackage
   };
 }
 
+export interface PluginMetajobBackendQualification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'qualification';
+  info: {
+    description: '';
+    displayName: 'Qualification';
+    pluralName: 'qualifications';
+    singularName: 'qualification';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::metajob-backend.qualification'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    value: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+  };
+}
+
 export interface PluginMetajobBackendResume
   extends Struct.CollectionTypeSchema {
   collectionName: 'resumes';
@@ -1200,6 +1231,7 @@ export interface PluginMetajobBackendResume
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
     education: Schema.Attribute.Component<'block.experience', true>;
     experience: Schema.Attribute.Component<'block.experience', true>;
     experience_time: Schema.Attribute.Relation<
@@ -1294,6 +1326,10 @@ export interface PluginMetajobBackendResume
     name: Schema.Attribute.String;
     portfolio: Schema.Attribute.Component<'block.portfolio', true>;
     publishedAt: Schema.Attribute.DateTime;
+    qualification: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::metajob-backend.qualification'
+    >;
     salary: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.avg-salary'
@@ -1769,12 +1805,29 @@ export interface PluginPadmaBackendPrivateFrontpage
       'oneToOne',
       'plugin::users-permissions.role'
     >;
-    role1Components: Schema.Attribute.DynamicZone<['shared.spacing']>;
+    role1Components: Schema.Attribute.DynamicZone<
+      [
+        'shared.spacing',
+        'widget.count-card',
+        'widget.closed-job',
+        'widget.applied-list',
+        'widget.favorite-list',
+        'widget.matched-list',
+      ]
+    >;
     role2: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.role'
     >;
-    role2Components: Schema.Attribute.DynamicZone<['shared.spacing']>;
+    role2Components: Schema.Attribute.DynamicZone<
+      [
+        'shared.spacing',
+        'widget.total-job',
+        'widget.open-job',
+        'widget.favorite-list',
+        'widget.closed-job',
+      ]
+    >;
     style: Schema.Attribute.Component<'component.grid-container', false>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1856,6 +1909,16 @@ export interface PluginPadmaBackendPrivatePage
         'metajob-block.bookmark',
         'metajob-block.applied-jobs',
         'metajob-block.manage-resume',
+        'widget.total-job',
+        'widget.open-job',
+        'widget.menu-widget',
+        'widget.matched-list',
+        'widget.favorite-list',
+        'widget.count-card',
+        'widget.copyright-bar',
+        'widget.contact-widget',
+        'widget.closed-job',
+        'widget.applied-list',
         'metajob-block.manage-company',
       ]
     > &
@@ -1884,12 +1947,7 @@ export interface PluginPadmaBackendPrivatePage
         };
       }>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    styles: Schema.Attribute.Component<'component.grid-container', false> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+    styles: Schema.Attribute.Component<'component.grid-container', false>;
     title: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -2422,6 +2480,7 @@ declare module '@strapi/strapi' {
       'plugin::metajob-backend.membership': PluginMetajobBackendMembership;
       'plugin::metajob-backend.message': PluginMetajobBackendMessage;
       'plugin::metajob-backend.package': PluginMetajobBackendPackage;
+      'plugin::metajob-backend.qualification': PluginMetajobBackendQualification;
       'plugin::metajob-backend.resume': PluginMetajobBackendResume;
       'plugin::metajob-backend.resume-setting': PluginMetajobBackendResumeSetting;
       'plugin::metajob-backend.revenue': PluginMetajobBackendRevenue;

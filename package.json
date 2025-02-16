@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm --filter core build",
-    "dev": "pnpm --filter core dev",
-    "start": "pmpm -F core start",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "start": "turbo run start",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
