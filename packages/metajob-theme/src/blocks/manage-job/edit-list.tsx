@@ -9,7 +9,7 @@ import DynamicForm from "../../form"
 import { findOne, updateOne } from "../../lib/strapi"
 import _ from "lodash"
 import toast from "react-hot-toast"
-import { ManageListsDataProps } from "./type"
+import { IManageJobBock } from "./type"
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
@@ -26,9 +26,9 @@ type EditListProps = {
    handleClose: () => void
    listID: number
    mutate: KeyedMutator<any>
-   userId: number
+   userId?: number
    formData: formProps
-   data: ManageListsDataProps
+   data: IManageJobBock
 }
 
 export default function EditList({
@@ -128,7 +128,7 @@ export default function EditList({
    React.useEffect(() => {
       const getList = async () => {
          const { data, error } = await findOne(
-            "api/metajob-strapi/jobs",
+            "api/metajob-backend/jobs",
             listID,
             {
                populate: "deep"
@@ -189,7 +189,7 @@ export default function EditList({
             }
          }}>
          <DynamicForm
-            title={data?.editButtonText}
+            title={"Edit"}
             buttonsText={buttonsText}
             fields={fields}
             handleFromSubmit={handleFromSubmit}

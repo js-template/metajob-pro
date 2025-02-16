@@ -4,18 +4,25 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import _ from "lodash"
 import { useState } from "react"
-
+import { useSession } from "next-auth/react"
 import { boxHeaderData } from "./data"
 import { Button } from "@mui/material"
 import CIcon from "../../components/common/icon"
 import ManageListsTable from "./table"
 import AccessError from "./error"
-import { ManageListsProps } from "./type"
+import { IManageJobBock } from "./type"
 import useSWR from "swr"
 import AddList from "./add-list"
+import toast from "react-hot-toast"
 
-export const ManageLists = ({ block, session }: ManageListsProps) => {
+type Props = {
+   block: IManageJobBock
+   language?: string
+}
+
+export const ManageJobs = ({ block }: Props) => {
    // session data destructuring
+   const { data: session } = useSession()
    const { user } = session || {}
    const { id: userId, role: userRole } = user || {}
    const role = userRole?.type || ""
@@ -36,7 +43,25 @@ export const ManageLists = ({ block, session }: ManageListsProps) => {
       total: 0
    })
 
-   const { title, enableSearch, tableHead, empty, form, addButtonText, editButtonText, perPageText } = block || {}
+   // const { title, enableSearch, tableHead, empty, form, addButtonText, editButtonText, perPageText } = block || {}
+   // TODO: need to update table form
+   const formData = {
+      title: "a",
+      slug: "s",
+      formStep: 1,
+      stepLabels: [{ id: 1, title: "a" }],
+      buttonsText: "B",
+      fields: [{ label: "L", name: "A" }]
+   } as any
+
+   const { title, style, empty, table_config, table_head: tableHeader, add_button_placeholder } = block || {}
+   const {
+      label: tableLabel,
+      enable_search,
+      search_placeholder,
+      default_data_count,
+      per_page_placeholder
+   } = table_config || {}
 
    // *** fetcher function for SWR
    const fetcher = async (url: string) => {
@@ -51,7 +76,7 @@ export const ManageLists = ({ block, session }: ManageListsProps) => {
 
    // Fetcher function for SWR
    const queryParams = {
-      populate: "deep",
+      populate: "*",
       pagination: {
          page: pagination.page,
          pageSize: pagination.pageSize,
@@ -84,12 +109,15 @@ export const ManageLists = ({ block, session }: ManageListsProps) => {
    const queryString = encodeURIComponent(JSON.stringify(queryParams))
 
    // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-strapi/jobs&query=${queryString}&cache=no-store`
+   const apiUrl = `/api/find?model=api/metajob-backend/jobs&query=${queryString}&cache=no-store`
 
    const { data: listsData, error, isLoading, mutate } = useSWR(apiUrl, fetcher)
 
+   console.log("listsData", listsData)
+
    // *** open add lists popup
    const handleAddList = () => {
+      return toast.error("This feature is under development")
       setAddList(true)
    }
 
@@ -114,7 +142,7 @@ export const ManageLists = ({ block, session }: ManageListsProps) => {
                   open={addList}
                   handleClose={() => setAddList(false)}
                   userId={userId}
-                  data={form?.data?.attributes}
+                  data={formData}
                   mutate={mutate}
                   listData={block}
                />
@@ -141,33 +169,31 @@ export const ManageLists = ({ block, session }: ManageListsProps) => {
                         lineHeight={"24px"}>
                         {title}
                      </Typography>
-                     {form?.data && (
-                        <Button
-                           color='primary'
-                           variant='contained'
-                           onClick={handleAddList}
-                           sx={{
-                              display: "flex",
-                              gap: 1,
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "8px",
-                              textTransform: "capitalize",
-                              boxShadow: "none",
-                              px: 1.5,
-                              minWidth: "auto",
-                              color: (theme) => theme.palette.primary.contrastText + "!important",
-                              "& svg": {
-                                 color: theme.palette.primary.contrastText + " !important"
-                              }
-                           }}>
-                           <CIcon icon={"mdi:plus"} size={24} />
-                           {addButtonText && addButtonText}
-                        </Button>
-                     )}
+                     <Button
+                        color='primary'
+                        variant='contained'
+                        onClick={handleAddList}
+                        sx={{
+                           display: "flex",
+                           gap: 1,
+                           justifyContent: "center",
+                           alignItems: "center",
+                           borderRadius: "8px",
+                           textTransform: "capitalize",
+                           boxShadow: "none",
+                           px: 1.5,
+                           minWidth: "auto",
+                           color: (theme) => theme.palette.primary.contrastText + "!important",
+                           "& svg": {
+                              color: theme.palette.primary.contrastText + " !important"
+                           }
+                        }}>
+                        <CIcon icon={"mdi:plus"} size={24} />
+                        {add_button_placeholder || "Add Job"}
+                     </Button>
                   </Box>
                   {/* table data filter actions input fields */}
-                  {enableSearch && (
+                  {enable_search && (
                      <Box
                         sx={{
                            px: 3,
@@ -183,7 +209,7 @@ export const ManageLists = ({ block, session }: ManageListsProps) => {
                         <FormControl size='small'>
                            <TextField
                               id='outlined-basic'
-                              placeholder={boxHeaderData?.searchPlaceholder}
+                              placeholder={search_placeholder}
                               variant='outlined'
                               onChange={handleSearch}
                               InputProps={{
@@ -213,7 +239,7 @@ export const ManageLists = ({ block, session }: ManageListsProps) => {
 
                   {/* Table */}
                   <ManageListsTable
-                     headCells={tableHead}
+                     headCells={tableHeader}
                      selectAll={selectAll}
                      setSelectAll={setSelectAll}
                      data={listsData}
@@ -222,7 +248,7 @@ export const ManageLists = ({ block, session }: ManageListsProps) => {
                      isLoading={isLoading}
                      empty={empty}
                      userId={userId}
-                     formData={form?.data?.attributes}
+                     formData={formData}
                      pageSize={pagination.pageSize}
                   />
 
@@ -243,9 +269,9 @@ export const ManageLists = ({ block, session }: ManageListsProps) => {
                            gap: 1,
                            alignItems: "center"
                         }}>
-                        {perPageText && (
+                        {per_page_placeholder && (
                            <Typography variant='body1' fontWeight={500} lineHeight={"24px"}>
-                              {perPageText}
+                              {per_page_placeholder}
                            </Typography>
                         )}
                         <FormControl size='small'>

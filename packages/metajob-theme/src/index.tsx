@@ -24,7 +24,6 @@ import { LatestApplied } from "./blocks/latest-applied"
 import { LatestBookmarks } from "./blocks/latest-bookmarks"
 import { LatestNotifications } from "./blocks/latest-notification"
 
-import { ManageLists } from "./blocks/manage-list"
 import { AppliedList } from "./widgets/applied-list"
 import { FavoriteList } from "./widgets/favorite-list"
 import { MatchedList } from "./widgets/matched-list"
@@ -64,6 +63,7 @@ import { BookmarkTable } from "./blocks/bookmark-table"
 import { AppliedJobs } from "./blocks/applied-jobs"
 import { ManageResume } from "./blocks/manage-resume"
 import { ManageCompanies } from "./blocks/manage-companies"
+import { ManageJobs } from "./blocks/manage-job"
 import { MyProfile } from "./blocks/profile"
 
 // *** get the private components from the mapping
@@ -76,6 +76,7 @@ export const getPrivateComponents = {
    "metajob-block.applied-jobs": { component: AppliedJobs },
    "metajob-block.manage-resume": { component: ManageResume },
    "metajob-block.manage-company": { component: ManageCompanies },
+   "metajob-block.manage-job": { component: ManageJobs },
 
    // ?? Widget mapping
    "widget.total-list": { component: TotalList },
@@ -91,8 +92,6 @@ export const getPrivateComponents = {
    "block.recent-activities": { component: LatestNotifications },
    "block.latest-applied": { component: LatestApplied },
    "config.message": { component: MessageLayout },
-
-   "block.manage-lists": { component: ManageLists },
 
    "block.auth-profile": { component: MyProfile }
 }

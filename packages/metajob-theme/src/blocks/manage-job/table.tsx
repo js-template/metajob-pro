@@ -4,11 +4,9 @@ import _ from "lodash"
 import toast from "react-hot-toast"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import TableItem from "./item"
-
 import { KeyedMutator } from "swr"
-import { emptyProps } from "../../shared/type"
 import { formProps } from "../../types/forms"
-import { ManageListsDataProps } from "./type"
+import { IManageJobBock } from "./type"
 import { TableLoader } from "./loader"
 
 const ManageListsTable = ({
@@ -24,22 +22,29 @@ const ManageListsTable = ({
    pageSize,
    listData
 }: {
-   headCells: {
-      label: string
-      sort: boolean
-      align: "left" | "center" | "right"
-   }[]
+   headCells: { value: string }[]
    selectAll: boolean
    setSelectAll: (value: boolean) => void
    data: any
-   listData: ManageListsDataProps
+   listData: IManageJobBock
    mutate: KeyedMutator<any>
    isLoading: boolean
-   empty: emptyProps
+   empty?: {
+      title: string
+      description: string
+   }
    formData: formProps
-   userId: number
+   userId?: number
    pageSize: number
 }) => {
+   const totalHeader = 6
+   if (headCells && headCells.length > 0 && headCells.length < totalHeader) {
+      const remainHeader = totalHeader - headCells.length
+      for (let i = 0; i < remainHeader; i++) {
+         headCells.push({ value: "" })
+      }
+   }
+
    return (
       <PerfectScrollbar>
          <Box
@@ -67,7 +72,7 @@ const ManageListsTable = ({
                         <TableRow>
                            {_.map(headCells, (headCell, index) => (
                               <TableCell
-                                 align={headCell.align}
+                                 align={index === headCells?.length - 1 ? "center" : "left"}
                                  sx={{
                                     ...(index === 0 && {
                                        minWidth: "200px"
@@ -75,20 +80,7 @@ const ManageListsTable = ({
                                     py: 1.5
                                  }}
                                  key={index}>
-                                 {headCell.sort ? (
-                                    <Box
-                                       sx={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          gap: 1,
-                                          justifyContent: "space-between",
-                                          width: "100%"
-                                       }}>
-                                       <div>{headCell.label}</div>
-                                    </Box>
-                                 ) : (
-                                    headCell.label
-                                 )}
+                                 {headCell?.value}
                               </TableCell>
                            ))}
                         </TableRow>

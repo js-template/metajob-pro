@@ -4,7 +4,7 @@ import { formProps } from "../../types/forms"
 import DynamicForm from "../../form"
 import { KeyedMutator } from "swr"
 import { Box, CircularProgress } from "@mui/material"
-import { ManageListsDataProps } from "./type"
+import { IManageJobBock } from "./type"
 import { createEntry, find } from "../../lib/strapi"
 import toast from "react-hot-toast"
 import _ from "lodash"
@@ -13,9 +13,9 @@ type addListProps = {
    open: boolean
    handleClose: () => void
    data: formProps
-   userId: number
+   userId?: number
    mutate: KeyedMutator<any>
-   listData: ManageListsDataProps
+   listData: IManageJobBock
 }
 
 /**
@@ -110,7 +110,7 @@ const AddList = ({ open, handleClose, data, userId, mutate, listData }: addListP
 
    return data ? (
       <DynamicForm
-         title={listData?.addButtonText}
+         title={"Add Job"}
          buttonsText={buttonsText}
          fields={fields}
          handleFromSubmit={handleFromSubmit}

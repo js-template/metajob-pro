@@ -6,7 +6,7 @@ import CIcon, { SpinnersClock } from "../../components/common/icon"
 import { dateFormatter } from "../../lib/date-format"
 import { deleteEntry } from "../../lib/strapi"
 import toast from "react-hot-toast"
-import { ManageListsDataProps } from "./type"
+import { IManageJobBock } from "./type"
 import EditList from "./edit-list"
 import { KeyedMutator } from "swr"
 import { formProps } from "../../types/forms"
@@ -20,22 +20,23 @@ const TableItem = ({
    userId
 }: {
    job: any
-   listData: ManageListsDataProps
+   listData: IManageJobBock
    mutate: KeyedMutator<any>
    formData: formProps
-   userId: number
+   userId?: number
    selectAll: boolean
    noteFunctionHandler: () => void
 }) => {
-   const { title, slug, publishedAt, status, vacancy, startDate, endDate } = job?.attributes
+   const { title, slug, publishedAt, status, vacancy, startDate, endDate, documentId } = job || {}
    const [loading, setLoading] = useState(false)
    const theme = useTheme()
    const [show, setShow] = useState(false)
 
    const listID = job?.id
-   const model = "api/metajob-strapi/jobs"
+   const model = "api/metajob-backend/jobs"
 
    const handleClickOpen = () => {
+      return toast.error("This feature is under development")
       setShow(true)
    }
 
@@ -49,7 +50,7 @@ const TableItem = ({
          setLoading(true)
 
          try {
-            const { data, error } = await deleteEntry(model, listID)
+            const { data, error } = await deleteEntry(model, documentId)
 
             if (error) {
                throw new Error(error)
@@ -137,7 +138,14 @@ const TableItem = ({
                   justifyContent: "center"
                }}>
                {/* Edit icon */}
-               {listData?.tableConfig?.enableEdit && (
+               <IconButton
+                  sx={{
+                     color: (theme) => theme.palette.text.secondary
+                  }}
+                  onClick={() => handleClickOpen()}>
+                  <CIcon icon='tabler:edit' size={24} />
+               </IconButton>
+               {/* {listData?.tableConfig?.enableEdit && (
                   <IconButton
                      sx={{
                         color: (theme) => theme.palette.text.secondary
@@ -145,9 +153,17 @@ const TableItem = ({
                      onClick={() => handleClickOpen()}>
                      <CIcon icon='tabler:edit' size={24} />
                   </IconButton>
-               )}
+               )} */}
                {/* Delete icon */}
-               {listData?.tableConfig?.enableDelete && (
+               <IconButton
+                  sx={{
+                     color: (theme) => theme.palette.text.secondary
+                  }}
+                  onClick={() => handleDelete()}
+                  disabled={loading}>
+                  {loading ? <SpinnersClock /> : <CIcon icon='tabler:trash' size={24} />}
+               </IconButton>
+               {/* {listData?.tableConfig?.enableDelete && (
                   <IconButton
                      sx={{
                         color: (theme) => theme.palette.text.secondary
@@ -156,7 +172,7 @@ const TableItem = ({
                      disabled={loading}>
                      {loading ? <SpinnersClock /> : <CIcon icon='tabler:trash' size={24} />}
                   </IconButton>
-               )}
+               )} */}
             </TableCell>
          </TableRow>
 
