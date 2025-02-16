@@ -1,10 +1,10 @@
-import { Fragment } from "react"
 import { notFound } from "next/navigation"
 import { Metadata, ResolvingMetadata } from "next"
 import { find } from "@/lib/strapi"
 import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { getLanguageFromCookie } from "@/utils/language"
 import { loadActiveTheme } from "config/theme-loader"
+import { Grid } from "@mui/material"
 
 export const dynamicParams = false // true | false,
 
@@ -16,6 +16,8 @@ export default async function DynamicPages({
 }) {
    const pageSlug = params?.slug
 
+   //console.log("Page Slug", pageSlug)
+
    const language = getLanguageFromCookie()
 
    const { data, error } = await find(
@@ -26,11 +28,7 @@ export default async function DynamicPages({
                $eq: pageSlug
             }
          },
-         populate: {
-            blocks: {
-               populate: "*"
-            }
-         }
+         populate: "*" // populate all the fields
       },
       "no-store"
    )
@@ -38,9 +36,18 @@ export default async function DynamicPages({
    const activeTheme = await loadActiveTheme()
    const getPrivateComponents = activeTheme?.getPrivateComponents || {}
 
+   //console.log("Private Page Data", data?.data)
+
    const blocks = data?.data[0]?.blocks || []
 
    console.log("Private Page Blocks Loaded", blocks)
+   const style = data?.data[0]?.styles || {}
+
+   //console.log("Private Page Styles", style)
+
+   //console.log("Private Page Blocks Loaded", blocks)
+
+   //console.log("Private Page Blocks Loaded", blocks)
 
    // *** if blocks is empty, return 404 ***
    if (!blocks || blocks?.length === 0) {
@@ -52,10 +59,18 @@ export default async function DynamicPages({
    }
 
    return (
-      <>
+      <Grid
+         container
+         {...(style?.columnSpacing && { columnSpacing: style.columnSpacing })}
+         {...(style?.rowSpacing && { rowSpacing: style.rowSpacing })}
+         {...(style?.spacing && { spacing: style.spacing })}
+         {...(style?.zeroMinWidth && { zeroMinWidth: style.zeroMinWidth })}
+         {...(style?.columns && { columns: style.columns })}
+         {...(style?.wrap && { wrap: style.wrap })}
+         sx={{ mb: 4 }}>
          {blocks?.map((block: any, index: number) => {
             const BlockConfig = getPrivateComponents[block.__component as keyof typeof getPrivateComponents]
-
+            console.log("Block Config", BlockConfig)
             if (BlockConfig) {
                const { component: ComponentToRender } = BlockConfig
 
@@ -64,7 +79,7 @@ export default async function DynamicPages({
             }
             return null // Handle the case where the component mapping is missing
          })}
-      </>
+      </Grid>
    )
 }
 

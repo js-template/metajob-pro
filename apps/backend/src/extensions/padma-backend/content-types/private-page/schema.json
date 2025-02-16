@@ -49,19 +49,27 @@
         "metajob-block.bookmark",
         "metajob-block.applied-jobs",
         "metajob-block.manage-resume",
+<<<<<<< Updated upstream
         "metajob-block.manage-company"
+=======
+        "widget.total-job",
+        "widget.open-job",
+        "widget.menu-widget",
+        "widget.matched-list",
+        "widget.favorite-list",
+        "widget.count-card",
+        "widget.copyright-bar",
+        "widget.contact-widget",
+        "widget.closed-job",
+        "widget.applied-list"
+>>>>>>> Stashed changes
       ]
     },
     "styles": {
       "displayName": "grid container",
       "type": "component",
       "repeatable": false,
-      "component": "component.grid-container",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "component": "component.grid-container"
     },
     "seo": {
       "type": "component",
