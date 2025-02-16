@@ -4,7 +4,6 @@ import { find } from "@/lib/strapi"
 import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { getLanguageFromCookie } from "@/utils/language"
 import { loadActiveTheme } from "config/theme-loader"
-import { Grid } from "@mui/material"
 
 export const dynamicParams = false // true | false,
 
@@ -28,7 +27,11 @@ export default async function DynamicPages({
                $eq: pageSlug
             }
          },
-         populate: "*" // populate all the fields
+         populate: {
+            blocks: {
+               populate: "*"
+            }
+         }
       },
       "no-store"
    )
@@ -40,14 +43,7 @@ export default async function DynamicPages({
 
    const blocks = data?.data[0]?.blocks || []
 
-   //console.log("Private Page Blocks Loaded", blocks)
-   const style = data?.data[0]?.styles || {}
-
-   //console.log("Private Page Styles", style)
-
-   //console.log("Private Page Blocks Loaded", blocks)
-
-   //console.log("Private Page Blocks Loaded", blocks)
+   console.log("Private Page Blocks Loaded", blocks)
 
    // *** if blocks is empty, return 404 ***
    if (!blocks || blocks?.length === 0) {
@@ -62,7 +58,7 @@ export default async function DynamicPages({
       <>
          {blocks?.map((block: any, index: number) => {
             const BlockConfig = getPrivateComponents[block.__component as keyof typeof getPrivateComponents]
-            // console.log("Block Config", BlockConfig)
+
             if (BlockConfig) {
                const { component: ComponentToRender } = BlockConfig
 

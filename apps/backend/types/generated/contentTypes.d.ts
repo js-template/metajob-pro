@@ -1920,6 +1920,7 @@ export interface PluginPadmaBackendPrivatePage
         'widget.closed-job',
         'widget.applied-list',
         'metajob-block.manage-company',
+        'metajob-block.manage-job',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
