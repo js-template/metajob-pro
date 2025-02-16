@@ -11,37 +11,48 @@ export default async function DashboardPage({
    searchParams: { [key: string]: string | string[] | undefined }
 }) {
    const session = await auth()
-   // if (!session) {
-   //    redirect("/login")
-   // }
+   if (!session) {
+      redirect("/login")
+   }
 
    const { data, error } = await find("api/padma-backend/private-frontpage", { populate: "*" }, "no-store")
+
+   // console.log("Private Page Data", data?.data)
 
    if (error) {
       console.error("Error fetching dashboard data:", error?.message)
       return <div>Error loading dashboard. Please try again later.</div>
    }
 
-   //const userRoleId = session?.user?.role?.id
-   // console.log("userRoleId", userRoleId)
-   //const userRoleKey = `role${userRoleId}Components`
-   // const roleComponents = data?.data?.[userRoleKey] || []
+   const userRole = session?.user?.role?.name?.toLowerCase() // Normalize role name
+   console.log("User Role:", userRole)
 
-   //console.log("roleComponents", data)
+   // Find the correct role components
+   let roleComponents = []
 
-   // if (roleComponents.length === 0) {
-   //    console.warn(`No components found for role ID: ${userRoleId}`)
-   // }
+   if (data?.data?.role1?.name?.toLowerCase() === userRole) {
+      roleComponents = data?.data?.role1Components || []
+   } else if (data?.data?.role2?.name?.toLowerCase() === userRole) {
+      roleComponents = data?.data?.role2Components || []
+   }
+
+   // console.log("Filtered Role Components:", roleComponents)
+
+   if (roleComponents.length === 0) {
+      console.warn(`No components found for role: ${userRole}`)
+   }
 
    const activeTheme = await loadActiveTheme()
    const getPrivateComponents = activeTheme?.getPrivateComponents || {}
 
+   //console.log("getPrivateComponents", getPrivateComponents)
+
    return (
-      <h1>Will Depcreate soon</h1>
-      // <Body
-      //    blocks={roleComponents} // Pass the role-specific components
-      //    session={session}
-      //    currentThemeComponents={getPrivateComponents}
-      // />
+      <Body
+         blocks={roleComponents} // Pass the role-specific components
+         session={session}
+         currentThemeComponents={getPrivateComponents}
+         style={data?.data?.style}
+      />
    )
 }

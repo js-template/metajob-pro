@@ -12,7 +12,7 @@ export const block = {
       category_placeholder: "Select Category"
    },
    image: {
-      url: "https://res.cloudinary.com/js-template/image/upload/v1727762709/hero_Bg_27e769e7a9.png"
+      url: "https://placeholder.co/300x300"
    },
    style: null
 }

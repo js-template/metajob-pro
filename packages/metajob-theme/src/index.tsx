@@ -84,9 +84,9 @@ export const getPrivateComponents = {
    "widget.closed-list": { component: ClosedList },
    "widget.bookmark-list": { component: ClosedList },
    // ?? Dashboard blocks mapping
-   "widget.applied-lists": { component: AppliedList },
-   "widget.favorite-lists": { component: FavoriteList },
-   "widget.matched-lists": { component: MatchedList },
+   "widget.applied-list": { component: AppliedList },
+   "widget.favorite-list": { component: FavoriteList },
+   "widget.matched-list": { component: MatchedList },
    "shared.spacing": { component: Spacing },
    "block.bookmark-list": { component: LatestBookmarks },
    "block.recent-activities": { component: LatestNotifications },
