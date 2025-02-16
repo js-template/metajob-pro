@@ -1857,6 +1857,7 @@ export interface PluginPadmaBackendPrivatePage
         'metajob-block.applied-jobs',
         'metajob-block.manage-resume',
         'metajob-block.manage-company',
+        'metajob-block.manage-job',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
