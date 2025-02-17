@@ -132,6 +132,7 @@ const ApplyItem = ({ apply, mutate }: { apply: IJobApplyData; mutate: KeyedMutat
                   sx={{
                      backgroundColor: (theme) => theme.palette.text.primary + "10",
                      borderRadius: "8px",
+                     width: { xs: "100%", md: "80%" },
                      borderColor: "divider",
                      minWidth: "70px",
                      "& .MuiSelect-select": {

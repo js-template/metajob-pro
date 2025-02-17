@@ -53,7 +53,6 @@ export default function JobApplications({ open, handleClose, jobDocID, mutate, b
    const [loading, setLoading] = React.useState(false)
    const [jobApplyData, setJobApplyData] = React.useState<any | null>(null)
 
-   console.log("blockData", blockData)
    const { apply_table_head: headCells } = blockData || {}
    const totalHeader = 4
    if (headCells && headCells?.length > 0 && headCells?.length < totalHeader) {
@@ -113,7 +112,7 @@ export default function JobApplications({ open, handleClose, jobDocID, mutate, b
                width: "100%"
             }
          }}>
-         <Box sx={{ width: "100%", pt: 3, pb: 4, px: 2 }}>
+         <Box sx={{ width: "100%", minHeight: "calc(100vh - 271px)", py: 10, px: 2 }}>
             {/* Cancel icon */}
             <Box
                sx={{
