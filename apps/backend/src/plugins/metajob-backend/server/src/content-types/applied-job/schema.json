@@ -22,7 +22,7 @@
     },
     "job": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToMany",
       "target": "plugin::metajob-backend.job",
       "mappedBy": "applications"
     },

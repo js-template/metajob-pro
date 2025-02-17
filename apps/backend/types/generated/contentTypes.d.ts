@@ -528,7 +528,7 @@ export interface PluginMetajobBackendAppliedJob
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    job: Schema.Attribute.Relation<'oneToOne', 'plugin::metajob-backend.job'>;
+    job: Schema.Attribute.Relation<'manyToMany', 'plugin::metajob-backend.job'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
