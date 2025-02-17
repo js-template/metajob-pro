@@ -89,6 +89,15 @@ const ApplyItem = ({ apply, mutate }: { apply: IJobApplyData; mutate: KeyedMutat
             <TableCell>{email}</TableCell>
             <TableCell>
                <Button
+                  sx={{
+                     px: 0,
+                     bgcolor: "transparent",
+                     color: "primary.main",
+                     "&:hover": {
+                        bgcolor: "transparent",
+                        color: "primary.main"
+                     }
+                  }}
                   onClick={() => {
                      handleCardModalOpen()
                   }}>
