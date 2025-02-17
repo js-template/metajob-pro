@@ -113,7 +113,7 @@ export const ManageJobs = ({ block }: Props) => {
 
    const { data: listsData, error, isLoading, mutate } = useSWR(apiUrl, fetcher)
 
-   console.log("listsData", listsData)
+   // console.log("listsData==>", listsData)
 
    // *** open add lists popup
    const handleAddList = () => {

@@ -13,7 +13,7 @@
   "attributes": {
     "apply_status": {
       "type": "enumeration",
-      "enum": ["Shortlisted", "Pending", "Rejected"]
+      "enum": ["Shortlisted", "Selected", "Pending", "Rejected"]
     },
     "owner": {
       "type": "relation",

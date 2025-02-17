@@ -10,6 +10,7 @@ import { IManageJobBock } from "./type"
 import EditList from "./edit-list"
 import { KeyedMutator } from "swr"
 import { formProps } from "../../types/forms"
+import JobApplications from "./job-applications"
 
 const TableItem = ({
    job,
@@ -31,9 +32,17 @@ const TableItem = ({
    const [loading, setLoading] = useState(false)
    const theme = useTheme()
    const [show, setShow] = useState(false)
+   const [jobApplicationShow, setJobApplicationShow] = useState(false)
 
    const listID = job?.id
    const model = "api/metajob-backend/jobs"
+
+   const handleApplicationOpen = () => {
+      setJobApplicationShow(true)
+   }
+   const handleApplicationClose = () => {
+      setJobApplicationShow(false)
+   }
 
    const handleClickOpen = () => {
       return toast.error("This feature is under development")
@@ -114,7 +123,9 @@ const TableItem = ({
             </TableCell>
             <TableCell>{dateFormatter(publishedAt)}</TableCell>
             <TableCell>{dateFormatter(endDate)}</TableCell>
-            <TableCell>{vacancy}</TableCell>
+            <TableCell sx={{ cursor: "pointer" }} onClick={() => handleApplicationOpen()}>
+               {vacancy}
+            </TableCell>
             <TableCell
                sx={{
                   color: (theme) => theme.palette.primary.main
@@ -185,6 +196,15 @@ const TableItem = ({
                listID={listID}
                mutate={mutate}
                userId={userId}
+               data={listData}
+            />
+         )}
+         {jobApplicationShow && (
+            <JobApplications
+               open={jobApplicationShow}
+               handleClose={handleApplicationClose}
+               jobDocID={documentId}
+               mutate={mutate}
                data={listData}
             />
          )}

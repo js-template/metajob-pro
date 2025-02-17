@@ -26,3 +26,29 @@ export type IManageJobBock = {
       desktop: number
    }
 }
+
+export type IJobApplyData = {
+   id: number
+   documentId: string
+   cover_letter: string
+   createdAt: string
+   updatedAt: string
+   publishedAt: string
+   apply_status: string
+   owner: {
+      id: 3
+      documentId: string
+      username: string
+      email: string
+      first_name?: string
+      last_name?: string
+      phone?: string
+   }
+   job: {
+      id: 17
+      documentId: string
+      title: string
+      price: number
+      slug: string
+   }
+}

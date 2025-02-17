@@ -31,3 +31,25 @@ export const TableLoader = ({ numberOfRows }: { numberOfRows?: number }) => {
       </TableRow>
    ))
 }
+export const ApplyTableLoader = ({ numberOfRows }: { numberOfRows?: number }) => {
+   return Array.from(new Array(numberOfRows ?? 5)).map((_, index) => (
+      <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+         <TableCell component='th' scope='row' sx={{ p: "12px 24px" }}>
+            <Skeleton variant='text' width={150} height={20} />
+         </TableCell>
+         <TableCell
+            sx={{
+               py: "21px",
+               display: { xs: "none", sm: "table-cell" }
+            }}>
+            <Skeleton variant='text' width={100} height={20} />
+         </TableCell>
+         <TableCell sx={{ py: "12px" }}>
+            <Skeleton variant='text' width={100} height={20} />
+         </TableCell>
+         <TableCell sx={{ py: "12px" }}>
+            <Skeleton variant='text' width={100} height={20} />
+         </TableCell>
+      </TableRow>
+   ))
+}

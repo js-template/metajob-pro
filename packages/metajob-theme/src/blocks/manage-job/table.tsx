@@ -38,8 +38,8 @@ const ManageListsTable = ({
    pageSize: number
 }) => {
    const totalHeader = 6
-   if (headCells && headCells.length > 0 && headCells.length < totalHeader) {
-      const remainHeader = totalHeader - headCells.length
+   if (headCells && headCells?.length > 0 && headCells?.length < totalHeader) {
+      const remainHeader = totalHeader - headCells?.length
       for (let i = 0; i < remainHeader; i++) {
          headCells.push({ value: "" })
       }
@@ -105,9 +105,9 @@ const ManageListsTable = ({
                            ))}
 
                            {/* Empty message */}
-                           {data?.data.length === 0 && (
+                           {data?.data?.length === 0 && (
                               <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                                 <TableCell colSpan={headCells.length} sx={{ py: 9.7 }}>
+                                 <TableCell colSpan={headCells?.length} sx={{ py: 9.7 }}>
                                     <Box
                                        sx={{
                                           display: "flex",
