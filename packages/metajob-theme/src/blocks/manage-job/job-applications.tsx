@@ -40,16 +40,16 @@ const Transition = React.forwardRef(function Transition(
 type Props = {
    open: boolean
    handleClose: () => void
-   jobDocID: number
+   jobDocID: string
    mutate: KeyedMutator<any>
-   data: IManageJobBock
+   blockData: IManageJobBock
    empty?: {
       title: string
       description: string
    }
 }
 
-export default function JobApplications({ open, handleClose, jobDocID, mutate, data, empty }: Props) {
+export default function JobApplications({ open, handleClose, jobDocID, mutate, blockData, empty }: Props) {
    const [loading, setLoading] = React.useState(false)
    const [jobApplyData, setJobApplyData] = React.useState<any | null>(null)
 

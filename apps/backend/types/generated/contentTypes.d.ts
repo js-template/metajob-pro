@@ -865,6 +865,10 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    applications: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::metajob-backend.applied-job'
+    >;
     category: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.job-category'

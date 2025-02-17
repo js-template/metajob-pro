@@ -27,6 +27,21 @@ export type IManageJobBock = {
    }
 }
 
+export type IJobData = {
+   id: number
+   documentId: string
+   title: string
+   slug: string
+   status: "draft" | "open" | "closed"
+   vacancy: number
+   publishedAt: string
+   endDate: string
+
+   applications: {
+      count?: number
+   }
+}
+
 export type IJobApplyData = {
    id: number
    documentId: string

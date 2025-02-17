@@ -23,7 +23,8 @@
     "job": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::metajob-backend.job"
+      "target": "plugin::metajob-backend.job",
+      "mappedBy": "applications"
     },
     "cover_letter": {
       "type": "richtext"
