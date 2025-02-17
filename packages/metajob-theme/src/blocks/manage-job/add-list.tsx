@@ -15,7 +15,7 @@ type addListProps = {
    data: formProps
    userId?: number
    mutate: KeyedMutator<any>
-   listData: IManageJobBock
+   blockData: IManageJobBock
 }
 
 /**
@@ -34,10 +34,10 @@ type addListProps = {
  *   data={data}
  *   userId={userId}
  *   mutate={mutate}
- *   listData={listData}
+ *   blockData={blockData}
  * />
  */
-const AddList = ({ open, handleClose, data, userId, mutate, listData }: addListProps) => {
+const AddList = ({ open, handleClose, data, userId, mutate, blockData }: addListProps) => {
    const [loading, setLoading] = React.useState(false)
    // *** data format
    const { buttonsText, stepLabels, fields } = data

@@ -6,7 +6,7 @@ import PerfectScrollbar from "react-perfect-scrollbar"
 import TableItem from "./item"
 import { KeyedMutator } from "swr"
 import { formProps } from "../../types/forms"
-import { IManageJobBock } from "./type"
+import { IJobData, IManageJobBock } from "./type"
 import { TableLoader } from "./loader"
 
 const ManageListsTable = ({
@@ -20,13 +20,13 @@ const ManageListsTable = ({
    empty,
    formData,
    pageSize,
-   listData
+   blockData
 }: {
    headCells: { value: string }[]
    selectAll: boolean
    setSelectAll: (value: boolean) => void
-   data: any
-   listData: IManageJobBock
+   data: IJobData[]
+   blockData: IManageJobBock
    mutate: KeyedMutator<any>
    isLoading: boolean
    empty?: {
@@ -38,8 +38,8 @@ const ManageListsTable = ({
    pageSize: number
 }) => {
    const totalHeader = 6
-   if (headCells && headCells.length > 0 && headCells.length < totalHeader) {
-      const remainHeader = totalHeader - headCells.length
+   if (headCells && headCells?.length > 0 && headCells?.length < totalHeader) {
+      const remainHeader = totalHeader - headCells?.length
       for (let i = 0; i < remainHeader; i++) {
          headCells.push({ value: "" })
       }
@@ -89,12 +89,12 @@ const ManageListsTable = ({
                         <TableLoader numberOfRows={pageSize} />
                      ) : (
                         <TableBody>
-                           {data?.data?.map((job: any) => (
+                           {data?.map((job: IJobData) => (
                               <TableItem
                                  key={job.id}
                                  job={job}
                                  selectAll={selectAll}
-                                 listData={listData}
+                                 blockData={blockData}
                                  mutate={mutate}
                                  noteFunctionHandler={() => {
                                     toast.error("Note function not implemented yet")
@@ -105,9 +105,9 @@ const ManageListsTable = ({
                            ))}
 
                            {/* Empty message */}
-                           {data?.data.length === 0 && (
+                           {data?.length === 0 && (
                               <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                                 <TableCell colSpan={headCells.length} sx={{ py: 9.7 }}>
+                                 <TableCell colSpan={headCells?.length} sx={{ py: 9.7 }}>
                                     <Box
                                        sx={{
                                           display: "flex",

@@ -6,34 +6,44 @@ import CIcon, { SpinnersClock } from "../../components/common/icon"
 import { dateFormatter } from "../../lib/date-format"
 import { deleteEntry } from "../../lib/strapi"
 import toast from "react-hot-toast"
-import { IManageJobBock } from "./type"
+import { IJobData, IManageJobBock } from "./type"
 import EditList from "./edit-list"
 import { KeyedMutator } from "swr"
 import { formProps } from "../../types/forms"
+import JobApplications from "./job-applications"
+import { hexToRGBA } from "../../lib/hex-to-rgba"
 
 const TableItem = ({
    job,
    selectAll,
-   listData,
+   blockData,
    mutate,
    formData,
    userId
 }: {
-   job: any
-   listData: IManageJobBock
+   job: IJobData
+   blockData: IManageJobBock
    mutate: KeyedMutator<any>
    formData: formProps
    userId?: number
    selectAll: boolean
    noteFunctionHandler: () => void
 }) => {
-   const { title, slug, publishedAt, status, vacancy, startDate, endDate, documentId } = job || {}
+   const { title, slug, publishedAt, status, applications, endDate, documentId } = job || {}
    const [loading, setLoading] = useState(false)
    const theme = useTheme()
    const [show, setShow] = useState(false)
+   const [jobApplicationShow, setJobApplicationShow] = useState(false)
 
    const listID = job?.id
    const model = "api/metajob-backend/jobs"
+
+   const handleApplicationOpen = () => {
+      setJobApplicationShow(true)
+   }
+   const handleApplicationClose = () => {
+      setJobApplicationShow(false)
+   }
 
    const handleClickOpen = () => {
       return toast.error("This feature is under development")
@@ -114,11 +124,20 @@ const TableItem = ({
             </TableCell>
             <TableCell>{dateFormatter(publishedAt)}</TableCell>
             <TableCell>{dateFormatter(endDate)}</TableCell>
-            <TableCell>{vacancy}</TableCell>
-            <TableCell
-               sx={{
-                  color: (theme) => theme.palette.primary.main
-               }}>
+            <TableCell sx={{ cursor: "pointer" }} onClick={() => handleApplicationOpen()}>
+               <Typography
+                  variant='body2'
+                  sx={{
+                     bgcolor: hexToRGBA(theme.palette.primary.main, 0.2),
+                     textAlign: "center",
+                     borderRadius: "4px",
+                     color: (theme) => theme.palette.text.primary,
+                     p: 0.5
+                  }}>
+                  {applications?.count || 0}
+               </Typography>
+            </TableCell>
+            <TableCell>
                <Chip
                   label={<Typography variant='body2'>{status}</Typography>}
                   color={status === "open" ? "primary" : "error"}
@@ -145,7 +164,7 @@ const TableItem = ({
                   onClick={() => handleClickOpen()}>
                   <CIcon icon='tabler:edit' size={24} />
                </IconButton>
-               {/* {listData?.tableConfig?.enableEdit && (
+               {/* {blockData?.tableConfig?.enableEdit && (
                   <IconButton
                      sx={{
                         color: (theme) => theme.palette.text.secondary
@@ -163,7 +182,7 @@ const TableItem = ({
                   disabled={loading}>
                   {loading ? <SpinnersClock /> : <CIcon icon='tabler:trash' size={24} />}
                </IconButton>
-               {/* {listData?.tableConfig?.enableDelete && (
+               {/* {blockData?.tableConfig?.enableDelete && (
                   <IconButton
                      sx={{
                         color: (theme) => theme.palette.text.secondary
@@ -185,7 +204,16 @@ const TableItem = ({
                listID={listID}
                mutate={mutate}
                userId={userId}
-               data={listData}
+               blockData={blockData}
+            />
+         )}
+         {jobApplicationShow && (
+            <JobApplications
+               open={jobApplicationShow}
+               handleClose={handleApplicationClose}
+               jobDocID={documentId}
+               mutate={mutate}
+               blockData={blockData}
             />
          )}
       </Fragment>

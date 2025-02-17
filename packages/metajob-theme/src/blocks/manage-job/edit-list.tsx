@@ -28,7 +28,7 @@ type EditListProps = {
    mutate: KeyedMutator<any>
    userId?: number
    formData: formProps
-   data: IManageJobBock
+   blockData: IManageJobBock
 }
 
 export default function EditList({
@@ -39,7 +39,7 @@ export default function EditList({
    mutate,
    userId,
    formData,
-   data
+   blockData
 }: EditListProps) {
    const [loading, setLoading] = React.useState(false)
    const [listData, setListData] = React.useState<{

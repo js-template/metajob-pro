@@ -14,6 +14,9 @@ export type IManageJobBock = {
    table_head: {
       value: string
    }[]
+   apply_table_head: {
+      value: string
+   }[]
    empty?: {
       title: string
       description: string
@@ -24,5 +27,45 @@ export type IManageJobBock = {
       mobile: number
       tab: number
       desktop: number
+   }
+}
+
+export type IJobData = {
+   id: number
+   documentId: string
+   title: string
+   slug: string
+   status: "draft" | "open" | "closed"
+   vacancy: number
+   publishedAt: string
+   endDate: string
+   applications: {
+      count?: number
+   }
+}
+
+export type IJobApplyData = {
+   id: number
+   documentId: string
+   cover_letter: string
+   createdAt: string
+   updatedAt: string
+   publishedAt: string
+   apply_status: string
+   owner: {
+      id: 3
+      documentId: string
+      username: string
+      email: string
+      first_name?: string
+      last_name?: string
+      phone?: string
+   }
+   job: {
+      id: 17
+      documentId: string
+      title: string
+      price: number
+      slug: string
    }
 }

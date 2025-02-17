@@ -76,7 +76,10 @@ export const ManageJobs = ({ block }: Props) => {
 
    // Fetcher function for SWR
    const queryParams = {
-      populate: "*",
+      // populate: "*",
+      populate: {
+         applications: { count: true }
+      },
       pagination: {
          page: pagination.page,
          pageSize: pagination.pageSize,
@@ -113,8 +116,6 @@ export const ManageJobs = ({ block }: Props) => {
 
    const { data: listsData, error, isLoading, mutate } = useSWR(apiUrl, fetcher)
 
-   console.log("listsData", listsData)
-
    // *** open add lists popup
    const handleAddList = () => {
       return toast.error("This feature is under development")
@@ -144,7 +145,7 @@ export const ManageJobs = ({ block }: Props) => {
                   userId={userId}
                   data={formData}
                   mutate={mutate}
-                  listData={block}
+                  blockData={block}
                />
             ) : (
                <>
@@ -242,8 +243,8 @@ export const ManageJobs = ({ block }: Props) => {
                      headCells={tableHeader}
                      selectAll={selectAll}
                      setSelectAll={setSelectAll}
-                     data={listsData}
-                     listData={block}
+                     data={listsData?.data}
+                     blockData={block}
                      mutate={mutate}
                      isLoading={isLoading}
                      empty={empty}

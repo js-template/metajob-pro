@@ -13,7 +13,7 @@
   "attributes": {
     "apply_status": {
       "type": "enumeration",
-      "enum": ["Shortlisted", "Pending", "Rejected"]
+      "enum": ["Shortlisted", "Selected", "Pending", "Rejected"]
     },
     "owner": {
       "type": "relation",
@@ -22,8 +22,9 @@
     },
     "job": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::metajob-backend.job"
+      "relation": "manyToMany",
+      "target": "plugin::metajob-backend.job",
+      "mappedBy": "applications"
     },
     "cover_letter": {
       "type": "richtext"
