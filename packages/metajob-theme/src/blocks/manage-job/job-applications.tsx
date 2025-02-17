@@ -53,9 +53,10 @@ export default function JobApplications({ open, handleClose, jobDocID, mutate, b
    const [loading, setLoading] = React.useState(false)
    const [jobApplyData, setJobApplyData] = React.useState<any | null>(null)
 
-   const headCells = [] as any
-   const totalHeader = 6
-   if (headCells && headCells.length > 0 && headCells.length < totalHeader) {
+   console.log("blockData", blockData)
+   const { apply_table_head: headCells } = blockData || {}
+   const totalHeader = 4
+   if (headCells && headCells?.length > 0 && headCells?.length < totalHeader) {
       const remainHeader = totalHeader - headCells.length
       for (let i = 0; i < remainHeader; i++) {
          headCells.push({ value: "" })

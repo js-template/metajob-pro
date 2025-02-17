@@ -904,6 +904,10 @@ export interface MetajobBlockManageJob extends Struct.ComponentSchema {
   };
   attributes: {
     add_button_placeholder: Schema.Attribute.String;
+    apply_table_head: Schema.Attribute.Component<
+      'metajob-config.meta-data',
+      true
+    >;
     description: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;

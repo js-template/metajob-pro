@@ -22,6 +22,11 @@
       "repeatable": true,
       "component": "metajob-config.meta-data"
     },
+    "apply_table_head": {
+      "type": "component",
+      "repeatable": true,
+      "component": "metajob-config.meta-data"
+    },
     "empty": {
       "type": "component",
       "repeatable": false,

@@ -15,7 +15,7 @@ const ApplyItem = ({ apply, mutate }: { apply: IJobApplyData; mutate: KeyedMutat
    const { documentId, cover_letter, apply_status, publishedAt, owner, job } = apply || {}
    const { email, first_name, last_name } = owner || {}
    const { title, slug } = job || {}
-   const applicantName = first_name ? first_name : getNameFromEmail(email)
+   const applicantName = first_name ? `${first_name} ${last_name}` : getNameFromEmail(email)
 
    const [loading, setLoading] = useState(false)
    const [applyStatus, setApplyStatus] = useState(apply_status)
@@ -63,8 +63,8 @@ const ApplyItem = ({ apply, mutate }: { apply: IJobApplyData; mutate: KeyedMutat
                   py: 1
                },
                "& td:last-child": {
-                  pr: theme.direction === "rtl" ? 0 : 5,
-                  pl: theme.direction === "ltr" ? 0 : 5
+                  pr: theme.direction === "rtl" ? 0 : 2,
+                  pl: theme.direction === "ltr" ? 0 : 2
                },
                "&:last-child td, &:last-child th": { border: 0 }
             }}>
@@ -100,8 +100,8 @@ const ApplyItem = ({ apply, mutate }: { apply: IJobApplyData; mutate: KeyedMutat
                   color: (theme) => theme.palette.primary.main
                }}>
                <Select
-                  labelId='per_page'
-                  id='per_page'
+                  labelId='apply-status'
+                  id='apply-status'
                   autoWidth
                   defaultValue={apply_status || ""}
                   onChange={(e) => {

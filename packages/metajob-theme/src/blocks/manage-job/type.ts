@@ -14,6 +14,9 @@ export type IManageJobBock = {
    table_head: {
       value: string
    }[]
+   apply_table_head: {
+      value: string
+   }[]
    empty?: {
       title: string
       description: string
@@ -36,7 +39,6 @@ export type IJobData = {
    vacancy: number
    publishedAt: string
    endDate: string
-
    applications: {
       count?: number
    }
