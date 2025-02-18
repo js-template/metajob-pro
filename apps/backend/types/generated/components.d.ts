@@ -920,6 +920,21 @@ export interface MetajobBlockManageJob extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockManagePackages extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_manage_packages';
+  info: {
+    description: 'Manage package block';
+    displayName: 'Manage Package';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobBlockManageResume extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_manage_resumes';
   info: {
@@ -1471,6 +1486,7 @@ declare module '@strapi/strapi' {
       'metajob-block.job-filter': MetajobBlockJobFilter;
       'metajob-block.manage-company': MetajobBlockManageCompany;
       'metajob-block.manage-job': MetajobBlockManageJob;
+      'metajob-block.manage-packages': MetajobBlockManagePackages;
       'metajob-block.manage-resume': MetajobBlockManageResume;
       'metajob-config.header-config': MetajobConfigHeaderConfig;
       'metajob-config.header-field': MetajobConfigHeaderField;

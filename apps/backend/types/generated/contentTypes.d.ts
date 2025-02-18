@@ -1058,7 +1058,7 @@ export interface PluginMetajobBackendJobType
 }
 
 export interface PluginMetajobBackendMembership
-  extends Struct.SingleTypeSchema {
+  extends Struct.CollectionTypeSchema {
   collectionName: 'memberships';
   info: {
     description: '';
@@ -1073,19 +1073,24 @@ export interface PluginMetajobBackendMembership
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.membership'
     > &
       Schema.Attribute.Private;
+    owner: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     publishedAt: Schema.Attribute.DateTime;
-    table: Schema.Attribute.DynamicZone<['block.pricing']>;
-    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user_plan: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::metajob-backend.package'
+    >;
   };
 }
 
@@ -1889,6 +1894,7 @@ export interface PluginPadmaBackendPrivatePage
         'widget.applied-list',
         'metajob-block.manage-company',
         'metajob-block.manage-job',
+        'metajob-block.manage-packages',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

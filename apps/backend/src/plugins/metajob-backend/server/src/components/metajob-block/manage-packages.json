@@ -1,0 +1,29 @@
+{
+  "info": {
+    "displayName": "Manage Package",
+    "icon": "arrowRight",
+    "description": "Manage package block"
+  },
+  "category": "metajob-block",
+  "modelName": "manage-package",
+  "uid": "metajob-block.manage-package",
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}
