@@ -60,7 +60,8 @@
         "widget.closed-job",
         "widget.applied-list",
         "metajob-block.manage-company",
-        "metajob-block.manage-job"
+        "metajob-block.manage-job",
+        "metajob-block.manage-packages"
       ]
     },
     "styles": {
