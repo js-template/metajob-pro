@@ -7,7 +7,7 @@ import OpenError from "./error"
 import { IUserSession } from "../../types/user"
 import { find } from "@/lib/strapi"
 
-export const FavoriteList = async ({
+export const OpenJob = async ({
    block,
    session
 }: {
@@ -27,9 +27,9 @@ export const FavoriteList = async ({
       "api/padma-backend/private-frontpage",
       {
          populate: {
-            role1Components: {
+            role2Components: {
                on: {
-                  "widget.favorite-list": {
+                  "widget.open-job": {
                      populate: "*"
                   }
                }
@@ -40,11 +40,12 @@ export const FavoriteList = async ({
    )
 
    const { data: JobData, error: JobError } = await find(
-      "api/metajob-backend/bookmarks",
+      "api/metajob-backend/jobs",
       {
          fields: ["id"],
          filters: {
-            owner: userId
+            owner: userId,
+            status: "open"
          }
       },
       "no-store"
@@ -52,14 +53,13 @@ export const FavoriteList = async ({
 
    const openJob = JobData?.meta?.pagination.total || 0
 
-   console.log("Open Job Data", data, error)
    // Extract relevant data
    const componentData =
-      data?.data?.role1Components?.find((comp: any) => comp.__component === "widget.favorite-list")?.details || null
+      data?.data?.role2Components?.find((comp: any) => comp.__component === "widget.open-job")?.details || null
 
    const isLoading = !data && !error
 
-   return role === "candidate" ? (
+   return role === "employer" ? (
       <>
          {isLoading ? (
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>

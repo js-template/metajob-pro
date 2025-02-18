@@ -4,8 +4,8 @@ import { Box, Typography } from "@mui/material"
 import NextLink from "next/link"
 import { countCardProps } from "./type"
 
-export const CountCard = ({ item }: { item: countCardProps }) => {
-   const { title, subTitle, count, isLink, link, target } = item
+export const CountCard = ({ item, count }: { item: countCardProps; count: number }) => {
+   const { title, subTitle, isLink, link, target } = item
 
    return (
       <Box
