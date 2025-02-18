@@ -1,15 +1,13 @@
-"use client"
 import { Grid } from "@mui/material"
-import { CountCard } from "../../components/cards/count"
+import { CountCard } from "../../shared/count-card"
 import CountCardLoader from "../../shared/count-card/loader"
-import useSWR from "swr"
-import { fetcher } from "../../utils/swr-fetcher"
 import _ from "lodash"
-import { countCardProps } from "../../shared/count-card/type"
-import FavoriteError from "./error"
-import { IUserSession } from "../../types/user"
 
-export const FavoriteList = ({
+import OpenError from "./error"
+import { IUserSession } from "../../types/user"
+import { find } from "@/lib/strapi"
+
+export const FavoriteList = async ({
    block,
    session
 }: {
@@ -18,36 +16,48 @@ export const FavoriteList = ({
    data?: any
    language?: string
 }) => {
-   // session data destructuring
    const { user } = session || {}
    const { id: userId, role: userRole } = user || {}
    const role = userRole?.type || ""
 
-   const queryParams = {
-      fields: ["id"],
-      filters: {
-         owner: {
-            id: userId
-         },
-         type: "list"
-      }
-   }
-
-   const totalList = block?.details || ({} as countCardProps)
    const styleData = block?.style || {}
 
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
+   // Fetch component data
+   const { data, error } = await find(
+      "api/padma-backend/private-frontpage",
+      {
+         populate: {
+            role1Components: {
+               on: {
+                  "widget.favorite-list": {
+                     populate: "*"
+                  }
+               }
+            }
+         }
+      },
+      "no-store"
+   )
 
-   // // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-strapi/bookmarks?query=${queryString}&cache=no-store`
+   const { data: JobData, error: JobError } = await find(
+      "api/metajob-backend/bookmarks",
+      {
+         fields: ["id"],
+         filters: {
+            owner: userId
+         }
+      },
+      "no-store"
+   )
 
-   const {
-      data: countData,
-      error,
-      isLoading
-   } = useSWR(apiUrl, block?.details?.dynamicCount && role === "candidate" ? fetcher : null)
-   const dynamicTotalList = _.get(countData, "meta.pagination.total", null)
+   const openJob = JobData?.meta?.pagination.total || 0
+
+   console.log("Open Job Data", data, error)
+   // Extract relevant data
+   const componentData =
+      data?.data?.role1Components?.find((comp: any) => comp.__component === "widget.favorite-list")?.details || null
+
+   const isLoading = !data && !error
 
    return role === "candidate" ? (
       <>
@@ -57,20 +67,17 @@ export const FavoriteList = ({
             </Grid>
          ) : (
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
-               <CountCard
-                  item={{
-                     ...totalList,
-                     count: block?.details?.dynamicCount ? dynamicTotalList : totalList.count
-                  }}
-                  style={styleData}
-               />
+               <CountCard item={componentData} count={openJob} />
             </Grid>
+            // <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
+            //    <CountCard item={componentData} count={totalJob} style={styleData} />
+            // </Grid>
          )}
       </>
    ) : (
-      // Add message for employer
+      // Add message for candidate
       <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
-         <FavoriteError />
+         <OpenError />
       </Grid>
    )
 }
