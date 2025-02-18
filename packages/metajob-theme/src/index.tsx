@@ -3,9 +3,9 @@ import PlaceholderComponent from "./utils/placeholder"
 
 // widgets import
 
-import { TotalList } from "./widgets/total-list"
-import { ClosedList } from "./widgets/closed-list"
-import { OpenList } from "./widgets/open-list"
+import { TotalJobs } from "./widgets/total-job"
+import { ClosedJob } from "./widgets/closed-job"
+import { OpenJob } from "./widgets/open-job"
 import BreadCrumbs from "./components/breadcrumbs"
 import Checkbox from "./components/checkbox"
 import { Card } from "./components/common/card"
@@ -14,7 +14,7 @@ import CIcon from "./components/common/icon"
 
 import TextFieldWithLabel from "./components/textField-with-label"
 import Spacing from "./shared/spacing"
-export * from "./widgets/applied-list"
+export * from "./widgets/applied-job"
 export * from "./widgets/favorite-list"
 export * from "./widgets/matched-list"
 
@@ -24,7 +24,7 @@ import { LatestApplied } from "./blocks/latest-applied"
 import { LatestBookmarks } from "./blocks/latest-bookmarks"
 import { LatestNotifications } from "./blocks/latest-notification"
 
-import { AppliedList } from "./widgets/applied-list"
+import { AppliedJob } from "./widgets/applied-job"
 import { FavoriteList } from "./widgets/favorite-list"
 import { MatchedList } from "./widgets/matched-list"
 
@@ -79,12 +79,12 @@ export const getPrivateComponents = {
    "metajob-block.manage-job": { component: ManageJobs },
 
    // ?? Widget mapping
-   "widget.total-list": { component: TotalList },
-   "widget.open-list": { component: OpenList },
-   "widget.closed-list": { component: ClosedList },
-   "widget.bookmark-list": { component: ClosedList },
+   "widget.total-job": { component: TotalJobs },
+   "widget.open-job": { component: OpenJob },
+   "widget.closed-job": { component: ClosedJob },
+   //"widget.bookmark-list": { component: ClosedList },
    // ?? Dashboard blocks mapping
-   "widget.applied-list": { component: AppliedList },
+   "widget.applied-list": { component: AppliedJob },
    "widget.favorite-list": { component: FavoriteList },
    "widget.matched-list": { component: MatchedList },
    "shared.spacing": { component: Spacing },
