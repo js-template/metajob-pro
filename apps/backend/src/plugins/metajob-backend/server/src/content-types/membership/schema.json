@@ -1,5 +1,5 @@
 {
-  "kind": "singleType",
+  "kind": "collectionType",
   "collectionName": "memberships",
   "info": {
     "singularName": "membership",
@@ -12,15 +12,15 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string"
+    "owner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     },
-    "description": {
-      "type": "text"
-    },
-    "table": {
-      "type": "dynamiczone",
-      "components": ["block.pricing"]
+    "user_plan": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.package"
     }
   }
 }
