@@ -64,6 +64,7 @@ import { AppliedJobs } from "./blocks/applied-jobs"
 import { ManageResume } from "./blocks/manage-resume"
 import { ManageCompanies } from "./blocks/manage-companies"
 import { ManageJobs } from "./blocks/manage-job"
+import { ManagePackage } from "./blocks/manage-package"
 import { MyProfile } from "./blocks/profile"
 
 // *** get the private components from the mapping
@@ -77,6 +78,7 @@ export const getPrivateComponents = {
    "metajob-block.manage-resume": { component: ManageResume },
    "metajob-block.manage-company": { component: ManageCompanies },
    "metajob-block.manage-job": { component: ManageJobs },
+   "metajob-block.manage-packages": { component: ManagePackage },
 
    // ?? Widget mapping
    "widget.total-list": { component: TotalList },
