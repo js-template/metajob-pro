@@ -19,6 +19,7 @@ import ResumePreviewBox from "./resumePreview"
 import { steps } from "./data"
 import { removeIdFromObjects } from "./hook"
 import { mutate } from "swr"
+import { AccessError } from "../../shared/error-table"
 
 type Props = {
    block: IManageResumeBlock
@@ -29,7 +30,8 @@ export const ManageResume = ({ block, language }: Props) => {
    // session data destructuring
    const { data: session } = useSession()
    const { user } = session || {}
-   const { id: userId } = user || {}
+   const { id: userId, role: userRole } = user || {}
+   const role = userRole?.type || ""
 
    const [loading, setLoading] = useState(false)
    const [activeStep, setActiveStep] = useState(0)
@@ -288,7 +290,7 @@ export const ManageResume = ({ block, language }: Props) => {
       setIsPreview(false)
    }
 
-   return (
+   return role === "candidate" ? (
       <Grid item xs={12}>
          <Box>
             {isPreview ? (
@@ -494,5 +496,7 @@ export const ManageResume = ({ block, language }: Props) => {
             )}
          </Box>
       </Grid>
+   ) : (
+      <AccessError roleValue={"Candidate"} />
    )
 }

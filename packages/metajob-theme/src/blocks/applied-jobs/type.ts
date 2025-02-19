@@ -41,5 +41,5 @@ export type IApplyJobData = {
       startDate: string
       endDate: string
       vacancy: number
-   }
+   }[]
 }

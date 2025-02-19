@@ -9,7 +9,7 @@ const TableItem = ({ application }: { application: IApplyJobData }) => {
    const theme = useTheme()
 
    const { apply_status } = application || {}
-   const { title, vacancy, startDate, endDate, slug } = application?.job || {}
+   const { title, vacancy, startDate, endDate, slug } = application?.job?.[0] || {}
 
    return (
       <Fragment>
