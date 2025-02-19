@@ -10,6 +10,8 @@ import CardItem from "./item"
 import { IUserSession } from "../../types/user"
 import { IReviewsBlock } from "./types"
 import { SectionTitle } from "../../components/section-title"
+import { fetcher } from "./hook"
+import useSWR from "swr"
 
 type Props = {
    block: IReviewsBlock
@@ -22,7 +24,7 @@ export const ReviewCard = ({ block, language }: Props) => {
    const theme = useTheme()
 
    // destructure the block
-   const { content, empty, style, reviews } = block || {}
+   const { content, empty, style } = block || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
 
    const slider = React.useRef<Slider | null>(null)
@@ -72,8 +74,20 @@ export const ReviewCard = ({ block, language }: Props) => {
       ]
    }
 
+   //===================Starts fetching testimonial data============
+   const testimonialQueryParams = {
+      populate: "*"
+      // locale: language ? [language] : ["en"]
+   }
+   const testimonialQueryString = encodeURIComponent(JSON.stringify(testimonialQueryParams))
+   const testimonialAPiUrl = `/api/find?model=api/metajob-backend/testimonials&query=${testimonialQueryString}`
+   const { data: testimonialsAll, isLoading } = useSWR(testimonialAPiUrl, fetcher, {
+      fallbackData: []
+   })
+   const testimonialData = testimonialsAll?.data
+
    return (
-      <Stack py={8} bgcolor={backgroundColor ? backgroundColor : theme.palette.background.paper}>
+      <Stack py={8} bgcolor={backgroundColor ? backgroundColor : theme.palette.background.default}>
          <Container maxWidth='lg' sx={{ py: 2 }}>
             <Stack spacing={8}>
                <Stack spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
@@ -81,16 +95,25 @@ export const ReviewCard = ({ block, language }: Props) => {
                   {content && <SectionTitle data={content} />}
                </Stack>
                <Stack position={"relative"}>
-                  {reviews && reviews?.length > 0 && (
+                  {testimonialData && testimonialData?.length > 1 && (
                      <Slider {...settings} ref={slider}>
-                        {_.map(reviews, (review, index) => (
+                        {_.map(testimonialData, (review, index) => (
                            <CardItem key={index} data={review} />
                         ))}
                      </Slider>
                   )}
+                  {testimonialData && testimonialData?.length == 1 && (
+                     <Box sx={{ display: "flex", justifyContent: "flex-start", width: "100%" }}>
+                        <Box sx={{ maxWidth: 600 }}>
+                           {_.map(testimonialData, (review, index) => (
+                              <CardItem key={index} data={review} />
+                           ))}
+                        </Box>
+                     </Box>
+                  )}
 
                   {/* empty data */}
-                  {reviews?.length == 0 && (
+                  {testimonialData?.length == 0 && (
                      <Stack
                         sx={{
                            display: "flex",
