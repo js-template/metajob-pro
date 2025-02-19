@@ -11,33 +11,48 @@ export default async function DashboardPage({
    params: { page: string }
    searchParams: { [key: string]: string | string[] | undefined }
 }) {
+   // Get user session
    const session = await auth()
    if (!session) {
       redirect("/login")
    }
 
-   const { data, error } = await find("api/padma-backend/private-frontpage", { populate: "*" }, "no-store")
+   const userRole = session?.user?.role?.name?.toLowerCase()
 
-   // console.log("Private Page Data", data?.data)
+   /// console.log("User role", userRole)
+
+   if (!userRole) {
+      return <div>You are not allowed to access this page.</div>
+   }
+
+   // Define which role components to fetch
+   const roleComponentField =
+      userRole === "candidate" ? "role1Components" : userRole === "employer" ? "role2Components" : null
+
+   console.log("Role component field", roleComponentField)
+   if (!roleComponentField) {
+      return <div>You are not allowed to access this page.</div>
+   }
+
+   // Fetch only relevant role components
+   const { data, error } = await find(
+      "api/padma-backend/private-frontpage",
+      {
+         populate: {
+            [roleComponentField]: {
+               populate: "*"
+            }
+         }
+      },
+      "no-store"
+   )
 
    if (error) {
       console.error("Error fetching dashboard data:", error?.message)
       return <div>Error loading dashboard. Please try again later.</div>
    }
 
-   const userRole = session?.user?.role?.name?.toLowerCase() // Normalize role name
-   console.log("User Role:", userRole)
-
-   // Find the correct role components
-   let roleComponents = []
-
-   if (data?.data?.role1?.name?.toLowerCase() === userRole) {
-      roleComponents = data?.data?.role1Components || []
-   } else if (data?.data?.role2?.name?.toLowerCase() === userRole) {
-      roleComponents = data?.data?.role2Components || []
-   }
-
-   //console.log("Filtered Role Components:", roleComponents)
+   const roleComponents = data?.data?.[roleComponentField] || []
 
    if (roleComponents.length === 0) {
       console.warn(`No components found for role: ${userRole}`)
@@ -46,12 +61,10 @@ export default async function DashboardPage({
    const activeTheme = await loadActiveTheme()
    const getPrivateComponents = activeTheme?.getPrivateComponents || {}
 
-   //console.log("getPrivateComponents", getPrivateComponents)
-
    return (
       <Suspense fallback={<div>Loading...</div>}>
          <Body
-            blocks={roleComponents} // Pass the role-specific components
+            blocks={roleComponents} // Pass the filtered role components
             session={session}
             currentThemeComponents={getPrivateComponents}
             style={data?.data?.style}

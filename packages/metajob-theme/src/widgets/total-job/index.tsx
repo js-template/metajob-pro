@@ -2,7 +2,6 @@ import { Grid } from "@mui/material"
 import { CountCard } from "../../shared/count-card"
 import TotalError from "./error"
 import CountCardLoader from "../../shared/count-card/loader"
-// import { countCardProps } from "../../shared/count-card/type"
 import { IUserSession } from "../../types/user"
 import { find } from "@/lib/strapi"
 
@@ -14,22 +13,7 @@ export const TotalJobs = async ({ block, session }: { block: any; session?: IUse
 
    const styleData = block?.style || {}
 
-   // Fetch component data
-   const { data, error } = await find(
-      "api/padma-backend/private-frontpage",
-      {
-         populate: {
-            role2Components: {
-               on: {
-                  "widget.total-job": {
-                     populate: "*"
-                  }
-               }
-            }
-         }
-      },
-      "no-store"
-   )
+   const componentData = block?.details || null
 
    const { data: JobData, error: JobError } = await find(
       "api/metajob-backend/jobs",
@@ -44,11 +28,7 @@ export const TotalJobs = async ({ block, session }: { block: any; session?: IUse
 
    const totalJob = JobData?.meta?.pagination.total || 0
 
-   console.log("Total Job Data", totalJob)
-
    // Extract relevant data
-   const componentData =
-      data?.data?.role2Components?.find((comp: any) => comp.__component === "widget.total-job")?.details || null
 
    // If the user is not an employer, return an error message early
    if (role !== "employer") {
@@ -60,7 +40,7 @@ export const TotalJobs = async ({ block, session }: { block: any; session?: IUse
    }
 
    // If data is not available yet, return a loading state
-   if (!data && !error) {
+   if (!block) {
       return (
          <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
             <CountCardLoader />

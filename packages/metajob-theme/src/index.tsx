@@ -92,6 +92,7 @@ export const getPrivateComponents = {
    "block.recent-activities": { component: LatestNotifications },
    "block.latest-applied": { component: LatestApplied },
    "config.message": { component: MessageLayout },
+   "block.notification-list": { component: LatestNotifications },
 
    "block.auth-profile": { component: MyProfile }
 }

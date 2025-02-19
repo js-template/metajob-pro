@@ -1288,6 +1288,7 @@ export interface UiJobInfo extends Struct.ComponentSchema {
 export interface WidgetAppliedList extends Struct.ComponentSchema {
   collectionName: 'components_widget_applied_lists';
   info: {
+    description: '';
     displayName: 'Applied List';
     icon: 'oneToOne';
   };
@@ -1342,21 +1343,14 @@ export interface WidgetCopyrightBar extends Struct.ComponentSchema {
 export interface WidgetCountCard extends Struct.ComponentSchema {
   collectionName: 'components_widget_count_cards';
   info: {
+    description: '';
     displayName: 'Count Card';
     icon: 'apps';
   };
   attributes: {
-    count: Schema.Attribute.BigInteger;
-    dynamicCount: Schema.Attribute.Boolean;
     enableStats: Schema.Attribute.Boolean;
     isLink: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    link: Schema.Attribute.String;
-    model: Schema.Attribute.String;
     subTitle: Schema.Attribute.String;
-    target: Schema.Attribute.Enumeration<
-      ['_self', '_blank', '_parent', '_top']
-    > &
-      Schema.Attribute.DefaultTo<'_self'>;
     title: Schema.Attribute.String;
   };
 }

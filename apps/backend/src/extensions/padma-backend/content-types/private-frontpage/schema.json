@@ -28,7 +28,8 @@
         "widget.closed-job",
         "widget.applied-list",
         "widget.favorite-list",
-        "widget.matched-list"
+        "widget.matched-list",
+        "block.notification-list"
       ]
     },
     "role2": {
@@ -43,7 +44,8 @@
         "widget.total-job",
         "widget.open-job",
         "widget.favorite-list",
-        "widget.closed-job"
+        "widget.closed-job",
+        "block.notification-list"
       ]
     },
     "style": {
