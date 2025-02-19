@@ -22,23 +22,6 @@ export const OpenJob = async ({
 
    const styleData = block?.style || {}
 
-   // Fetch component data
-   const { data, error } = await find(
-      "api/padma-backend/private-frontpage",
-      {
-         populate: {
-            role2Components: {
-               on: {
-                  "widget.open-job": {
-                     populate: "*"
-                  }
-               }
-            }
-         }
-      },
-      "no-store"
-   )
-
    const { data: JobData, error: JobError } = await find(
       "api/metajob-backend/jobs",
       {
@@ -54,14 +37,11 @@ export const OpenJob = async ({
    const openJob = JobData?.meta?.pagination.total || 0
 
    // Extract relevant data
-   const componentData =
-      data?.data?.role2Components?.find((comp: any) => comp.__component === "widget.open-job")?.details || null
-
-   const isLoading = !data && !error
+   const componentData = block?.details || null
 
    return role === "employer" ? (
       <>
-         {isLoading ? (
+         {!componentData ? (
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
                <CountCardLoader />
             </Grid>
@@ -69,9 +49,6 @@ export const OpenJob = async ({
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
                <CountCard item={componentData} count={openJob} />
             </Grid>
-            // <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
-            //    <CountCard item={componentData} count={totalJob} style={styleData} />
-            // </Grid>
          )}
       </>
    ) : (

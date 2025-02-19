@@ -17,6 +17,7 @@ import MessageController from "./message";
 import ExperienceLevelController from "./experience-level";
 import SalaryTypeController from "./salary-type";
 import AvgSalaryController from "./avg-salary";
+import emailHistory from "./email-history";
 
 export default {
   "job-setting": JobSettingController,
@@ -36,6 +37,7 @@ export default {
   "experience-level": ExperienceLevelController,
   "salary-type": SalaryTypeController,
   "avg-salary": AvgSalaryController,
+  "email-history": emailHistory,
 
   controller,
 };

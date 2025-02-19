@@ -24,30 +24,13 @@ export const ClosedJob = async ({
 
    const styleData = block?.style || {}
 
-   // Fetch component data
-   const { data, error } = await find(
-      "api/padma-backend/private-frontpage",
-      {
-         populate: {
-            role2Components: {
-               on: {
-                  "widget.closed-job": {
-                     populate: "*"
-                  }
-               }
-            }
-         }
-      },
-      "no-store"
-   )
-
    const { data: JobData, error: JobError } = await find(
       "api/metajob-backend/jobs",
       {
          fields: ["id"],
          filters: {
             owner: userId,
-            status: "open"
+            status: "closed"
          }
       },
       "no-store"
@@ -56,14 +39,11 @@ export const ClosedJob = async ({
    const closedJob = JobData?.meta?.pagination.total || 0
 
    // Extract relevant data
-   const componentData =
-      data?.data?.role2Components?.find((comp: any) => comp.__component === "widget.closed-job")?.details || null
-
-   const isLoading = !data && !error
+   const componentData = block?.details || null
 
    return role === "employer" ? (
       <>
-         {isLoading ? (
+         {!componentData ? (
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
                <CountCardLoader />
             </Grid>

@@ -22,23 +22,6 @@ export const FavoriteList = async ({
 
    const styleData = block?.style || {}
 
-   // Fetch component data
-   const { data, error } = await find(
-      "api/padma-backend/private-frontpage",
-      {
-         populate: {
-            role1Components: {
-               on: {
-                  "widget.favorite-list": {
-                     populate: "*"
-                  }
-               }
-            }
-         }
-      },
-      "no-store"
-   )
-
    const { data: JobData, error: JobError } = await find(
       "api/metajob-backend/bookmarks",
       {
@@ -52,16 +35,12 @@ export const FavoriteList = async ({
 
    const openJob = JobData?.meta?.pagination.total || 0
 
-   console.log("Open Job Data", data, error)
    // Extract relevant data
-   const componentData =
-      data?.data?.role1Components?.find((comp: any) => comp.__component === "widget.favorite-list")?.details || null
-
-   const isLoading = !data && !error
+   const componentData = block?.details || null
 
    return role === "candidate" ? (
       <>
-         {isLoading ? (
+         {!componentData ? (
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
                <CountCardLoader />
             </Grid>
@@ -69,9 +48,6 @@ export const FavoriteList = async ({
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
                <CountCard item={componentData} count={openJob} />
             </Grid>
-            // <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
-            //    <CountCard item={componentData} count={totalJob} style={styleData} />
-            // </Grid>
          )}
       </>
    ) : (

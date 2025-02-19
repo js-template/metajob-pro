@@ -72,6 +72,7 @@ export const CountCard = ({ item, count }: { item: countCardProps; count: number
 
          {isLink && (
             <Box
+               // @ts-ignore
                component={NextLink}
                href={link ?? ""}
                target={target ?? "_self"}

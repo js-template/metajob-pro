@@ -21,23 +21,7 @@ export const AppliedJob = async ({
    const role = userRole?.type || ""
 
    const styleData = block?.style || {}
-
-   // Fetch component data
-   const { data, error } = await find(
-      "api/padma-backend/private-frontpage",
-      {
-         populate: {
-            role1Components: {
-               on: {
-                  "widget.applied-list": {
-                     populate: "*"
-                  }
-               }
-            }
-         }
-      },
-      "no-store"
-   )
+   const componentData = block?.details || {}
 
    const { data: JobData, error: JobError } = await find(
       "api/metajob-backend/applied-jobs",
@@ -52,16 +36,9 @@ export const AppliedJob = async ({
 
    const appliedJob = JobData?.meta?.pagination.total || 0
 
-   // Extract relevant data
-   const componentData =
-      data?.data?.role1Components?.find((comp: any) => comp.__component === "widget.applied-list")?.details || null
-
-   //console.log("Applied Job Data", componentData, "error", error)
-   const isLoading = !data && !error
-
    return role === "candidate" ? (
       <>
-         {isLoading ? (
+         {!block ? (
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
                <CountCardLoader />
             </Grid>
