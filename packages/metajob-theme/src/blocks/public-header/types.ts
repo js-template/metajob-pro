@@ -1,8 +1,3 @@
-export type IPublicHeaderProps = {
-   block: IPublicHeaderBlock
-   language?: string
-}
-
 export type IPublicHeaderBlock = {
    id: number
    __component: string
