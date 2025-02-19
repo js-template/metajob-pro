@@ -1787,6 +1787,7 @@ export interface PluginPadmaBackendPrivateFrontpage
         'widget.favorite-list',
         'widget.matched-list',
         'block.notification-list',
+        'block.bookmark-list',
       ]
     >;
     role2: Schema.Attribute.Relation<
@@ -1801,6 +1802,7 @@ export interface PluginPadmaBackendPrivateFrontpage
         'widget.favorite-list',
         'widget.closed-job',
         'block.notification-list',
+        'block.bookmark-list',
       ]
     >;
     style: Schema.Attribute.Component<'component.grid-container', false>;

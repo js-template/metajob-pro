@@ -54,7 +54,7 @@ const TableItem = ({
                         textOverflow: "ellipsis",
                         WebkitLineClamp: 1
                      }}>
-                     {item?.title}
+                     {item?.job?.title || item?.resume?.name}
                   </Typography>
                )}
             </TableCell>
