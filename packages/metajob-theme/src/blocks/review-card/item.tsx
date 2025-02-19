@@ -3,12 +3,12 @@ import Image from "next/image"
 import { Stack, Typography, useTheme } from "@mui/material"
 import _ from "lodash"
 import { ISingleReview } from "./types"
-import CIcon from "../../components/common/icon"
+// import CIcon from "../../components/common/icon"
 
 const CardItem = ({ data }: { data: ISingleReview }) => {
    const theme = useTheme()
 
-   const { reviewer, review, avatar, rating } = data || {}
+   const { name, designation, review, avatar } = data || {}
    // const url = avatar?.url || "https://placehold.co/64/png"
    const url = avatar?.url
 
@@ -34,21 +34,21 @@ const CardItem = ({ data }: { data: ISingleReview }) => {
                   />
                )}
                <Stack>
-                  {reviewer && (
+                  {name && (
                      <Typography color='text.primary' fontWeight={400} fontSize={20}>
-                        {reviewer}
+                        {name}
                      </Typography>
                   )}
-                  {/* {designation && (
+                  {designation && (
                      <Typography color='text.disabled' fontWeight={400} fontSize={14}>
                         {designation}
                      </Typography>
-                  )} */}
+                  )}
                </Stack>
             </Stack>
 
             <Stack direction={"row"} spacing={2} alignItems={"center"}>
-               <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
+               {/* <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
                   <CIcon
                      icon='solar:star-bold'
                      size={16}
@@ -68,7 +68,7 @@ const CardItem = ({ data }: { data: ISingleReview }) => {
                      }}>
                      ({rating || "0"})
                   </Typography>
-               </Stack>
+               </Stack> */}
                <Stack>
                   {review && (
                      <Typography color='text.disabled' fontWeight={400} fontSize={16}>
