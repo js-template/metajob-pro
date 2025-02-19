@@ -41,6 +41,9 @@ export default async function DashboardPage({
          populate: {
             [roleComponentField]: {
                populate: "*"
+            },
+            style: {
+               populate: "*"
             }
          }
       },
