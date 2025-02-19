@@ -1,6 +1,5 @@
-"use client"
 import { Grid } from "@mui/material"
-import { CountCard } from "../../components/cards/count"
+import { CountCard } from "../../shared/count-card"
 import CountCardLoader from "../../shared/count-card/loader"
 import useSWR from "swr"
 import { fetcher } from "../../utils/swr-fetcher"
@@ -8,8 +7,9 @@ import _ from "lodash"
 import { countCardProps } from "../../shared/count-card/type"
 import OpenError from "./error"
 import { IUserSession } from "../../types/user"
+import { find } from "@/lib/strapi"
 
-export const OpenList = ({
+export const ClosedJob = async ({
    block,
    session
 }: {
@@ -18,36 +18,48 @@ export const OpenList = ({
    data?: any
    language?: string
 }) => {
-   // session data destructuring
    const { user } = session || {}
    const { id: userId, role: userRole } = user || {}
    const role = userRole?.type || ""
 
-   const queryParams = {
-      fields: ["id"],
-      filters: {
-         owner: {
-            id: userId
-         },
-         status: "open"
-      }
-   }
-
-   const totalList = block?.details || ({} as countCardProps)
    const styleData = block?.style || {}
 
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
+   // Fetch component data
+   const { data, error } = await find(
+      "api/padma-backend/private-frontpage",
+      {
+         populate: {
+            role2Components: {
+               on: {
+                  "widget.closed-job": {
+                     populate: "*"
+                  }
+               }
+            }
+         }
+      },
+      "no-store"
+   )
 
-   // // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-strapi/jobs&query=${queryString}&cache=no-store`
+   const { data: JobData, error: JobError } = await find(
+      "api/metajob-backend/jobs",
+      {
+         fields: ["id"],
+         filters: {
+            owner: userId,
+            status: "open"
+         }
+      },
+      "no-store"
+   )
 
-   const {
-      data: countData,
-      error,
-      isLoading
-   } = useSWR(apiUrl, block?.details?.dynamicCount && role === "employer" ? fetcher : null)
-   const dynamicTotalList = _.get(countData, "meta.pagination.total", null)
+   const closedJob = JobData?.meta?.pagination.total || 0
+
+   // Extract relevant data
+   const componentData =
+      data?.data?.role2Components?.find((comp: any) => comp.__component === "widget.closed-job")?.details || null
+
+   const isLoading = !data && !error
 
    return role === "employer" ? (
       <>
@@ -57,13 +69,7 @@ export const OpenList = ({
             </Grid>
          ) : (
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
-               <CountCard
-                  item={{
-                     ...totalList,
-                     count: block?.details?.dynamicCount ? dynamicTotalList : totalList.count
-                  }}
-                  style={styleData}
-               />
+               <CountCard item={componentData} count={closedJob} />
             </Grid>
          )}
       </>

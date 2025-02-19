@@ -7,7 +7,7 @@ import OpenError from "./error"
 import { IUserSession } from "../../types/user"
 import { find } from "@/lib/strapi"
 
-export const FavoriteList = async ({
+export const AppliedJob = async ({
    block,
    session
 }: {
@@ -29,7 +29,7 @@ export const FavoriteList = async ({
          populate: {
             role1Components: {
                on: {
-                  "widget.favorite-list": {
+                  "widget.applied-list": {
                      populate: "*"
                   }
                }
@@ -40,7 +40,7 @@ export const FavoriteList = async ({
    )
 
    const { data: JobData, error: JobError } = await find(
-      "api/metajob-backend/bookmarks",
+      "api/metajob-backend/applied-jobs",
       {
          fields: ["id"],
          filters: {
@@ -50,13 +50,13 @@ export const FavoriteList = async ({
       "no-store"
    )
 
-   const openJob = JobData?.meta?.pagination.total || 0
+   const appliedJob = JobData?.meta?.pagination.total || 0
 
-   console.log("Open Job Data", data, error)
    // Extract relevant data
    const componentData =
-      data?.data?.role1Components?.find((comp: any) => comp.__component === "widget.favorite-list")?.details || null
+      data?.data?.role1Components?.find((comp: any) => comp.__component === "widget.applied-list")?.details || null
 
+   //console.log("Applied Job Data", componentData, "error", error)
    const isLoading = !data && !error
 
    return role === "candidate" ? (
@@ -67,11 +67,8 @@ export const FavoriteList = async ({
             </Grid>
          ) : (
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
-               <CountCard item={componentData} count={openJob} />
+               <CountCard item={componentData} count={appliedJob} />
             </Grid>
-            // <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
-            //    <CountCard item={componentData} count={totalJob} style={styleData} />
-            // </Grid>
          )}
       </>
    ) : (

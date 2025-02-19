@@ -1,5 +1,6 @@
 import { find } from "@/lib/strapi"
 import Body from "./body"
+import React, { Suspense } from "react"
 import { auth } from "@/context/auth"
 import { redirect } from "next/navigation"
 import { loadActiveTheme } from "config/theme-loader"
@@ -36,7 +37,7 @@ export default async function DashboardPage({
       roleComponents = data?.data?.role2Components || []
    }
 
-   // console.log("Filtered Role Components:", roleComponents)
+   //console.log("Filtered Role Components:", roleComponents)
 
    if (roleComponents.length === 0) {
       console.warn(`No components found for role: ${userRole}`)
@@ -48,11 +49,13 @@ export default async function DashboardPage({
    //console.log("getPrivateComponents", getPrivateComponents)
 
    return (
-      <Body
-         blocks={roleComponents} // Pass the role-specific components
-         session={session}
-         currentThemeComponents={getPrivateComponents}
-         style={data?.data?.style}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+         <Body
+            blocks={roleComponents} // Pass the role-specific components
+            session={session}
+            currentThemeComponents={getPrivateComponents}
+            style={data?.data?.style}
+         />
+      </Suspense>
    )
 }
