@@ -8,8 +8,6 @@ export type recentActivitiesProps = {
 }
 
 export type recentActivitiesItemProps = {
-   attributes: {
-      dateTime: string
-      title: string
-   }
+   dateTime: string
+   title: string
 }

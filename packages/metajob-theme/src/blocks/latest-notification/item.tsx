@@ -9,9 +9,7 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
    const theme = useTheme()
    //const direction = theme.direction
 
-   console.log("Items", item)
-
-   const { title, dateTime } = item?.attributes || {}
+   const { title, dateTime } = item || {}
 
    return (
       <Fragment>
