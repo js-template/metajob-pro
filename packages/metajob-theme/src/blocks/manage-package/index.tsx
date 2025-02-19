@@ -6,7 +6,7 @@ import useSWR from "swr"
 import _ from "lodash"
 import { Box, Grid, Paper, Stack, Typography } from "@mui/material"
 import { IManagePackageBock } from "./types"
-import AccessError from "./error"
+import { AccessError } from "../../shared/error-table"
 import { PackageItem } from "./item"
 import { fetcher } from "./hook"
 
