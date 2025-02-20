@@ -70,7 +70,5 @@ export async function generateMetadata(): Promise<Metadata> {
       "force-cache"
    )
 
-   console.log("Product", product)
-
    return StrapiSeoFormate(product?.data?.data?.seo)
 }

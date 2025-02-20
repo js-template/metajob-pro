@@ -20,66 +20,6 @@ type Props = {
    params: { slug: string; item: string }
 }
 
-// *** generate metadata for the page
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-   const pageSlug = params?.slug // e.g., "job", "resume"
-   const pageItem = params?.item // e.g., "fullstack" or "designer"
-
-   // ?? Fetch the permalink structure from Strapi
-   const { data } = await find("api/padma-backend/permalink", {
-      populate: "*"
-      // publicationState: "live",
-      // locale: ["en"]
-   })
-
-   // ?? Get the singlePages from the permalink data
-   const singlePages = data?.data?.attributes?.singlePage
-
-   // ?? If no matching page is found, return 404
-   if (!singlePages) {
-      return {
-         title: "404 - Not Found",
-         description: "Page not found"
-      }
-   }
-
-   // ?? find the pageItem in the singlePages slug
-   const singlePageData = singlePages?.find((page: any) => page.slug === pageSlug)
-
-   // ?? Get he seo data for the page from Strapi
-   const { data: seoData } = await find(
-      singlePageData?.collectionModel,
-      {
-         filters: {
-            slug: {
-               $eq: pageItem
-            }
-         },
-         populate: "*"
-      },
-      "no-cache"
-   )
-
-   // ?? If no matching page is found, return 404
-   if (!seoData) {
-      return {
-         title: "404 - Not Found",
-         description: "Page not found"
-      }
-   }
-
-   // ?? if seo is not available, return default data
-   if (!seoData?.data?.[0]?.attributes?.seo) {
-      return {
-         title: seoData?.data[0]?.attributes?.title || "Title not found",
-         description: seoData?.data[0]?.attributes?.description || "Description not found"
-      }
-   }
-
-   // ?? Return the formatted SEO data
-   return StrapiSeoFormate(seoData?.data?.[0]?.attributes?.seo, `/${pageSlug}/${pageItem}`)
-}
-
 export default async function DynamicPages({ params }: Props) {
    const session = await auth()
 
@@ -225,4 +165,68 @@ export async function generateStaticParams() {
       slug: post?.slug,
       item: post?.item
    }))
+}
+
+// *** generate metadata for the page
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+   const pageSlug = params?.slug // e.g., "job", "resume"
+   const pageItem = params?.item // e.g., "fullstack" or "designer"
+
+   // ?? Fetch the permalink structure from Strapi
+   const { data } = await find("api/padma-backend/permalink", {
+      populate: "*"
+      // publicationState: "live",
+      // locale: ["en"]
+   })
+
+   // ?? Get the singlePages from the permalink data
+   const singlePages = data?.data?.singlePage
+
+   console.log("singlePages", singlePages)
+
+   // ?? If no matching page is found, return 404
+   if (!singlePages) {
+      return {
+         title: "404 - Not Found",
+         description: "Page not found"
+      }
+   }
+
+   // ?? find the pageItem in the singlePages slug
+   const singlePageData = singlePages?.find((page: any) => page.slug === pageSlug)
+
+   // ?? Get he seo data for the page from Strapi
+   const { data: seoData } = await find(
+      singlePageData?.collectionModel,
+      {
+         filters: {
+            slug: {
+               $eq: pageItem
+            }
+         },
+         populate: "*"
+      },
+      "no-cache"
+   )
+
+   console.log("seoData", seoData)
+
+   // ?? If no matching page is found, return 404
+   if (!seoData) {
+      return {
+         title: "404 - Not Found",
+         description: "Page not found"
+      }
+   }
+
+   // ?? if seo is not available, return default data
+   if (!seoData?.data?.[0]?.seo) {
+      return {
+         title: seoData?.data[0]?.title || seoData?.data[0]?.name,
+         description: seoData?.data[0]?.description || "Description not found"
+      }
+   }
+
+   // ?? Return the formatted SEO data
+   return StrapiSeoFormate(seoData?.data?.[0]?.seo, `/${pageSlug}/${pageItem}`)
 }
