@@ -1,21 +1,20 @@
 "use client"
 import { Box, CircularProgress, Grid, Paper } from "@mui/material"
 import { Suspense } from "react"
+import { useSession } from "next-auth/react"
 import ChatSection from "./chats"
-import { IUserSession } from "../../types/user"
+import { IMessageBock } from "./type"
 
-export const MessageLayout = ({
-   block,
-   session
-}: {
-   block: any
-   session?: IUserSession | null | any
-   data?: any
+type Props = {
+   block: IMessageBock
    language?: string
-}) => {
+}
+
+export const MessageLayout = ({ block }: Props) => {
    // session data destructuring
+   const { data: session } = useSession()
    const { user } = session || {}
-   const { id: userId, role: userRole } = user || {}
+   const { id: userId, role: userRole, email: userEmail } = user || {}
    const role = userRole?.type || ""
 
    // *** If the user role is not an candidate or employer, redirect to the dashboard
@@ -76,7 +75,7 @@ export const MessageLayout = ({
                      />
                   </Box>
                }>
-               <ChatSection data={block} role={role} userId={userId} />
+               <ChatSection blockData={block} role={role} userId={userId} userEmail={userEmail} />
             </Suspense>
          </Paper>
       </Grid>

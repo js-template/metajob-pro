@@ -1,32 +1,27 @@
 "use client"
-import { Box, CircularProgress, Typography, useMediaQuery, useTheme } from "@mui/material"
-import _ from "lodash"
 import { Fragment, useEffect, useMemo, useState } from "react"
-import PerfectScrollbar from "react-perfect-scrollbar"
-import MessageItem from "./MessageItem"
-import SendMessage from "./SendMessage"
+import _ from "lodash"
 import useSWR from "swr"
-import { MessageDataProps } from "./type"
-import { createEntry, updateOne } from "../../lib/strapi"
 import toast from "react-hot-toast"
-// { empty, candidateId, chatId }: { empty: boolean; candidateId?: number; chatId?: number }
+import { Box, CircularProgress, Typography, useMediaQuery, useTheme } from "@mui/material"
+import PerfectScrollbar from "react-perfect-scrollbar"
+import MessageItem from "./item"
+import { MessageDataProps } from "./type"
+import SendMessage from "./send-message"
+import { createEntry, updateOne } from "../../lib/strapi"
 
 const MessageBox = ({
-   empty,
-   candidateId,
+   noMessage,
    chatId,
-   data,
+   blockData,
    role,
-   userId,
-   setChatId
+   userId
 }: {
-   empty: boolean
-   candidateId?: number
-   chatId?: number | null
-   data: any
+   noMessage: boolean
+   chatId?: number | string | null
+   blockData: any
    role: string
-   userId: number
-   setChatId: React.Dispatch<React.SetStateAction<number | null>>
+   userId?: number
 }) => {
    const theme = useTheme()
    const hidden = useMediaQuery(theme.breakpoints.up("lg"))
@@ -67,41 +62,43 @@ const MessageBox = ({
          throw new Error(result.error)
       }
 
-      if (!result?.data?.data && result?.data?.data.length === 0) {
+      if (!result?.data?.data && result?.data?.data?.length === 0) {
          throw new Error("Chat session not found")
       }
+      const resultData = result?.data?.data[0]
 
       return {
-         id: result?.data?.data[0]?.id,
-         ...result?.data?.data[0]?.attributes,
+         id: resultData?.id,
+         ...resultData,
          receiver: {
-            id: result?.data?.data[0]?.attributes.receiver?.data?.id,
-            ...result?.data?.data[0]?.attributes.receiver?.data?.attributes,
+            id: resultData?.receiver?.id,
+            ...resultData?.receiver,
             avatar: {
-               id: result?.data?.data[0]?.attributes.receiver?.data?.attributes?.avatar?.data?.id,
-               ...result?.data?.data[0]?.attributes.receiver?.data?.attributes?.avatar?.data?.attributes
+               id: resultData?.receiver?.avatar?.id,
+               ...resultData?.receiver?.avatar
             }
          },
          sender: {
-            id: result?.data?.data[0]?.attributes.sender?.data?.id,
-            ...result?.data?.data[0]?.attributes.sender?.data?.attributes,
+            id: resultData?.sender?.id,
+            ...resultData?.sender,
             avatar: {
-               id: result?.data?.data[0]?.attributes.sender?.data?.attributes?.avatar?.data?.id,
-               ...result?.data?.data[0]?.attributes.sender?.data?.attributes?.avatar?.data?.attributes
+               id: resultData?.sender?.avatar?.id,
+               ...resultData?.sender?.avatar
             }
          },
          job: {
-            id: result?.data?.data[0]?.attributes.job?.data?.id,
-            ...result?.data?.data[0]?.attributes.job?.data?.attributes
+            id: resultData?.job?.id,
+            ...resultData?.job
          }
       }
    }
 
    // ?? create chat session query params
    const chatQueryParams = {
-      populate: "deep",
+      // populate: "deep",
+      populate: "*",
       filters: {
-         id: {
+         documentId: {
             $eq: chatId
          }
       }
@@ -111,7 +108,7 @@ const MessageBox = ({
    const chatQueryString = encodeURIComponent(JSON.stringify(chatQueryParams))
 
    const { data: sessionInfo, mutate: chatSessionMutate } = useSWR(
-      `/api/find?model=api/metajob-strapi/chats&query=${chatQueryString}&cache=no-store`,
+      `/api/find?model=api/metajob-backend/chats&query=${chatQueryString}&cache=no-store`,
       chatId ? chatSessionFetcher : null,
       {
          // revalidateOnFocus: false,
@@ -133,31 +130,28 @@ const MessageBox = ({
       if (result.error) {
          throw new Error(result.error)
       }
-
       // data format
       const filtered = result?.data?.data?.map((c: any) => {
          return {
             messageId: c.id,
-            id: c.attributes.sender?.data?.id,
-            message: c?.attributes?.message,
-            date: c?.attributes?.createdAt,
-            name:
-               c?.attributes?.sender?.data?.attributes?.firstName +
-               " " +
-               c?.attributes?.sender?.data?.attributes?.lastName,
-            avatar: c?.attributes?.sender?.data?.attributes?.avatar?.data?.attributes?.url,
-            read: c?.attributes?.read,
+            documentId: c.documentId,
+            id: c?.sender?.id,
+            message: c?.message,
+            date: c?.createdAt,
+            name: c?.sender?.first_name + " " + c?.sender?.last_name,
+            avatar: c?.sender?.avatar?.url,
+            read: c?.read,
             images:
-               _.map(c?.attributes?.medias?.data, (item) => {
+               _.map(c?.medias?.data, (item) => {
                   return {
                      id: item.id,
-                     src: item?.attributes?.url,
-                     alt: item?.attributes?.alternativeText,
-                     caption: item?.attributes?.caption,
-                     width: item?.attributes?.width,
-                     height: item?.attributes?.height,
-                     createdAt: item?.attributes?.createdAt,
-                     updatedAt: item?.attributes?.updatedAt
+                     src: item?.url,
+                     alt: item?.alternativeText,
+                     caption: item?.caption,
+                     width: item?.width,
+                     height: item?.height,
+                     createdAt: item?.createdAt,
+                     updatedAt: item?.updatedAt
                   }
                }) || []
          }
@@ -167,11 +161,23 @@ const MessageBox = ({
    }
 
    const queryParams = {
-      populate: "deep",
+      // populate: "deep",
+      // populate: "*",
+      populate: {
+         sender: {
+            populate: "*"
+         },
+         receiver: {
+            populate: "*"
+         },
+         chat_session: {
+            populate: "*"
+         }
+      },
       sort: "createdAt:DESC",
       filters: {
          chat_session: {
-            id: chatId
+            documentId: chatId
          }
          // sender: {
          //    firstName: {
@@ -205,7 +211,7 @@ const MessageBox = ({
       isLoading,
       mutate: messagesMutate
    } = useSWR(
-      `/api/find?model=api/metajob-strapi/messages&query=${queryString}&cache=no-store`,
+      `/api/find?model=api/metajob-backend/messages&query=${queryString}&cache=no-store`,
       chatId ? messageFetcher : null,
       {
          refreshInterval: 10000,
@@ -213,8 +219,6 @@ const MessageBox = ({
          revalidateOnReconnect: true
       }
    )
-
-   console.log("chatData", chatData)
 
    useEffect(() => {
       if (scrollEl) scrollToBottom()
@@ -236,7 +240,7 @@ const MessageBox = ({
    useEffect(() => {
       if (unreadMessages.length > 0) {
          unreadMessages.forEach(async (message: MessageDataProps) => {
-            await updateOne("metajob-strapi/messages", message.messageId, {
+            await updateOne("metajob-backend/messages", message?.documentId, {
                data: {
                   read: true,
                   send_notification: false
@@ -264,15 +268,8 @@ const MessageBox = ({
    // *** send message function handler
    const sendMessage = async (data: any) => {
       if (sessionInfo && chatId) {
-         // ?? if sessionInfo receiver or sender id, firstName, lastName is not null or undefined then return error
-         if (
-            !sessionInfo.receiver.id ||
-            !sessionInfo.receiver.firstName ||
-            !sessionInfo.receiver.lastName ||
-            !sessionInfo.sender.id ||
-            !sessionInfo.sender.firstName ||
-            !sessionInfo.sender.lastName
-         ) {
+         // ?? if sessionInfo receiver or sender id, undefined then return error
+         if (!sessionInfo.receiver.id || !sessionInfo.sender.id) {
             toast.error("Chat session is missing, please refresh the page")
             window.location.reload()
             return
@@ -282,12 +279,13 @@ const MessageBox = ({
          setRecentMessages([
             ...recentMessages,
             {
-               messageId: data.id,
+               messageId: data?.id,
+               documentId: data?.documentId,
                id: role === "candidate" ? sessionInfo?.receiver?.id : sessionInfo?.sender?.id,
                name:
                   role === "candidate"
-                     ? sessionInfo?.receiver?.firstName + " " + sessionInfo?.receiver?.lastName
-                     : sessionInfo?.sender?.firstName + " " + sessionInfo?.sender?.lastName,
+                     ? sessionInfo?.receiver?.first_name + " " + sessionInfo?.receiver?.last_name
+                     : sessionInfo?.sender?.first_name + " " + sessionInfo?.sender?.last_name,
                avatar: role === "candidate" ? sessionInfo?.receiver?.avatar?.url : sessionInfo?.sender?.avatar?.url,
                message: data?.message,
                read: false,
@@ -297,16 +295,27 @@ const MessageBox = ({
          ])
          scrollToBottom()
 
-         await createEntry("metajob-strapi/messages", {
+         const messageInput = {
             data: {
-               message: data.message,
-               sender: userId,
-               receiver: sessionInfo.receiver.id === Number(userId) ? sessionInfo.sender.id : sessionInfo.receiver.id,
-               chat_session: chatId,
-               read: false,
-               createdBy: userId
+               message: data?.message,
+               sender: [
+                  {
+                     id: Number(userId)
+                  }
+               ],
+               receiver: [
+                  {
+                     id: sessionInfo.receiver.id === Number(userId) ? sessionInfo.sender.id : sessionInfo.receiver.id
+                  }
+               ],
+               chat_session: {
+                  connect: [chatId]
+               },
+               read: false
+               // createdBy: userId
             }
-         }).then((res) => {
+         }
+         await createEntry("metajob-backend/messages", messageInput).then((res) => {
             if (res.error) {
                toast.error(res.error)
                setRecentMessages([])
@@ -322,33 +331,10 @@ const MessageBox = ({
       }
    }
 
-   // *** delete message function handler
-   // const deleteMessage = async (id: number) => {
-   //    const notify = toast.loading("Deleting message...")
-
-   //    await deleteEntry("api/metajob-strapi/messages", id).then((res) => {
-   //       if (res.error) {
-   //          toast.error(res.error, {
-   //             id: notify
-   //          })
-   //          return
-   //       }
-   //       messagesMutate().finally(() => {
-   //          toast.success("Message deleted successfully", {
-   //             id: notify
-   //          })
-   //       })
-   //       setRecentMessages([])
-   //       scrollToBottom()
-   //       return
-   //    })
-   // }
-
    // *** edit message function handler ***
-   const editMessage = async (id: number, data: any) => {
+   const editMessage = async (id: string, data: any) => {
       const notify = toast.loading("Editing message...")
-
-      await updateOne("metajob-strapi/messages", id, {
+      await updateOne("metajob-backend/messages", id, {
          data: {
             message: data.message
          }
@@ -418,7 +404,7 @@ const MessageBox = ({
          )}
 
          {/* If messages empty */}
-         {empty ? (
+         {noMessage ? (
             <Box
                sx={{
                   display: "flex",
@@ -440,7 +426,7 @@ const MessageBox = ({
                      sx={{
                         fontWeight: 600
                      }}>
-                     {data?.empty_chat?.title}
+                     {blockData?.empty_chat?.title}
                   </Typography>
                   <Typography
                      variant='body1'
@@ -448,7 +434,7 @@ const MessageBox = ({
                         fontWeight: 400,
                         color: "text.secondary"
                      }}>
-                     {data?.empty_chat?.description}
+                     {blockData?.empty_chat?.description}
                   </Typography>
                </Box>
             </Box>
@@ -474,7 +460,7 @@ const MessageBox = ({
                            sx={{
                               fontWeight: 500
                            }}>
-                           {data?.empty_messages?.title}
+                           {blockData?.empty_messages?.title}
                         </Typography>
                         <Typography
                            variant='body1'
@@ -482,7 +468,7 @@ const MessageBox = ({
                               fontWeight: 400,
                               color: "text.secondary"
                            }}>
-                           {data?.empty_messages?.description}
+                           {blockData?.empty_messages?.description}
                         </Typography>
                      </Box>
                   </Box>
@@ -518,11 +504,11 @@ const MessageBox = ({
                            return (
                               <MessageItem
                                  key={index}
-                                 {...item}
+                                 data={item}
                                  isSender={item.id === Number(userId)}
                                  // onDelete={deleteMessage}
                                  onEdit={editMessage}
-                                 data={data}
+                                 blockData={blockData}
                               />
                            )
                         })}
@@ -555,7 +541,7 @@ const MessageBox = ({
                   handleSendMessage={sendMessage}
                   loading={isSending}
                   setLoading={setIsSending}
-                  sendPlaceholder={data?.sendMessagePlaceholder}
+                  sendPlaceholder={blockData?.sendMessagePlaceholder}
                />
             </Fragment>
          )}

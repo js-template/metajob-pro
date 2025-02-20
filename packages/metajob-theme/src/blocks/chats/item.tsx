@@ -1,37 +1,24 @@
 "use client"
+import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
+import { useForm } from "react-hook-form"
 import { Avatar, Box, Menu, MenuItem, TextField, Typography, useTheme } from "@mui/material"
+import { LoadingButton } from "@mui/lab"
 import Moment from "react-moment"
 import "yet-another-react-lightbox/plugins/counter.css"
 import "yet-another-react-lightbox/styles.css"
 import MarkdownCustomPreview from "../../components/markdown-preview"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
-import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
-import { LoadingButton } from "@mui/lab"
 import CIcon from "../../components/common/icon"
 import { CopyToClipboard } from "react-copy-to-clipboard"
-import { ChatSectionProps } from "./type"
+import { IMessageBock, MessageDataProps } from "./type"
 
-// FIXME: too many code like not used.need t0 talk robi
 type MessageItemProps = {
-   data: ChatSectionProps
-   messageId: number
-   id: number
-   message: string
-   images: {
-      src: string
-      alt: string
-      caption: string
-      width: number
-      height: number
-   }[]
-   avatar?: string
-   name: string
-   date: string
+   data: MessageDataProps
+   blockData: IMessageBock
    isSender?: boolean
    onEdit?: (
-      id: number,
+      id: string,
       data: {
          message: string
       }
@@ -39,19 +26,8 @@ type MessageItemProps = {
    // onDelete?: (id: number) => void
 }
 
-const MessageItem = ({
-   data,
-   messageId,
-   message,
-   id,
-   images,
-   avatar,
-   name,
-   date,
-   isSender,
-   onEdit
-   // onDelete
-}: MessageItemProps) => {
+const MessageItem = ({ data, blockData, isSender, onEdit }: MessageItemProps) => {
+   const { documentId, message, images, avatar, name, date } = data || {}
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
    const open = Boolean(anchorEl)
    const theme = useTheme()
@@ -75,7 +51,6 @@ const MessageItem = ({
 
    useEffect(() => {
       setValue("message", message)
-
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [message])
 
@@ -94,12 +69,12 @@ const MessageItem = ({
    const onSubmit = async (data: any) => {
       if (onEdit) {
          setLoading(true)
-         if (!messageId) {
+         if (!documentId) {
             toast.error("Something went wrong. Please try again")
             setLoading(false)
             return
          }
-         await onEdit(messageId, {
+         await onEdit(documentId, {
             message: data.message
          }).finally(() => {
             setEdit(false)
@@ -170,7 +145,7 @@ const MessageItem = ({
                         <TextField
                            fullWidth
                            id='outlined-basic'
-                           placeholder={data?.sendMessagePlaceholder}
+                           placeholder={blockData?.sendMessagePlaceholder}
                            variant='outlined'
                            type='text'
                            multiline
@@ -209,7 +184,7 @@ const MessageItem = ({
                               textTransform: "capitalize",
                               color: (theme) => theme.palette.text.primary
                            }}>
-                           {data?.saveButtonText}
+                           {blockData?.saveButtonText}
                         </LoadingButton>
                         {/* Cancel button */}
                         <LoadingButton
@@ -231,7 +206,7 @@ const MessageItem = ({
                               textTransform: "capitalize",
                               color: (theme) => theme.palette.text.primary
                            }}>
-                           {data?.cancelButtonText}
+                           {blockData?.cancelButtonText}
                         </LoadingButton>
                      </Box>
                   ) : (
@@ -391,7 +366,7 @@ const MessageItem = ({
                                  m: 0
                               }}>
                               <CIcon icon='tabler:edit' />
-                              {data?.editActionText}
+                              {blockData?.editActionText}
                            </MenuItem>
                         )}
                         {/* {isSender && (
@@ -432,7 +407,7 @@ const MessageItem = ({
                                  m: 0
                               }}>
                               <CIcon icon='tabler:copy' />
-                              {data?.copyActionText}
+                              {blockData?.copyActionText}
                            </MenuItem>
                         </CopyToClipboard>
                      </Menu>
