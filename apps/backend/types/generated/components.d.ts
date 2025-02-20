@@ -460,44 +460,6 @@ export interface ConfigMenu extends Struct.ComponentSchema {
   };
 }
 
-export interface ConfigMessage extends Struct.ComponentSchema {
-  collectionName: 'components_config_messages';
-  info: {
-    displayName: 'Message';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    cancelButtonText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Cancel'>;
-    copyActionText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Copy'>;
-    editActionText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Edit'>;
-    empty_chat: Schema.Attribute.Component<'shared.empty', false> &
-      Schema.Attribute.Required;
-    empty_messages: Schema.Attribute.Component<'shared.empty', false> &
-      Schema.Attribute.Required;
-    enableSearch: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    saveButtonText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Save'>;
-    searchPlaceholder: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Search'>;
-    sendMessagePlaceholder: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Type Something'>;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Messages'>;
-  };
-}
-
 export interface ConfigMetaData extends Struct.ComponentSchema {
   collectionName: 'components_config_meta_data';
   info: {
@@ -1458,7 +1420,6 @@ declare module '@strapi/strapi' {
       'config.link': ConfigLink;
       'config.logo': ConfigLogo;
       'config.menu': ConfigMenu;
-      'config.message': ConfigMessage;
       'config.meta-data': ConfigMetaData;
       'config.relations': ConfigRelations;
       'config.review-card': ConfigReviewCard;

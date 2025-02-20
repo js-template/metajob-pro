@@ -1900,6 +1900,7 @@ export interface PluginPadmaBackendPrivatePage
         'metajob-block.manage-company',
         'metajob-block.manage-job',
         'metajob-block.manage-packages',
+        'metajob-config.message',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
