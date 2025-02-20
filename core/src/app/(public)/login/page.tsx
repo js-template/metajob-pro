@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import LoginBody from "./body"
 
+// FIXME: Replace with dynamic function
 export const metadata: Metadata = {
    title: "Login | MUI Next.js Boilerplate",
    description: "Login page for MUI Next.js Boilerplate"

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import RegisterBody from "./body"
-
+// FIXME: Replace with dynamic function
 export const metadata: Metadata = {
    title: "Register - MetaJobs",
    description: "MetaJobs is a job board for developers, designers, and other tech professionals."
