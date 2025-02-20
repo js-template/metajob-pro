@@ -1,17 +1,24 @@
 "use client"
-import UsersBox from "./UsersBox"
+import UsersBox from "./users-box"
 import { Box, Grid, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material"
 import { Fragment, useEffect, useState } from "react"
 import CIcon from "../../components/common/icon"
-import MessageBox from "./MessageBox"
-import { ChatSectionProps } from "./type"
+import MessageBox from "./message-box"
+import { IMessageBock } from "./type"
 
-const ChatSection = ({ data, role, userId }: { data: ChatSectionProps; role: string; userId: number }) => {
+type Props = {
+   blockData: IMessageBock
+   role: string
+   userId?: number
+   userEmail?: string
+}
+
+const ChatSection = ({ blockData, role, userId, userEmail }: Props) => {
    const theme = useTheme()
    const [chatSidebar, setChatSidebar] = useState(false)
    const lgAbove = useMediaQuery(theme.breakpoints.up("lg"))
    // ?? id is string or number
-   const [chatId, setChatId] = useState<number | null>(null)
+   const [chatId, setChatId] = useState<number | string | null>(null)
 
    // if user on mobile, open chat sidebar
    useEffect(() => {
@@ -56,7 +63,7 @@ const ChatSection = ({ data, role, userId }: { data: ChatSectionProps; role: str
                         lineHeight: "32px",
                         textTransform: "capitalize"
                      }}>
-                     {data?.title}
+                     {blockData?.title}
                   </Typography>
                </Grid>
                <Grid item xs={12} sm={9}>
@@ -81,21 +88,20 @@ const ChatSection = ({ data, role, userId }: { data: ChatSectionProps; role: str
             <UsersBox
                chatSidebar={chatSidebar}
                setChatSidebar={setChatSidebar}
-               activeId={Number(chatId)}
-               chatId={Number(chatId)}
+               activeId={chatId}
                hidden={lgAbove}
                role={role}
                userId={userId}
+               userEmail={userEmail}
                setChatId={setChatId}
-               chatData={data}
+               blockData={blockData}
             />
             <MessageBox
-               data={data}
-               empty={chatId === null ? true : false}
+               blockData={blockData}
+               noMessage={chatId === null ? true : false}
                chatId={chatId}
                role={role}
                userId={userId}
-               setChatId={setChatId}
             />
          </Box>
       </Fragment>

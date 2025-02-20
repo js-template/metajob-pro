@@ -1,50 +1,33 @@
 "use client"
-import { hexToRGBA } from "../../lib/hex-to-rgba"
-
-import {
-   Avatar,
-   Badge,
-   Box,
-   Chip,
-   CircularProgress,
-   Drawer,
-   FormControl,
-   TextField,
-   Typography,
-   useMediaQuery,
-   useTheme
-} from "@mui/material"
-import _ from "lodash"
 import { useEffect, useState } from "react"
-import Moment from "react-moment"
-import PerfectScrollbar from "react-perfect-scrollbar"
-import { ChatDataProps, ChatSectionProps } from "./type"
-import CIcon from "../../components/common/icon"
-
 import useSWR from "swr"
+import { Box, CircularProgress, Drawer, FormControl, TextField, Typography, useTheme } from "@mui/material"
+import _ from "lodash"
+import PerfectScrollbar from "react-perfect-scrollbar"
+import { IMessageBock } from "./type"
+import CIcon from "../../components/common/icon"
+import UserItem from "./user-item"
 
 const UsersBox = ({
-   chatData,
+   blockData,
    chatSidebar,
    setChatSidebar,
    hidden,
    activeId,
-   receiverId,
-   chatId,
    role,
    userId,
+   userEmail,
    setChatId
 }: {
-   chatData: ChatSectionProps
-   activeId?: number
+   blockData: IMessageBock
+   activeId?: number | string | null
    chatSidebar: boolean
    setChatSidebar: (value: boolean) => void
    hidden: boolean
-   receiverId?: number
-   chatId?: number
    role: string
-   userId: number
-   setChatId: React.Dispatch<React.SetStateAction<number | null>>
+   userId?: number
+   userEmail?: string
+   setChatId: React.Dispatch<React.SetStateAction<number | string | null>>
 }) => {
    const theme = useTheme()
    const [searchQuery, setSearchQuery] = useState("")
@@ -72,42 +55,29 @@ const UsersBox = ({
       }
 
       const filtered = _.map(result?.data?.data, (c: any) => {
-         const badge = c?.attributes?.messages?.data.filter(
-            (m: any) => m?.attributes?.receiver?.data?.id === Number(userId) && !m?.attributes?.read
-         ).length
+         const badge = c?.messages?.data.filter((m: any) => m?.receiver?.data?.id === Number(userId) && !m?.read).length
 
          return {
             id: c?.id,
+            documentId: c?.documentId,
             ...(role === "employer"
                ? {
-                    avatar: c?.attributes?.receiver?.data?.attributes?.avatar?.data?.attributes?.url,
-                    name:
-                       c?.attributes?.receiver?.data?.attributes?.firstName +
-                       " " +
-                       c?.attributes?.receiver?.data?.attributes?.lastName,
-                    date:
-                       c?.attributes?.messages?.data[c?.attributes?.messages?.data?.length - 1]?.attributes
-                          ?.updatedAt || c?.attributes?.updatedAt,
+                    avatar: c?.receiver?.avatar?.url,
+                    name: c?.receiver?.first_name + " " + c?.receiver?.last_name,
+                    email: c?.receiver?.email,
+                    date: c?.messages?.data[c?.messages?.data?.length - 1]?.updatedAt || c?.updatedAt,
                     badge: badge,
-                    status: c?.attributes?.receiver?.data?.attributes?.status,
-                    message:
-                       c?.attributes?.messages?.data[c?.attributes?.messages?.data?.length - 1]?.attributes?.message ||
-                       ""
+                    status: c?.receiver?.status,
+                    message: c?.messages?.data[c?.messages?.data?.length - 1]?.message || ""
                  }
                : {
-                    avatar: c?.attributes?.sender?.data?.attributes?.avatar?.data?.attributes?.url,
-                    name:
-                       c?.attributes?.sender?.data?.attributes?.firstName +
-                       " " +
-                       c?.attributes?.sender?.data?.attributes?.lastName,
-                    date:
-                       c?.attributes?.messages?.data[c?.attributes?.messages?.data?.length - 1]?.attributes
-                          ?.updatedAt || c?.attributes?.updatedAt,
+                    avatar: c?.sender?.avatar?.url,
+                    name: c?.sender?.first_name + " " + c?.sender?.last_name,
+                    email: c?.sender?.email,
+                    date: c?.messages?.data[c?.messages?.data?.length - 1]?.updatedAt || c?.updatedAt,
                     badge: badge,
-                    status: c?.attributes?.receiver?.data?.attributes?.status,
-                    message:
-                       c?.attributes?.messages?.data[c?.attributes?.messages?.data?.length - 1]?.attributes?.message ||
-                       ""
+                    status: c?.sender?.status,
+                    message: c?.messages?.data[c?.messages?.data?.length - 1]?.message || ""
                  })
          }
       })
@@ -116,38 +86,50 @@ const UsersBox = ({
    }
 
    const queryParams = {
-      populate: "sender,sender.avatar,receiver,receiver.avatar,messages,messages.receiver,messages.sender",
+      populate: {
+         sender: {
+            populate: "*"
+         },
+         receiver: {
+            populate: "*"
+         },
+         job: {
+            populate: "*"
+         }
+      },
       publicationState: "live",
-      sort: "updatedAt:DESC",
       filters: {
          ...(role === "candidate"
             ? {
                  receiver: {
-                    id: {
-                       $eq: userId
+                    email: {
+                       $eq: userEmail
                     }
+                    //   id: {
+                    //      $eq: userId
+                    //   }
                  },
-                 sender: {
-                    firstName: {
-                       $ne: null
-                    },
-                    lastName: {
-                       $ne: null
-                    }
-                 },
+                 //   sender: {
+                 //      first_name: {
+                 //         $ne: null
+                 //      },
+                 //      last_name: {
+                 //         $ne: null
+                 //      }
+                 //   },
                  ...(searchQuery &&
                     searchQuery.length > 0 && {
                        $or: [
                           {
                              sender: {
-                                firstName: {
+                                first_name: {
                                    $containsi: searchQuery
                                 }
                              }
                           },
                           {
                              sender: {
-                                lastName: {
+                                last_name: {
                                    $containsi: searchQuery
                                 }
                              }
@@ -171,31 +153,34 @@ const UsersBox = ({
               }
             : {
                  sender: {
-                    id: {
-                       $eq: userId
+                    email: {
+                       $eq: userEmail
                     }
+                    //   id: {
+                    //      $eq: userId
+                    //   }
                  },
-                 receiver: {
-                    firstName: {
-                       $ne: null
-                    },
-                    lastName: {
-                       $ne: null
-                    }
-                 },
+                 //   receiver: {
+                 //      first_name: {
+                 //         $ne: null
+                 //      },
+                 //      last_name: {
+                 //         $ne: null
+                 //      }
+                 //   },
                  ...(searchQuery &&
                     searchQuery.length > 0 && {
                        $or: [
                           {
                              receiver: {
-                                firstName: {
+                                first_name: {
                                    $containsi: searchQuery
                                 }
                              }
                           },
                           {
                              receiver: {
-                                lastName: {
+                                last_name: {
                                    $containsi: searchQuery
                                 }
                              }
@@ -220,32 +205,11 @@ const UsersBox = ({
       }
    }
 
-   // Utility function for base filters based on role
-   // const getBaseFilters = (role: string, userId: number) => {
-   //    return role === "candidate"
-   //       ? {
-   //            receiver: { id: { $eq: userId } },
-   //            sender: { id: { $ne: null } } // Ensure sender exists
-   //         }
-   //       : {
-   //            sender: { id: { $eq: userId } },
-   //            receiver: { id: { $ne: null } } // Ensure receiver exists
-   //         }
-   // }
-
-   // // Main queryParams with deep population
-   // const queryParams = {
-   //    populate: "deep", // Automatically populates all relations deeply
-   //    publicationState: "live",
-   //    sort: "updatedAt:DESC",
-   //    filters: getBaseFilters(role, userId)
-   // }
-
    // Convert queryParams to a string for the URL
    const queryString = encodeURIComponent(JSON.stringify(queryParams))
 
    // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-strapi/chats&query=${queryString}`
+   const apiUrl = `/api/find?model=api/metajob-backend/chats&query=${queryString}`
 
    const { data, error, mutate, isLoading } = useSWR(apiUrl, fetcher, {
       refreshInterval: 10000,
@@ -330,7 +294,7 @@ const UsersBox = ({
                }}>
                <TextField
                   id='outlined-basic'
-                  placeholder={chatData?.searchPlaceholder}
+                  placeholder={blockData?.searchPlaceholder}
                   variant='outlined'
                   onChange={(e) => {
                      setSearchQuery(e.target.value)
@@ -443,12 +407,11 @@ const UsersBox = ({
                   {_.map(data, (item, index) => {
                      return (
                         <UserItem
-                           role={role}
                            key={index}
                            item={item}
                            setChatSidebar={setChatSidebar}
-                           userId={item.id}
-                           active={activeId === item.id}
+                           userId={item?.id}
+                           active={activeId === item?.documentId}
                            setChatId={setChatId}
                         />
                      )
@@ -477,168 +440,6 @@ const UsersBox = ({
             </PerfectScrollbar>
          </Box>
       </Drawer>
-   )
-}
-
-// TODO: Need to seperate this component to another file
-const UserItem = ({
-   role,
-   item,
-   active,
-   setChatSidebar,
-   setChatId
-}: {
-   role: string
-   item: ChatDataProps
-   active?: boolean
-   setChatId: React.Dispatch<React.SetStateAction<number | null>>
-   setChatSidebar: (value: boolean) => void
-   userId: number
-}) => {
-   // ** Hooks
-   const theme = useTheme()
-   const hidden = useMediaQuery(theme.breakpoints.down("lg"))
-
-   const { avatar, name, date, badge, status, message } = item
-
-   return (
-      <Box
-         onClick={() => {
-            if (active) {
-               setChatSidebar(false)
-               setChatId(null)
-               return
-            }
-            setChatSidebar(false)
-            setChatId(item.id)
-         }}
-         sx={{
-            position: "relative",
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 2,
-            alignItems: "center",
-            p: "6px 8px",
-            borderRadius: "4px",
-            transition: "all 200ms ease-in-out",
-            backgroundColor: (theme) => (active ? hexToRGBA(theme.palette.text.primary, 0.08) : "transparent"),
-            "&:hover": {
-               cursor: "pointer",
-               backgroundColor: (theme) => hexToRGBA(theme.palette.text.primary, 0.08)
-            },
-            textDecoration: "none"
-         }}>
-         <Box
-            sx={{
-               display: "flex",
-               alignItems: "center",
-               gap: 2
-            }}>
-            <Badge
-               color='success'
-               overlap='circular'
-               badgeContent=' '
-               variant='dot'
-               anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right"
-               }}
-               sx={{
-                  "& .MuiBadge-badge": {
-                     backgroundColor: (theme) =>
-                        status === "active"
-                           ? theme.palette.success.main
-                           : status === "away"
-                             ? theme.palette.warning.main
-                             : theme.palette.text.secondary,
-                     color: (theme) => theme.palette.primary.main,
-                     boxShadow: (theme) => `0 0 0 2px ${theme.palette.background.paper}`,
-                     borderRadius: "50%"
-                  }
-               }}>
-               <Avatar
-                  // component={NextLink}
-                  // href={slug}
-                  className='notranslate'
-                  sx={{
-                     width: hidden ? "38px" : "48px",
-                     height: hidden ? "38px" : "48px"
-                  }}
-                  src={avatar}
-                  alt={"User Name"}
-               />
-            </Badge>
-            <Box>
-               <Typography
-                  variant='body1'
-                  className='notranslate'
-                  sx={{
-                     color: (theme) => theme.palette.text.primary,
-                     fontSize: "14px",
-                     fontWeight: 500,
-                     lineHeight: "20px",
-                     // lineClamp 1
-                     overflow: "hidden",
-                     textOverflow: "ellipsis",
-                     display: "-webkit-box",
-                     WebkitLineClamp: 1,
-                     WebkitBoxOrient: "vertical",
-                     mb: 0.5
-                  }}>
-                  {name}
-               </Typography>
-               <Typography
-                  className='notranslate'
-                  variant='body2'
-                  sx={{
-                     color: (theme) => theme.palette.text.secondary,
-                     fontSize: "12px",
-                     lineHeight: "16px",
-                     // lineClamp 1
-                     overflow: "hidden",
-                     textOverflow: "ellipsis",
-                     display: "-webkit-box",
-                     WebkitLineClamp: 1,
-                     WebkitBoxOrient: "vertical"
-                  }}>
-                  {message}
-               </Typography>
-            </Box>
-         </Box>
-         <Box
-            sx={{
-               textAlign: "right"
-            }}>
-            <Typography
-               variant='body1'
-               fontWeight={500}
-               lineHeight={"16px"}
-               fontSize={"12px"}
-               sx={{
-                  mb: 0.5,
-                  flex: "none",
-                  color: (theme) => theme.palette.text.secondary
-               }}>
-               <Moment fromNow>{date}</Moment>
-            </Typography>
-            {/* Badge */}
-            {badge === 0 && <Box sx={{ height: "24px" }} />}
-            {badge > 0 && (
-               <Chip
-                  label={badge}
-                  size='small'
-                  color='primary'
-                  sx={{
-                     "& .MuiChip-label": {
-                        fontSize: "12px",
-                        fontWeight: 400,
-                        lineHeight: "16px"
-                     }
-                  }}
-               />
-            )}
-         </Box>
-      </Box>
    )
 }
 
