@@ -9,6 +9,7 @@ import _ from "lodash"
 import { updateOne } from "../../lib/strapi"
 import { CoveModal } from "./cover-modal"
 import { getNameFromEmail } from "./hook"
+import { MessageModal } from "./message-modal"
 
 const ApplyItem = ({ apply, mutate }: { apply: IJobApplyData; mutate: KeyedMutator<any> }) => {
    const theme = useTheme()
@@ -19,10 +20,16 @@ const ApplyItem = ({ apply, mutate }: { apply: IJobApplyData; mutate: KeyedMutat
 
    const [loading, setLoading] = useState(false)
    const [applyStatus, setApplyStatus] = useState(apply_status)
+   const [messageModalData, setMessageModalData] = useState(apply)
    const [coverModalOpen, setCoverModalOpen] = useState(false)
+   const [messageModalOpen, setMessageModalOpen] = useState(false)
    const handleCardModalOpen = () => setCoverModalOpen(true)
    const handleCardModalClose = () => {
       setCoverModalOpen(false)
+   }
+   const handleMessageModalOpen = () => setMessageModalOpen(true)
+   const handleMessageModalClose = () => {
+      setMessageModalOpen(false)
    }
 
    // *** handle update apply status
@@ -166,8 +173,32 @@ const ApplyItem = ({ apply, mutate }: { apply: IJobApplyData; mutate: KeyedMutat
                   ))}
                </Select>
             </TableCell>
+            <TableCell>
+               <Button
+                  sx={{
+                     px: 0,
+                     bgcolor: "transparent",
+                     color: "primary.main",
+                     "&:hover": {
+                        bgcolor: "transparent",
+                        color: "primary.main"
+                     }
+                  }}
+                  onClick={() => {
+                     handleMessageModalOpen()
+                     setMessageModalData(apply)
+                  }}>
+                  Message
+               </Button>
+            </TableCell>
          </TableRow>
          <CoveModal open={coverModalOpen} handleClose={handleCardModalClose} title='Cover Letter' data={cover_letter} />
+         <MessageModal
+            open={messageModalOpen}
+            handleClose={handleMessageModalClose}
+            title='Message'
+            modalData={messageModalData}
+         />
       </Fragment>
    )
 }
