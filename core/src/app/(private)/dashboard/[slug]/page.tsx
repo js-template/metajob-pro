@@ -107,16 +107,20 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
                $eq: pageSlug
             }
          },
-         populate: "*"
+         populate: {
+            seo: {
+               populate: "*"
+            }
+         }
       },
       "no-store"
    )
-
-   if (!product?.data?.data?.[0]?.attributes?.seo) {
+   if (!product?.data?.data?.[0]?.seo) {
       return {
-         title: product?.data?.data?.[0]?.attributes?.title || "Title not found",
-         description: `Description ${product?.data?.data[0]?.attributes?.title}` || "Description not found"
+         title: product?.data?.data?.[0]?.title || "Title not found",
+         description: `Description ${product?.data?.data[0]?.title}` || "Description not found"
       }
    }
-   return StrapiSeoFormate(product?.data?.data?.[0]?.attributes?.seo, `/${pageSlug}`)
+
+   return StrapiSeoFormate(product?.data?.data?.[0]?.seo, `/${pageSlug}`)
 }

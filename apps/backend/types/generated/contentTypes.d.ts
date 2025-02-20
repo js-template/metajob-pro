@@ -1805,6 +1805,7 @@ export interface PluginPadmaBackendPrivateFrontpage
         'block.bookmark-list',
       ]
     >;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     style: Schema.Attribute.Component<'component.grid-container', false>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;

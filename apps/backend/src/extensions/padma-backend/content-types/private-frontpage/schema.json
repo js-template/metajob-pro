@@ -54,6 +54,11 @@
       "type": "component",
       "repeatable": false,
       "component": "component.grid-container"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
     }
   }
 }
