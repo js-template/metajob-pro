@@ -59,7 +59,7 @@ export default async function DynamicPages({
    // }
 
    return (
-      <Fragment>
+      <>
          {blocks?.map((block: any, index: number) => {
             const BlockConfig = getPublicComponents[block.__component as keyof typeof getPublicComponents]
 
@@ -71,7 +71,7 @@ export default async function DynamicPages({
             }
             return null // Handle the case where the component mapping is missing
          })}
-      </Fragment>
+      </>
    )
 }
 
@@ -111,16 +111,14 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
                $eq: pageSlug
             }
          },
-         populate: "*"
+         populate: {
+            seo: {
+               populate: "*"
+            }
+         }
       },
       "no-store"
    )
 
-   if (!product?.data?.data?.[0]?.attributes?.seo) {
-      return {
-         title: product?.data?.data?.[0]?.attributes?.title || "Title not found",
-         description: `Description ${product?.data?.data[0]?.attributes?.title}` || "Description not found"
-      }
-   }
-   return StrapiSeoFormate(product?.data?.data?.[0]?.attributes?.seo, `/${pageSlug}`)
+   return StrapiSeoFormate(product?.data?.data?.[0]?.seo, `/${pageSlug}`)
 }

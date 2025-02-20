@@ -4,6 +4,14 @@ import React, { Suspense } from "react"
 import { auth } from "@/context/auth"
 import { redirect } from "next/navigation"
 import { loadActiveTheme } from "config/theme-loader"
+import { StrapiSeoFormate } from "@/lib/strapiSeo"
+import { Metadata, ResolvingMetadata } from "next/types"
+
+// // *** generate metadata type
+type Props = {
+   params: { slug: string }
+   searchParams: { [key: string]: string | string[] | undefined }
+}
 
 export default async function DashboardPage({
    params
@@ -74,4 +82,30 @@ export default async function DashboardPage({
          />
       </Suspense>
    )
+}
+
+// // *** generate metadata for the page
+export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+   const pageSlug = params?.slug
+
+   // ***fetch seo data
+   const product = await find(
+      "api/padma-backend/private-frontpage",
+      {
+         populate: {
+            seo: {
+               populate: "*"
+            }
+         }
+      },
+      "no-store"
+   )
+   if (!product?.data?.data?.seo) {
+      return {
+         title: product?.data?.data?.title || "Title not found",
+         description: `Description ${product?.data?.data?.description}` || "Description not found"
+      }
+   }
+
+   return StrapiSeoFormate(product?.data?.data?.seo, `/${pageSlug}`)
 }

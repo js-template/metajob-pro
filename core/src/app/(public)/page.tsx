@@ -61,10 +61,16 @@ export async function generateMetadata(): Promise<Metadata> {
    const product = await find(
       "api/padma-backend/public-frontpage",
       {
-         populate: "*"
+         populate: {
+            seo: {
+               populate: "*"
+            }
+         }
       },
       "force-cache"
    )
+
+   console.log("Product", product)
 
    return StrapiSeoFormate(product?.data?.data?.seo)
 }
