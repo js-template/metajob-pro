@@ -38,6 +38,7 @@ export type MenuItemProps = {
    id: number
    label: string
    link: string
+   identifier?: string
    type: string | null
    target: string | null
    icon: string

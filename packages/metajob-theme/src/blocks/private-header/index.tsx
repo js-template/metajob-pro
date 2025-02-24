@@ -64,6 +64,7 @@ export const DrawerHeader: React.FC = styled("div")(({ theme }) => ({
 
 export const PrivateHeader = ({ block, language = "en" }: IPrivateHeaderProps) => {
    const { data: session } = useSession()
+   const userRle = session?.user?.role?.type
    const theme = useTheme()
    const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
@@ -72,7 +73,7 @@ export const PrivateHeader = ({ block, language = "en" }: IPrivateHeaderProps) =
 
    const {
       main_menu,
-      side_menu: sidebarMenu,
+      side_menu,
       profile_menu: user_menu,
       language: langMenu,
       light_logo,
@@ -85,12 +86,9 @@ export const PrivateHeader = ({ block, language = "en" }: IPrivateHeaderProps) =
    const [open, setOpen] = React.useState(true)
    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
 
-   //    const sidebarMenu =
-   //       session?.user?.role?.type === "candidate"
-   //          ? ((sidebarMenus && sidebarMenus?.find((menu) => menu.role === "candidate")?.menus) ?? [])
-   //          : session?.user?.role?.type === "employer"
-   //            ? ((sidebarMenus && sidebarMenus?.find((menu) => menu.role === "employer")?.menus) ?? [])
-   //            : ((sidebarMenus && sidebarMenus?.find((menu) => menu.role === "candidate")?.menus) ?? [])
+   const candidateMenu = side_menu?.filter((menu) => menu?.identifier !== "employer")
+   const employerMenu = side_menu?.filter((menu) => menu?.identifier !== "candidate")
+   const sidebarMenu = userRle === "candidate" ? candidateMenu : userRle === "employer" ? employerMenu : side_menu
 
    useEffect(() => {
       if (isTablet) {
