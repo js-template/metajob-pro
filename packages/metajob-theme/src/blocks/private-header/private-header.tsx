@@ -63,7 +63,7 @@ export const DrawerHeader: React.FC = styled("div")(({ theme }) => ({
 
 export const PrivateHeaderComponent = ({ block, language = "en" }: IPrivateHeaderProps) => {
    const { data: session } = useSession()
-   const userRle = session?.user?.role?.type
+   const userRole = session?.user?.role?.type
    const theme = useTheme()
    const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
@@ -85,9 +85,10 @@ export const PrivateHeaderComponent = ({ block, language = "en" }: IPrivateHeade
    const [open, setOpen] = React.useState(true)
    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
 
+   // filter sidebar-menu based on role
    const candidateMenu = side_menu?.filter((menu) => menu?.identifier !== "employer")
    const employerMenu = side_menu?.filter((menu) => menu?.identifier !== "candidate")
-   const sidebarMenu = userRle === "candidate" ? candidateMenu : userRle === "employer" ? employerMenu : side_menu
+   const sidebarMenu = userRole === "candidate" ? candidateMenu : userRole === "employer" ? employerMenu : side_menu
 
    useEffect(() => {
       if (isTablet) {
@@ -139,6 +140,7 @@ export const PrivateHeaderComponent = ({ block, language = "en" }: IPrivateHeade
             anchorElUser={anchorElUser}
             headerData={block}
             lang={language}
+            userRole={userRole}
          />
          {/* Mobile main nav  */}
          {isTablet && <MobileNav open={open} setOpen={setOpen} headerData={block} lang={language} />}

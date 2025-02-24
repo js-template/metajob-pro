@@ -62,7 +62,8 @@ const CustomAppBar = ({
    handleCloseUserMenu,
    anchorElUser,
    lang,
-   headerData
+   headerData,
+   userRole
 }: {
    open: boolean
    handleDrawerOpen: () => void
@@ -71,6 +72,7 @@ const CustomAppBar = ({
    anchorElUser: null | HTMLElement
    lang: string
    headerData: IPrivateHeaderBlock
+   userRole?: string
 }) => {
    const theme = useTheme()
    const [loading, setLoading] = React.useState(false)
@@ -87,7 +89,7 @@ const CustomAppBar = ({
 
    const {
       main_menu,
-      profile_menu: user_menu,
+      profile_menu,
       language: langMenu,
       light_logo,
       dark_logo,
@@ -95,12 +97,15 @@ const CustomAppBar = ({
       notification
    } = headerData || {}
 
-   console.log("headerData", headerData)
-
    const logoData = mode === "light" ? light_logo : dark_logo || {}
    const logo = logoData?.logo?.url || ""
-
    const dashboardLink = logoData?.link
+
+   // filter user-menu based on role
+   const candidateProfileMenu = profile_menu?.filter((menu) => menu?.identifier !== "employer")
+   const employerProfileMenu = profile_menu?.filter((menu) => menu?.identifier !== "candidate")
+   const user_menu =
+      userRole === "candidate" ? candidateProfileMenu : userRole === "employer" ? employerProfileMenu : profile_menu
 
    // *** Language Menu ***
    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
