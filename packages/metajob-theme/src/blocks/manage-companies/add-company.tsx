@@ -2,25 +2,15 @@
 import React from "react"
 import toast from "react-hot-toast"
 import { formProps } from "../../types/forms"
-import DynamicForm from "../../form"
 import { createEntry, find, updateOne, uploadImage } from "../../lib/strapi"
 import useSWR, { KeyedMutator } from "swr"
 import {
-   Alert,
-   AlertTitle,
    Box,
-   Button,
    CircularProgress,
    Grid,
    IconButton,
    MenuItem,
    Select,
-   Slide,
-   SlideProps,
-   Snackbar,
-   Step,
-   StepLabel,
-   Stepper,
    TextField,
    Typography,
    useTheme
@@ -41,32 +31,14 @@ type addCompanyProps = {
    mutate: KeyedMutator<any>
 }
 
-/**
- * Add Company Component
- * @param {boolean} open - open modal
- * @param {function} handleClose - close modal
- * @param {formProps} data - form data object
- * @param {number} userId - user id of the company owner
- * @returns {React.ReactElement} - React Component
- * @example
- * <AddCompany
- *   open={open}
- *   handleClose={handleClose}
- *   data={data}
- *   userId={userId}
- * />
- */
 const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps) => {
    const theme = useTheme()
    const [loading, setLoading] = React.useState(false)
-   // *** data format
-   const { title, buttonsText, stepLabels, fields } = data
 
    const {
       handleSubmit,
       register,
       formState: { errors },
-      control,
       reset,
       setValue,
       setFocus,
@@ -88,8 +60,6 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
          facebook_url: "",
          twitter_url: "",
          linkedin_url: ""
-         //    location: "",
-
          //    logo: null
       }
    })
@@ -240,11 +210,7 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
    }
    const companySizesQueryString = encodeURIComponent(JSON.stringify(companySizesQueryParams))
    const companySizesAPiUrl = `/api/find?model=api/metajob-backend/company-sizes&query=${companySizesQueryString}`
-   const {
-      data: companySizesData,
-      error: companySizesError,
-      isLoading: companySizesIsLoading
-   } = useSWR(companySizesAPiUrl, fetcher, {
+   const { data: companySizesData, isLoading: companySizesIsLoading } = useSWR(companySizesAPiUrl, fetcher, {
       fallbackData: []
    })
 
@@ -254,22 +220,14 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
    }
    const revenuesQueryString = encodeURIComponent(JSON.stringify(revenuesQueryParams))
    const revenuesAPiUrl = `/api/find?model=api/metajob-backend/revenues&query=${revenuesQueryString}`
-   const {
-      data: revenuesData,
-      error: revenuesError,
-      isLoading: revenuesIsLoading
-   } = useSWR(revenuesAPiUrl, fetcher, {
+   const { data: revenuesData, isLoading: revenuesIsLoading } = useSWR(revenuesAPiUrl, fetcher, {
       fallbackData: []
    })
 
    // fetch avg-salary data
    const avgSalaryString = encodeURIComponent(JSON.stringify({}))
    const avgSalaryAPiUrl = `/api/find?model=api/metajob-backend/avg-salaries&query=${avgSalaryString}`
-   const {
-      data: avgSalaryData,
-      error: avgSalaryError,
-      isLoading: avgSalaryIsLoading
-   } = useSWR(avgSalaryAPiUrl, fetcher, {
+   const { data: avgSalaryData, isLoading: avgSalaryIsLoading } = useSWR(avgSalaryAPiUrl, fetcher, {
       fallbackData: []
    })
 
@@ -333,8 +291,6 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
                   color='error'
                   onClick={() => {
                      handleClose()
-                     // handleReset()
-                     // reset()
                   }}>
                   <CIcon
                      icon='cil-x'
@@ -1061,80 +1017,8 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
                      Submit Company
                   </LoadingButton>
                </Box>
-               {/* Action Buttons */}
-               {/* <Box sx={{ display: "flex", flexDirection: "row", pt: 2, px: 3 }}>
-                     <Button
-                        onClick={() => {
-                           if (activeStep === 1) {
-                              handleClose()
-                              handleReset()
-                              reset()
-                           } else {
-                              handleBack()
-                           }
-                        }}
-                        sx={{
-                           bgcolor: (theme) => theme.palette.background.default,
-                           color: (theme) => theme.palette.text.disabled,
-                           "&:hover": {
-                              color: (theme) =>
-                                 activeStep === 1
-                                    ? theme.palette.error.contrastText
-                                    : theme.palette.primary.contrastText,
-                              bgcolor: (theme) =>
-                                 activeStep === 1 ? theme.palette.error.main : theme.palette.primary.main
-                           }
-                        }}>
-                        {activeStep === 1 ? buttonsText?.cancel : buttonsText?.back}
-                     </Button>
-                     <Box sx={{ flex: "1 1 auto" }} />
-                     {activeStep === steps.length ? (
-                        <LoadingButton type='submit' variant='contained' color='primary' loading={loading}>
-                           {activeStep === steps.length ? buttonsText?.submit : buttonsText?.next}
-                        </LoadingButton>
-                     ) : (
-                        <Button type='button' variant='contained' color='primary' onClick={handleNext}>
-                           {buttonsText?.next}
-                        </Button>
-                     )}
-                  </Box> */}
             </Box>
          </Box>
-
-         {/* Error Snackbar */}
-         {/* <Snackbar
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            open={error.open}
-            autoHideDuration={6000}
-            onClose={() => setError({ ...error, open: false })}
-            TransitionComponent={error.Transition}
-            sx={{
-               maxWidth: 600
-            }}>
-            <Alert
-               // onClose={() => setAccountStatue({ ...accountStatue, open: false })}
-               severity='warning'
-               sx={{
-                  boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)"
-               }}>
-               <AlertTitle>
-                  <Typography
-                     variant='h3'
-                     sx={{
-                        fontSize: {
-                           xs: "1.25rem",
-                           sm: "1.5rem"
-                        }
-                     }}>
-                     Warning
-                  </Typography>
-               </AlertTitle>
-               <Typography variant='body1' fontWeight={400}>
-                  Steps and Step Labels length should be equal. There is a mismatch in the steps and step labels. steps:{" "}
-                  {steps.length} and stepLabels: {stepLabels?.length} are not equal.
-               </Typography>
-            </Alert> 
-         </Snackbar>*/}
       </Box>
    )
 }
