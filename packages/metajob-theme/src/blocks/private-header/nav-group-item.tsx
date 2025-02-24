@@ -4,8 +4,8 @@ import _ from "lodash"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import CIcon from "../../components/common/icon"
-import NavLink from "./NavLink"
-import { MenuItemProps } from "./type"
+import NavLink from "./nav-link"
+import { MenuItemProps } from "./types"
 
 const NavGroupItem = ({
    item,

@@ -45,12 +45,3 @@ export type MenuItemProps = {
    disabled: boolean
    child: MenuItemProps[]
 }
-
-export type SharedMenusProps = {
-   id: number
-   __component: string
-   role: string
-   menus: MenuItemProps[]
-}
-
-export type SharedMenuList = SharedMenusProps[]

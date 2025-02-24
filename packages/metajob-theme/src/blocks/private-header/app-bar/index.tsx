@@ -28,7 +28,8 @@ import { getLanguageValue } from "../../../utils"
 import { useTheme as modeUseTheme } from "next-themes"
 import { signOut, useSession } from "next-auth/react"
 import { useChangeDirection, useChangeLang } from "../utils"
-import { IPrivateHeaderBlock } from "../type"
+import { IPrivateHeaderBlock } from "../types"
+import { SignOut } from "../../../utils/user"
 
 interface AppBarProps extends MuiAppBarProps {
    open?: boolean
@@ -94,9 +95,12 @@ const CustomAppBar = ({
       notification
    } = headerData || {}
 
-   const logo = mode === "light" ? light_logo?.logo?.url : dark_logo?.logo?.url
+   console.log("headerData", headerData)
 
-   const dashboardLink = mode === "light" ? light_logo?.link : dark_logo?.link
+   const logoData = mode === "light" ? light_logo : dark_logo || {}
+   const logo = logoData?.logo?.url || ""
+
+   const dashboardLink = logoData?.link
 
    // *** Language Menu ***
    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -111,20 +115,13 @@ const CustomAppBar = ({
    const LogOutHandler = async () => {
       setLoading(true)
       await signOut().then(() => {
-         setLoading(false)
-         toast.success("Logout successfully", {
-            duration: 5000
+         SignOut().then(() => {
+            toast.success("Logout successfully", {
+               duration: 5000
+            })
+            setLoading(false)
          })
       })
-
-      // await signOut().then(() => {
-      //    SignOut().then(() => {
-      //       toast.success("Logout successfully", {
-      //          duration: 5000
-      //       })
-      //       setLoading(false)
-      //    })
-      // })
    }
 
    // const queryParams = {
@@ -402,7 +399,7 @@ const CustomAppBar = ({
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}>
                         {_.map(user_menu, (setting: any, index: number) => {
-                           return setting.link !== "/logout" ? (
+                           return setting.label !== "Logout" ? (
                               <MenuItem
                                  key={index}
                                  onClick={handleCloseUserMenu}
