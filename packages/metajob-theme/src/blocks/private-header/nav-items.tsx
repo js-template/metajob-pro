@@ -1,8 +1,8 @@
 "use client"
 import { Fragment } from "react"
-import NavGroupItem from "./NavGroupItem"
-import NavLink from "./NavLink"
-import { MenuItemProps } from "./type"
+import NavGroupItem from "./nav-group-item"
+import NavLink from "./nav-link"
+import { MenuItemProps } from "./types"
 
 const NavItems = (Items: MenuItemProps[], open: boolean, direction: "ltr" | "rtl", signOut: () => Promise<void>) => {
    const RenderMenuItems = Items?.map((item: MenuItemProps, index: number) => {
