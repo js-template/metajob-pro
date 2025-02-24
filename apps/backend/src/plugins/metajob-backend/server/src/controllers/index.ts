@@ -18,6 +18,8 @@ import ExperienceLevelController from "./experience-level";
 import SalaryTypeController from "./salary-type";
 import AvgSalaryController from "./avg-salary";
 import emailHistory from "./email-history";
+import CompanySizeController from "./company-size";
+import RevenueController from "./revenue";
 
 export default {
   "job-setting": JobSettingController,
@@ -38,6 +40,8 @@ export default {
   "salary-type": SalaryTypeController,
   "avg-salary": AvgSalaryController,
   "email-history": emailHistory,
+  "company-size": CompanySizeController,
+  revenue: RevenueController,
 
   controller,
 };
