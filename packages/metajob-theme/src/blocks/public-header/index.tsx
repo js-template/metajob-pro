@@ -1,5 +1,5 @@
 "use server"
-import { find } from "@/lib/strapi"
+import { find } from "../../lib/strapi"
 import { IPublicHeaderBlock } from "./types"
 import { PublicHeaderComponent } from "./public-header"
 

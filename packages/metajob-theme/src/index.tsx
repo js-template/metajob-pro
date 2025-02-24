@@ -33,6 +33,7 @@ import { CategoryBlock } from "./blocks/category-block"
 /**------------------------------------------------
  *          Public Components import
  -------------------------------------------------*/
+
 // header import
 import { PublicHeader } from "./blocks/public-header"
 import { PrivateHeader } from "./blocks/private-header"
@@ -41,6 +42,7 @@ import { ContactWidget } from "./widgets/contact-widget"
 import { MenuWidget } from "./widgets/menu-widget"
 import { CopyrightWidget } from "./widgets/copyright-widget"
 // blocks import
+import { PageHeader } from "./blocks/page-header"
 import { JobBanner } from "./blocks/job-banner"
 import { JobCategory } from "./blocks/job-category"
 import { JobCard } from "./blocks/job-card"
@@ -93,7 +95,7 @@ export const getPrivateComponents = {
    "block.bookmark-list": { component: LatestBookmarks },
    "block.recent-activities": { component: LatestNotifications },
    "block.latest-applied": { component: LatestApplied },
-   "config.message": { component: MessageLayout },
+   "metajob-config.message": { component: MessageLayout },
    "block.notification-list": { component: LatestNotifications },
 
    "block.auth-profile": { component: MyProfile }
@@ -113,6 +115,7 @@ export const getPublicComponents = {
    "widget.copyright-bar": { component: CopyrightWidget },
 
    // block mapping
+   "metajob-block.page-header": { component: PageHeader },
    "metajob-block.job-banner": { component: JobBanner },
    "metajob-block.job-category": { component: JobCategory },
    "block.category-card": { component: PlaceholderComponent },

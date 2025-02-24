@@ -453,48 +453,11 @@ export interface ConfigMenu extends Struct.ComponentSchema {
     child: Schema.Attribute.Component<'config.link', true>;
     disabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'bx:smile'>;
+    identifier: Schema.Attribute.String;
     label: Schema.Attribute.String & Schema.Attribute.Required;
     link: Schema.Attribute.String & Schema.Attribute.Required;
     target: Schema.Attribute.Enumeration<['_blank', '_self']>;
     type: Schema.Attribute.Enumeration<['External', 'Internal']>;
-  };
-}
-
-export interface ConfigMessage extends Struct.ComponentSchema {
-  collectionName: 'components_config_messages';
-  info: {
-    displayName: 'Message';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    cancelButtonText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Cancel'>;
-    copyActionText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Copy'>;
-    editActionText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Edit'>;
-    empty_chat: Schema.Attribute.Component<'shared.empty', false> &
-      Schema.Attribute.Required;
-    empty_messages: Schema.Attribute.Component<'shared.empty', false> &
-      Schema.Attribute.Required;
-    enableSearch: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    saveButtonText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Save'>;
-    searchPlaceholder: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Search'>;
-    sendMessagePlaceholder: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Type Something'>;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Messages'>;
   };
 }
 
@@ -942,6 +905,20 @@ export interface MetajobBlockManageResume extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobBlockPageHeader extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_page_headers';
+  info: {
+    description: 'Page heder block';
+    displayName: 'Page Heder';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -1458,7 +1435,6 @@ declare module '@strapi/strapi' {
       'config.link': ConfigLink;
       'config.logo': ConfigLogo;
       'config.menu': ConfigMenu;
-      'config.message': ConfigMessage;
       'config.meta-data': ConfigMetaData;
       'config.relations': ConfigRelations;
       'config.review-card': ConfigReviewCard;
@@ -1482,6 +1458,7 @@ declare module '@strapi/strapi' {
       'metajob-block.manage-job': MetajobBlockManageJob;
       'metajob-block.manage-packages': MetajobBlockManagePackages;
       'metajob-block.manage-resume': MetajobBlockManageResume;
+      'metajob-block.page-header': MetajobBlockPageHeader;
       'metajob-config.header-config': MetajobConfigHeaderConfig;
       'metajob-config.header-field': MetajobConfigHeaderField;
       'metajob-config.message': MetajobConfigMessage;

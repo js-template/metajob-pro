@@ -1912,6 +1912,7 @@ export interface PluginPadmaBackendPrivatePage
         'metajob-block.manage-company',
         'metajob-block.manage-job',
         'metajob-block.manage-packages',
+        'metajob-config.message',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -2058,6 +2059,7 @@ export interface PluginPadmaBackendPublicPage
         'metajob-block.job-filter',
         'metajob-block.company-filter',
         'metajob-block.candidate-filter',
+        'metajob-block.page-header',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

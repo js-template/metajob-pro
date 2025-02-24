@@ -1,21 +1,4 @@
-export type MessageDataProps = {
-   messageId: number
-   id: number
-   message: string
-   images: {
-      src: string
-      alt: string
-      caption: string
-      width: number
-      height: number
-   }[]
-   avatar: string
-   read: boolean
-   name: string
-   date: string
-}
-
-export type ChatSectionProps = {
+export type IMessageBock = {
    id: number
    title: string
    enableSearch: boolean
@@ -36,10 +19,30 @@ export type ChatSectionProps = {
    __component: string
 }
 
+export type MessageDataProps = {
+   messageId: number
+   documentId: string
+   id: number
+   message: string
+   images: {
+      src: string
+      alt: string
+      caption: string
+      width: number
+      height: number
+   }[]
+   avatar: string
+   read: boolean
+   name: string
+   date: string
+}
+
 export type ChatDataProps = {
    id: number
+   documentId: number
    avatar: string
    name: string
+   email: string
    slug?: string
    status: "active" | "inactive" | "away"
    message: string
