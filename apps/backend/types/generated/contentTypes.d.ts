@@ -2042,6 +2042,7 @@ export interface PluginPadmaBackendPublicPage
         'metajob-block.job-filter',
         'metajob-block.company-filter',
         'metajob-block.candidate-filter',
+        'metajob-block.page-header',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

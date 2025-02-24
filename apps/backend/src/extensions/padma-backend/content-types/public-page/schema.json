@@ -38,7 +38,8 @@
         "block.image-gallery",
         "metajob-block.job-filter",
         "metajob-block.company-filter",
-        "metajob-block.candidate-filter"
+        "metajob-block.candidate-filter",
+        "metajob-block.page-header"
       ]
     },
     "seo": {
