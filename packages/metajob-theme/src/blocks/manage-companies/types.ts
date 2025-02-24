@@ -83,3 +83,9 @@ export type ISingleCompany = {
    //       address: string
    //    }
 }
+
+export type IJobCategory = {
+   id: number
+   documentId: string
+   title: string
+}

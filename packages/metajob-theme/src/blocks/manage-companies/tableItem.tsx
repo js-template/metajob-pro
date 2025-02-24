@@ -11,7 +11,7 @@ import { KeyedMutator } from "swr"
 import dynamic from "next/dynamic"
 import { formProps } from "@/types/forms"
 import { getValueFromWebsite } from "./hook"
-import { ISingleCompany } from "./type"
+import { ISingleCompany } from "./types"
 
 // import EditCompany from "./edit-company"
 const EditCompany = dynamic(() => import("./edit-company"))
