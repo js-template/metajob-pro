@@ -1,0 +1,27 @@
+{
+  "info": {
+    "displayName": "Page Heder",
+    "icon": "arrowRight",
+    "description": "Page heder block"
+  },
+  "category": "metajob-block",
+  "modelName": "page-header",
+  "uid": "metajob-block.page-header",
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}

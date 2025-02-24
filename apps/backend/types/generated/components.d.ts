@@ -909,6 +909,20 @@ export interface MetajobBlockManageResume extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockPageHeader extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_page_headers';
+  info: {
+    description: 'Page heder block';
+    displayName: 'Page Heder';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobConfigHeaderConfig extends Struct.ComponentSchema {
   collectionName: 'components_metajob_config_header_configs';
   info: {
@@ -1444,6 +1458,7 @@ declare module '@strapi/strapi' {
       'metajob-block.manage-job': MetajobBlockManageJob;
       'metajob-block.manage-packages': MetajobBlockManagePackages;
       'metajob-block.manage-resume': MetajobBlockManageResume;
+      'metajob-block.page-header': MetajobBlockPageHeader;
       'metajob-config.header-config': MetajobConfigHeaderConfig;
       'metajob-config.header-field': MetajobConfigHeaderField;
       'metajob-config.message': MetajobConfigMessage;
