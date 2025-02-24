@@ -48,7 +48,7 @@ export const BlogFilter = ({ block, language }: Props) => {
          page: page
       },
       publicationState: "live",
-      locale: language ? [language] : ["en"]
+      locale: language ?? ["en"]
    }
 
    // Convert queryParams to a string for the URL

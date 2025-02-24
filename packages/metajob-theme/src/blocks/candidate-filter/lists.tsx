@@ -31,6 +31,7 @@ export default function CandidateLists({ data, loading, error }: CandidateRightS
                      component={"span"}
                      variant='h4'
                      pl={2}>
+                     {/* FIXME: Can not be static text. we need multilingual supported  */}
                      We have found{" "}
                      <Typography
                         fontSize={16}

@@ -4,7 +4,7 @@ import { loadActiveTheme } from "config/theme-loader"
 
 export default async function PublicLayoutHeader() {
    // fetch the language from cookies or session
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
 
    const { data, error } = await find(
       // fetch public header data
@@ -12,7 +12,8 @@ export default async function PublicLayoutHeader() {
       {
          populate: {
             header: { populate: "*" }
-         }
+         },
+         locale: language ?? ["en"]
       },
       "no-store"
    )

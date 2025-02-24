@@ -111,6 +111,8 @@ export const findOne = async (
          }
       })
 
+      //console.log("Response", response)
+
       if (!response.ok) {
          throw new Error(`Failed to fetch data: ${response.statusText}`)
       }
@@ -118,10 +120,10 @@ export const findOne = async (
       const data = await response.json()
       return { data, error: null }
    } catch (error: any) {
-      console.error(`Error during API call: ${error.message}`)
+      console.error(`Error during API call: ${error}`)
       return {
          data: null,
-         error: error.message || "An error occurred during data fetch"
+         error: error || "An error occurred during data fetch"
       }
    }
 }

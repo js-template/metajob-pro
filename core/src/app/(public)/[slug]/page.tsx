@@ -5,8 +5,9 @@ import { find } from "@/lib/strapi"
 import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { getLanguageFromCookie } from "@/utils/language"
 import { loadActiveTheme } from "config/theme-loader"
+import { cookies } from "next/headers"
 
-export const dynamicParams = false // true | false,
+export const dynamicParams = true // true | false,
 
 export default async function DynamicPages({
    params
@@ -15,7 +16,9 @@ export default async function DynamicPages({
    searchParams: { [key: string]: string | string[] | undefined }
 }) {
    const pageSlug = params?.slug
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
+
+   // console.log("language in cookie", language)
 
    const { data, error } = await find(
       "api/padma-backend/public-pages",
@@ -29,10 +32,13 @@ export default async function DynamicPages({
             blocks: {
                populate: "*"
             }
-         }
+         },
+         locale: language ?? ["en"]
       },
       "no-store"
    )
+
+   console.log("data", data)
 
    const activeTheme = await loadActiveTheme()
 
@@ -54,9 +60,9 @@ export default async function DynamicPages({
       return notFound()
    }
    // *** if error, return error page ***
-   // if (error) {
-   //    throw error;
-   // }
+   if (error) {
+      throw error
+   }
 
    return (
       <>
@@ -77,14 +83,21 @@ export default async function DynamicPages({
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-   const { data, error } = await find("api/padma-backend/public-pages", {
-      fields: ["slug"],
-      filters: {
-         slug: {
-            $ne: null
+   // const cookieStore = await cookies()
+   // const language = cookieStore.get("lang")
+
+   const { data, error } = await find(
+      "api/padma-backend/public-pages",
+      {
+         fields: ["slug"],
+         filters: {
+            slug: {
+               $ne: null
+            }
          }
-      }
-   })
+      },
+      "no-store"
+   )
 
    return data?.data?.map((post: any) => ({
       slug: post?.slug || ""
@@ -100,7 +113,7 @@ type Props = {
 // *** generate metadata for the page
 export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
    const pageSlug = params?.slug
-   const language = getLanguageFromCookie()
+   //const language = await getLanguageFromCookie()
 
    // ***fetch seo data
    const product = await find(
@@ -116,6 +129,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
                populate: "*"
             }
          }
+         //locale: language ?? ["en"]
       },
       "no-store"
    )

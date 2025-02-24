@@ -4,7 +4,7 @@ import { loadActiveTheme } from "config/theme-loader"
 
 export default async function PrivateLayoutHeader() {
    // fetch the language from cookies or session
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
 
    // fetch private header data
    const { data, error } = await find(

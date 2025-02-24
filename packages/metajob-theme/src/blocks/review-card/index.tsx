@@ -77,14 +77,14 @@ export const ReviewCard = ({ block, language }: Props) => {
    //===================Starts fetching testimonial data============
    const testimonialQueryParams = {
       populate: "*"
-      // locale: language ? [language] : ["en"]
+      //locale: language ?? ["en"]
    }
    const testimonialQueryString = encodeURIComponent(JSON.stringify(testimonialQueryParams))
    const testimonialAPiUrl = `/api/find?model=api/metajob-backend/testimonials&query=${testimonialQueryString}`
-   const { data: testimonialsAll, isLoading } = useSWR(testimonialAPiUrl, fetcher, {
-      fallbackData: []
-   })
+   const { data: testimonialsAll, error, isLoading } = useSWR(testimonialAPiUrl, fetcher)
    const testimonialData = testimonialsAll?.data
+
+   console.log("testimonialData", testimonialData, "error", error)
 
    return (
       <Stack py={8} bgcolor={backgroundColor ? backgroundColor : theme.palette.background.default}>
