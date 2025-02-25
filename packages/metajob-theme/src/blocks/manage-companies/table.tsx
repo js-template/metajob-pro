@@ -6,7 +6,6 @@ import PerfectScrollbar from "react-perfect-scrollbar"
 import ManageCompaniesTableItem from "./tableItem"
 import { KeyedMutator } from "swr"
 import { TableLoader } from "../../components/loader"
-import { emptyProps } from "../../shared/type"
 import { formProps } from "@/types/forms"
 import { ISingleCompany } from "./types"
 

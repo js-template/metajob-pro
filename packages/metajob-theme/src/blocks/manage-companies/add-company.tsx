@@ -60,8 +60,9 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
          avg_salary: "",
          about: "",
          facebook_url: "",
-         twitter_url: "",
          linkedin_url: "",
+         twitter_url: "",
+         instagram_url: "",
          logo: null
       }
    })
@@ -100,9 +101,12 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
             data.linkedin_url && {
                type: "linkedin",
                link: data.linkedin_url
+            },
+            data.instagram_url && {
+               type: "linkedin",
+               link: data.instagram_url
             }
          ]
-
          // ?? remove empty values from socialLinks
          const filteredSocialLinks = socialLinks.filter((link) => link)
 
