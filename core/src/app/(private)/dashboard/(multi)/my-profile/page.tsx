@@ -28,7 +28,7 @@ export default async function ProfilePage() {
    }
 
    return (
-      <Fragment>
+      <>
          {/* Render the components dynamically using blockComponentMapping */}
          {[{ __component: "block.auth-profile" }]?.map((block: any, index: number) => {
             // @ts-ignore
@@ -41,6 +41,6 @@ export default async function ProfilePage() {
             }
             return null
          })}
-      </Fragment>
+      </>
    )
 }

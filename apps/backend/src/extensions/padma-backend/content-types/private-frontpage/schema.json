@@ -35,7 +35,12 @@
         "widget.matched-list",
         "block.notification-list",
         "block.bookmark-list"
-      ]
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "role2": {
       "type": "relation",
@@ -52,7 +57,12 @@
         "widget.closed-job",
         "block.notification-list",
         "block.bookmark-list"
-      ]
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "style": {
       "type": "component",

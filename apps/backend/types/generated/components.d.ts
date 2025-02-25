@@ -1281,8 +1281,13 @@ export interface WidgetAppliedList extends Struct.ComponentSchema {
   collectionName: 'components_widget_applied_lists';
   info: {
     description: '';
-    displayName: 'Applied List';
+    displayName: 'Applied Job';
     icon: 'oneToOne';
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
   };
   attributes: {
     details: Schema.Attribute.Component<'widget.count-card', false>;
