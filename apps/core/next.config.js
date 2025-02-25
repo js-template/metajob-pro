@@ -1,15 +1,13 @@
 const dotenv = require("dotenv")
 const path = require("path")
 
-// Load the .env file from the root directory manually
-dotenv.config({ path: path.resolve(__dirname, "..", ".env") })
-
 module.exports = {
    env: {
       NEXTAUTH_URL: process.env.NEXTAUTH_URL,
       NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
       STRAPI_AUTH_TOKEN: process.env.STRAPI_AUTH_TOKEN,
-      NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL
+      NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+      LICENSE_TOKEN: process.env.LICENSE_TOKEN
    },
    typescript: {
       ignoreBuildErrors: true
