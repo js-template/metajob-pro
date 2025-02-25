@@ -7,7 +7,8 @@ export const fetcher = async (url: string) => {
    const result = await response.json()
 
    // Return the nested data to match fallbackData structure
-   const blocks = result?.data
+   // const blocks = result?.data
+   const blocks = result?.data?.data || []
 
    return blocks
 }
