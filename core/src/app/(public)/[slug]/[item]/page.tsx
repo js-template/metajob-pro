@@ -1,11 +1,10 @@
-import { Fragment } from "react"
 import { notFound } from "next/navigation"
 import { auth } from "@/context/auth"
 import { find } from "@/lib/strapi"
 import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { Metadata } from "next"
 import { loadActiveTheme } from "config/theme-loader"
-import { cookies } from "next/headers"
+
 import { getLanguageFromCookie } from "@/utils/language"
 
 // ?? Next.js will invalidate the cache when a
@@ -137,7 +136,9 @@ export async function generateStaticParams() {
    })
 
    // ?? Get the singlePages from the permalink data
-   const singlePages = data?.data?.attributes?.singlePage || []
+   const singlePages = data?.data?.singlePage || []
+
+   console.log("singlePages", singlePages)
 
    // ?? If no singlePages are found, return an empty array
    let params: Array<{ slug: string; item: string }> = []
@@ -153,19 +154,23 @@ export async function generateStaticParams() {
                   $ne: null
                }
             },
-            publicationState: "live",
+            //   FIXME: Locally will be dynamic
             locale: ["en"]
          })
+
+         console.log("collectionData", collectionData, "error", collectionError)
 
          // ?? Store all slugs in the params array
          const mappedSlugs = collectionData?.data?.map((single: any) => ({
             slug: page.slug,
-            item: single?.attributes?.slug
+            item: single?.slug
          }))
 
          params = params.concat(mappedSlugs)
       })
    )
+
+   console.log("params", params)
    // ?? Return the params array
    return params?.map((post: { slug: string; item: string }) => ({
       slug: post?.slug,

@@ -149,6 +149,7 @@ export const find = async (
       encode: false,
       indices: false
    })
+   const url = `${apiUrl}/${model}/?${queryString}`
 
    try {
       const response = await fetch(`${apiUrl}/${model}/?${queryString}`, {
@@ -170,14 +171,16 @@ export const find = async (
       })
 
       if (!response.ok) {
-         throw new Error(`Failed to fetch data: ${response.statusText}`)
+         throw new Error(`HTTP ${response.status} - ${response.statusText}`)
       }
 
       const data = await response.json()
 
       return { data, error: null }
    } catch (error: any) {
-      console.error(`Error during API call: ${error.message}`)
+      if (process.env.DEBUG === "true") {
+         console.error(`API Error: ${error.message} | URL: ${url}`)
+      }
       return {
          data: null,
          error: error.message || "An error occurred during data fetch"

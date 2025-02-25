@@ -1,11 +1,9 @@
-import { Fragment } from "react"
 import { notFound } from "next/navigation"
 import { Metadata, ResolvingMetadata } from "next"
 import { find } from "@/lib/strapi"
 import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { getLanguageFromCookie } from "@/utils/language"
 import { loadActiveTheme } from "config/theme-loader"
-import { cookies } from "next/headers"
 
 export const dynamicParams = true // true | false,
 
@@ -17,8 +15,6 @@ export default async function DynamicPages({
 }) {
    const pageSlug = params?.slug
    const language = await getLanguageFromCookie()
-
-   // console.log("language in cookie", language)
 
    const { data, error } = await find(
       "api/padma-backend/public-pages",
@@ -37,8 +33,6 @@ export default async function DynamicPages({
       },
       "no-store"
    )
-
-   console.log("data", data)
 
    const activeTheme = await loadActiveTheme()
 
