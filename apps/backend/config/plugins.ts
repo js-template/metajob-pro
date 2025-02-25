@@ -4,7 +4,7 @@ export default ({ env }: { env: any }) => ({
   },
   "metajob-backend": {
     enabled: true,
-    resolve: "./src/plugins/metajob-backend",
+    //resolve: "./src/plugins/metajob-backend",
   },
   upload: {
     config: {
