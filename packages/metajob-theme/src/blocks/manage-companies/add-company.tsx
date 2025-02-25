@@ -1,15 +1,17 @@
 "use client"
 import React from "react"
 import toast from "react-hot-toast"
-import { formProps } from "../../types/forms"
 import { createEntry, find, updateOne, uploadImage } from "../../lib/strapi"
 import useSWR, { KeyedMutator } from "swr"
 import {
+   Avatar,
    Box,
    CircularProgress,
+   FormControl,
    Grid,
    IconButton,
    MenuItem,
+   Paper,
    Select,
    TextField,
    Typography,
@@ -17,25 +19,25 @@ import {
 } from "@mui/material"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import CIcon from "../../components/common/icon"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { fetcher } from "./hook"
 import { IJobCategory } from "./types"
 import MDEditor from "@uiw/react-md-editor"
 import { LoadingButton } from "@mui/lab"
+import _ from "lodash"
 
 type addCompanyProps = {
-   open: boolean
    handleClose: () => void
-   data: formProps
    userId?: number
    mutate: KeyedMutator<any>
 }
 
-const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps) => {
+const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
    const theme = useTheme()
    const [loading, setLoading] = React.useState(false)
 
    const {
+      control,
       handleSubmit,
       register,
       formState: { errors },
@@ -58,9 +60,10 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
          avg_salary: "",
          about: "",
          facebook_url: "",
+         linkedin_url: "",
          twitter_url: "",
-         linkedin_url: ""
-         //    logo: null
+         instagram_url: "",
+         logo: null
       }
    })
 
@@ -98,9 +101,12 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
             data.linkedin_url && {
                type: "linkedin",
                link: data.linkedin_url
+            },
+            data.instagram_url && {
+               type: "linkedin",
+               link: data.instagram_url
             }
          ]
-
          // ?? remove empty values from socialLinks
          const filteredSocialLinks = socialLinks.filter((link) => link)
 
@@ -149,19 +155,21 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
             if (companyData && data?.logo) {
                const formData = new FormData()
                formData.append("files", data.logo[0])
-               const { data: logoData, error: logoError } = await uploadImage(formData)
-
-               if (logoError) {
+               const { data: uploadData, error: uploadError } = await uploadImage(formData)
+               console.log("uploadError", uploadError)
+               if (uploadError) {
+                  mutate()
+                  handleClose()
                   return toast.error("Failed to upload image")
                }
 
                // ?? update company with logo
                const { data: updatedCompanyData, error: updateError } = await updateOne(
-                  "/metajob-backend/companies",
+                  "metajob-backend/companies",
                   companyData?.documentId,
                   {
                      data: {
-                        logo: logoData[0].id
+                        logo: uploadData[0].id
                      }
                   }
                )
@@ -406,7 +414,7 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
                         size='small'
                         placeholder='Company Tagline'
                         {...register("tagline")}
-                        error={Boolean(errors.name)}
+                        error={Boolean(errors.tagline)}
                      />
                   </Grid>
                   {/* Email */}
@@ -574,7 +582,7 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
                         error={Boolean(errors.slug)}
                      />
                   </Grid>
-                  {/* Website */}
+                  {/* Logo */}
                   <Grid
                      item
                      xs={12}
@@ -584,35 +592,171 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
                            width: "100%"
                         }
                      }}>
-                     <Box
-                        sx={{
-                           display: "flex",
-                           justifyContent: "space-between",
-                           alignItems: "center",
-                           gap: 1
-                        }}>
-                        <Typography
-                           variant='body1'
-                           sx={{
-                              color: (theme) => theme.palette.text.primary,
-                              fontSize: 16,
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 0.5
-                           }}
-                           pb={0.5}>
-                           Website
-                           <Typography
-                              component='span'
-                              sx={{
-                                 fontSize: 14,
-                                 color: (theme) => theme.palette.text.secondary
-                              }}>
-                              (optional)
-                           </Typography>
-                        </Typography>
-                     </Box>
-                     <TextField
+                     <Controller
+                        name='logo'
+                        control={control}
+                        // rules={rules}
+                        render={({ field, fieldState: { error } }) => (
+                           <FormControl fullWidth={true}>
+                              <Box
+                                 sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    gap: 1
+                                 }}>
+                                 <Typography
+                                    variant='body1'
+                                    sx={{
+                                       color: (theme) => theme.palette.text.primary,
+                                       fontSize: 16,
+                                       display: "flex",
+                                       alignItems: "center",
+                                       gap: 0.5
+                                    }}
+                                    pb={0.5}>
+                                    Company Logo
+                                    <Typography
+                                       component='span'
+                                       sx={{
+                                          fontSize: 14,
+                                          color: (theme) => theme.palette.text.secondary
+                                       }}>
+                                       (optional)
+                                    </Typography>
+                                 </Typography>
+                              </Box>
+                              <TextField
+                                 {...field}
+                                 sx={{
+                                    "& .MuiFormHelperText-root": {
+                                       color: (theme) => theme.palette.error.main,
+                                       textTransform: "capitalize",
+                                       mx: 0.5
+                                    },
+                                    "& input": {
+                                       py: "10px"
+                                    }
+                                    // ...textFieldSx
+                                 }}
+                                 type={"file"}
+                                 value={undefined}
+                                 onChange={(e: any) => {
+                                    field.onChange(e.target.files)
+                                 }}
+                                 error={!!error}
+                                 helperText={error ? "Helper Text" : ""}
+                                 // {...textFieldProps}
+                                 size={"small"}
+                                 inputProps={
+                                    {
+                                       // accept: accept?.join(","),
+                                       // multiple: multiple,
+                                       // ...inputProps
+                                    }
+                                 }
+                              />
+
+                              {/* files preview */}
+                              {field.value && (
+                                 <Box
+                                    sx={{
+                                       display: "flex",
+                                       flexWrap: "wrap",
+                                       gap: 1.5,
+                                       mt: 1.5
+                                    }}>
+                                    {_.map(field.value, (file: any, index: number) => {
+                                       return (
+                                          <Paper
+                                             key={index}
+                                             sx={{
+                                                position: "relative",
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                border: "1px solid",
+                                                borderColor: (theme) => theme.palette.divider,
+                                                borderRadius: 1,
+                                                boxShadow: 2.5
+                                             }}>
+                                             {/* Show Avatar or icon base on the type */}
+                                             {file?.type === "image/png" ||
+                                             file?.type === "image/jpeg" ||
+                                             file?.type === "image/jpg" ||
+                                             file?.type === "image/gif" ||
+                                             file?.type === "image/svg+xml" ||
+                                             file?.type === "image/webp" ? (
+                                                <Avatar
+                                                   variant='rounded'
+                                                   sx={{
+                                                      width: {
+                                                         xs: 40,
+                                                         sm: 50,
+                                                         md: 60,
+                                                         lg: 70,
+                                                         xl: 80
+                                                      },
+                                                      height: {
+                                                         xs: 40,
+                                                         sm: 50,
+                                                         md: 60,
+                                                         lg: 70,
+                                                         xl: 80
+                                                      }
+                                                   }}
+                                                   src={URL.createObjectURL(file)}
+                                                />
+                                             ) : (
+                                                <CIcon
+                                                   icon='tabler:file-text'
+                                                   size={40}
+                                                   sx={{
+                                                      width: {
+                                                         xs: 40,
+                                                         sm: 50,
+                                                         md: 60,
+                                                         lg: 70,
+                                                         xl: 80
+                                                      },
+                                                      height: {
+                                                         xs: 40,
+                                                         sm: 50,
+                                                         md: 60,
+                                                         lg: 70,
+                                                         xl: 80
+                                                      }
+                                                   }}
+                                                />
+                                             )}
+                                             <IconButton
+                                                sx={{
+                                                   position: "absolute",
+                                                   top: -15,
+                                                   right: -15
+                                                }}
+                                                color='error'
+                                                onClick={() => {
+                                                   field.onChange(() => {
+                                                      const files = _.filter(
+                                                         field.value,
+                                                         (_: any, i: number) => i !== index
+                                                      )
+
+                                                      return files.length ? files : undefined
+                                                   })
+                                                }}>
+                                                <CIcon icon='tabler:x' color={"error"} size={20} />
+                                             </IconButton>
+                                          </Paper>
+                                       )
+                                    })}
+                                 </Box>
+                              )}
+                           </FormControl>
+                        )}
+                     />
+                     {/* <TextField
                         sx={{
                            "& .MuiFormHelperText-root": {
                               color: (theme) => theme.palette.error.main,
@@ -625,10 +769,10 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
                         }}
                         type='text'
                         size='small'
-                        placeholder='Company Website'
-                        {...register("website")}
-                        error={Boolean(errors.website)}
-                     />
+                        placeholder='Company Logo'
+                        {...register("logo")}
+                        error={Boolean(errors.logo)}
+                     /> */}
                   </Grid>
                   {/* Industry */}
                   <Grid item xs={12} sm={6}>
@@ -817,6 +961,62 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
                               )
                            )}
                      </Select>
+                  </Grid>
+                  {/* Website */}
+                  <Grid
+                     item
+                     xs={12}
+                     md={6}
+                     sx={{
+                        "& .MuiFormControl-root": {
+                           width: "100%"
+                        }
+                     }}>
+                     <Box
+                        sx={{
+                           display: "flex",
+                           justifyContent: "space-between",
+                           alignItems: "center",
+                           gap: 1
+                        }}>
+                        <Typography
+                           variant='body1'
+                           sx={{
+                              color: (theme) => theme.palette.text.primary,
+                              fontSize: 16,
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 0.5
+                           }}
+                           pb={0.5}>
+                           Website
+                           <Typography
+                              component='span'
+                              sx={{
+                                 fontSize: 14,
+                                 color: (theme) => theme.palette.text.secondary
+                              }}>
+                              (optional)
+                           </Typography>
+                        </Typography>
+                     </Box>
+                     <TextField
+                        sx={{
+                           "& .MuiFormHelperText-root": {
+                              color: (theme) => theme.palette.error.main,
+                              textTransform: "capitalize",
+                              mx: 0.5
+                           },
+                           "& input": {
+                              py: "10px"
+                           }
+                        }}
+                        type='text'
+                        size='small'
+                        placeholder='Company Website'
+                        {...register("website")}
+                        error={Boolean(errors.website)}
+                     />
                   </Grid>
                   {/* Facebook Url */}
                   <Grid

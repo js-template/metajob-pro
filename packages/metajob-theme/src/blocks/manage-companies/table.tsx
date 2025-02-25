@@ -6,8 +6,6 @@ import PerfectScrollbar from "react-perfect-scrollbar"
 import ManageCompaniesTableItem from "./tableItem"
 import { KeyedMutator } from "swr"
 import { TableLoader } from "../../components/loader"
-import { emptyProps } from "../../shared/type"
-import { formProps } from "@/types/forms"
 import { ISingleCompany } from "./types"
 
 const ManageCompaniesTable = ({
@@ -19,7 +17,6 @@ const ManageCompaniesTable = ({
    mutate,
    isLoading,
    empty,
-   formData,
    pageSize
 }: {
    headCells: { value: string }[]
@@ -33,7 +30,6 @@ const ManageCompaniesTable = ({
       title: string
       description: string
    }
-   formData: formProps
    pageSize: number
 }) => {
    const totalHeader = 4
@@ -109,7 +105,6 @@ const ManageCompaniesTable = ({
                               noteFunctionHandler={() => {
                                  toast.error("Note function not implemented yet")
                               }}
-                              formData={formData}
                            />
                         ))}
 

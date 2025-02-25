@@ -11,7 +11,6 @@ import { AccessError } from "../../shared/error-table"
 import AddCompany from "./add-company"
 import useSWR from "swr"
 import { IManageCompanyBock } from "./types"
-import toast from "react-hot-toast"
 
 type Props = {
    block: IManageCompanyBock
@@ -25,15 +24,6 @@ export const ManageCompanies = ({ block }: Props) => {
    const { id: userId, role: userRole } = user || {}
    const role = userRole?.type || ""
 
-   // TODO: need to update table form
-   const formData = {
-      title: "a",
-      slug: "s",
-      formStep: 1,
-      stepLabels: [{ id: 1, title: "a" }],
-      buttonsText: "B",
-      fields: [{ label: "L", name: "A" }]
-   } as any
    const { title, style, empty, table_config, table_head: tableHeader, add_button_placeholder } = block || {}
    const {
       label: tableLabel,
@@ -79,6 +69,9 @@ export const ManageCompanies = ({ block }: Props) => {
          withCount: true
       },
       filters: {
+         owner: {
+            id: userId
+         },
          ...(search && {
             $or: [
                {
@@ -132,13 +125,7 @@ export const ManageCompanies = ({ block }: Props) => {
                   mb: 5
                }}>
                {addCompany ? (
-                  <AddCompany
-                     open={addCompany}
-                     handleClose={() => setAddCompany(false)}
-                     userId={userId}
-                     data={formData}
-                     mutate={mutate}
-                  />
+                  <AddCompany handleClose={() => setAddCompany(false)} userId={userId} mutate={mutate} />
                ) : (
                   <>
                      <Box
@@ -240,8 +227,6 @@ export const ManageCompanies = ({ block }: Props) => {
                         mutate={mutate}
                         isLoading={isLoading}
                         empty={empty}
-                        // formData={form?.data?.attributes}
-                        formData={formData}
                         pageSize={pagination.pageSize}
                      />
 

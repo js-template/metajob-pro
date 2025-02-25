@@ -18,6 +18,8 @@ import AvgSalaryRoute from "./avg-salary";
 import emailHistory from "./email-history";
 import CompanySizeRoute from "./company-size";
 import RevenueRoute from "./revenue";
+import JobTypeRoute from "./job-type";
+import SkillRoute from "./skill";
 
 export default {
   "job-setting": JobSettingRoute,
@@ -40,4 +42,6 @@ export default {
   "email-history": emailHistory,
   "company-size": CompanySizeRoute,
   revenue: RevenueRoute,
+  "job-type": JobTypeRoute,
+  skill: SkillRoute,
 };

@@ -71,8 +71,8 @@ export const MessageModal = ({ open, handleClose, title, modalData }: Props) => 
    const apiUrl = userId ? `/api/find?model=api/metajob-backend/chats&query=${queryString}&cache=no-store` : null
    const { data: messageListMain, error, isLoading: messageIsLoading } = useSWR(apiUrl, fetcher)
    // check the job is applied
-   const isMessaged = messageListMain?.data?.length > 0 || messageIdentifier
-   const messageListData = messageListMain?.data?.[0]
+   const isMessaged = messageListMain?.length > 0 || messageIdentifier
+   const messageListData = messageListMain?.[0]
 
    // *** message send function handler ***
    const onSubmit = async (data: any) => {
