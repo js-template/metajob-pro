@@ -69,3 +69,9 @@ export type IJobApplyData = {
       slug: string
    }
 }
+
+export type IJobCategory = {
+   id: number
+   documentId: string
+   title: string
+}

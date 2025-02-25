@@ -12,8 +12,8 @@ import ManageListsTable from "./table"
 import { AccessError } from "../../shared/error-table"
 import { IManageJobBock } from "./type"
 import useSWR from "swr"
-import AddList from "./add-list"
 import toast from "react-hot-toast"
+import AddJob from "./add-job"
 
 type Props = {
    block: IManageJobBock
@@ -118,7 +118,6 @@ export const ManageJobs = ({ block }: Props) => {
 
    // *** open add lists popup
    const handleAddList = () => {
-      return toast.error("This feature is under development")
       setAddList(true)
    }
 
@@ -132,23 +131,18 @@ export const ManageJobs = ({ block }: Props) => {
             elevation={0}
             sx={{
                width: "100%",
-               border: "1px solid",
-               borderColor: "divider",
-               borderRadius: "12px",
                p: 0,
                mb: 5
             }}>
             {addList ? (
-               <AddList
-                  open={addList}
-                  handleClose={() => setAddList(false)}
-                  userId={userId}
-                  data={formData}
-                  mutate={mutate}
-                  blockData={block}
-               />
+               <AddJob handleClose={() => setAddList(false)} userId={userId} mutate={mutate} />
             ) : (
-               <>
+               <Box
+                  sx={{
+                     border: "1px solid",
+                     borderColor: "divider",
+                     borderRadius: "12px"
+                  }}>
                   <Box
                      sx={{
                         px: 3,
@@ -382,7 +376,7 @@ export const ManageJobs = ({ block }: Props) => {
                         )}
                      </Box>
                   </Box>
-               </>
+               </Box>
             )}
          </Paper>
       </Grid>

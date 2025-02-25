@@ -414,7 +414,7 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
                         size='small'
                         placeholder='Company Tagline'
                         {...register("tagline")}
-                        error={Boolean(errors.name)}
+                        error={Boolean(errors.tagline)}
                      />
                   </Grid>
                   {/* Email */}

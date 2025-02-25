@@ -20,6 +20,8 @@ import AvgSalaryService from "./avg-salary";
 import emailHistory from "./email-history";
 import CompanySizeService from "./company-size";
 import RevenueService from "./revenue";
+import JobTypeService from "./job-type";
+import SkillService from "./skill";
 
 export default {
   service,
@@ -44,4 +46,6 @@ export default {
   "email-history": emailHistory,
   "company-size": CompanySizeService,
   revenue: RevenueService,
+  "job-type": JobTypeService,
+  skill: SkillService,
 };

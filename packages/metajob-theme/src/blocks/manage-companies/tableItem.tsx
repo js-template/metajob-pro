@@ -9,11 +9,8 @@ import { deleteEntry } from "../../lib/strapi"
 import toast from "react-hot-toast"
 import { KeyedMutator } from "swr"
 import dynamic from "next/dynamic"
-import { formProps } from "@/types/forms"
 import { getValueFromWebsite } from "./hook"
 import { ISingleCompany } from "./types"
-
-// import EditCompany from "./edit-company"
 const EditCompany = dynamic(() => import("./edit-company"))
 
 const ManageCompaniesTableItem = ({
@@ -21,15 +18,13 @@ const ManageCompaniesTableItem = ({
    selectAll,
    noteFunctionHandler,
    direction,
-   mutate,
-   formData
+   mutate
 }: {
    row: ISingleCompany
    direction: "ltr" | "rtl"
    selectAll: boolean
    noteFunctionHandler: () => void
    mutate: KeyedMutator<any>
-   formData: formProps
 }) => {
    const [show, setShow] = useState(false)
    const [loading, setLoading] = useState(false)
@@ -154,7 +149,7 @@ const ManageCompaniesTableItem = ({
                </Stack>
             </TableCell>
          </TableRow>
-         {/* TODO: Need To update EditCompany */}
+         {/*  Edit Company */}
          <EditCompany open={show} handleClose={handleClose} companyDocID={documentId} mutate={mutate} />
       </Fragment>
    )
