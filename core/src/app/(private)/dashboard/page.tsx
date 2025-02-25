@@ -6,6 +6,7 @@ import { redirect } from "next/navigation"
 import { loadActiveTheme } from "config/theme-loader"
 import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { Metadata, ResolvingMetadata } from "next/types"
+import { getLanguageFromCookie } from "@/utils/language"
 
 // // *** generate metadata type
 type Props = {
@@ -19,6 +20,8 @@ export default async function DashboardPage({
    params: { page: string }
    searchParams: { [key: string]: string | string[] | undefined }
 }) {
+   const language = await getLanguageFromCookie()
+
    // Get user session
    const session = await auth()
    if (!session) {
@@ -53,7 +56,8 @@ export default async function DashboardPage({
             style: {
                populate: "*"
             }
-         }
+         },
+         locale: language ?? ["en"]
       },
       "no-store"
    )

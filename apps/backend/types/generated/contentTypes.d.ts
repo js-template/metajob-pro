@@ -1004,6 +1004,11 @@ export interface PluginMetajobBackendJobSetting
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<['metajob-single-type.job-details']> &
       Schema.Attribute.Required &
@@ -1016,12 +1021,11 @@ export interface PluginMetajobBackendJobSetting
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.job-setting'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1042,16 +1046,20 @@ export interface PluginMetajobBackendJobType
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.job-type'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1073,16 +1081,20 @@ export interface PluginMetajobBackendMembership
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.membership'
-    > &
-      Schema.Attribute.Private;
+    >;
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -1162,6 +1174,11 @@ export interface PluginMetajobBackendPackage
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     ads_boost_limit: Schema.Attribute.Integer &
       Schema.Attribute.Required &
@@ -1176,12 +1193,11 @@ export interface PluginMetajobBackendPackage
     description: Schema.Attribute.Text;
     feature: Schema.Attribute.Component<'config.meta-data', true>;
     frequency: Schema.Attribute.Enumeration<['Monthly', 'Yearly', 'One Time']>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.package'
-    > &
-      Schema.Attribute.Private;
+    >;
     price: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
@@ -1801,7 +1817,12 @@ export interface PluginPadmaBackendPrivateFrontpage
         'block.notification-list',
         'block.bookmark-list',
       ]
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     role2: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.role'
@@ -1816,7 +1837,12 @@ export interface PluginPadmaBackendPrivateFrontpage
         'block.notification-list',
         'block.bookmark-list',
       ]
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     style: Schema.Attribute.Component<'component.grid-container', false>;
     title: Schema.Attribute.String;

@@ -5,7 +5,7 @@ import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { getLanguageFromCookie } from "@/utils/language"
 import { loadActiveTheme } from "config/theme-loader"
 
-export const dynamicParams = false // true | false,
+export const dynamicParams = true // true | false,
 
 export default async function DynamicPages({
    params
@@ -31,7 +31,8 @@ export default async function DynamicPages({
             blocks: {
                populate: "*"
             }
-         }
+         },
+         locale: language ?? ["en"]
       },
       "no-store"
    )
