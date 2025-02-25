@@ -132,13 +132,7 @@ export const ManageCompanies = ({ block }: Props) => {
                   mb: 5
                }}>
                {addCompany ? (
-                  <AddCompany
-                     open={addCompany}
-                     handleClose={() => setAddCompany(false)}
-                     userId={userId}
-                     data={formData}
-                     mutate={mutate}
-                  />
+                  <AddCompany handleClose={() => setAddCompany(false)} userId={userId} mutate={mutate} />
                ) : (
                   <>
                      <Box
