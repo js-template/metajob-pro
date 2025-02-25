@@ -48,19 +48,28 @@
         "block.blog-card",
         "metajob-block.bookmark",
         "metajob-block.applied-jobs",
-        "metajob-block.manage-resume"
+        "metajob-block.manage-resume",
+        "widget.total-job",
+        "widget.open-job",
+        "widget.menu-widget",
+        "widget.matched-list",
+        "widget.favorite-list",
+        "widget.count-card",
+        "widget.copyright-bar",
+        "widget.contact-widget",
+        "widget.closed-job",
+        "widget.applied-list",
+        "metajob-block.manage-company",
+        "metajob-block.manage-job",
+        "metajob-block.manage-packages",
+        "metajob-config.message"
       ]
     },
     "styles": {
       "displayName": "grid container",
       "type": "component",
       "repeatable": false,
-      "component": "component.grid-container",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "component": "component.grid-container"
     },
     "seo": {
       "type": "component",

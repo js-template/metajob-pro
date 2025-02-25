@@ -1,10 +1,16 @@
 {
   "collectionName": "components_widget_applied_lists",
   "info": {
-    "displayName": "Applied List",
-    "icon": "oneToOne"
+    "displayName": "Applied Job",
+    "icon": "oneToOne",
+    "description": ""
   },
   "options": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "details": {
       "type": "component",

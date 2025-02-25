@@ -57,7 +57,7 @@ export const ResumeDetails = ({
          }
       },
       publicationState: "live",
-      locale: language ? [language] : ["en"]
+      locale: language ?? ["en"]
    }
 
    // Convert queryParams to a string for the URL

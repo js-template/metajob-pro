@@ -16,15 +16,15 @@ export const metadata: Metadata = {
 
 export default async function NotFound(props: { children: React.ReactNode }) {
    // fetch the language from cookies or session
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
 
    // get the layout data from the server
    const { data } = await find(
       "api/padma-backend/layout",
       {
-         populate: "*"
+         populate: "*",
          // publicationState: "live",
-         // locale: language ? [language] : ["en"]
+         locale: language ? [language] : ["en"]
       },
       "no-store"
    )

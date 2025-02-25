@@ -1,4 +1,3 @@
-import { Fragment } from "react"
 import { notFound } from "next/navigation"
 import { Metadata, ResolvingMetadata } from "next"
 import { find } from "@/lib/strapi"
@@ -6,7 +5,7 @@ import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { getLanguageFromCookie } from "@/utils/language"
 import { loadActiveTheme } from "config/theme-loader"
 
-export const dynamicParams = false // true | false,
+export const dynamicParams = true // true | false,
 
 export default async function DynamicPages({
    params
@@ -16,7 +15,9 @@ export default async function DynamicPages({
 }) {
    const pageSlug = params?.slug
 
-   const language = getLanguageFromCookie()
+   //console.log("Page Slug", pageSlug)
+
+   const language = await getLanguageFromCookie()
 
    const { data, error } = await find(
       "api/padma-backend/private-pages",
@@ -30,7 +31,8 @@ export default async function DynamicPages({
             blocks: {
                populate: "*"
             }
-         }
+         },
+         locale: language ?? ["en"]
       },
       "no-store"
    )
@@ -38,9 +40,11 @@ export default async function DynamicPages({
    const activeTheme = await loadActiveTheme()
    const getPrivateComponents = activeTheme?.getPrivateComponents || {}
 
+   //console.log("Private Page Data", data?.data)
+
    const blocks = data?.data[0]?.blocks || []
 
-   console.log("Private Page Blocks Loaded", blocks)
+   //console.log("Private Page Blocks Loaded", blocks)
 
    // *** if blocks is empty, return 404 ***
    if (!blocks || blocks?.length === 0) {
@@ -93,7 +97,7 @@ type Props = {
 // // *** generate metadata for the page
 export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
    const pageSlug = params?.slug
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
 
    // ***fetch seo data
    const product = await find(
@@ -104,16 +108,20 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
                $eq: pageSlug
             }
          },
-         populate: "*"
+         populate: {
+            seo: {
+               populate: "*"
+            }
+         }
       },
       "no-store"
    )
-
-   if (!product?.data?.data?.[0]?.attributes?.seo) {
+   if (!product?.data?.data?.[0]?.seo) {
       return {
-         title: product?.data?.data?.[0]?.attributes?.title || "Title not found",
-         description: `Description ${product?.data?.data[0]?.attributes?.title}` || "Description not found"
+         title: product?.data?.data?.[0]?.title || "Title not found",
+         description: `Description ${product?.data?.data[0]?.title}` || "Description not found"
       }
    }
-   return StrapiSeoFormate(product?.data?.data?.[0]?.attributes?.seo, `/${pageSlug}`)
+
+   return StrapiSeoFormate(product?.data?.data?.[0]?.seo, `/${pageSlug}`)
 }

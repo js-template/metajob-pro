@@ -1,15 +1,13 @@
-"use client"
 import { Grid } from "@mui/material"
-import { CountCard } from "../../components/cards/count"
+import { CountCard } from "../../shared/count-card"
 import CountCardLoader from "../../shared/count-card/loader"
-import useSWR from "swr"
-import { fetcher } from "../../utils/swr-fetcher"
 import _ from "lodash"
-import { countCardProps } from "../../shared/count-card/type"
-import FavoriteError from "./error"
-import { IUserSession } from "../../types/user"
 
-export const FavoriteList = ({
+import OpenError from "./error"
+import { IUserSession } from "../../types/user"
+import { find } from "@/lib/strapi"
+
+export const FavoriteList = async ({
    block,
    session
 }: {
@@ -18,59 +16,44 @@ export const FavoriteList = ({
    data?: any
    language?: string
 }) => {
-   // session data destructuring
    const { user } = session || {}
    const { id: userId, role: userRole } = user || {}
    const role = userRole?.type || ""
 
-   const queryParams = {
-      fields: ["id"],
-      filters: {
-         owner: {
-            id: userId
-         },
-         type: "list"
-      }
-   }
-
-   const totalList = block?.details || ({} as countCardProps)
    const styleData = block?.style || {}
 
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
+   const { data: JobData, error: JobError } = await find(
+      "api/metajob-backend/bookmarks",
+      {
+         fields: ["id"],
+         filters: {
+            owner: userId
+         }
+      },
+      "no-store"
+   )
 
-   // // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-strapi/bookmarks?query=${queryString}&cache=no-store`
+   const openJob = JobData?.meta?.pagination.total || 0
 
-   const {
-      data: countData,
-      error,
-      isLoading
-   } = useSWR(apiUrl, block?.details?.dynamicCount && role === "candidate" ? fetcher : null)
-   const dynamicTotalList = _.get(countData, "meta.pagination.total", null)
+   // Extract relevant data
+   const componentData = block?.details || null
 
    return role === "candidate" ? (
       <>
-         {isLoading ? (
+         {!componentData ? (
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
                <CountCardLoader />
             </Grid>
          ) : (
             <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
-               <CountCard
-                  item={{
-                     ...totalList,
-                     count: block?.details?.dynamicCount ? dynamicTotalList : totalList.count
-                  }}
-                  style={styleData}
-               />
+               <CountCard item={componentData} count={openJob} />
             </Grid>
          )}
       </>
    ) : (
-      // Add message for employer
+      // Add message for candidate
       <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
-         <FavoriteError />
+         <OpenError />
       </Grid>
    )
 }

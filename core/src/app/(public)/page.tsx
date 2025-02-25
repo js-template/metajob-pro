@@ -6,8 +6,11 @@ import { getLanguageFromCookie } from "@/utils/language"
 import { loadActiveTheme } from "config/theme-loader"
 
 export default async function Home() {
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
 
+   console.log("Language", language)
+
+   // TODO: Handle Error and Steramline
    const { data, error } = await find(
       "api/padma-backend/public-frontpage",
       {
@@ -15,7 +18,8 @@ export default async function Home() {
             blocks: {
                populate: "*"
             }
-         }
+         },
+         locale: language ?? ["en"]
       },
       "no-store"
    )
@@ -55,13 +59,17 @@ export default async function Home() {
 
 // *** generate metadata for the page
 export async function generateMetadata(): Promise<Metadata> {
-   // const language = getLanguageFromCookie()
+   // const language = await getLanguageFromCookie()
    // *** fetch seo data
 
    const product = await find(
       "api/padma-backend/public-frontpage",
       {
-         populate: "*"
+         populate: {
+            seo: {
+               populate: "*"
+            }
+         }
       },
       "force-cache"
    )

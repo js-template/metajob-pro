@@ -8,10 +8,10 @@ import { KeyedMutator } from "swr"
 import { TableLoader } from "../../components/loader"
 import { emptyProps } from "../../shared/type"
 import { formProps } from "@/types/forms"
+import { ISingleCompany } from "./types"
 
 const ManageCompaniesTable = ({
    headCells,
-   rows,
    selectAll,
    setSelectAll,
    direction,
@@ -20,32 +20,30 @@ const ManageCompaniesTable = ({
    isLoading,
    empty,
    formData,
-   userId,
    pageSize
 }: {
-   headCells: {
-      label: string
-      sort: boolean
-      align: "left" | "center" | "right"
-   }[]
-   rows: {
-      id: number
-      company: string
-      createdAt: string
-      publishedAt: string
-      status: "Approved" | "Pending" | "Rejected"
-   }[]
+   headCells: { value: string }[]
    selectAll: boolean
    setSelectAll: (value: boolean) => void
    direction: "ltr" | "rtl"
    data: any
    mutate: KeyedMutator<any>
    isLoading: boolean
-   empty: emptyProps
+   empty?: {
+      title: string
+      description: string
+   }
    formData: formProps
-   userId: number
    pageSize: number
 }) => {
+   const totalHeader = 4
+   if (headCells && headCells.length > 0 && headCells.length < totalHeader) {
+      const remainHeader = totalHeader - headCells.length
+      for (let i = 0; i < remainHeader; i++) {
+         headCells.push({ value: "" })
+      }
+   }
+
    return (
       <PerfectScrollbar>
          <Box
@@ -80,7 +78,7 @@ const ManageCompaniesTable = ({
                         {_.map(headCells, (headCell, index) => (
                            <TableCell
                               key={index}
-                              align={headCell.align}
+                              align={index === headCells?.length - 1 ? "center" : "left"}
                               sx={{
                                  ...(index === 0 && {
                                     minWidth: "200px"
@@ -91,31 +89,7 @@ const ManageCompaniesTable = ({
                                  }),
                                  py: 1.5
                               }}>
-                              {headCell.sort ? (
-                                 <Box
-                                    sx={{
-                                       display: "flex",
-                                       alignItems: "center",
-                                       gap: 1,
-                                       justifyContent: "space-between",
-                                       width: "100%"
-                                    }}>
-                                    <div>{headCell.label}</div>
-                                    {/* {headCell.sort && (
-                                       <Box
-                                          sx={{
-                                             display: "flex",
-                                             flexDirection: "column",
-                                             cursor: "pointer"
-                                          }}>
-                                          <IconifyIcon icon='iconamoon:arrow-up-2-duotone' size={16} />
-                                          <IconifyIcon icon='iconamoon:arrow-down-2-duotone' size={16} />
-                                       </Box>
-                                    )} */}
-                                 </Box>
-                              ) : (
-                                 headCell.label
-                              )}
+                              {headCell?.value}
                            </TableCell>
                         ))}
                      </TableRow>
@@ -125,9 +99,9 @@ const ManageCompaniesTable = ({
                      <TableLoader numberOfRows={pageSize} />
                   ) : (
                      <TableBody>
-                        {data?.data.map((row: any) => (
+                        {data?.data.map((row: ISingleCompany, index: number) => (
                            <ManageCompaniesTableItem
-                              key={row.id}
+                              key={index}
                               row={row}
                               selectAll={selectAll}
                               direction={direction}
@@ -136,7 +110,6 @@ const ManageCompaniesTable = ({
                                  toast.error("Note function not implemented yet")
                               }}
                               formData={formData}
-                              userId={userId}
                            />
                         ))}
 

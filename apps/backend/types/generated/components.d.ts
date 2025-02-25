@@ -208,75 +208,6 @@ export interface BlockLatestApplied extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockManageCompany extends Struct.ComponentSchema {
-  collectionName: 'components_block_manage_companies';
-  info: {
-    displayName: 'Manage Company';
-    icon: 'bulletList';
-  };
-  attributes: {
-    addButtonText: Schema.Attribute.String;
-    editButtonText: Schema.Attribute.String;
-    empty: Schema.Attribute.Component<'shared.empty', false>;
-    enableDelete: Schema.Attribute.Boolean;
-    enableEdit: Schema.Attribute.Boolean;
-    enableSearch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    form: Schema.Attribute.Component<'config.relations', false>;
-    perPageText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Showing per page'>;
-    style: Schema.Attribute.Component<'config.style-section', false>;
-    subTitle: Schema.Attribute.String;
-    tableConfig: Schema.Attribute.Component<'config.header-config', false> &
-      Schema.Attribute.Required;
-    tableHead: Schema.Attribute.Component<'config.header-field', true> &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 4;
-          min: 4;
-        },
-        number
-      >;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface BlockManageJob extends Struct.ComponentSchema {
-  collectionName: 'components_block_manage_jobs';
-  info: {
-    displayName: 'Manage Job';
-    icon: 'bulletList';
-  };
-  attributes: {
-    addButtonText: Schema.Attribute.String;
-    editButtonText: Schema.Attribute.String;
-    empty: Schema.Attribute.Component<'shared.empty', false> &
-      Schema.Attribute.Required;
-    enableSearch: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    form: Schema.Attribute.Component<'config.relations', false>;
-    perPageText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Showing per page'>;
-    tableConfig: Schema.Attribute.Component<'config.header-config', false> &
-      Schema.Attribute.Required;
-    tableHead: Schema.Attribute.Component<'config.header-field', true> &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 6;
-          min: 6;
-        },
-        number
-      >;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Manage Lists'>;
-  };
-}
-
 export interface BlockNotificationList extends Struct.ComponentSchema {
   collectionName: 'components_block_notification_lists';
   info: {
@@ -522,48 +453,11 @@ export interface ConfigMenu extends Struct.ComponentSchema {
     child: Schema.Attribute.Component<'config.link', true>;
     disabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'bx:smile'>;
+    identifier: Schema.Attribute.String;
     label: Schema.Attribute.String & Schema.Attribute.Required;
     link: Schema.Attribute.String & Schema.Attribute.Required;
     target: Schema.Attribute.Enumeration<['_blank', '_self']>;
     type: Schema.Attribute.Enumeration<['External', 'Internal']>;
-  };
-}
-
-export interface ConfigMessage extends Struct.ComponentSchema {
-  collectionName: 'components_config_messages';
-  info: {
-    displayName: 'Message';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    cancelButtonText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Cancel'>;
-    copyActionText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Copy'>;
-    editActionText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Edit'>;
-    empty_chat: Schema.Attribute.Component<'shared.empty', false> &
-      Schema.Attribute.Required;
-    empty_messages: Schema.Attribute.Component<'shared.empty', false> &
-      Schema.Attribute.Required;
-    enableSearch: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    saveButtonText: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Save'>;
-    searchPlaceholder: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Search'>;
-    sendMessagePlaceholder: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Type Something'>;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Messages'>;
   };
 }
 
@@ -945,6 +839,65 @@ export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockManageCompany extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_manage_companies';
+  info: {
+    displayName: 'Manage Company';
+    icon: 'bulletList';
+  };
+  attributes: {
+    add_button_placeholder: Schema.Attribute.String;
+    description: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    table_config: Schema.Attribute.Component<
+      'metajob-config.table-config',
+      false
+    >;
+    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobBlockManageJob extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_manage_jobs';
+  info: {
+    displayName: 'Manage Job';
+    icon: 'bulletList';
+  };
+  attributes: {
+    add_button_placeholder: Schema.Attribute.String;
+    apply_table_head: Schema.Attribute.Component<
+      'metajob-config.meta-data',
+      true
+    >;
+    description: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    table_config: Schema.Attribute.Component<
+      'metajob-config.table-config',
+      false
+    >;
+    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobBlockManagePackages extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_manage_packages';
+  info: {
+    description: 'Manage package block';
+    displayName: 'Manage Package';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobBlockManageResume extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_manage_resumes';
   info: {
@@ -952,6 +905,20 @@ export interface MetajobBlockManageResume extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobBlockPageHeader extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_page_headers';
+  info: {
+    description: 'Page heder block';
+    displayName: 'Page Heder';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -1092,6 +1059,8 @@ export interface MetajobConfigTableConfig extends Struct.ComponentSchema {
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Name'>;
+    per_page_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Showing per page'>;
     search_placeholder: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Search'>;
     table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
@@ -1311,8 +1280,14 @@ export interface UiJobInfo extends Struct.ComponentSchema {
 export interface WidgetAppliedList extends Struct.ComponentSchema {
   collectionName: 'components_widget_applied_lists';
   info: {
-    displayName: 'Applied List';
+    description: '';
+    displayName: 'Applied Job';
     icon: 'oneToOne';
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
   };
   attributes: {
     details: Schema.Attribute.Component<'widget.count-card', false>;
@@ -1365,21 +1340,14 @@ export interface WidgetCopyrightBar extends Struct.ComponentSchema {
 export interface WidgetCountCard extends Struct.ComponentSchema {
   collectionName: 'components_widget_count_cards';
   info: {
+    description: '';
     displayName: 'Count Card';
     icon: 'apps';
   };
   attributes: {
-    count: Schema.Attribute.BigInteger;
-    dynamicCount: Schema.Attribute.Boolean;
     enableStats: Schema.Attribute.Boolean;
     isLink: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    link: Schema.Attribute.String;
-    model: Schema.Attribute.String;
     subTitle: Schema.Attribute.String;
-    target: Schema.Attribute.Enumeration<
-      ['_self', '_blank', '_parent', '_top']
-    > &
-      Schema.Attribute.DefaultTo<'_self'>;
     title: Schema.Attribute.String;
   };
 }
@@ -1460,8 +1428,6 @@ declare module '@strapi/strapi' {
       'block.image-carousel': BlockImageCarousel;
       'block.image-gallery': BlockImageGallery;
       'block.latest-applied': BlockLatestApplied;
-      'block.manage-company': BlockManageCompany;
-      'block.manage-job': BlockManageJob;
       'block.notification-list': BlockNotificationList;
       'block.portfolio': BlockPortfolio;
       'block.pricing': BlockPricing;
@@ -1474,7 +1440,6 @@ declare module '@strapi/strapi' {
       'config.link': ConfigLink;
       'config.logo': ConfigLogo;
       'config.menu': ConfigMenu;
-      'config.message': ConfigMessage;
       'config.meta-data': ConfigMetaData;
       'config.relations': ConfigRelations;
       'config.review-card': ConfigReviewCard;
@@ -1494,7 +1459,11 @@ declare module '@strapi/strapi' {
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
       'metajob-block.job-filter': MetajobBlockJobFilter;
+      'metajob-block.manage-company': MetajobBlockManageCompany;
+      'metajob-block.manage-job': MetajobBlockManageJob;
+      'metajob-block.manage-packages': MetajobBlockManagePackages;
       'metajob-block.manage-resume': MetajobBlockManageResume;
+      'metajob-block.page-header': MetajobBlockPageHeader;
       'metajob-config.header-config': MetajobConfigHeaderConfig;
       'metajob-config.header-field': MetajobConfigHeaderField;
       'metajob-config.message': MetajobConfigMessage;

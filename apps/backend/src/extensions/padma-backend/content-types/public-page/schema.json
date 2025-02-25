@@ -10,14 +10,24 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "slug": {
       "type": "uid",
-      "targetField": "title"
+      "targetField": "title",
+      "required": true
     },
     "blocks": {
       "pluginOptions": {
@@ -38,13 +48,19 @@
         "block.image-gallery",
         "metajob-block.job-filter",
         "metajob-block.company-filter",
-        "metajob-block.candidate-filter"
+        "metajob-block.candidate-filter",
+        "metajob-block.page-header"
       ]
     },
     "seo": {
       "type": "component",
       "repeatable": false,
-      "component": "shared.seo"
+      "component": "shared.seo",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

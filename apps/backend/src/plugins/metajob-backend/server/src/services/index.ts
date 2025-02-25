@@ -17,6 +17,9 @@ import MessageService from "./message";
 import ExperienceLevelService from "./experience-level";
 import SalaryTypeService from "./salary-type";
 import AvgSalaryService from "./avg-salary";
+import emailHistory from "./email-history";
+import CompanySizeService from "./company-size";
+import RevenueService from "./revenue";
 
 export default {
   service,
@@ -38,4 +41,7 @@ export default {
   "experience-level": ExperienceLevelService,
   "salary-type": SalaryTypeService,
   "avg-salary": AvgSalaryService,
+  "email-history": emailHistory,
+  "company-size": CompanySizeService,
+  revenue: RevenueService,
 };

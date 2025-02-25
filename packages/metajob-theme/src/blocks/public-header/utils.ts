@@ -15,7 +15,7 @@ export const useChangeLang = () => {
          maxAge: 30 * 24 * 60 * 60,
          path: "/"
       })
-      router.refresh()
+      router.push("/")
    }
 
    return { changeLang }

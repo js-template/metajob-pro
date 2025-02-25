@@ -19,16 +19,13 @@ export type IReviewsBlock = {
       title: string
       description: string
    }
-   reviews?: IReview
 }
 export type ISingleReview = {
    id: number
-   rating: number
+   name: string
+   designation: string
    review: string
-   reviewer: string
    avatar: {
-      url: string //TODO: need to update here
+      url: string
    }
 }
-
-export type IReview = ISingleReview[]

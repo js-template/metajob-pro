@@ -72,9 +72,6 @@ export const JobFilter = ({ block, language }: Props) => {
                $eq: searchOptions?.category || undefined
             }
          }
-         // location: {
-         //    $containsi: searchOptions.location || undefined // Apply filter dynamically
-         // },
       },
       populate: {
          company: {
@@ -96,7 +93,7 @@ export const JobFilter = ({ block, language }: Props) => {
          page: page
       },
       publicationState: "live",
-      locale: language ? [language] : ["en"]
+      locale: language ?? ["en"]
    }
 
    // Convert queryParams to a string for the URL

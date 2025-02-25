@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography"
 import { boxHeaderData } from "./data"
 import CIcon from "../../components/common/icon"
 import ListsTable from "./table"
-import AccessError from "./error"
+import { AccessError } from "../../shared/error-table"
 import { IAppliedJobsBlock } from "./type"
 
 type Props = {
@@ -313,6 +313,6 @@ export const AppliedJobs = ({ block, language }: Props) => {
          </Paper>
       </Grid>
    ) : (
-      <AccessError roleValue={role} />
+      <AccessError roleValue={"Candidate"} />
    )
 }

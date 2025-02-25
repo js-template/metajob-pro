@@ -5,8 +5,9 @@ import { find } from "@/lib/strapi"
 import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { getLanguageFromCookie } from "@/utils/language"
 import { loadActiveTheme } from "config/theme-loader"
+import { cookies } from "next/headers"
 
-export const dynamicParams = false // true | false,
+export const dynamicParams = true // true | false,
 
 export default async function DynamicPages({
    params
@@ -15,7 +16,9 @@ export default async function DynamicPages({
    searchParams: { [key: string]: string | string[] | undefined }
 }) {
    const pageSlug = params?.slug
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
+
+   // console.log("language in cookie", language)
 
    const { data, error } = await find(
       "api/padma-backend/public-pages",
@@ -29,10 +32,13 @@ export default async function DynamicPages({
             blocks: {
                populate: "*"
             }
-         }
+         },
+         locale: language ?? ["en"]
       },
       "no-store"
    )
+
+   console.log("data", data)
 
    const activeTheme = await loadActiveTheme()
 
@@ -54,12 +60,12 @@ export default async function DynamicPages({
       return notFound()
    }
    // *** if error, return error page ***
-   // if (error) {
-   //    throw error;
-   // }
+   if (error) {
+      throw error
+   }
 
    return (
-      <Fragment>
+      <>
          {blocks?.map((block: any, index: number) => {
             const BlockConfig = getPublicComponents[block.__component as keyof typeof getPublicComponents]
 
@@ -71,20 +77,27 @@ export default async function DynamicPages({
             }
             return null // Handle the case where the component mapping is missing
          })}
-      </Fragment>
+      </>
    )
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-   const { data, error } = await find("api/padma-backend/public-pages", {
-      fields: ["slug"],
-      filters: {
-         slug: {
-            $ne: null
+   // const cookieStore = await cookies()
+   // const language = cookieStore.get("lang")
+
+   const { data, error } = await find(
+      "api/padma-backend/public-pages",
+      {
+         fields: ["slug"],
+         filters: {
+            slug: {
+               $ne: null
+            }
          }
-      }
-   })
+      },
+      "no-store"
+   )
 
    return data?.data?.map((post: any) => ({
       slug: post?.slug || ""
@@ -100,7 +113,7 @@ type Props = {
 // *** generate metadata for the page
 export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
    const pageSlug = params?.slug
-   const language = getLanguageFromCookie()
+   //const language = await getLanguageFromCookie()
 
    // ***fetch seo data
    const product = await find(
@@ -111,16 +124,15 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
                $eq: pageSlug
             }
          },
-         populate: "*"
+         populate: {
+            seo: {
+               populate: "*"
+            }
+         }
+         //locale: language ?? ["en"]
       },
       "no-store"
    )
 
-   if (!product?.data?.data?.[0]?.attributes?.seo) {
-      return {
-         title: product?.data?.data?.[0]?.attributes?.title || "Title not found",
-         description: `Description ${product?.data?.data[0]?.attributes?.title}` || "Description not found"
-      }
-   }
-   return StrapiSeoFormate(product?.data?.data?.[0]?.attributes?.seo, `/${pageSlug}`)
+   return StrapiSeoFormate(product?.data?.data?.[0]?.seo, `/${pageSlug}`)
 }

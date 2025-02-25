@@ -15,6 +15,9 @@ import MessageRoute from "./message";
 import ExperienceLevelRoute from "./experience-level";
 import SalaryTypeRoute from "./salary-type";
 import AvgSalaryRoute from "./avg-salary";
+import emailHistory from "./email-history";
+import CompanySizeRoute from "./company-size";
+import RevenueRoute from "./revenue";
 
 export default {
   "job-setting": JobSettingRoute,
@@ -34,4 +37,7 @@ export default {
   "experience-level": ExperienceLevelRoute,
   "salary-type": SalaryTypeRoute,
   "avg-salary": AvgSalaryRoute,
+  "email-history": emailHistory,
+  "company-size": CompanySizeRoute,
+  revenue: RevenueRoute,
 };

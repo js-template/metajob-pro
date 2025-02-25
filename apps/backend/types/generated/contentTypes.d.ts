@@ -522,13 +522,13 @@ export interface PluginMetajobBackendAppliedJob
   };
   attributes: {
     apply_status: Schema.Attribute.Enumeration<
-      ['Shortlisted', 'Pending', 'Rejected']
+      ['Shortlisted', 'Selected', 'Pending', 'Rejected']
     >;
     cover_letter: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    job: Schema.Attribute.Relation<'oneToOne', 'plugin::metajob-backend.job'>;
+    job: Schema.Attribute.Relation<'manyToMany', 'plugin::metajob-backend.job'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -864,7 +864,16 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
+    applications: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::metajob-backend.applied-job'
+    >;
     category: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.job-category'
@@ -881,12 +890,11 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
     is_featured: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.job'
-    > &
-      Schema.Attribute.Private;
+    >;
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -996,6 +1004,11 @@ export interface PluginMetajobBackendJobSetting
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<['metajob-single-type.job-details']> &
       Schema.Attribute.Required &
@@ -1008,12 +1021,11 @@ export interface PluginMetajobBackendJobSetting
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.job-setting'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1034,16 +1046,20 @@ export interface PluginMetajobBackendJobType
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.job-type'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1054,7 +1070,7 @@ export interface PluginMetajobBackendJobType
 }
 
 export interface PluginMetajobBackendMembership
-  extends Struct.SingleTypeSchema {
+  extends Struct.CollectionTypeSchema {
   collectionName: 'memberships';
   info: {
     description: '';
@@ -1065,23 +1081,32 @@ export interface PluginMetajobBackendMembership
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.membership'
-    > &
-      Schema.Attribute.Private;
+    >;
+    owner: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     publishedAt: Schema.Attribute.DateTime;
-    table: Schema.Attribute.DynamicZone<['block.pricing']>;
-    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user_plan: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::metajob-backend.package'
+    >;
   };
 }
 
@@ -1149,6 +1174,11 @@ export interface PluginMetajobBackendPackage
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     ads_boost_limit: Schema.Attribute.Integer &
       Schema.Attribute.Required &
@@ -1163,12 +1193,11 @@ export interface PluginMetajobBackendPackage
     description: Schema.Attribute.Text;
     feature: Schema.Attribute.Component<'config.meta-data', true>;
     frequency: Schema.Attribute.Enumeration<['Monthly', 'Yearly', 'One Time']>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.package'
-    > &
-      Schema.Attribute.Private;
+    >;
     price: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
@@ -1636,6 +1665,11 @@ export interface PluginPadmaBackendPost extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1649,12 +1683,11 @@ export interface PluginPadmaBackendPost extends Struct.CollectionTypeSchema {
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::padma-backend.post'
-    > &
-      Schema.Attribute.Private;
+    >;
     post_categories: Schema.Attribute.Relation<
       'manyToMany',
       'plugin::padma-backend.category'
@@ -1683,7 +1716,7 @@ export interface PluginPadmaBackendPostSetting extends Struct.SingleTypeSchema {
     singularName: 'post-setting';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   pluginOptions: {
     i18n: {
@@ -1754,27 +1787,63 @@ export interface PluginPadmaBackendPrivateFrontpage
   options: {
     draftAndPublish: false;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::padma-backend.private-frontpage'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     role1: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.role'
     >;
-    role1Components: Schema.Attribute.DynamicZone<['shared.spacing']>;
+    role1Components: Schema.Attribute.DynamicZone<
+      [
+        'shared.spacing',
+        'widget.count-card',
+        'widget.closed-job',
+        'widget.applied-list',
+        'widget.favorite-list',
+        'widget.matched-list',
+        'block.notification-list',
+        'block.bookmark-list',
+      ]
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     role2: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.role'
     >;
-    role2Components: Schema.Attribute.DynamicZone<['shared.spacing']>;
+    role2Components: Schema.Attribute.DynamicZone<
+      [
+        'shared.spacing',
+        'widget.total-job',
+        'widget.open-job',
+        'widget.favorite-list',
+        'widget.closed-job',
+        'block.notification-list',
+        'block.bookmark-list',
+      ]
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     style: Schema.Attribute.Component<'component.grid-container', false>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1856,6 +1925,20 @@ export interface PluginPadmaBackendPrivatePage
         'metajob-block.bookmark',
         'metajob-block.applied-jobs',
         'metajob-block.manage-resume',
+        'widget.total-job',
+        'widget.open-job',
+        'widget.menu-widget',
+        'widget.matched-list',
+        'widget.favorite-list',
+        'widget.count-card',
+        'widget.copyright-bar',
+        'widget.contact-widget',
+        'widget.closed-job',
+        'widget.applied-list',
+        'metajob-block.manage-company',
+        'metajob-block.manage-job',
+        'metajob-block.manage-packages',
+        'metajob-config.message',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -1883,12 +1966,7 @@ export interface PluginPadmaBackendPrivatePage
         };
       }>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    styles: Schema.Attribute.Component<'component.grid-container', false> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+    styles: Schema.Attribute.Component<'component.grid-container', false>;
     title: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -1987,6 +2065,11 @@ export interface PluginPadmaBackendPublicPage
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
       [
@@ -2002,6 +2085,7 @@ export interface PluginPadmaBackendPublicPage
         'metajob-block.job-filter',
         'metajob-block.company-filter',
         'metajob-block.candidate-filter',
+        'metajob-block.page-header',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -2012,16 +2096,25 @@ export interface PluginPadmaBackendPublicPage
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::padma-backend.public-page'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
-    seo: Schema.Attribute.Component<'shared.seo', false>;
-    slug: Schema.Attribute.UID<'title'>;
-    title: Schema.Attribute.String;
+    seo: Schema.Attribute.Component<'shared.seo', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

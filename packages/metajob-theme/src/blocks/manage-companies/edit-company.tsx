@@ -24,9 +24,8 @@ type EditCompanyProps = {
    open: boolean
    handleClickOpen: () => void
    handleClose: () => void
-   companyID: number
+   companyDocID: string
    mutate: KeyedMutator<any>
-   userId: number
    formData: formProps
 }
 
@@ -34,9 +33,8 @@ export default function EditCompany({
    open,
    handleClickOpen,
    handleClose,
-   companyID,
+   companyDocID,
    mutate,
-   userId,
    formData
 }: EditCompanyProps) {
    const [loading, setLoading] = React.useState(false)
@@ -185,14 +183,14 @@ export default function EditCompany({
       return true
    }
 
-   // *** get the company data by the companyID
+   // *** get the company data by the companyDocID
    React.useEffect(() => {
       const getCompany = async () => {
          const { data, error } = await findOne(
-            "api/metajob-strapi/companies",
-            companyID,
+            "api/metajob-backend/companies",
+            companyDocID,
             {
-               populate: "deep"
+               populate: "*"
             },
             "no-store"
          )
@@ -204,7 +202,7 @@ export default function EditCompany({
          }
 
          // filtered company data
-         let filteredData = _.get(data, "data.attributes", {})
+         let filteredData = _.get(data, "data", {})
          // industry data
          const industry = _.get(filteredData, "industry.data.attributes", {})
          filteredData.industry = {
@@ -227,7 +225,7 @@ export default function EditCompany({
       }
 
       if (open) {
-         if (!companyID) return
+         if (!companyDocID) return
          // ?? get company data by companyID
          getCompany()
       }

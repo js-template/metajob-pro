@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material"
 
-export const AccessError = () => {
+export const AccessError = ({ roleValue }: { roleValue?: string }) => {
    return (
       <Grid item xs={12}>
          <Box
@@ -13,7 +13,7 @@ export const AccessError = () => {
                borderRadius: "12px",
                height: "100%",
                display: "flex",
-               // flexDirection: "column",
+               flexDirection: "column",
                alignItems: "center",
                justifyContent: "center",
                backgroundColor: (theme) => theme.palette.background.paper,
@@ -28,7 +28,7 @@ export const AccessError = () => {
                Access Denied
             </Typography>
             <Typography variant='body1' color='error'>
-               This widget is only for Employer
+               This widget is only for {roleValue || "Employer"}
             </Typography>
          </Box>
       </Grid>

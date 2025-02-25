@@ -18,7 +18,7 @@ const apiUrl = process.env.STRAPI_ENDPOINT || ""
  */
 export const findOne = async (
    model: string,
-   id: number,
+   id: number | string,
    query: any = {},
    cache: "force-cache" | "no-cache" | "no-store" = "force-cache",
    revalidate?: number
@@ -47,6 +47,8 @@ export const findOne = async (
                : {})
          }
       })
+
+      console.log("response", response)
 
       if (!response.ok) {
          throw new Error(`Failed to fetch data: ${response.statusText}`)

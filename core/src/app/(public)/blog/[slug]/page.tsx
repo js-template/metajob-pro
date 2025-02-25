@@ -20,10 +20,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
       notFound()
    }
 
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
 
    // *** get blog-details data from strapi ***
-   const { data: detailsData, error } = await find(
+   const { data: detailsData, error: detailsErro } = await find(
       "api/padma-backend/posts",
       {
          filters: {
@@ -31,9 +31,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
                $eq: pageSlug
             }
          },
-         populate: "*"
-         // publicationState: "live",
-         // locale: language ? [language] : ["en"]
+         populate: "*",
+         publicationState: "live",
+         locale: language ?? ["en"]
       },
       "no-store"
    )
@@ -45,7 +45,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
    const { data: blogPageData, error: blogPageError } = await find(
       "api/padma-backend/post-setting",
       {
-         populate: "*"
+         populate: "*",
+         publicationState: "live",
+         locale: language ?? ["en"]
       },
       "no-store"
    )
@@ -86,7 +88,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 // *** generate metadata for the page
 export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
    const pageSlug = params?.slug
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
    // *** fetch seo data
    const { data } = await find(
       "api/padma-backend/posts",
@@ -100,20 +102,18 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
             seo: {
                populate: "*"
             }
-         },
-         publicationState: "live",
-         locale: language ? [language] : ["en"]
+         }
       },
       "no-cache"
    )
 
    // if seo is not available, return default data
-   if (!data?.data?.[0]?.attributes?.seo) {
+   if (!data?.data?.[0]?.seo) {
       return {
-         title: data?.data?.[0]?.attributes?.title || "Title not found",
-         description: data?.data?.[0]?.attributes?.short_description || "Description not found"
+         title: data?.data?.[0]?.title || "Title not found",
+         description: data?.data?.[0]?.short_description || "Description not found"
       }
    }
 
-   return StrapiSeoFormate(data?.data?.[0]?.attributes?.seo, `/blog/${pageSlug}`)
+   return StrapiSeoFormate(data?.data?.[0]?.seo, `/blog/${pageSlug}`)
 }

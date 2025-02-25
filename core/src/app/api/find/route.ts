@@ -16,6 +16,8 @@ export async function GET(request: NextRequest) {
    // Define the expected type of the result
    type FindResult = { data: any; error: null } | { data: null; error: any }
 
+   //console.log("model", model)
+
    const result: FindResult = await find(model, query, cache, revalidate)
 
    if (result.error) {

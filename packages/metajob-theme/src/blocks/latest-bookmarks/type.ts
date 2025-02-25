@@ -10,9 +10,16 @@ export type bookmarksListsProps = {
 
 export type bookmarksListsItemProps = {
    id: number
-   title: string
    type: string
    note: string
-   createdAt: string
-   updatedAt: string
+   job: {
+      id: number
+      title: string
+      slug: string
+   }
+   resume: {
+      id: number
+      name: string
+      slug: string
+   }
 }

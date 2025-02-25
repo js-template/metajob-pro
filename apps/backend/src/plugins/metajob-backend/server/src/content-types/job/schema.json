@@ -10,6 +10,11 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "title": {
       "type": "string",
@@ -73,6 +78,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "plugin::metajob-backend.skill"
+    },
+    "applications": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::metajob-backend.applied-job",
+      "inversedBy": "job"
     },
     "seo": {
       "type": "component",

@@ -3,9 +3,9 @@ import PlaceholderComponent from "./utils/placeholder"
 
 // widgets import
 
-import { TotalList } from "./widgets/total-list"
-import { ClosedList } from "./widgets/closed-list"
-import { OpenList } from "./widgets/open-list"
+import { TotalJobs } from "./widgets/total-job"
+import { ClosedJob } from "./widgets/closed-job"
+import { OpenJob } from "./widgets/open-job"
 import BreadCrumbs from "./components/breadcrumbs"
 import Checkbox from "./components/checkbox"
 import { Card } from "./components/common/card"
@@ -14,7 +14,7 @@ import CIcon from "./components/common/icon"
 
 import TextFieldWithLabel from "./components/textField-with-label"
 import Spacing from "./shared/spacing"
-export * from "./widgets/applied-list"
+export * from "./widgets/applied-job"
 export * from "./widgets/favorite-list"
 export * from "./widgets/matched-list"
 
@@ -24,9 +24,7 @@ import { LatestApplied } from "./blocks/latest-applied"
 import { LatestBookmarks } from "./blocks/latest-bookmarks"
 import { LatestNotifications } from "./blocks/latest-notification"
 
-import { ManageCompanies } from "./blocks/manage-companies"
-import { ManageLists } from "./blocks/manage-list"
-import { AppliedList } from "./widgets/applied-list"
+import { AppliedJob } from "./widgets/applied-job"
 import { FavoriteList } from "./widgets/favorite-list"
 import { MatchedList } from "./widgets/matched-list"
 
@@ -35,6 +33,7 @@ import { CategoryBlock } from "./blocks/category-block"
 /**------------------------------------------------
  *          Public Components import
  -------------------------------------------------*/
+
 // header import
 import { PublicHeader } from "./blocks/public-header"
 import { PrivateHeader } from "./blocks/private-header"
@@ -43,6 +42,7 @@ import { ContactWidget } from "./widgets/contact-widget"
 import { MenuWidget } from "./widgets/menu-widget"
 import { CopyrightWidget } from "./widgets/copyright-widget"
 // blocks import
+import { PageHeader } from "./blocks/page-header"
 import { JobBanner } from "./blocks/job-banner"
 import { JobCategory } from "./blocks/job-category"
 import { JobCard } from "./blocks/job-card"
@@ -64,6 +64,9 @@ import { BlogDetails } from "./single-type/blog-details"
 import { BookmarkTable } from "./blocks/bookmark-table"
 import { AppliedJobs } from "./blocks/applied-jobs"
 import { ManageResume } from "./blocks/manage-resume"
+import { ManageCompanies } from "./blocks/manage-companies"
+import { ManageJobs } from "./blocks/manage-job"
+import { ManagePackage } from "./blocks/manage-package"
 import { MyProfile } from "./blocks/profile"
 
 // *** get the private components from the mapping
@@ -75,24 +78,25 @@ export const getPrivateComponents = {
    "metajob-block.bookmark": { component: BookmarkTable },
    "metajob-block.applied-jobs": { component: AppliedJobs },
    "metajob-block.manage-resume": { component: ManageResume },
+   "metajob-block.manage-company": { component: ManageCompanies },
+   "metajob-block.manage-job": { component: ManageJobs },
+   "metajob-block.manage-packages": { component: ManagePackage },
 
    // ?? Widget mapping
-   "widget.total-list": { component: TotalList },
-   "widget.open-list": { component: OpenList },
-   "widget.closed-list": { component: ClosedList },
-   "widget.bookmark-list": { component: ClosedList },
+   "widget.total-job": { component: TotalJobs },
+   "widget.open-job": { component: OpenJob },
+   "widget.closed-job": { component: ClosedJob },
+   //"widget.bookmark-list": { component: ClosedList },
    // ?? Dashboard blocks mapping
-   "widget.applied-lists": { component: AppliedList },
-   "widget.favorite-lists": { component: FavoriteList },
-   "widget.matched-lists": { component: MatchedList },
+   "widget.applied-list": { component: AppliedJob },
+   "widget.favorite-list": { component: FavoriteList },
+   "widget.matched-list": { component: MatchedList },
    "shared.spacing": { component: Spacing },
    "block.bookmark-list": { component: LatestBookmarks },
    "block.recent-activities": { component: LatestNotifications },
    "block.latest-applied": { component: LatestApplied },
-   "config.message": { component: MessageLayout },
-
-   "block.manage-lists": { component: ManageLists },
-   "block.manage-companies": { component: ManageCompanies },
+   "metajob-config.message": { component: MessageLayout },
+   "block.notification-list": { component: LatestNotifications },
 
    "block.auth-profile": { component: MyProfile }
 }
@@ -111,6 +115,7 @@ export const getPublicComponents = {
    "widget.copyright-bar": { component: CopyrightWidget },
 
    // block mapping
+   "metajob-block.page-header": { component: PageHeader },
    "metajob-block.job-banner": { component: JobBanner },
    "metajob-block.job-category": { component: JobCategory },
    "block.category-card": { component: PlaceholderComponent },
