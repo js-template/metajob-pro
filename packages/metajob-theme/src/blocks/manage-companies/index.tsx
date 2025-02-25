@@ -10,7 +10,7 @@ import CIcon from "../../components/common/icon"
 import { AccessError } from "../../shared/error-table"
 import AddCompany from "./add-company"
 import useSWR from "swr"
-import { IManageCompanyBock } from "./type"
+import { IManageCompanyBock } from "./types"
 import toast from "react-hot-toast"
 
 type Props = {
@@ -108,8 +108,8 @@ export const ManageCompanies = ({ block }: Props) => {
 
    // *** open add company popup
    const handleAddCompany = () => {
-      toast.error("This feature is under development")
-      return
+      // toast.error("This feature is under development")
+      // return
       setAddCompany(true)
    }
 

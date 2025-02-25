@@ -8,7 +8,7 @@ import { KeyedMutator } from "swr"
 import { TableLoader } from "../../components/loader"
 import { emptyProps } from "../../shared/type"
 import { formProps } from "@/types/forms"
-import { ISingleCompany } from "./type"
+import { ISingleCompany } from "./types"
 
 const ManageCompaniesTable = ({
    headCells,
