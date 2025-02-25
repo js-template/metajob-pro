@@ -34,13 +34,13 @@ export const BlogCard = ({ block, language }: Props) => {
             fields: ["url"]
          }
       },
-      sort: ["createdAt:desc"], //sorting to the most recent data
+      sort: ["createdAt:desc"],
       pagination: {
-         pageSize: 4, //fetch 3 recent post
+         pageSize: 4,
          page: 1
       },
-      publicationState: "live",
-      locale: language ? [language] : ["en"]
+      //publicationState: "live",
+      locale: language ?? ["en"]
    }
 
    // Convert queryParams to a string for the URL
@@ -102,6 +102,7 @@ export const BlogCard = ({ block, language }: Props) => {
                               bgcolor: "primary.main"
                            }
                         }}
+                        // @ts-ignore
                         LinkComponent={Link}
                         href={link || "/career-advice"}>
                         {label || "See All Blogs"}

@@ -120,7 +120,7 @@ export const GlobalProvider = ({ children, language, layout }: Props) => {
          maxAge: 30 * 24 * 60 * 60,
          path: "/"
       })
-      router.refresh()
+      router.push("/")
    }
 
    // NOTE: Change the direction function handler

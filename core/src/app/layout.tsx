@@ -20,7 +20,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
    const cookieStore = cookies()
    const Lang = cookieStore.get("lang")
 
+   //console.log("Lang", Lang)
+
    const language = Lang ? Lang.value : "en"
+   // console.log("language after cookie", language)
 
    const dir = cookieStore.get("direction")
    const direction = dir ? dir.value : "ltr"
@@ -29,9 +32,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
    const { data, error } = await find(
       "api/padma-backend/layout",
       {
-         populate: "*"
+         populate: "*",
          // publicationState: "live",
-         // locale: [language]
+         locale: language ?? ["en"]
       },
       "no-store"
    )

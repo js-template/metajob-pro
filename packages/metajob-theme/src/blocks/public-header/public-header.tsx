@@ -197,6 +197,7 @@ export const PublicHeaderComponent = ({ block, language }: Props) => {
                         sx={{
                            display: { xs: "none", md: "flex" }
                         }}
+                        // @ts-ignore
                         component={NextLink}
                         href='/'>
                         <Image

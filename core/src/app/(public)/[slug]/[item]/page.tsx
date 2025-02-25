@@ -5,6 +5,8 @@ import { find } from "@/lib/strapi"
 import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { Metadata } from "next"
 import { loadActiveTheme } from "config/theme-loader"
+import { cookies } from "next/headers"
+import { getLanguageFromCookie } from "@/utils/language"
 
 // ?? Next.js will invalidate the cache when a
 // ?? request comes in, at most once every 60 seconds.
@@ -26,12 +28,12 @@ export default async function DynamicPages({ params }: Props) {
    const pageSlug = params?.slug // e.g., "job", "resume"
    const singleType = params?.item // e.g., "fullstack" or "designer"
 
-   // ?? Fetch the language or use a default
-   const language = "en"
+   const language = await getLanguageFromCookie()
 
    // ?? Fetch the permalink structure from Strapi
    const { data: permalinkData } = await find("api/padma-backend/permalink", {
-      populate: "*"
+      populate: "*",
+      locale: language ?? ["en"]
    })
 
    const singlePages = permalinkData?.data?.singlePage
@@ -50,9 +52,9 @@ export default async function DynamicPages({ params }: Props) {
    const { data: singleData, error: singleError } = await find(
       singleModel,
       {
-         populate: "*"
+         populate: "*",
          // publicationState: "live",
-         // locale: language ? [language] : ["en"]
+         locale: language ?? ["en"]
       },
       "no-store"
    )
@@ -61,17 +63,21 @@ export default async function DynamicPages({ params }: Props) {
       return notFound()
    }
 
-   // ?? Fetch additional page details (if needed)
+   // INFO: Fetch additional page details (if needed)
    const { data: pageDetails, error: pageDetailsError } = await find(collectionModel, {
       filters: {
          slug: {
             $eq: singleType
          }
       },
-      populate: "*"
+      populate: "*",
       // populate: "deep",
-      // locale: language ? [language] : ["en"]
+      locale: language ?? ["en"]
    })
+
+   if (pageDetailsError) {
+      console.error("Error fetching page details:", pageDetailsError)
+   }
 
    const pageDetailsData = pageDetails?.data?.[0]
 
@@ -98,7 +104,7 @@ export default async function DynamicPages({ params }: Props) {
    }
 
    return (
-      <Fragment>
+      <>
          {/* Render the components dynamically using blockComponentMapping */}
          {blocks?.map((block: any, index: number) => {
             // @ts-ignore
@@ -119,7 +125,7 @@ export default async function DynamicPages({ params }: Props) {
             }
             return null // Handle missing component mapping case
          })}
-      </Fragment>
+      </>
    )
 }
 
@@ -175,14 +181,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
    // ?? Fetch the permalink structure from Strapi
    const { data } = await find("api/padma-backend/permalink", {
       populate: "*"
-      // publicationState: "live",
-      // locale: ["en"]
    })
 
    // ?? Get the singlePages from the permalink data
    const singlePages = data?.data?.singlePage
-
-   console.log("singlePages", singlePages)
 
    // ?? If no matching page is found, return 404
    if (!singlePages) {
@@ -196,7 +198,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
    const singlePageData = singlePages?.find((page: any) => page.slug === pageSlug)
 
    // ?? Get he seo data for the page from Strapi
-   const { data: seoData } = await find(
+   const { data: seoData, error: seoError } = await find(
       singlePageData?.collectionModel,
       {
          filters: {
@@ -209,7 +211,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "no-cache"
    )
 
-   console.log("seoData", seoData)
+   if (seoError) {
+      console.error("Error fetching SEO data:", seoError)
+   }
 
    // ?? If no matching page is found, return 404
    if (!seoData) {

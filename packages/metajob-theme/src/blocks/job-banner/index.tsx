@@ -64,7 +64,7 @@ export const JobBanner = ({ block, language }: Props) => {
    // fetch category data
    const categoryQueryParams = {
       fields: ["title"]
-      // locale: language ? [language] : ["en"]
+      // locale: language ?? ["en"]
    }
    const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
    const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`

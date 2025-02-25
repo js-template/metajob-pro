@@ -28,7 +28,7 @@ export const ManagePackage = ({ block, language }: Props) => {
    const queryParams = {
       populate: "*",
       publicationState: "live",
-      locale: language ? [language] : ["en"]
+      locale: language ?? ["en"]
    }
    // Convert queryParams to a string for the URL
    const queryString = encodeURIComponent(JSON.stringify(queryParams))
@@ -46,7 +46,7 @@ export const ManagePackage = ({ block, language }: Props) => {
          }
       },
       publicationState: "live",
-      locale: language ? [language] : ["en"]
+      locale: language ?? ["en"]
    }
    // Convert queryParams to a string for the URL
    const membershipQueryString = encodeURIComponent(JSON.stringify(membershipQueryParams))

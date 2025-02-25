@@ -27,7 +27,7 @@ const BlogCategory = ({ language }: Props) => {
          pageSize: 10, //fetch 10 blog-categories
          page: 1
       }
-      // locale: language ? [language] : ["en"]
+      // locale: language ?? ["en"]
    }
 
    // Convert queryParams to a string for the URL

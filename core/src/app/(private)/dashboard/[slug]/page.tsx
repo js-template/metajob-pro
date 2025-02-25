@@ -17,7 +17,7 @@ export default async function DynamicPages({
 
    //console.log("Page Slug", pageSlug)
 
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
 
    const { data, error } = await find(
       "api/padma-backend/private-pages",
@@ -43,7 +43,7 @@ export default async function DynamicPages({
 
    const blocks = data?.data[0]?.blocks || []
 
-   console.log("Private Page Blocks Loaded", blocks)
+   //console.log("Private Page Blocks Loaded", blocks)
 
    // *** if blocks is empty, return 404 ***
    if (!blocks || blocks?.length === 0) {
@@ -96,7 +96,7 @@ type Props = {
 // // *** generate metadata for the page
 export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
    const pageSlug = params?.slug
-   const language = getLanguageFromCookie()
+   const language = await getLanguageFromCookie()
 
    // ***fetch seo data
    const product = await find(

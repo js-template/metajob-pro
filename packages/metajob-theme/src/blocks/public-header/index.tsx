@@ -28,11 +28,13 @@ export const PublicHeader = async ({ block, language }: Props) => {
                   }
                }
             }
-         }
+         },
+         locale: language ?? ["en"]
       },
       "no-store"
    )
 
+   // console.log("public header data", data?.data?.header?.[0], "public header error", error)
    const combineBlockData = {
       ...block,
       ...data?.data?.header?.[0]

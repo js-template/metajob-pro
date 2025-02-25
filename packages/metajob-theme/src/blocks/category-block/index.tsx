@@ -26,7 +26,7 @@ export const CategoryBlock = ({ block, language }: { block: IProps; language?: s
          page: page
       },
       publicationState: "live",
-      locale: language ? [language] : ["en"]
+      locale: language ?? ["en"]
    }
 
    // Convert queryParams to a string for the URL

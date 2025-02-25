@@ -46,7 +46,7 @@ const OpenJobs = ({ id, language, empty }: Props) => {
          page: 1
       },
       publicationState: "live",
-      locale: language ? [language] : ["en"]
+      locale: language ?? ["en"]
    }
 
    // Convert queryParams to a string for the URL

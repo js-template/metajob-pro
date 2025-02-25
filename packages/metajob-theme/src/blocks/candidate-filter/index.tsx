@@ -74,7 +74,7 @@ export const CandidateFilter = ({ block, language }: Props) => {
          page: page
       },
       publicationState: "live",
-      locale: language ? [language] : ["en"]
+      locale: language ?? ["en"]
    }
    const queryString = encodeURIComponent(JSON.stringify(queryParams))
    // Construct the API URL

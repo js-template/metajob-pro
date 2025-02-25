@@ -37,7 +37,7 @@ export default async function DashboardPage({
    const roleComponentField =
       userRole === "candidate" ? "role1Components" : userRole === "employer" ? "role2Components" : null
 
-   console.log("Role component field", roleComponentField)
+   //console.log("Role component field", roleComponentField)
    if (!roleComponentField) {
       return <div>You are not allowed to access this page.</div>
    }

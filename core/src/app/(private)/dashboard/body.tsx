@@ -18,7 +18,7 @@ interface BodyProps {
 }
 
 const Body: React.FC<BodyProps> = ({ blocks, style, session, language, currentThemeComponents }) => {
-   console.log("BodyProps", style)
+   //console.log("BodyProps", style)
    return (
       <>
          <Grid
