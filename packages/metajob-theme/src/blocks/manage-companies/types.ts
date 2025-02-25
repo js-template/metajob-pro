@@ -89,3 +89,52 @@ export type IJobCategory = {
    documentId: string
    title: string
 }
+
+export type ICompanyFillData = {
+   id: number
+   name: string
+   documentId: string
+   tagline: string
+   email: string
+   phone: string
+   website: string
+   logo?: string
+   about: string
+   industry: {
+      id: number
+      documentId: string
+      title: string
+      slug: string
+   }
+   company_size: {
+      id: number
+      documentId: string
+      title: string
+      slug: string
+   }
+   revenue: {
+      id: number
+      documentId: string
+      title: string
+      slug: string
+   }
+   avg_salary: {
+      id: number
+      documentId: string
+      title: string
+      slug: string
+   }
+   slug: string
+   location: {
+      address: string
+      geohash: string
+      coordinates: {
+         lat: number
+         lng: number
+      }
+   }
+   social_links: {
+      type: string
+      link: string
+   }[]
+}

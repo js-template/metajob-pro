@@ -43,7 +43,7 @@ const ManageCompaniesTableItem = ({
    const companySiteValue = getValueFromWebsite(website)
 
    const handleClickOpen = () => {
-      toast.error("This feature is under development")
+      // toast.error("This feature is under development")
       setShow(true)
    }
 
@@ -155,14 +155,7 @@ const ManageCompaniesTableItem = ({
             </TableCell>
          </TableRow>
          {/* TODO: Need To update EditCompany */}
-         {/* <EditCompany
-            open={show}
-            handleClickOpen={handleClickOpen}
-            handleClose={handleClose}
-            formData={formData}
-            companyDocID={documentId}
-            mutate={mutate}
-         /> */}
+         <EditCompany open={show} handleClose={handleClose} companyDocID={documentId} mutate={mutate} />
       </Fragment>
    )
 }

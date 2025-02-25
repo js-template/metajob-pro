@@ -25,3 +25,22 @@ export const getValueFromWebsite = (websiteUrl: string) => {
       .trimEnd("/") // Remove trailing slash
       .value()
 }
+
+/**
+ * get social link obj by type
+ * @param type as string value  like facebook, twitter, linkedin
+ * @param socialArr as array of object
+ * @returns
+ */
+export const getSocialLik = (
+   type: string,
+   socialArr?: {
+      type: string
+      link: string
+   }[]
+) => {
+   if (!socialArr || socialArr.length === 0) {
+      return { link: "" }
+   }
+   return socialArr?.find((link) => link?.type === type)
+}
