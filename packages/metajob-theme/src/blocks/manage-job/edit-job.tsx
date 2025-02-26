@@ -535,8 +535,13 @@ const EditJob = ({ open, handleClose, mutate, jobDocID }: EditListProps) => {
                            type='number'
                            size='small'
                            placeholder='Price'
-                           {...register("price")}
+                           {...register("price", {
+                              valueAsNumber: true,
+                              min: 0, // Ensures values cannot be negative
+                              validate: (value) => value >= 0 || "Value must be 0 or greater"
+                           })}
                            error={Boolean(errors.price)}
+                           helperText={errors.price ? "Value must be 0 or greater" : ""}
                         />
                      </Grid>
                      {/* Vacancy */}
@@ -591,8 +596,13 @@ const EditJob = ({ open, handleClose, mutate, jobDocID }: EditListProps) => {
                            type='number'
                            size='small'
                            placeholder='Vacancy'
-                           {...register("vacancy")}
+                           {...register("vacancy", {
+                              valueAsNumber: true,
+                              min: 0, // Ensures values cannot be negative
+                              validate: (value) => value >= 0 || "Value must be 0 or greater"
+                           })}
                            error={Boolean(errors.vacancy)}
+                           helperText={errors.vacancy ? "Value must be 0 or greater" : ""}
                         />
                      </Grid>
                      {/* Job Type  */}
