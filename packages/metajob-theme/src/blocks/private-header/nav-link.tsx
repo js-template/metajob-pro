@@ -46,7 +46,7 @@ const NavLink = ({
       })
    }
 
-   return item.link !== "/logout" ? (
+   return item.label !== "Logout" ? (
       <ListItem sx={{ display: "block", py: 0, mb: 1, px: 0 }}>
          <ListItemButton
             disabled={item?.disabled}
