@@ -33,9 +33,10 @@ const RegisterBody = () => {
          return
       }
       let modifiedData = {
-         username: data.username,
-         email: data.email,
-         password: data.password
+         username: data?.username,
+         email: data?.email,
+         password: data?.password,
+         role: data?.role
       }
       try {
          // Use the getUser function to perform the login
