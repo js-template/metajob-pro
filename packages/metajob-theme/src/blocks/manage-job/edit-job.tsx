@@ -1,10 +1,12 @@
 "use client"
-import React from "react"
+import * as React from "react"
+import Dialog from "@mui/material/Dialog"
 import _ from "lodash"
 import toast from "react-hot-toast"
+import Slide from "@mui/material/Slide"
+import useSWR, { KeyedMutator } from "swr"
 import { useForm } from "react-hook-form"
 import MDEditor from "@uiw/react-md-editor"
-import useSWR, { KeyedMutator } from "swr"
 import {
    Box,
    CircularProgress,
@@ -17,21 +19,33 @@ import {
    useTheme
 } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
-import { hexToRGBA } from "../../lib/hex-to-rgba"
-import { IJobCategory } from "./types"
-import { createEntry, find } from "../../lib/strapi"
+import { TransitionProps } from "@mui/material/transitions"
+import { findOne, updateOne } from "../../lib/strapi"
+import { IEditJobData, IJobCategory } from "./types"
 import CIcon from "../../components/common/icon"
 import { fetcher } from "./hook"
+import { hexToRGBA } from "../../lib/hex-to-rgba"
 
-type addListProps = {
+const Transition = React.forwardRef(function Transition(
+   props: TransitionProps & {
+      children: React.ReactElement<any, any>
+   },
+   ref: React.Ref<unknown>
+) {
+   return <Slide direction='up' ref={ref} {...props} />
+})
+
+type EditListProps = {
+   open: boolean
    handleClose: () => void
-   userId?: number
    mutate: KeyedMutator<any>
+   jobDocID: string
 }
 
-const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
+const EditJob = ({ open, handleClose, mutate, jobDocID }: EditListProps) => {
    const theme = useTheme()
    const [loading, setLoading] = React.useState(false)
+   const [jobData, setJobData] = React.useState<IEditJobData | null>(null)
 
    const {
       handleSubmit,
@@ -55,47 +69,22 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
       }
    })
 
-   const isCompanySelected = watch("company")
-
    // *** handle form submit
    const handleFromSubmit = async (data: { [key: string]: any }) => {
       try {
+         if (!jobData) return false
          setLoading(true)
-         // ?? check if slug is already exist
-         const { data: slugData } = await find(
-            "api/metajob-backend/jobs",
-            {
-               fields: ["slug"],
-               filters: {
-                  slug: data.slug
-               }
-            },
-            "no-store"
-         )
-         if (slugData?.data?.length > 0) {
-            return toast.error("Slug already exist, please change the slug")
-         }
-
-         const createInput = {
+         // ?? create list function
+         const updateInput = {
             data: {
                title: data.title,
-               slug: data.slug,
                description: data.description,
                startDate: data.startDate,
                endDate: data.endDate,
                price: data.price,
                vacancy: data.vacancy,
-               status: "open",
-               owner: [
-                  {
-                     id: Number(userId) || undefined
-                  }
-               ],
                category: {
                   connect: [data?.category]
-               },
-               company: {
-                  connect: [data?.company]
                },
                //check if skills is exist then connect
                ...(data?.skills && {
@@ -107,37 +96,74 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                })
             }
          }
-         // *** create new list entry
-         const { data: newJob, error, message } = await createEntry("metajob-backend/jobs", createInput)
+         const {
+            data: updateList,
+            error,
+            message
+         } = await updateOne("metajob-backend/jobs", jobData?.documentId, updateInput)
 
          if (error) {
-            return toast.error(message || "Failed to create list")
-         } else {
+            return toast.error(message || "Something went wrong")
+         }
+
+         if (updateList) {
             mutate()
-            toast.success("Successfully created!")
+            toast.success("Job Updated Successfully")
             handleClose()
          }
       } catch (error: any) {
-         toast.error(error?.message || "An unexpected error occurred. Please try again.")
+         toast.error(error?.message || "Error updating job")
       } finally {
          setLoading(false)
       }
    }
 
-   // fetch company data
-   const queryParams = {
-      filters: {
-         owner: {
-            id: userId
+   // *** get the list data by the jobDocID
+   React.useEffect(() => {
+      const getList = async () => {
+         setLoading(true)
+         const { data, error } = await findOne(
+            "api/metajob-backend/jobs",
+            jobDocID,
+            {
+               populate: "*"
+            },
+            "no-store"
+         )
+
+         if (error) {
+            handleClose()
+            setLoading(false)
+            return toast.error(error ?? "Failed to fetch list data")
          }
-      },
-      fields: ["name"]
-   }
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-backend/companies&query=${queryString}&cache=no-store`
-   const { data: companyData, isLoading: companyIsLoading } = useSWR(apiUrl, fetcher)
+
+         setJobData(data?.data)
+         setLoading(false)
+      }
+
+      if (open) {
+         if (!jobDocID) return
+         getList()
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [open])
+
+   // fill form data from db
+   React.useEffect(() => {
+      if (jobData) {
+         setValue("title", jobData?.title || "")
+         setValue("description", jobData?.description || "")
+         setValue("vacancy", jobData?.vacancy || 0)
+         setValue("startDate", jobData?.startDate || "")
+         setValue("endDate", jobData?.endDate || "")
+         setValue("price", jobData?.price || 0)
+         setValue("type", jobData?.type?.documentId || "")
+         setValue("skills", jobData?.skills?.[0]?.documentId || "")
+         setValue("category", jobData?.category?.documentId || "")
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [jobData])
 
    // fetch job-category data
    const categoryQueryParams = {
@@ -170,166 +196,88 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
    })
 
    return (
-      <Box
+      <Dialog
+         open={open}
+         TransitionComponent={Transition}
+         keepMounted
+         aria-describedby='edit-list'
          sx={{
-            position: "relative",
-            bgcolor: "background.default"
+            "& .MuiDialog-paper": {
+               backgroundColor: (theme) => theme.palette.background.default,
+               maxWidth: "1440px",
+               width: "100%"
+            }
          }}>
-         {/* Full form loader */}
-         {loading && (
-            <Box
-               sx={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backdropFilter: "blur(5px)",
-                  zIndex: 9999,
-                  backgroundColor: (theme) => hexToRGBA(theme.palette.background.default, 0.2)
-               }}>
-               <CircularProgress />
-            </Box>
-         )}
-         {/* Cancel icon */}
          <Box
             sx={{
-               position: "absolute",
-               top: 0,
-               right: 0
+               position: "relative"
             }}>
-            <IconButton
-               color='error'
-               onClick={() => {
-                  handleClose()
-               }}>
-               <CIcon
-                  icon='cil-x'
+            {/* Full form loader */}
+            {loading && (
+               <Box
                   sx={{
-                     color: (theme) => theme.palette.error.main
+                     position: "absolute",
+                     top: 0,
+                     left: 0,
+                     right: 0,
+                     bottom: 0,
+                     display: "flex",
+                     justifyContent: "center",
+                     alignItems: "center",
+                     backdropFilter: "blur(5px)",
+                     zIndex: 9999,
+                     backgroundColor: (theme) => hexToRGBA(theme.palette.background.default, 0.2)
+                  }}>
+                  <CircularProgress />
+               </Box>
+            )}
+
+            {/* Form Header */}
+            <Box
+               sx={{
+                  px: 3,
+                  py: 2.5,
+                  borderBottom: "1px solid",
+                  borderColor: "divider",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: 3
+               }}>
+               <Typography
+                  variant='body1'
+                  fontWeight={700}
+                  fontSize={{
+                     xs: "1.25rem",
+                     sm: "1.5rem"
                   }}
-               />
-            </IconButton>
-         </Box>
-
-         <Box component={"form"} onSubmit={handleSubmit(handleFromSubmit)}>
-            {/* Company Selection */}
-            <Box
-               sx={{
-                  border: "1px solid",
-                  borderColor: "divider",
-                  borderRadius: "12px",
-                  bgcolor: "background.paper",
-                  mb: 2
-               }}>
-               <Box
-                  sx={{
-                     px: 3,
-                     py: 2.5,
-                     borderBottom: "1px solid",
-                     borderColor: "divider",
-                     display: "flex",
-                     justifyContent: "space-between",
-                     alignItems: "center",
-                     gap: 3
-                  }}>
-                  <Typography
-                     variant='body1'
-                     fontWeight={700}
-                     fontSize={{
-                        xs: "1.25rem",
-                        sm: "1.5rem"
-                     }}
-                     lineHeight={"24px"}>
-                     Select Company
-                  </Typography>
-               </Box>
-               <Box sx={{ width: "100%", pt: 3, mb: 4, px: 2 }}>
-                  <Grid container spacing={3} rowSpacing={2.5} px={3} pb={1} sx={{ display: "flex" }}>
-                     {/* Company */}
-                     <Grid item xs={12} sm={12}>
-                        <Box
-                           component={"label"}
-                           htmlFor='company'
-                           sx={{
-                              display: "block",
-                              fontSize: "0.875rem",
-                              fontWeight: 500,
-                              color: "text.primary",
-                              mb: 1
-                           }}>
-                           Add Company
-                           <Box
-                              component={"span"}
-                              sx={{
-                                 color: "error.main",
-                                 ml: 0.5
-                              }}>
-                              *
-                           </Box>
-                        </Box>
-                        <Select
-                           displayEmpty
-                           fullWidth
-                           variant='outlined'
-                           id='company'
-                           size='small'
-                           {...register("company", {
-                              required: "Job Company is required"
-                           })}
-                           defaultValue={watch("company") || ""}
-                           error={Boolean(errors.company)}>
-                           <MenuItem disabled value=''>
-                              Select Company
-                           </MenuItem>
-                           {companyData &&
-                              companyData?.map((companyItem: { name: string; documentId: string }, index: number) => {
-                                 return (
-                                    <MenuItem key={index} value={companyItem?.documentId}>
-                                       {companyItem?.name}
-                                    </MenuItem>
-                                 )
-                              })}
-                        </Select>
-                     </Grid>
-                  </Grid>
-               </Box>
+                  lineHeight={"24px"}>
+                  Job Details
+               </Typography>
             </Box>
-
-            {/* Job Form */}
-            <Box
-               sx={{
-                  border: "1px solid",
-                  borderColor: "divider",
-                  borderRadius: "12px",
-                  bgcolor: "background.paper"
-               }}>
+            <Box sx={{ width: "100%", pt: 3, pb: 4, px: 2 }}>
+               {/* Cancel icon */}
                <Box
                   sx={{
-                     px: 3,
-                     py: 2.5,
-                     borderBottom: "1px solid",
-                     borderColor: "divider",
-                     display: "flex",
-                     justifyContent: "space-between",
-                     alignItems: "center",
-                     gap: 3
+                     position: "absolute",
+                     top: 0,
+                     right: 0
                   }}>
-                  <Typography
-                     variant='body1'
-                     fontWeight={700}
-                     fontSize={{
-                        xs: "1.25rem",
-                        sm: "1.5rem"
-                     }}
-                     lineHeight={"24px"}>
-                     Job Details
-                  </Typography>
+                  <IconButton
+                     color='error'
+                     onClick={() => {
+                        handleClose()
+                     }}>
+                     <CIcon
+                        icon='cil-x'
+                        sx={{
+                           color: (theme) => theme.palette.error.main
+                        }}
+                     />
+                  </IconButton>
                </Box>
-               <Box sx={{ width: "100%", pt: 3, pb: 4, px: 2 }}>
+               {/* Form area  */}
+               <Box component={"form"} onSubmit={handleSubmit(handleFromSubmit)}>
                   {/* Form area  */}
                   <Grid container spacing={3} rowSpacing={2.5} px={3} pb={1} sx={{ display: "flex" }}>
                      {/* Title  */}
@@ -363,7 +311,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            </Typography>
                         </Box>
                         <TextField
-                           inputProps={{ readOnly: !isCompanySelected }}
                            sx={{
                               "& .MuiFormHelperText-root": {
                                  color: (theme) => theme.palette.error.main,
@@ -383,59 +330,52 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            error={Boolean(errors.title)}
                         />
                      </Grid>
-                     {/* Slug */}
-                     <Grid
-                        item
-                        xs={12}
-                        md={6}
-                        sx={{
-                           "& .MuiFormControl-root": {
-                              width: "100%"
-                           }
-                        }}>
+                     {/* Category */}
+                     <Grid item xs={12} sm={6}>
                         <Box
+                           component={"label"}
+                           htmlFor='resume-resume-category'
                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              gap: 1
+                              display: "block",
+                              fontSize: "0.875rem",
+                              fontWeight: 500,
+                              color: "text.primary",
+                              mb: 1
                            }}>
-                           <Typography
-                              variant='body1'
+                           Category
+                           <Box
+                              component={"span"}
                               sx={{
-                                 color: (theme) => theme.palette.text.primary,
-                                 fontSize: 16,
-                                 display: "flex",
-                                 alignItems: "center",
-                                 gap: 0.5
-                              }}
-                              pb={0.5}>
-                              Job Slug
-                              <Typography component='span' color='error'>
-                                 *
-                              </Typography>
-                           </Typography>
+                                 color: "error.main",
+                                 ml: 0.5
+                              }}>
+                              *
+                           </Box>
                         </Box>
-                        <TextField
-                           inputProps={{ readOnly: !isCompanySelected }}
-                           sx={{
-                              "& .MuiFormHelperText-root": {
-                                 color: (theme) => theme.palette.error.main,
-                                 textTransform: "capitalize",
-                                 mx: 0.5
-                              },
-                              "& input": {
-                                 py: "10px"
-                              }
-                           }}
-                           type='text'
+                        <Select
+                           displayEmpty
+                           fullWidth
+                           variant='outlined'
+                           id='company-industry'
                            size='small'
-                           placeholder='Job Slug'
-                           {...register("slug", {
-                              required: "Job Slug is required"
+                           {...register("category", {
+                              required: "Job Category is required"
                            })}
-                           error={Boolean(errors.slug)}
-                        />
+                           defaultValue={watch("category") || ""}
+                           value={watch("category") || ""}
+                           error={Boolean(errors.category)}>
+                           <MenuItem disabled value=''>
+                              Select Category
+                           </MenuItem>
+                           {categoryData &&
+                              categoryData?.map((categoryItem: IJobCategory, index: number) => {
+                                 return (
+                                    <MenuItem key={index} value={categoryItem?.documentId}>
+                                       {categoryItem?.title}
+                                    </MenuItem>
+                                 )
+                              })}
+                        </Select>
                      </Grid>
                      {/* Start Date */}
                      <Grid
@@ -471,7 +411,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            </Typography>
                         </Box>
                         <TextField
-                           inputProps={{ readOnly: !isCompanySelected }}
                            sx={{
                               "& .MuiFormHelperText-root": {
                                  color: (theme) => theme.palette.error.main,
@@ -525,7 +464,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            </Typography>
                         </Box>
                         <TextField
-                           inputProps={{ readOnly: !isCompanySelected }}
                            sx={{
                               "& .MuiFormHelperText-root": {
                                  color: (theme) => theme.palette.error.main,
@@ -584,7 +522,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            </Typography>
                         </Box>
                         <TextField
-                           inputProps={{ readOnly: !isCompanySelected }}
                            sx={{
                               "& .MuiFormHelperText-root": {
                                  color: (theme) => theme.palette.error.main,
@@ -641,7 +578,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            </Typography>
                         </Box>
                         <TextField
-                           inputProps={{ readOnly: !isCompanySelected }}
                            sx={{
                               "& .MuiFormHelperText-root": {
                                  color: (theme) => theme.palette.error.main,
@@ -658,53 +594,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            {...register("vacancy")}
                            error={Boolean(errors.vacancy)}
                         />
-                     </Grid>
-                     {/* Category */}
-                     <Grid item xs={12} sm={6}>
-                        <Box
-                           component={"label"}
-                           htmlFor='resume-resume-category'
-                           sx={{
-                              display: "block",
-                              fontSize: "0.875rem",
-                              fontWeight: 500,
-                              color: "text.primary",
-                              mb: 1
-                           }}>
-                           Category
-                           <Box
-                              component={"span"}
-                              sx={{
-                                 color: "error.main",
-                                 ml: 0.5
-                              }}>
-                              *
-                           </Box>
-                        </Box>
-                        <Select
-                           inputProps={{ readOnly: !isCompanySelected }}
-                           displayEmpty
-                           fullWidth
-                           variant='outlined'
-                           id='company-industry'
-                           size='small'
-                           {...register("category", {
-                              required: "Job Category is required"
-                           })}
-                           defaultValue={watch("category") || ""}
-                           error={Boolean(errors.category)}>
-                           <MenuItem disabled value=''>
-                              Select Category
-                           </MenuItem>
-                           {categoryData &&
-                              categoryData?.map((categoryItem: IJobCategory, index: number) => {
-                                 return (
-                                    <MenuItem key={index} value={categoryItem?.documentId}>
-                                       {categoryItem?.title}
-                                    </MenuItem>
-                                 )
-                              })}
-                        </Select>
                      </Grid>
                      {/* Job Type  */}
                      <Grid item xs={12} sm={6}>
@@ -730,7 +619,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            </Typography>
                         </Box>
                         <Select
-                           inputProps={{ readOnly: !isCompanySelected }}
                            displayEmpty
                            fullWidth
                            variant='outlined'
@@ -738,6 +626,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            size='small'
                            {...register("type")}
                            defaultValue={watch("type") || ""}
+                           value={watch("type") || ""}
                            error={Boolean(errors.type)}>
                            <MenuItem disabled value=''>
                               Select Job Type
@@ -776,7 +665,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            </Typography>
                         </Box>
                         <Select
-                           inputProps={{ readOnly: !isCompanySelected }}
                            displayEmpty
                            fullWidth
                            variant='outlined'
@@ -784,6 +672,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            size='small'
                            {...register("skills")}
                            defaultValue={watch("skills") || ""}
+                           value={watch("skills") || ""}
                            error={Boolean(errors.skills)}>
                            <MenuItem disabled value=''>
                               Select Job Skill
@@ -798,7 +687,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                               })}
                         </Select>
                      </Grid>
-
                      {/* Description */}
                      <Grid item xs={12}>
                         <Box
@@ -826,20 +714,15 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                      </Grid>
                   </Grid>
                   <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                     <LoadingButton
-                        disabled={!isCompanySelected}
-                        variant='contained'
-                        color='primary'
-                        loading={loading}
-                        type='submit'>
+                     <LoadingButton variant='contained' color='primary' loading={loading} type='submit'>
                         Submit Job
                      </LoadingButton>
                   </Box>
                </Box>
             </Box>
          </Box>
-      </Box>
+      </Dialog>
    )
 }
 
-export default AddJob
+export default EditJob

@@ -10,9 +10,8 @@ import { Button } from "@mui/material"
 import CIcon from "../../components/common/icon"
 import ManageListsTable from "./table"
 import { AccessError } from "../../shared/error-table"
-import { IManageJobBock } from "./type"
+import { IManageJobBock } from "./types"
 import useSWR from "swr"
-import toast from "react-hot-toast"
 import AddJob from "./add-job"
 
 type Props = {
@@ -30,7 +29,6 @@ export const ManageJobs = ({ block }: Props) => {
    const [addList, setAddList] = useState(false)
    const theme = useTheme()
    const [search, setSearch] = useState("")
-   const [selectAll, setSelectAll] = useState(false)
    const [pagination, setPagination] = useState<{
       page: number
       pageSize: number
@@ -42,17 +40,6 @@ export const ManageJobs = ({ block }: Props) => {
       pageCount: 1,
       total: 0
    })
-
-   // const { title, enableSearch, tableHead, empty, form, addButtonText, editButtonText, perPageText } = block || {}
-   // TODO: need to update table form
-   const formData = {
-      title: "a",
-      slug: "s",
-      formStep: 1,
-      stepLabels: [{ id: 1, title: "a" }],
-      buttonsText: "B",
-      fields: [{ label: "L", name: "A" }]
-   } as any
 
    const { title, style, empty, table_config, table_head: tableHeader, add_button_placeholder } = block || {}
    const {
@@ -235,15 +222,11 @@ export const ManageJobs = ({ block }: Props) => {
                   {/* Table */}
                   <ManageListsTable
                      headCells={tableHeader}
-                     selectAll={selectAll}
-                     setSelectAll={setSelectAll}
                      data={listsData?.data}
                      blockData={block}
                      mutate={mutate}
                      isLoading={isLoading}
                      empty={empty}
-                     userId={userId}
-                     formData={formData}
                      pageSize={pagination.pageSize}
                   />
 

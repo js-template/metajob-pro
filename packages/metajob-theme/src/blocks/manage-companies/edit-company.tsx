@@ -594,61 +594,6 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                            error={Boolean(errors.phone)}
                         />
                      </Grid>
-
-                     {/* Slug */}
-                     {/* <Grid
-                        item
-                        xs={12}
-                        md={6}
-                        sx={{
-                           "& .MuiFormControl-root": {
-                              width: "100%"
-                           }
-                        }}>
-                        <Box
-                           sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              gap: 1
-                           }}>
-                           <Typography
-                              variant='body1'
-                              sx={{
-                                 color: (theme) => theme.palette.text.primary,
-                                 fontSize: 16,
-                                 display: "flex",
-                                 alignItems: "center",
-                                 gap: 0.5
-                              }}
-                              pb={0.5}>
-                              Company Slug
-                              <Typography component='span' color='error'>
-                                 *
-                              </Typography>
-                           </Typography>
-                        </Box>
-                        <TextField
-                           sx={{
-                              "& .MuiFormHelperText-root": {
-                                 color: (theme) => theme.palette.error.main,
-                                 textTransform: "capitalize",
-                                 mx: 0.5
-                              },
-                              "& input": {
-                                 py: "10px"
-                              }
-                           }}
-                           type='text'
-                           size='small'
-                           placeholder='Company Slug'
-                           {...register("slug", {
-                              required: "Company Slug is required"
-                           })}
-                           error={Boolean(errors.slug)}
-                        />
-                     </Grid> */}
-
                      {/* Website */}
                      <Grid
                         item
