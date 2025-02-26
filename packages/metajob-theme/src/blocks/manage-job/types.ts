@@ -75,3 +75,22 @@ export type IJobCategory = {
    documentId: string
    title: string
 }
+export type IEditJobData = {
+   id: number
+   documentId: string
+   title: string
+   description: string
+   startDate: string
+   endDate: string
+   price: number
+   vacancy: number
+   type: {
+      documentId: string
+   }
+   skills: {
+      documentId: string
+   }[]
+   category: {
+      documentId: string
+   }
+}

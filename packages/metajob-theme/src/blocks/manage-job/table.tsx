@@ -5,26 +5,19 @@ import toast from "react-hot-toast"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import TableItem from "./item"
 import { KeyedMutator } from "swr"
-import { formProps } from "../../types/forms"
-import { IJobData, IManageJobBock } from "./type"
+import { IJobData, IManageJobBock } from "./types"
 import { TableLoader } from "./loader"
 
 const ManageListsTable = ({
    headCells,
-   selectAll,
-   setSelectAll,
-   userId,
    data,
    mutate,
    isLoading,
    empty,
-   formData,
    pageSize,
    blockData
 }: {
    headCells: { value: string }[]
-   selectAll: boolean
-   setSelectAll: (value: boolean) => void
    data: IJobData[]
    blockData: IManageJobBock
    mutate: KeyedMutator<any>
@@ -33,8 +26,6 @@ const ManageListsTable = ({
       title: string
       description: string
    }
-   formData: formProps
-   userId?: number
    pageSize: number
 }) => {
    const totalHeader = 6
@@ -93,14 +84,11 @@ const ManageListsTable = ({
                               <TableItem
                                  key={job.id}
                                  job={job}
-                                 selectAll={selectAll}
                                  blockData={blockData}
                                  mutate={mutate}
                                  noteFunctionHandler={() => {
                                     toast.error("Note function not implemented yet")
                                  }}
-                                 formData={formData}
-                                 userId={userId}
                               />
                            ))}
 

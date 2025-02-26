@@ -1,15 +1,17 @@
 "use client"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { useTheme } from "next-themes"
 import { LoadingButton } from "@mui/lab"
-import { Button, Box, Container, Divider, Grid, IconButton, Stack, Typography } from "@mui/material"
+import { Button, Box, Container, Divider, Grid, IconButton, Stack, Typography, Skeleton } from "@mui/material"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Card } from "../common/card"
 import CIcon from "../common/icon"
 // @ts-ignore
 import TextFieldWithLabel from "../textField-with-label"
+import { find } from "@/lib/strapi"
+import { IUserRole } from "./types"
 
 type ISignUp = { username: string; email: string; password: string; confirmPassword: string }
 
@@ -28,7 +30,7 @@ export const SignUpCard = ({
    facebookSignUpHandler,
    linkedinSignUpHandler
 }: Props) => {
-   const [selectedButton, setSelectedButton] = useState("candidate")
+   const [selectedButton, setSelectedButton] = useState("")
    const { theme: mode } = useTheme()
 
    const {
@@ -41,11 +43,52 @@ export const SignUpCard = ({
    //    submit handler
    const onSubmitHandler = async (data: ISignUp) => {
       if (signUpHandler) {
-         await signUpHandler(data)
+         const signUpdata = {
+            ...data,
+            role: selectedButton
+         }
+         // await signUpHandler(data)
+         await signUpHandler(signUpdata)
          reset()
       }
    }
 
+   const [isLoading, setIsLoading] = useState(false)
+   const [allRoles, setAllRoles] = useState<IUserRole[] | null>(null)
+
+   // *** get all roles
+   const getRoles = async () => {
+      setIsLoading(true)
+      const { data, error } = await find(
+         "api/users-permissions/roles",
+         {
+            filters: {
+               type: {
+                  $or: [{ $ne: "public" }, { $ne: "authenticated" }]
+               }
+            }
+         },
+         "no-cache"
+      )
+      if (error) {
+         setIsLoading(false)
+         return setAllRoles([])
+      } else {
+         // without the public role and the authenticated role
+         const roles = data?.roles
+            .filter((role: any) => role.type !== "public" && role.type !== "authenticated")
+            ?.reverse()
+         setAllRoles(roles)
+         setSelectedButton(roles?.[0]?.id)
+         setIsLoading(false)
+      }
+   }
+
+   useEffect(() => {
+      getRoles()
+   }, [])
+
+   // console.log("allRoles", allRoles)
    //    provider present validator
    const noProvider = !googleSignUpHandler && !facebookSignUpHandler && !linkedinSignUpHandler
 
@@ -70,7 +113,35 @@ export const SignUpCard = ({
                            Create an account
                         </Typography>
                         <Stack direction={"row"} gap={2}>
-                           <Button
+                           {!isLoading &&
+                              allRoles?.map((roleItem: IUserRole, index: number) => (
+                                 <Button
+                                    key={index}
+                                    variant='contained'
+                                    fullWidth
+                                    onClick={() => setSelectedButton(roleItem?.id)}
+                                    sx={{
+                                       bgcolor:
+                                          selectedButton === roleItem?.id
+                                             ? (theme) => theme.palette.primary.main
+                                             : (theme) => hexToRGBA(theme.palette.text.disabled, 0.2),
+                                       color: (theme) =>
+                                          mode === "dark"
+                                             ? theme.palette.primary.contrastText
+                                             : selectedButton === roleItem?.id
+                                               ? theme.palette.primary.contrastText
+                                               : theme.palette.text.disabled,
+                                       textTransform: "capitalize"
+                                    }}>
+                                    {roleItem?.name}
+                                 </Button>
+                              ))}
+                           {isLoading &&
+                              [1, 2]?.map((_, index) => (
+                                 <Skeleton key={index} variant='rounded' width={"100%"} height={48} />
+                              ))}
+
+                           {/* <Button
                               variant='contained'
                               fullWidth
                               onClick={() => setSelectedButton("candidate")}
@@ -105,7 +176,7 @@ export const SignUpCard = ({
                               variant='contained'
                               onClick={() => setSelectedButton("employer")}>
                               Employer
-                           </Button>
+                           </Button> */}
                         </Stack>
                         <Stack spacing={2} component={"form"} onSubmit={handleSubmit(onSubmitHandler)}>
                            <TextFieldWithLabel
