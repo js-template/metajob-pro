@@ -4,15 +4,12 @@ import Dialog from "@mui/material/Dialog"
 import Slide from "@mui/material/Slide"
 import { TransitionProps } from "@mui/material/transitions"
 import { KeyedMutator } from "swr"
-import { formProps } from "@/types/forms"
-import DynamicForm from "../../form"
-import { find, findOne, updateOne } from "../../lib/strapi"
+import { find } from "../../lib/strapi"
 import _ from "lodash"
 import toast from "react-hot-toast"
-import { IJobApplyData, IManageJobBock } from "./type"
+import { IJobApplyData, IManageJobBock } from "./types"
 import {
    Box,
-   Button,
    IconButton,
    Table,
    TableBody,
@@ -24,8 +21,7 @@ import {
 } from "@mui/material"
 import CIcon from "../../components/common/icon"
 import PerfectScrollbar from "react-perfect-scrollbar"
-import { ApplyTableLoader, TableLoader } from "./loader"
-import TableItem from "./item"
+import { ApplyTableLoader } from "./loader"
 import ApplyItem from "./apply-item"
 
 const Transition = React.forwardRef(function Transition(

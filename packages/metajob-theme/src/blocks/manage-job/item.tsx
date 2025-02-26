@@ -6,27 +6,20 @@ import CIcon, { SpinnersClock } from "../../components/common/icon"
 import { dateFormatter } from "../../lib/date-format"
 import { deleteEntry } from "../../lib/strapi"
 import toast from "react-hot-toast"
-import { IJobData, IManageJobBock } from "./type"
-import EditList from "./edit-list"
+import { IJobData, IManageJobBock } from "./types"
+import EditJob from "./edit-job"
 import { KeyedMutator } from "swr"
-import { formProps } from "../../types/forms"
 import JobApplications from "./job-applications"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 
 const TableItem = ({
    job,
-   selectAll,
    blockData,
-   mutate,
-   formData,
-   userId
+   mutate
 }: {
    job: IJobData
    blockData: IManageJobBock
    mutate: KeyedMutator<any>
-   formData: formProps
-   userId?: number
-   selectAll: boolean
    noteFunctionHandler: () => void
 }) => {
    const { title, slug, publishedAt, status, applications, endDate, documentId } = job || {}
@@ -35,7 +28,6 @@ const TableItem = ({
    const [show, setShow] = useState(false)
    const [jobApplicationShow, setJobApplicationShow] = useState(false)
 
-   const listID = job?.id
    const model = "api/metajob-backend/jobs"
 
    const handleApplicationOpen = () => {
@@ -46,7 +38,6 @@ const TableItem = ({
    }
 
    const handleClickOpen = () => {
-      return toast.error("This feature is under development")
       setShow(true)
    }
 
@@ -195,18 +186,7 @@ const TableItem = ({
             </TableCell>
          </TableRow>
 
-         {show && (
-            <EditList
-               open={show}
-               handleClickOpen={handleClickOpen}
-               handleClose={handleClose}
-               formData={formData}
-               listID={listID}
-               mutate={mutate}
-               userId={userId}
-               blockData={blockData}
-            />
-         )}
+         {show && <EditJob open={show} handleClose={handleClose} mutate={mutate} jobDocID={documentId} />}
          {jobApplicationShow && (
             <JobApplications
                open={jobApplicationShow}

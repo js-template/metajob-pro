@@ -9,7 +9,7 @@ import DynamicForm from "../../form"
 import { findOne, updateOne } from "../../lib/strapi"
 import _ from "lodash"
 import toast from "react-hot-toast"
-import { IManageJobBock } from "./type"
+import { IManageJobBock } from "./types"
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
