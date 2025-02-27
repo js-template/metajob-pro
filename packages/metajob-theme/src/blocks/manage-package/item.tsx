@@ -20,7 +20,7 @@ import toast from "react-hot-toast"
 import { mutate } from "swr"
 
 type Props = {
-   data: IPackageData
+   data?: IPackageData
    isLoader?: boolean
    userId?: boolean
    mutateUrl?: string
@@ -228,7 +228,11 @@ export const PackageItem = ({ data, isLoader, membershipData, userId, mutateUrl 
                      fullWidth
                      color='primary'
                      variant='contained'
-                     onClick={() => changePackageHandler(data?.documentId)}
+                     onClick={() => {
+                        if (data?.documentId) {
+                           changePackageHandler(data?.documentId)
+                        }
+                     }}
                      sx={{
                         height: "46px",
                         p: "12px auto",
