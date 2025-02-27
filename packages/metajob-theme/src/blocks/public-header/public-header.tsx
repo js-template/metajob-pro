@@ -30,7 +30,7 @@ import { fetcher } from "./hook"
 import { MenuItemProps, IPublicHeaderBlock } from "./types"
 import { useTheme as modeUseTheme } from "next-themes"
 import { getLanguageValue } from "../../utils"
-import MobileNav from "./MobileNav"
+import MobileNav from "./mobile-nav"
 import { useChangeDirection, useChangeLang } from "./utils"
 
 const Image = styled("img")({

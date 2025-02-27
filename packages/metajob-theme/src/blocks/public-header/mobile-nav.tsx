@@ -6,7 +6,7 @@ import CIcon from "../../components/common/icon"
 import { useTheme as modeUseTheme } from "next-themes"
 import { getLanguageValue } from "../../utils"
 import { IPublicHeaderBlock } from "./types"
-import NavItems from "./NavItems"
+import NavItems from "./nav-items"
 
 type MobileNavProps = {
    open: boolean

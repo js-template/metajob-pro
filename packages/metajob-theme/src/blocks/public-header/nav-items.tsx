@@ -1,7 +1,7 @@
 "use client"
 import { Fragment } from "react"
-import NavGroupItem from "./NavGroupItem"
-import NavLink from "./NavLink"
+import NavGroupItem from "./nav-group-item"
+import NavLink from "./nav-link"
 import { MenuItemProps } from "./types"
 
 const NavItems = (Items: MenuItemProps[], open: boolean, direction: "ltr" | "rtl") => {
