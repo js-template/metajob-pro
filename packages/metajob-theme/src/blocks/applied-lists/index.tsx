@@ -41,7 +41,7 @@ export const AppliedLists = ({ data, userId }: { userId: number; data?: IApplied
       },
       populate: {
          job: {
-            fields: ["title", "slug", "status", "startDate", "endDate", "vacancy", "status"]
+            fields: ["title", "slug", "job_status", "startDate", "endDate", "vacancy"]
          }
       },
       fields: ["status"]

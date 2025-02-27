@@ -15,11 +15,6 @@ export const JobCard = async ({ block, language }: Props) => {
    const { data: JobsData, error: JobsError } = await find(
       "api/metajob-backend/jobs",
       {
-         // filters: {
-         //    is_featured: {
-         //       $eq: true
-         //    }
-         // },
          populate: {
             company: {
                populate: "*"

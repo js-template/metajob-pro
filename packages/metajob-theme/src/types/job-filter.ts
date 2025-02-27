@@ -98,7 +98,7 @@ type Location = {
 type JobAttributes = {
    title: string
    description: string
-   status?: "open" | "closed" | "draft"
+   job_status?: "open" | "closed" | "draft"
    // description: JobDescription[]
    startDate: Date
    endDate: Date

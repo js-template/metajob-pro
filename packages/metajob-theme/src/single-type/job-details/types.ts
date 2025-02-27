@@ -12,7 +12,7 @@ export type ISingleJob = {
    documentId: string
    title: string
    description: string
-   status?: "open" | "closed" | "draft"
+   job_status?: "open" | "closed" | "draft"
    type: {
       title: string
       value: string

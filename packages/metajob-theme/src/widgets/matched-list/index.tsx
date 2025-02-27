@@ -29,7 +29,7 @@ export const MatchedList = ({
          owner: {
             id: userId
          },
-         status: "open"
+         job_status: "open"
       }
    }
 

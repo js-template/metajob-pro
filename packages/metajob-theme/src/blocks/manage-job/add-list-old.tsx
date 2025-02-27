@@ -84,7 +84,7 @@ const AddList = ({ open, handleClose, data, userId, mutate, blockData }: addList
             endDate: data.endDate,
             owner: userId,
             // if the startDate is greater than the current date then the status will be draft otherwise open
-            status: new Date(data.startDate) > new Date() ? "draft" : "open"
+            job_status: new Date(data.startDate) > new Date() ? "draft" : "open"
          }
       })
 

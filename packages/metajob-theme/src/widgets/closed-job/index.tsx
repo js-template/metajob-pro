@@ -30,7 +30,7 @@ export const ClosedJob = async ({
          fields: ["id"],
          filters: {
             owner: userId,
-            status: "closed"
+            job_status: "closed"
          }
       },
       "no-store"
