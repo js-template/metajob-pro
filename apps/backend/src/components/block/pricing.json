@@ -23,7 +23,7 @@
     "table": {
       "type": "component",
       "repeatable": true,
-      "component": "config.meta-data"
+      "component": "metajob-config.meta-data"
     }
   }
 }

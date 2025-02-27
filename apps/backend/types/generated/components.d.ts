@@ -249,7 +249,7 @@ export interface BlockPricing extends Struct.ComponentSchema {
     button: Schema.Attribute.Component<'config.link', false>;
     description: Schema.Attribute.Text;
     price: Schema.Attribute.String;
-    table: Schema.Attribute.Component<'config.meta-data', true>;
+    table: Schema.Attribute.Component<'metajob-config.meta-data', true>;
     title: Schema.Attribute.String;
   };
 }
@@ -352,39 +352,6 @@ export interface ConfigCarouselCard extends Struct.ComponentSchema {
   };
 }
 
-export interface ConfigHeaderConfig extends Struct.ComponentSchema {
-  collectionName: 'components_config_header_configs';
-  info: {
-    displayName: 'Header Config';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    enableDelete: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    enableEdit: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-  };
-}
-
-export interface ConfigHeaderField extends Struct.ComponentSchema {
-  collectionName: 'components_config_header_fields';
-  info: {
-    displayName: 'Header Field';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    align: Schema.Attribute.Enumeration<['left', 'right', 'center']> &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'left'>;
-    label: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Name'>;
-    sort: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-  };
-}
-
 export interface ConfigLink extends Struct.ComponentSchema {
   collectionName: 'components_config_links';
   info: {
@@ -461,29 +428,6 @@ export interface ConfigMenu extends Struct.ComponentSchema {
   };
 }
 
-export interface ConfigMetaData extends Struct.ComponentSchema {
-  collectionName: 'components_config_meta_data';
-  info: {
-    displayName: 'Meta Data';
-    icon: 'chartBubble';
-  };
-  attributes: {
-    key: Schema.Attribute.String;
-    value: Schema.Attribute.String;
-  };
-}
-
-export interface ConfigRelations extends Struct.ComponentSchema {
-  collectionName: 'components_config_relations';
-  info: {
-    displayName: 'Relations';
-    icon: 'apps';
-  };
-  attributes: {
-    relationId: Schema.Attribute.Integer;
-  };
-}
-
 export interface ConfigReviewCard extends Struct.ComponentSchema {
   collectionName: 'components_review_cards';
   info: {
@@ -510,22 +454,6 @@ export interface ConfigReviewCard extends Struct.ComponentSchema {
     reviewer: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'John Doe'>;
-  };
-}
-
-export interface ConfigSearchConfig extends Struct.ComponentSchema {
-  collectionName: 'components_config_search_configs';
-  info: {
-    displayName: 'Search Config';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    button_placeholder: Schema.Attribute.String;
-    category_placeholder: Schema.Attribute.String;
-    location_placeholder: Schema.Attribute.String;
-    search_placeholder: Schema.Attribute.String;
-    sort_placeholder: Schema.Attribute.String;
-    title: Schema.Attribute.String;
   };
 }
 
@@ -1435,15 +1363,10 @@ declare module '@strapi/strapi' {
       'component.grid-container': ComponentGridContainer;
       'component.icon-box': ComponentIconBox;
       'config.carousel-card': ConfigCarouselCard;
-      'config.header-config': ConfigHeaderConfig;
-      'config.header-field': ConfigHeaderField;
       'config.link': ConfigLink;
       'config.logo': ConfigLogo;
       'config.menu': ConfigMenu;
-      'config.meta-data': ConfigMetaData;
-      'config.relations': ConfigRelations;
       'config.review-card': ConfigReviewCard;
-      'config.search-config': ConfigSearchConfig;
       'config.section-title': ConfigSectionTitle;
       'config.single-page': ConfigSinglePage;
       'config.style-section': ConfigStyleSection;

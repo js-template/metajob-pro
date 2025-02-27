@@ -1191,7 +1191,7 @@ export interface PluginMetajobBackendPackage
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
-    feature: Schema.Attribute.Component<'config.meta-data', true>;
+    feature: Schema.Attribute.Component<'metajob-config.meta-data', true>;
     frequency: Schema.Attribute.Enumeration<['Monthly', 'Yearly', 'One Time']>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
