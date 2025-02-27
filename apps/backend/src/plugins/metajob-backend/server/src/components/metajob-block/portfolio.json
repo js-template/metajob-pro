@@ -4,9 +4,9 @@
     "icon": "clock",
     "description": ""
   },
-  "category": "block",
+  "category": "metajob-block",
   "modelName": "portfolio",
-  "uid": "block.portfolio",
+  "uid": "metajob-block.portfolio",
   "attributes": {
     "title": {
       "type": "string"

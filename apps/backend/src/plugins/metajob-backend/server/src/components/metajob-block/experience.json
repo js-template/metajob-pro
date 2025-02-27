@@ -4,9 +4,9 @@
     "icon": "arrowRight",
     "description": ""
   },
-  "category": "block",
+  "category": "metajob-block",
   "modelName": "experience",
-  "uid": "block.experience",
+  "uid": "metajob-block.experience",
   "attributes": {
     "title": {
       "type": "string"

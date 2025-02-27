@@ -4,9 +4,9 @@
     "icon": "phone",
     "description": ""
   },
-  "category": "block",
+  "category": "metajob-block",
   "modelName": "contact",
-  "uid": "block.contact",
+  "uid": "metajob-block.contact",
   "pluginOptions": {},
   "attributes": {
     "friendlyAddress": {
