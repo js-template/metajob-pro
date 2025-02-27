@@ -1225,12 +1225,12 @@ export interface PluginMetajobBackendResume
       'oneToOne',
       'plugin::metajob-backend.job-category'
     >;
-    contact: Schema.Attribute.Component<'block.contact', false>;
+    contact: Schema.Attribute.Component<'metajob-block.contact', false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    education: Schema.Attribute.Component<'block.experience', true>;
-    experience: Schema.Attribute.Component<'block.experience', true>;
+    education: Schema.Attribute.Component<'metajob-block.experience', true>;
+    experience: Schema.Attribute.Component<'metajob-block.experience', true>;
     experience_time: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.experience-level'
@@ -1321,7 +1321,7 @@ export interface PluginMetajobBackendResume
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
-    portfolio: Schema.Attribute.Component<'block.portfolio', true>;
+    portfolio: Schema.Attribute.Component<'metajob-block.portfolio', true>;
     publishedAt: Schema.Attribute.DateTime;
     salary: Schema.Attribute.Relation<
       'oneToOne',
@@ -2008,8 +2008,8 @@ export interface PluginPadmaBackendPublicFrontpage
         'block.review-block',
         'block.image-carousel',
         'block.image-gallery',
-        'block.pricing',
-        'block.portfolio',
+        'metajob-block.pricing',
+        'metajob-block.portfolio',
         'metajob-block.job-banner',
         'metajob-block.job-category',
         'metajob-block.job-card',

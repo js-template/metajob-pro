@@ -4,9 +4,9 @@
     "icon": "bulletList",
     "description": ""
   },
-  "category": "block",
+  "category": "metajob-block",
   "modelName": "pricing",
-  "uid": "block.pricing",
+  "uid": "metajob-block.pricing",
   "attributes": {
     "button": {
       "type": "component",
