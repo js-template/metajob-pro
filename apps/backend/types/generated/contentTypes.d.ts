@@ -2008,8 +2008,6 @@ export interface PluginPadmaBackendPublicFrontpage
         'block.review-block',
         'block.image-carousel',
         'block.image-gallery',
-        'metajob-block.pricing',
-        'metajob-block.portfolio',
         'metajob-block.job-banner',
         'metajob-block.job-category',
         'metajob-block.job-card',
