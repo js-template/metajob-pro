@@ -1,5 +1,4 @@
 "use client"
-
 import React from "react"
 import { useSession } from "next-auth/react"
 import useSWR from "swr"
@@ -35,7 +34,7 @@ export const ManagePackage = ({ block, language }: Props) => {
    // Construct the API URL
    const apiUrl = `/api/find?model=api/metajob-backend/packages&query=${queryString}&cache=no-store`
    // fetch packages  data
-   const { data: packageDataAll, isLoading } = useSWR(apiUrl, fetcher)
+   const { data: packageDataAll, isLoading: packageIsLoading } = useSWR(apiUrl, fetcher)
    const packageData = packageDataAll?.data
 
    const membershipQueryParams = {
@@ -53,7 +52,7 @@ export const ManagePackage = ({ block, language }: Props) => {
    // Construct the API URL
    const membershipApiUrl = `/api/find?model=api/metajob-backend/memberships&query=${membershipQueryString}&cache=no-store`
    // fetch packages  data
-   const { data: membershipDataAll, isLoading: membershipIsLoading } = useSWR(membershipApiUrl, fetcher)
+   const { data: membershipDataAll } = useSWR(membershipApiUrl, fetcher)
    const membershipData = membershipDataAll?.data?.[0]
 
    return role === "employer" ? (
@@ -112,18 +111,18 @@ export const ManagePackage = ({ block, language }: Props) => {
                   </Grid>
                )}
                {/* loader */}
-               {isLoading && (
+               {packageIsLoading && (
                   <Grid container spacing={2}>
-                     {_.map(packageData, (item, index) => (
+                     {_.map([1, 2, 3], (item, index) => (
                         <Grid key={index} item xs={mobile || 12} sm={tab || 6} md={desktop || 3}>
-                           <PackageItem data={item} isLoader={isLoading} />
+                           <PackageItem isLoader={true} />
                         </Grid>
                      ))}
                   </Grid>
                )}
 
                {/* empty data */}
-               {!packageData && !isLoading && packageData?.data?.length == 0 && (
+               {!packageIsLoading && packageData?.length == 0 && (
                   <Grid container justifyContent={"center"} spacing={2}>
                      <Stack
                         sx={{

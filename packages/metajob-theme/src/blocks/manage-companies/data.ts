@@ -1,5 +1,3 @@
-// TODO: This file should fully delete
-
 // *** table head ***
 export const headCells = [
    {

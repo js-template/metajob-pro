@@ -33,6 +33,8 @@ export const BookmarkTable = ({ block, language }: Props) => {
    const { id: userId } = user || {}
 
    const theme = useTheme()
+   const direction = theme?.direction
+
    const { title, style, empty, table_config, table_head: tableHeader } = block || {}
    const { label: tableLabel, enable_search: enableSearch, search_placeholder, default_data_count } = table_config || {}
 
@@ -48,10 +50,6 @@ export const BookmarkTable = ({ block, language }: Props) => {
       pageCount: 1,
       total: 0
    })
-
-   // FIXME: need to fix, can not used context from apps/site
-   // const direction = "ltr" as string
-   const direction = "ltr" as string
 
    const fetcher = async (url: string) => {
       const response = await fetch(url)

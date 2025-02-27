@@ -111,8 +111,6 @@ export const findOne = async (
          }
       })
 
-      //console.log("Response", response)
-
       if (!response.ok) {
          throw new Error(`Failed to fetch data: ${response.statusText}`)
       }

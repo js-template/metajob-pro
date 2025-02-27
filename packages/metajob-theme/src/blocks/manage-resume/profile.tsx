@@ -32,44 +32,28 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
    }
    const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
    const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
-   const {
-      data: categoryData,
-      error: categoryError,
-      isLoading: categoryIsLoading
-   } = useSWR(categoryAPiUrl, fetcher, {
+   const { data: categoryData, isLoading: categoryIsLoading } = useSWR(categoryAPiUrl, fetcher, {
       fallbackData: []
    })
 
    // fetch experience-level data
    const experienceString = encodeURIComponent(JSON.stringify({}))
    const experienceAPiUrl = `/api/find?model=api/metajob-backend/experience-levels&query=${experienceString}`
-   const {
-      data: experienceData,
-      error: experienceError,
-      isLoading: experienceIsLoading
-   } = useSWR(experienceAPiUrl, fetcher, {
+   const { data: experienceData, isLoading: experienceIsLoading } = useSWR(experienceAPiUrl, fetcher, {
       fallbackData: []
    })
 
    // fetch avg-salary data
    const avgSalaryString = encodeURIComponent(JSON.stringify({}))
    const avgSalaryAPiUrl = `/api/find?model=api/metajob-backend/avg-salaries&query=${avgSalaryString}`
-   const {
-      data: avgSalaryData,
-      error: avgSalaryError,
-      isLoading: avgSalaryIsLoading
-   } = useSWR(avgSalaryAPiUrl, fetcher, {
+   const { data: avgSalaryData, isLoading: avgSalaryIsLoading } = useSWR(avgSalaryAPiUrl, fetcher, {
       fallbackData: []
    })
 
    // fetch salary-types data
    const salaryTypesString = encodeURIComponent(JSON.stringify({}))
    const salaryTypesAPiUrl = `/api/find?model=api/metajob-backend/salary-types&query=${salaryTypesString}`
-   const {
-      data: salaryTypesData,
-      error: salaryTypesError,
-      isLoading: salaryTypesIsLoading
-   } = useSWR(salaryTypesAPiUrl, fetcher, {
+   const { data: salaryTypesData, isLoading: salaryTypesIsLoading } = useSWR(salaryTypesAPiUrl, fetcher, {
       fallbackData: []
    })
 
@@ -111,6 +95,41 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
             />
          </Grid>
 
+         {/* Slug */}
+         <Grid item xs={12} sm={6}>
+            <Box
+               component={"label"}
+               htmlFor='resume-slug'
+               sx={{
+                  display: "block",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                  color: "text.primary",
+                  mb: 1
+               }}>
+               Slug
+               <Box
+                  component={"span"}
+                  sx={{
+                     color: "error.main",
+                     ml: 0.5
+                  }}>
+                  *
+               </Box>
+            </Box>
+            <TextField
+               id='resume-slug'
+               fullWidth
+               variant='outlined'
+               size='small'
+               type='text'
+               placeholder='Resume Slug'
+               {...register("slug", {
+                  required: "Slug is required"
+               })}
+               error={Boolean(errors.slug)}
+            />
+         </Grid>
          {/* Professional Title / tagline */}
          <Grid item xs={12} sm={6}>
             <Box

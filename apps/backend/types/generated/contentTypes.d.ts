@@ -887,9 +887,10 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText;
     endDate: Schema.Attribute.Date & Schema.Attribute.Required;
-    is_featured: Schema.Attribute.Boolean &
+    is_featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    job_status: Schema.Attribute.Enumeration<['open', 'closed', 'draft']> &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<false>;
+      Schema.Attribute.DefaultTo<'open'>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -908,9 +909,6 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
     >;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     startDate: Schema.Attribute.Date & Schema.Attribute.Required;
-    status: Schema.Attribute.Enumeration<['open', 'closed', 'draft']> &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'draft'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     type: Schema.Attribute.Relation<
       'oneToOne',
@@ -2008,8 +2006,6 @@ export interface PluginPadmaBackendPublicFrontpage
         'block.review-block',
         'block.image-carousel',
         'block.image-gallery',
-        'metajob-block.pricing',
-        'metajob-block.portfolio',
         'metajob-block.job-banner',
         'metajob-block.job-category',
         'metajob-block.job-card',

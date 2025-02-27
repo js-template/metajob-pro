@@ -105,7 +105,6 @@ export const ProfileInfo = () => {
             const formData = new FormData()
             formData.append("files", selectedImage)
             const { data: uploadData, error: uploadError } = await uploadImage(formData)
-            console.log("uploadError", uploadError)
 
             if (uploadData?.length > 0) {
                avatarId = uploadData[0]

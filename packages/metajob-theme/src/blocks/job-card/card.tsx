@@ -22,9 +22,6 @@ export const JobCardClient = ({ block, JobsData }: { block: any; JobsData: any }
    const { theme: mode } = useTheme()
    const theme = muiTheme()
 
-   const isLoading = false
-   const JobsError = false
-
    // destructure the block
    const { content, empty, style, button } = block || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
@@ -48,7 +45,7 @@ export const JobCardClient = ({ block, JobsData }: { block: any; JobsData: any }
                )}
 
                {/* empty data */}
-               {!JobsError && JobsData?.data?.length == 0 && (
+               {JobsData?.data?.length == 0 && (
                   <Grid container justifyContent={"center"} spacing={2}>
                      <Stack
                         sx={{
