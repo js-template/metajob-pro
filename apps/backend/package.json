@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@padmadev/padma-backend": "^0.0.6-alpha.3",
-    "@jstemplate/metajob-backend": "0.0.4-alpha.5",
+    "@jstemplate/metajob-backend": "0.0.4-alpha.6",
     "@strapi/plugin-cloud": "5.6.0",
     "@strapi/plugin-users-permissions": "5.6.0",
     "@strapi/provider-upload-cloudinary": "^5.4.1",

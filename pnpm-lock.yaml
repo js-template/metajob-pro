@@ -31,8 +31,8 @@ importers:
   apps/backend:
     dependencies:
       '@jstemplate/metajob-backend':
-        specifier: 0.0.4-alpha.4
-        version: 0.0.4-alpha.4(r55pwjkt2lhzag2pr3pnvunhye)
+        specifier: 0.0.4-alpha.6
+        version: 0.0.4-alpha.6(r55pwjkt2lhzag2pr3pnvunhye)
       '@padmadev/padma-backend':
         specifier: ^0.0.6-alpha.3
         version: 0.0.6-alpha.3(r55pwjkt2lhzag2pr3pnvunhye)
@@ -1407,8 +1407,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@jstemplate/metajob-backend@0.0.4-alpha.4':
-    resolution: {integrity: sha512-SB5siWpPqExJGES/815+xxVAMTHziEzySwhw1T/iLpbc5FCsAxgYSB5++Klk5Qz6CJQbxOYsFHoUzzpFQhn+0A==, tarball: https://api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/@jstemplate/metajob-backend/0.0.4-alpha.4.tgz}
+  '@jstemplate/metajob-backend@0.0.4-alpha.6':
+    resolution: {integrity: sha512-Ehp+peyamLu6q52IKJcBJvgl8doPK/Bsas6ClOjgJS8kU0MA79Exf/cl6fXdcat1OP3vUpWb8ZiYaAZujPbClg==, tarball: https://api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/@jstemplate/metajob-backend/0.0.4-alpha.6.tgz}
     peerDependencies:
       '@strapi/sdk-plugin': ^5.2.7
       '@strapi/strapi': ^5.4.0
@@ -10668,7 +10668,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@jstemplate/metajob-backend@0.0.4-alpha.4(r55pwjkt2lhzag2pr3pnvunhye)':
+  '@jstemplate/metajob-backend@0.0.4-alpha.6(r55pwjkt2lhzag2pr3pnvunhye)':
     dependencies:
       '@strapi/design-system': 2.0.0-rc.18(@babel/runtime@7.26.0)(@codemirror/state@6.5.0)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.36.1)(@strapi/icons@2.0.0-rc.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(codemirror@6.0.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@strapi/icons': 2.0.0-rc.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
