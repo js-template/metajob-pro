@@ -112,18 +112,6 @@ export interface BlockCategoryCard extends Struct.ComponentSchema {
   };
 }
 
-export interface BlockContact extends Struct.ComponentSchema {
-  collectionName: 'components_block_contacts';
-  info: {
-    displayName: 'Contact';
-    icon: 'phone';
-  };
-  attributes: {
-    friendlyAddress: Schema.Attribute.String;
-    location: Schema.Attribute.String;
-  };
-}
-
 export interface BlockContentBox extends Struct.ComponentSchema {
   collectionName: 'components_block_content_boxes';
   info: {
@@ -136,21 +124,6 @@ export interface BlockContentBox extends Struct.ComponentSchema {
     empty: Schema.Attribute.Component<'shared.empty', false>;
     icon_box: Schema.Attribute.Component<'component.icon-box', true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-  };
-}
-
-export interface BlockExperience extends Struct.ComponentSchema {
-  collectionName: 'components_block_experiences';
-  info: {
-    displayName: 'Experience';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    description: Schema.Attribute.Text;
-    endDate: Schema.Attribute.Date;
-    institution: Schema.Attribute.String;
-    startDate: Schema.Attribute.Date;
-    title: Schema.Attribute.String;
   };
 }
 
@@ -218,38 +191,6 @@ export interface BlockNotificationList extends Struct.ComponentSchema {
     column_1: Schema.Attribute.String & Schema.Attribute.Required;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface BlockPortfolio extends Struct.ComponentSchema {
-  collectionName: 'components_block_portfolios';
-  info: {
-    displayName: 'Portfolio';
-    icon: 'clock';
-  };
-  attributes: {
-    description: Schema.Attribute.Text;
-    image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
-    link: Schema.Attribute.Component<'config.link', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface BlockPricing extends Struct.ComponentSchema {
-  collectionName: 'components_block_pricings';
-  info: {
-    displayName: 'Pricing';
-    icon: 'bulletList';
-  };
-  attributes: {
-    button: Schema.Attribute.Component<'config.link', false>;
-    description: Schema.Attribute.Text;
-    price: Schema.Attribute.String;
-    table: Schema.Attribute.Component<'config.meta-data', true>;
     title: Schema.Attribute.String;
   };
 }
@@ -352,39 +293,6 @@ export interface ConfigCarouselCard extends Struct.ComponentSchema {
   };
 }
 
-export interface ConfigHeaderConfig extends Struct.ComponentSchema {
-  collectionName: 'components_config_header_configs';
-  info: {
-    displayName: 'Header Config';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    enableDelete: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    enableEdit: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-  };
-}
-
-export interface ConfigHeaderField extends Struct.ComponentSchema {
-  collectionName: 'components_config_header_fields';
-  info: {
-    displayName: 'Header Field';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    align: Schema.Attribute.Enumeration<['left', 'right', 'center']> &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'left'>;
-    label: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Name'>;
-    sort: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-  };
-}
-
 export interface ConfigLink extends Struct.ComponentSchema {
   collectionName: 'components_config_links';
   info: {
@@ -461,29 +369,6 @@ export interface ConfigMenu extends Struct.ComponentSchema {
   };
 }
 
-export interface ConfigMetaData extends Struct.ComponentSchema {
-  collectionName: 'components_config_meta_data';
-  info: {
-    displayName: 'Meta Data';
-    icon: 'chartBubble';
-  };
-  attributes: {
-    key: Schema.Attribute.String;
-    value: Schema.Attribute.String;
-  };
-}
-
-export interface ConfigRelations extends Struct.ComponentSchema {
-  collectionName: 'components_config_relations';
-  info: {
-    displayName: 'Relations';
-    icon: 'apps';
-  };
-  attributes: {
-    relationId: Schema.Attribute.Integer;
-  };
-}
-
 export interface ConfigReviewCard extends Struct.ComponentSchema {
   collectionName: 'components_review_cards';
   info: {
@@ -510,22 +395,6 @@ export interface ConfigReviewCard extends Struct.ComponentSchema {
     reviewer: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'John Doe'>;
-  };
-}
-
-export interface ConfigSearchConfig extends Struct.ComponentSchema {
-  collectionName: 'components_config_search_configs';
-  info: {
-    displayName: 'Search Config';
-    icon: 'arrowRight';
-  };
-  attributes: {
-    button_placeholder: Schema.Attribute.String;
-    category_placeholder: Schema.Attribute.String;
-    location_placeholder: Schema.Attribute.String;
-    search_placeholder: Schema.Attribute.String;
-    sort_placeholder: Schema.Attribute.String;
-    title: Schema.Attribute.String;
   };
 }
 
@@ -784,6 +653,33 @@ export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockContact extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_contacts';
+  info: {
+    displayName: 'Contact';
+    icon: 'phone';
+  };
+  attributes: {
+    friendlyAddress: Schema.Attribute.String;
+    location: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobBlockExperience extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_experiences';
+  info: {
+    displayName: 'Experience';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    endDate: Schema.Attribute.Date;
+    institution: Schema.Attribute.String;
+    startDate: Schema.Attribute.Date;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_job_banners';
   info: {
@@ -923,36 +819,35 @@ export interface MetajobBlockPageHeader extends Struct.ComponentSchema {
   };
 }
 
-export interface MetajobConfigHeaderConfig extends Struct.ComponentSchema {
-  collectionName: 'components_metajob_config_header_configs';
+export interface MetajobBlockPortfolio extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_portfolios';
   info: {
-    displayName: 'Header Config';
-    icon: 'arrowRight';
+    displayName: 'Portfolio';
+    icon: 'clock';
   };
   attributes: {
-    enableDelete: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    enableEdit: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    link: Schema.Attribute.Component<'config.link', false>;
+    title: Schema.Attribute.String;
   };
 }
 
-export interface MetajobConfigHeaderField extends Struct.ComponentSchema {
-  collectionName: 'components_metajob_config_header_fields';
+export interface MetajobBlockPricing extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_pricings';
   info: {
-    displayName: 'Header Field';
-    icon: 'arrowRight';
+    displayName: 'Pricing';
+    icon: 'bulletList';
   };
   attributes: {
-    align: Schema.Attribute.Enumeration<['left', 'right', 'center']> &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'left'>;
-    label: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Name'>;
-    sort: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    button: Schema.Attribute.Component<'config.link', false>;
+    description: Schema.Attribute.Text;
+    price: Schema.Attribute.String;
+    table: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -1063,7 +958,6 @@ export interface MetajobConfigTableConfig extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<'Showing per page'>;
     search_placeholder: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Search'>;
-    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
   };
 }
 
@@ -1422,28 +1316,19 @@ declare module '@strapi/strapi' {
       'block.bookmark-list': BlockBookmarkList;
       'block.breadcrumbs': BlockBreadcrumbs;
       'block.category-card': BlockCategoryCard;
-      'block.contact': BlockContact;
       'block.content-box': BlockContentBox;
-      'block.experience': BlockExperience;
       'block.image-carousel': BlockImageCarousel;
       'block.image-gallery': BlockImageGallery;
       'block.latest-applied': BlockLatestApplied;
       'block.notification-list': BlockNotificationList;
-      'block.portfolio': BlockPortfolio;
-      'block.pricing': BlockPricing;
       'block.review-block': BlockReviewBlock;
       'component.grid-container': ComponentGridContainer;
       'component.icon-box': ComponentIconBox;
       'config.carousel-card': ConfigCarouselCard;
-      'config.header-config': ConfigHeaderConfig;
-      'config.header-field': ConfigHeaderField;
       'config.link': ConfigLink;
       'config.logo': ConfigLogo;
       'config.menu': ConfigMenu;
-      'config.meta-data': ConfigMetaData;
-      'config.relations': ConfigRelations;
       'config.review-card': ConfigReviewCard;
-      'config.search-config': ConfigSearchConfig;
       'config.section-title': ConfigSectionTitle;
       'config.single-page': ConfigSinglePage;
       'config.style-section': ConfigStyleSection;
@@ -1455,6 +1340,8 @@ declare module '@strapi/strapi' {
       'metajob-block.bookmark': MetajobBlockBookmark;
       'metajob-block.candidate-filter': MetajobBlockCandidateFilter;
       'metajob-block.company-filter': MetajobBlockCompanyFilter;
+      'metajob-block.contact': MetajobBlockContact;
+      'metajob-block.experience': MetajobBlockExperience;
       'metajob-block.job-banner': MetajobBlockJobBanner;
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
@@ -1464,8 +1351,8 @@ declare module '@strapi/strapi' {
       'metajob-block.manage-packages': MetajobBlockManagePackages;
       'metajob-block.manage-resume': MetajobBlockManageResume;
       'metajob-block.page-header': MetajobBlockPageHeader;
-      'metajob-config.header-config': MetajobConfigHeaderConfig;
-      'metajob-config.header-field': MetajobConfigHeaderField;
+      'metajob-block.portfolio': MetajobBlockPortfolio;
+      'metajob-block.pricing': MetajobBlockPricing;
       'metajob-config.message': MetajobConfigMessage;
       'metajob-config.meta-data': MetajobConfigMetaData;
       'metajob-config.relations': MetajobConfigRelations;

@@ -156,7 +156,6 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
                const formData = new FormData()
                formData.append("files", data.logo[0])
                const { data: uploadData, error: uploadError } = await uploadImage(formData)
-               console.log("uploadError", uploadError)
                if (uploadError) {
                   mutate()
                   handleClose()

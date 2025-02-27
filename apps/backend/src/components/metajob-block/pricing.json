@@ -1,12 +1,10 @@
 {
+  "collectionName": "components_metajob_block_pricings",
   "info": {
     "displayName": "Pricing",
-    "icon": "bulletList",
-    "description": ""
+    "icon": "bulletList"
   },
-  "category": "block",
-  "modelName": "pricing",
-  "uid": "block.pricing",
+  "options": {},
   "attributes": {
     "button": {
       "type": "component",
@@ -25,7 +23,7 @@
     "table": {
       "type": "component",
       "repeatable": true,
-      "component": "config.meta-data"
+      "component": "metajob-config.meta-data"
     }
   }
 }

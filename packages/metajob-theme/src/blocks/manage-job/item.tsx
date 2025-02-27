@@ -1,16 +1,17 @@
 "use client"
 import NextLink from "next/link"
-import { Chip, IconButton, TableCell, TableRow, Typography, useTheme } from "@mui/material"
+import { Chip, IconButton, MenuItem, Select, TableCell, TableRow, Typography, useTheme } from "@mui/material"
 import { Fragment, useState } from "react"
 import CIcon, { SpinnersClock } from "../../components/common/icon"
 import { dateFormatter } from "../../lib/date-format"
-import { deleteEntry } from "../../lib/strapi"
+import { deleteEntry, updateOne } from "../../lib/strapi"
 import toast from "react-hot-toast"
 import { IJobData, IManageJobBock } from "./types"
 import EditJob from "./edit-job"
 import { KeyedMutator } from "swr"
 import JobApplications from "./job-applications"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
+import _ from "lodash"
 
 const TableItem = ({
    job,
@@ -22,8 +23,10 @@ const TableItem = ({
    mutate: KeyedMutator<any>
    noteFunctionHandler: () => void
 }) => {
-   const { title, slug, publishedAt, status, applications, endDate, documentId } = job || {}
+   const { title, slug, publishedAt, job_status, applications, endDate, documentId } = job || {}
    const [loading, setLoading] = useState(false)
+   const [statusLoading, setStatusLoading] = useState(false)
+   const [statusValue, setStatusValue] = useState(job_status)
    const theme = useTheme()
    const [show, setShow] = useState(false)
    const [jobApplicationShow, setJobApplicationShow] = useState(false)
@@ -68,6 +71,31 @@ const TableItem = ({
          }
       } else {
          return
+      }
+   }
+
+   // *** handle update job status
+   const handleUpdateStatus = async (value: "draft" | "open" | "closed") => {
+      try {
+         setStatusLoading(true)
+         const updateInput = {
+            data: {
+               job_status: value
+            }
+         }
+         const statusResponse = await updateOne("metajob-backend/jobs", documentId, updateInput)
+         // Check if the response has any errors
+         if (statusResponse.error) {
+            toast.error(statusResponse?.error || "Something went wrong")
+         } else {
+            setStatusValue(value)
+            // mutate("api/metajob-backend/applied-jobs")
+            toast.success("Status updated successfully")
+         }
+      } catch (error: any) {
+         toast.error(error?.message || "An unexpected error occurred. Please try again.")
+      } finally {
+         setStatusLoading(false)
       }
    }
 
@@ -129,24 +157,72 @@ const TableItem = ({
                </Typography>
             </TableCell>
             <TableCell>
-               <Chip
-                  label={<Typography variant='body2'>{status}</Typography>}
-                  color={status === "open" ? "primary" : "error"}
-                  variant='outlined'
-                  size='small'
-                  sx={{
-                     px: 1
+               <Select
+                  labelId='job-status'
+                  id='job-status'
+                  autoWidth
+                  defaultValue={job_status || ""}
+                  onChange={(e) => {
+                     const value = e.target.value as "draft" | "open" | "closed"
+                     handleUpdateStatus(value)
                   }}
-               />
+                  renderValue={(selected) => {
+                     const selectedValue = selected as string
+
+                     return (
+                        <Typography
+                           variant='body1'
+                           fontWeight={500}
+                           lineHeight={"24px"}
+                           sx={{ fontSize: "14px", py: 0 }}>
+                           {selectedValue}
+                        </Typography>
+                     )
+                  }}
+                  IconComponent={() => (
+                     <CIcon
+                        icon='iconamoon:arrow-down-2-duotone'
+                        size={20}
+                        sx={{
+                           position: "absolute",
+                           right: "8px",
+                           top: "50%",
+                           transform: "translateY(-50%)",
+                           pointerEvents: "none"
+                        }}
+                     />
+                  )}
+                  sx={{
+                     backgroundColor: (theme: { palette: { text: { primary: string } } }) =>
+                        theme.palette.text.primary + "10",
+                     borderRadius: "8px",
+                     width: { xs: "100%", md: "60%" },
+                     borderColor: "divider",
+                     "& .MuiSelect-select": {
+                        py: 0.5
+                     },
+
+                     "& .MuiTypography-root": {
+                        px: 1.5,
+                        py: 0,
+                        textTransform: "capitalize",
+                        fontSize: "14px",
+                        color:
+                           statusValue === "draft"
+                              ? "warning.main"
+                              : statusValue === "open"
+                                ? "primary.main"
+                                : "error.main"
+                     }
+                  }}>
+                  {_.map(["open", "draft", "closed"], (option, index) => (
+                     <MenuItem key={index} value={option}>
+                        {option}
+                     </MenuItem>
+                  ))}
+               </Select>
             </TableCell>
-            <TableCell
-               align='center'
-               sx={{
-                  display: "flex",
-                  gap: 0.5,
-                  alignItems: "center",
-                  justifyContent: "center"
-               }}>
+            <TableCell align='center'>
                {/* Edit icon */}
                <IconButton
                   sx={{

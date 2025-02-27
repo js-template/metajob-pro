@@ -1,6 +1,5 @@
 // *** table head ***
 
-// TODO: Should move to diectionary folder
 export const headCells = [
    {
       label: "Job Title",

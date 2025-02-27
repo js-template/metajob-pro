@@ -31,7 +31,8 @@ export const PricePlanWithFeatures = ({
 
    // *** get started button click handler
    const clickHandler = (type: string) => {
-      if (!handleGetStarted) console.log("Get started button clicked")
+      if (!handleGetStarted) {
+      }
 
       if (handleGetStarted) handleGetStarted(type)
    }

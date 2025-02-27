@@ -85,7 +85,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                endDate: data.endDate,
                price: data.price,
                vacancy: data.vacancy,
-               status: "open",
+               job_status: "open",
                owner: [
                   {
                      id: Number(userId) || undefined

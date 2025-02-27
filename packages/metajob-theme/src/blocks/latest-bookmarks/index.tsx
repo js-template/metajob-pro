@@ -44,8 +44,6 @@ export const LatestBookmarks = async ({
 
    const tableData = bookmarkData?.data || []
 
-   //console.log("tableData", tableData)
-
    return (
       <Grid item xs={style?.mobile} sm={style?.tab} md={style?.desktop}>
          <Paper

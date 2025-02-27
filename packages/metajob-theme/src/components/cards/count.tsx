@@ -15,8 +15,6 @@ export const CountCard = ({
 }) => {
    const { title, description, count } = item
 
-   console.log("Count Card", item)
-
    const displayCount = count ? count : (0 as number)
 
    return (

@@ -10,7 +10,7 @@ import ExperienceForm from "./experince"
 import { IManageResumeBlock, ResumeFormProps } from "./types"
 import EducationForm from "./education"
 import { ProfileForm } from "./profile"
-import { createEntry, updateOne } from "../../lib/strapi"
+import { createEntry, find, updateOne } from "../../lib/strapi"
 import { ContactForm } from "./contact"
 import { fetcher } from "../../utils/swr-fetcher"
 import PortfolioForm from "./portfolio"
@@ -40,6 +40,7 @@ export const ManageResume = ({ block, language }: Props) => {
    const methods = useForm<ResumeFormProps>({
       defaultValues: {
          name: "",
+         slug: "",
          tagline: "",
          // qualification: "",
          experience_time: "",
@@ -213,6 +214,21 @@ export const ManageResume = ({ block, language }: Props) => {
                handleReset()
             }
          } else {
+            // ?? check if slug is already exist
+            const { data: slugData } = await find(
+               "api/metajob-backend/resumes",
+               {
+                  fields: ["slug"],
+                  filters: {
+                     slug: data.slug
+                  }
+               },
+               "no-store"
+            )
+            if (slugData?.data?.length > 0) {
+               return toast.error("Slug already exist, please change the slug")
+            }
+
             const createInput = {
                data: {
                   ...data,
@@ -268,6 +284,7 @@ export const ManageResume = ({ block, language }: Props) => {
          const resumeDataValue = myResumeData
 
          setValue("name", resumeDataValue?.name || "")
+         setValue("slug", resumeDataValue?.slug || "")
          setValue("tagline", resumeDataValue?.tagline || "")
          setValue("language", resumeDataValue?.language || "")
          setValue("about", resumeDataValue?.about || "")

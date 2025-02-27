@@ -4,11 +4,11 @@ The **LoginCard** component a auth login page collect user from info and trigger
 
 ## Props
 
--  `loginHandler`: A function that will receive data having `username`, `password` properties.
--  `googleLoginHandler`: A function that will be triggered when goggle icon button clicked.
--  `facebookLoginHandler`: A function that will be triggered when facebook icon button clicked.
--  `linkedinLoginHandler`: A function that will be triggered when linkedin icon button clicked.
--  `loading`: A boolean value for login loader.
+- `loginHandler`: A function that will receive data having `username`, `password` properties.
+- `googleLoginHandler`: A function that will be triggered when goggle icon button clicked.
+- `facebookLoginHandler`: A function that will be triggered when facebook icon button clicked.
+- `linkedinLoginHandler`: A function that will be triggered when linkedin icon button clicked.
+- `loading`: A boolean value for login loader.
 
 ## Usage
 
@@ -21,7 +21,6 @@ The **LoginCard** component a auth login page collect user from info and trigger
 import LoginCard from "@padma/metajob-ui"
 
 const loginHandler = (data: { username: string; password: string }) => {
-   // console.log(data)
 }
 const googleLoginHandler = () => {
    //  google login function here

@@ -1,5 +1,5 @@
 {
-  "collectionName": "components_block_portfolios",
+  "collectionName": "components_metajob_block_portfolios",
   "info": {
     "displayName": "Portfolio",
     "icon": "clock"
@@ -13,12 +13,7 @@
       "type": "text"
     },
     "image": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
+      "allowedTypes": ["images", "files", "videos", "audios"],
       "type": "media",
       "multiple": true
     },

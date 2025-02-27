@@ -95,7 +95,7 @@ export default function EditList({
                endDate: data.endDate,
                owner: userId,
                // if the startDate is greater than the current date then the status will be draft otherwise open
-               status: new Date(data.startDate) > new Date() ? "draft" : "open"
+               job_status: new Date(data.startDate) > new Date() ? "draft" : "open"
             }
          })
 
@@ -117,7 +117,6 @@ export default function EditList({
          }
          return false
       } catch (error) {
-         console.error("Error updating job", error)
          setLoading(false)
          toast.error("Error updating job")
          return false

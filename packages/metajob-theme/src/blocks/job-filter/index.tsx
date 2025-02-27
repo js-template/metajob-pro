@@ -71,7 +71,8 @@ export const JobFilter = ({ block, language }: Props) => {
             title: {
                $eq: searchOptions?.category || undefined
             }
-         }
+         },
+         job_status: "open"
       },
       populate: {
          company: {

@@ -35,7 +35,7 @@ export type IJobData = {
    documentId: string
    title: string
    slug: string
-   status: "draft" | "open" | "closed"
+   job_status: "draft" | "open" | "closed"
    vacancy: number
    publishedAt: string
    endDate: string
@@ -75,6 +75,7 @@ export type IJobCategory = {
    documentId: string
    title: string
 }
+
 export type IEditJobData = {
    id: number
    documentId: string

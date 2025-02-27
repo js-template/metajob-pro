@@ -54,16 +54,15 @@
       "relation": "oneToOne",
       "target": "plugin::metajob-backend.company"
     },
-    "status": {
+    "job_status": {
       "type": "enumeration",
       "enum": ["open", "closed", "draft"],
-      "default": "draft",
+      "default": "open",
       "required": true
     },
     "is_featured": {
       "type": "boolean",
-      "default": false,
-      "required": true
+      "default": false
     },
     "endDate": {
       "type": "date",

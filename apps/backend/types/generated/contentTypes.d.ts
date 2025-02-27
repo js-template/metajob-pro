@@ -887,9 +887,10 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText;
     endDate: Schema.Attribute.Date & Schema.Attribute.Required;
-    is_featured: Schema.Attribute.Boolean &
+    is_featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    job_status: Schema.Attribute.Enumeration<['open', 'closed', 'draft']> &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<false>;
+      Schema.Attribute.DefaultTo<'open'>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -908,9 +909,6 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
     >;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     startDate: Schema.Attribute.Date & Schema.Attribute.Required;
-    status: Schema.Attribute.Enumeration<['open', 'closed', 'draft']> &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'draft'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     type: Schema.Attribute.Relation<
       'oneToOne',
@@ -1191,7 +1189,7 @@ export interface PluginMetajobBackendPackage
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
-    feature: Schema.Attribute.Component<'config.meta-data', true>;
+    feature: Schema.Attribute.Component<'metajob-config.meta-data', true>;
     frequency: Schema.Attribute.Enumeration<['Monthly', 'Yearly', 'One Time']>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
@@ -1225,12 +1223,12 @@ export interface PluginMetajobBackendResume
       'oneToOne',
       'plugin::metajob-backend.job-category'
     >;
-    contact: Schema.Attribute.Component<'block.contact', false>;
+    contact: Schema.Attribute.Component<'metajob-block.contact', false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    education: Schema.Attribute.Component<'block.experience', true>;
-    experience: Schema.Attribute.Component<'block.experience', true>;
+    education: Schema.Attribute.Component<'metajob-block.experience', true>;
+    experience: Schema.Attribute.Component<'metajob-block.experience', true>;
     experience_time: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.experience-level'
@@ -1321,7 +1319,7 @@ export interface PluginMetajobBackendResume
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
-    portfolio: Schema.Attribute.Component<'block.portfolio', true>;
+    portfolio: Schema.Attribute.Component<'metajob-block.portfolio', true>;
     publishedAt: Schema.Attribute.DateTime;
     salary: Schema.Attribute.Relation<
       'oneToOne',
@@ -2008,8 +2006,6 @@ export interface PluginPadmaBackendPublicFrontpage
         'block.review-block',
         'block.image-carousel',
         'block.image-gallery',
-        'block.pricing',
-        'block.portfolio',
         'metajob-block.job-banner',
         'metajob-block.job-category',
         'metajob-block.job-card',

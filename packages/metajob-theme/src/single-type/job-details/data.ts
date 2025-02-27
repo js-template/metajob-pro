@@ -18,7 +18,7 @@ export const jobData = {
    description: "**Lorem ipsum dolor** sit amet consectetur adipisicing elit.",
    vacancy: 4,
    slug: "job-one",
-   status: "draft",
+   job_status: "draft",
    endDate: "2024-12-25",
    createdAt: "2024-12-04T07:51:05.326Z",
    updatedAt: "2024-12-05T12:11:05.245Z",

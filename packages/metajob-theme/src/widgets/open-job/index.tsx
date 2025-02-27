@@ -28,7 +28,7 @@ export const OpenJob = async ({
          fields: ["id"],
          filters: {
             owner: userId,
-            status: "open"
+            job_status: "open"
          }
       },
       "no-store"

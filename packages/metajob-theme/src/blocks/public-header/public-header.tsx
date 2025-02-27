@@ -3,7 +3,6 @@ import { Fragment, useState, MouseEvent } from "react"
 import NextLink from "next/link"
 import { useRouter } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
-import useSWR from "swr"
 import _ from "lodash"
 import MenuIcon from "@mui/icons-material/Menu"
 import { LoadingButton } from "@mui/lab"
@@ -26,11 +25,10 @@ import {
    useMediaQuery
 } from "@mui/material"
 import CIcon from "../../components/common/icon"
-import { fetcher } from "./hook"
 import { MenuItemProps, IPublicHeaderBlock } from "./types"
 import { useTheme as modeUseTheme } from "next-themes"
 import { getLanguageValue } from "../../utils"
-import MobileNav from "./MobileNav"
+import MobileNav from "./mobile-nav"
 import { useChangeDirection, useChangeLang } from "./utils"
 
 const Image = styled("img")({
@@ -42,9 +40,15 @@ const Image = styled("img")({
 type Props = {
    block: IPublicHeaderBlock
    language?: string
+   userData?: {
+      id: number
+      avatar?: {
+         url: string
+      }
+   }
 }
 
-export const PublicHeaderComponent = ({ block, language }: Props) => {
+export const PublicHeaderComponent = ({ block, language, userData }: Props) => {
    const theme = useTheme()
    const router = useRouter()
    const { data: session, status } = useSession()
@@ -120,43 +124,9 @@ export const PublicHeaderComponent = ({ block, language }: Props) => {
       await signOut()
    }
 
-   const queryParams = {
-      populate: {
-         avatar: {
-            fields: ["url"]
-         }
-      },
-      fields: ["id"],
-      publicationState: "live",
-      locale: ["en"]
-   }
-
-   // FIXME: Why client side api for user
-   // fetch user avatar data
-   const userId = session?.user?.id
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   const apiUrl = userId ? `/api/find?model=api/users/${userId}&query=${queryString}&cache=no-store` : null
-
-   const { data: userData } = useSWR(apiUrl, fetcher)
+   // get user avatar data
    const userAvatar = userData?.avatar?.url || ""
    const userName = session?.user?.name || ""
-
-   // FIXME: remove unused code please
-   const handleMouseEnterButton = (event: React.MouseEvent<HTMLElement>, index: number) => {
-      setAnchorEl(event?.currentTarget) // Open menu on button hover
-      setActiveMenu(index)
-   }
-
-   // FIXME: remove unused code please
-   const handleMouseLeaveButton = (event: React.MouseEvent<HTMLElement>) => {
-      const relatedTarget = event.relatedTarget as HTMLElement
-
-      // Only close if the mouse isn't moving to the menu
-      if (!relatedTarget || !relatedTarget?.closest("#dropdown-menu")) {
-         setAnchorEl(null)
-         setActiveMenu(null)
-      }
-   }
 
    const handleMouseLeaveMenu = (event: React.MouseEvent<HTMLElement>) => {
       const relatedTarget = event.relatedTarget as HTMLElement
@@ -173,8 +143,6 @@ export const PublicHeaderComponent = ({ block, language }: Props) => {
          position='static'
          sx={{
             backgroundColor: "background.paper",
-            // FIXME: Why shadow hard coded, should be manage form design style
-            shadow: "0px 4px 8px 0px rgba(19, 22, 28, 0.12)",
             py: "6px",
             backgroundImage: "none"
          }}
@@ -283,10 +251,7 @@ export const PublicHeaderComponent = ({ block, language }: Props) => {
                                     display: "flex",
                                     alignItems: "center",
                                     cursor: "pointer"
-                                 }}
-                                 // onMouseEnter={(event: any) => handleMouseEnterButton(event, index)}
-                                 // onMouseLeave={handleMouseLeaveButton}
-                              >
+                                 }}>
                                  {item?.label ?? "No title"}
                                  {item?.child && item?.child?.length > 0 && (
                                     <CIcon

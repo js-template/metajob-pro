@@ -14,12 +14,12 @@
     "education": {
       "type": "component",
       "repeatable": true,
-      "component": "block.experience"
+      "component": "metajob-block.experience"
     },
     "experience": {
       "type": "component",
       "repeatable": true,
-      "component": "block.experience"
+      "component": "metajob-block.experience"
     },
     "user": {
       "type": "relation",
@@ -29,12 +29,12 @@
     "portfolio": {
       "type": "component",
       "repeatable": true,
-      "component": "block.portfolio"
+      "component": "metajob-block.portfolio"
     },
     "contact": {
       "type": "component",
       "repeatable": false,
-      "component": "block.contact"
+      "component": "metajob-block.contact"
     },
     "name": {
       "type": "string"

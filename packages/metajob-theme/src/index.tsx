@@ -2,23 +2,16 @@
 import PlaceholderComponent from "./utils/placeholder"
 
 // widgets import
-
 import { TotalJobs } from "./widgets/total-job"
 import { ClosedJob } from "./widgets/closed-job"
 import { OpenJob } from "./widgets/open-job"
 import BreadCrumbs from "./components/breadcrumbs"
-import Checkbox from "./components/checkbox"
-import { Card } from "./components/common/card"
-import GoBackBtn from "./components/common/go-back-btn"
-import CIcon from "./components/common/icon"
 
-import TextFieldWithLabel from "./components/textField-with-label"
 import Spacing from "./shared/spacing"
 export * from "./widgets/applied-job"
 export * from "./widgets/favorite-list"
 export * from "./widgets/matched-list"
 
-import { PageLoader } from "./components/loader/pageLoader"
 import { MessageLayout } from "./blocks/chats"
 import { LatestApplied } from "./blocks/latest-applied"
 import { LatestBookmarks } from "./blocks/latest-bookmarks"

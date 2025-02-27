@@ -37,11 +37,6 @@
       "required": true,
       "default": true
     },
-    "table_head": {
-      "type": "component",
-      "repeatable": true,
-      "component": "metajob-config.meta-data"
-    },
     "per_page_placeholder": {
       "type": "string",
       "default": "Showing per page"
