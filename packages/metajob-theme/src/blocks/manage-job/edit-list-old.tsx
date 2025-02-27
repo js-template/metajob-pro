@@ -117,7 +117,6 @@ export default function EditList({
          }
          return false
       } catch (error) {
-         console.error("Error updating job", error)
          setLoading(false)
          toast.error("Error updating job")
          return false

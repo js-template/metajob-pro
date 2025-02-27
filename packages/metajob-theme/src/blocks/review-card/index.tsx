@@ -84,8 +84,6 @@ export const ReviewCard = ({ block, language }: Props) => {
    const { data: testimonialsAll, error, isLoading } = useSWR(testimonialAPiUrl, fetcher)
    const testimonialData = testimonialsAll?.data
 
-   console.log("testimonialData", testimonialData, "error", error)
-
    return (
       <Stack py={8} bgcolor={backgroundColor ? backgroundColor : theme.palette.background.default}>
          <Container maxWidth='lg' sx={{ py: 2 }}>

@@ -112,7 +112,6 @@ export const find = async (
 
       return { data, error: null }
    } catch (error: any) {
-      console.error(`Error during API call: ${error.message}`)
       return {
          data: null,
          error: error.message || "An error occurred during data fetch"

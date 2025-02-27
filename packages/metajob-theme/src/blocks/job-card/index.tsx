@@ -31,7 +31,5 @@ export const JobCard = async ({ block, language }: Props) => {
       "no-store"
    )
 
-   //console.log("JobsData", JobsData, "JobsError", JobsError)
-
    return <JobCardClient block={block} JobsData={JobsData} />
 }
