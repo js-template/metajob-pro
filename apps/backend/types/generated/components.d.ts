@@ -958,7 +958,6 @@ export interface MetajobConfigTableConfig extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<'Showing per page'>;
     search_placeholder: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Search'>;
-    table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
   };
 }
 
