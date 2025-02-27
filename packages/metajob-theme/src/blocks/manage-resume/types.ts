@@ -5,6 +5,7 @@ export type IManageResumeBlock = {
 
 export type ResumeFormProps = {
    name: ""
+   slug: ""
    tagline: ""
    qualification: ""
    language: ""
