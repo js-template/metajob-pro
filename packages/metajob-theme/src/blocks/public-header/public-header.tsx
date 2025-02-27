@@ -3,7 +3,6 @@ import { Fragment, useState, MouseEvent } from "react"
 import NextLink from "next/link"
 import { useRouter } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
-import useSWR from "swr"
 import _ from "lodash"
 import MenuIcon from "@mui/icons-material/Menu"
 import { LoadingButton } from "@mui/lab"
@@ -42,9 +41,15 @@ const Image = styled("img")({
 type Props = {
    block: IPublicHeaderBlock
    language?: string
+   userData?: {
+      id: number
+      avatar?: {
+         url: string
+      }
+   }
 }
 
-export const PublicHeaderComponent = ({ block, language }: Props) => {
+export const PublicHeaderComponent = ({ block, language, userData }: Props) => {
    const theme = useTheme()
    const router = useRouter()
    const { data: session, status } = useSession()
@@ -120,24 +125,7 @@ export const PublicHeaderComponent = ({ block, language }: Props) => {
       await signOut()
    }
 
-   const queryParams = {
-      populate: {
-         avatar: {
-            fields: ["url"]
-         }
-      },
-      fields: ["id"],
-      publicationState: "live",
-      locale: ["en"]
-   }
-
-   // FIXME: Why client side api for user
-   // fetch user avatar data
-   const userId = session?.user?.id
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   const apiUrl = userId ? `/api/find?model=api/users/${userId}&query=${queryString}&cache=no-store` : null
-
-   const { data: userData } = useSWR(apiUrl, fetcher)
+   // get user avatar data
    const userAvatar = userData?.avatar?.url || ""
    const userName = session?.user?.name || ""
 

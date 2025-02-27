@@ -1,7 +1,8 @@
 "use server"
-import { find } from "../../lib/strapi"
+import { find, findOne } from "../../lib/strapi"
 import { IPublicHeaderBlock } from "./types"
 import { PublicHeaderComponent } from "./public-header"
+import { auth } from "../../lib/auth"
 
 type Props = {
    block: IPublicHeaderBlock
@@ -9,7 +10,10 @@ type Props = {
 }
 
 export const PublicHeader = async ({ block, language }: Props) => {
-   const { data, error } = await find(
+   // Get user session
+   const session = await auth()
+
+   const { data } = await find(
       // fetch public header data
       "api/padma-backend/layout",
       {
@@ -34,10 +38,30 @@ export const PublicHeader = async ({ block, language }: Props) => {
       "no-store"
    )
 
-   // console.log("public header data", data?.data?.header?.[0], "public header error", error)
    const combineBlockData = {
       ...block,
       ...data?.data?.header?.[0]
    }
-   return <PublicHeaderComponent block={combineBlockData} language={language} />
+
+   // get user data
+   const userId = session?.user?.id
+   const { data: userData } = userId
+      ? await findOne(
+           "api/users",
+           userId,
+           {
+              populate: {
+                 avatar: {
+                    fields: ["url"]
+                 }
+              },
+              fields: ["id"],
+              publicationState: "live",
+              locale: language ?? ["en"]
+           },
+           "no-store"
+        )
+      : {}
+
+   return <PublicHeaderComponent block={combineBlockData} language={language} userData={userData} />
 }
