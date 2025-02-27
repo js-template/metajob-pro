@@ -25,7 +25,6 @@ import {
    useMediaQuery
 } from "@mui/material"
 import CIcon from "../../components/common/icon"
-import { fetcher } from "./hook"
 import { MenuItemProps, IPublicHeaderBlock } from "./types"
 import { useTheme as modeUseTheme } from "next-themes"
 import { getLanguageValue } from "../../utils"
@@ -129,23 +128,6 @@ export const PublicHeaderComponent = ({ block, language, userData }: Props) => {
    const userAvatar = userData?.avatar?.url || ""
    const userName = session?.user?.name || ""
 
-   // FIXME: remove unused code please
-   const handleMouseEnterButton = (event: React.MouseEvent<HTMLElement>, index: number) => {
-      setAnchorEl(event?.currentTarget) // Open menu on button hover
-      setActiveMenu(index)
-   }
-
-   // FIXME: remove unused code please
-   const handleMouseLeaveButton = (event: React.MouseEvent<HTMLElement>) => {
-      const relatedTarget = event.relatedTarget as HTMLElement
-
-      // Only close if the mouse isn't moving to the menu
-      if (!relatedTarget || !relatedTarget?.closest("#dropdown-menu")) {
-         setAnchorEl(null)
-         setActiveMenu(null)
-      }
-   }
-
    const handleMouseLeaveMenu = (event: React.MouseEvent<HTMLElement>) => {
       const relatedTarget = event.relatedTarget as HTMLElement
 
@@ -161,8 +143,6 @@ export const PublicHeaderComponent = ({ block, language, userData }: Props) => {
          position='static'
          sx={{
             backgroundColor: "background.paper",
-            // FIXME: Why shadow hard coded, should be manage form design style
-            shadow: "0px 4px 8px 0px rgba(19, 22, 28, 0.12)",
             py: "6px",
             backgroundImage: "none"
          }}
@@ -271,10 +251,7 @@ export const PublicHeaderComponent = ({ block, language, userData }: Props) => {
                                     display: "flex",
                                     alignItems: "center",
                                     cursor: "pointer"
-                                 }}
-                                 // onMouseEnter={(event: any) => handleMouseEnterButton(event, index)}
-                                 // onMouseLeave={handleMouseLeaveButton}
-                              >
+                                 }}>
                                  {item?.label ?? "No title"}
                                  {item?.child && item?.child?.length > 0 && (
                                     <CIcon
