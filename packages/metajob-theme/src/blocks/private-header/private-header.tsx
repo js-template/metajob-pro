@@ -6,7 +6,6 @@ import List from "@mui/material/List"
 import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles"
 import React, { useEffect } from "react"
 import NavItems from "./nav-items"
-import toast from "react-hot-toast"
 import { IPrivateHeaderProps } from "./types"
 import CustomAppBar from "./app-bar"
 import MobileNav from "./mobile-nav"
@@ -108,25 +107,6 @@ export const PrivateHeaderComponent = ({ block, language = "en" }: IPrivateHeade
 
    const handleDrawerOpen = () => {
       setOpen(true)
-   }
-
-   const LogOutHandler = async () => {
-      setLoading(true)
-      await signOut().then(() => {
-         toast.success("Logout successfully", {
-            duration: 5000
-         })
-         setLoading(false)
-      })
-
-      // await signOut().then(() => {
-      //    SignOut().then(() => {
-      //       toast.success("Logout successfully", {
-      //          duration: 5000
-      //       })
-      //       setLoading(false)
-      //    })
-      // })
    }
 
    return (
