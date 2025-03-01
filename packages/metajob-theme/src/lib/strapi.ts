@@ -266,10 +266,9 @@ export const updateOne = async (
       //  if (revalidatePath && revalidateType) {
       //     userRevalidate(revalidatePath, revalidateType);
       //  }
-
       return {
          message: "Successfully Updated",
-         data: resData?.data,
+         data: resData,
          error: null
       }
    } catch (error: any) {

@@ -38,7 +38,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
    )
 
    return (
-      <html lang={language} dir={direction}>
+      <html lang={language} dir={direction} suppressHydrationWarning={true}>
          <body dir={direction}>
             <StyledEngineProvider injectFirst>
                <GlobalProvider layout={data?.data || null}>

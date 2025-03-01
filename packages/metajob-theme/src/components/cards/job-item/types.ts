@@ -12,7 +12,7 @@ export type ISingleJob = {
    type: { title: string }
    vacancy: number
    slug: string
-   is_featured: boolean
+   is_featured?: boolean
    company: {
       name: string
       logo: {
