@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
-import useSWR, { mutate } from "swr"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Paper, Stack, Typography, Box, Grid, Avatar, Button, TextField, useTheme, Skeleton } from "@mui/material"
 import styled from "@emotion/styled"
@@ -11,7 +10,6 @@ import { LoadingButton } from "@mui/lab"
 import { updateOne, uploadImage } from "../../lib/strapi"
 import CIcon from "../../components/common/icon"
 import previewImage from "../../utils/previewImage"
-import { fetcher } from "./hooks"
 import { useSession } from "next-auth/react"
 
 const VisuallyHiddenInput = styled("input")({
@@ -26,49 +24,37 @@ const VisuallyHiddenInput = styled("input")({
    width: 1
 })
 
-const queryParams2 = {
-   populate: {
-      role: {
-         fields: ["name", "type"]
-      },
-      avatar: {
-         fields: ["url"]
+type Props = {
+   userData?: {
+      documentId: string
+      first_name: string
+      last_name: string
+      email: string
+      phone: string
+      avatar?: {
+         url: string
       }
-   },
-   fields: ["first_name", "last_name", "email", "phone"],
-   pagination: {
-      pageSize: 10,
-      page: 1
-   },
-   publicationState: "live",
-   locale: ["en"]
-}
-const queryParams = {
-   populate: "*"
+   }
 }
 
-export const ProfileInfo = () => {
+export const ProfileInfo = ({ userData: data }: Props) => {
    const theme = useTheme()
 
    const { data: session } = useSession()
    const { user } = session || {}
    const { id: userId } = user || {}
 
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   const apiUrl = `/api/find?model=api/users/${userId}&query=${queryString}&cache=no-store`
-
-   const { data, error, isLoading } = useSWR(apiUrl, fetcher)
-   const documentId = data?.documentId
-
    const [isEditMode, setIsEditMode] = useState(false)
    const [loading, setLoading] = useState(false)
    const [selectedImage, setSelectedImage] = useState<(any | MediaSource | Blob) | null>(null)
+   const [avatarUrl, setAvatarUrl] = useState(data?.avatar?.url || "")
 
    const {
       register,
       handleSubmit,
       setValue,
       reset,
+      watch,
       formState: { errors, isDirty }
    } = useForm({
       mode: "onChange",
@@ -96,6 +82,10 @@ export const ProfileInfo = () => {
    const handleUpdateUser = async (formData: any) => {
       try {
          setLoading(true)
+         if (!formData.email) {
+            setLoading(false)
+            return toast.error("Email field can not be empty")
+         }
 
          // *** user image upload ***
          let avatarId: {
@@ -122,9 +112,11 @@ export const ProfileInfo = () => {
          if (userResponse.error) {
             toast.error(userResponse?.error)
          } else {
+            if (avatarId) {
+               setAvatarUrl(URL.createObjectURL(selectedImage))
+            }
             // Success case
             toast.success("User updated successfully")
-            mutate(apiUrl)
             setIsEditMode(false)
          }
       } catch (error: any) {
@@ -188,25 +180,21 @@ export const ProfileInfo = () => {
                                  fontSize: "30px"
                               }}
                               alt={"user-avatar"}
-                              src={data?.avatar?.url}
+                              src={avatarUrl}
                            />
                            {/* basic-info */}
                            <Box>
                               {/* name */}
-                              {isLoading ? (
-                                 <Skeleton variant='text' width={200} height={35} />
-                              ) : (
-                                 <Typography
-                                    variant='h6'
-                                    sx={{
-                                       fontSize: { xs: "24px", md: "24px" },
-                                       fontWeight: 500,
-                                       color: (theme) => theme.palette.text.primary,
-                                       lineHeight: "32px"
-                                    }}>
-                                    {data?.first_name} {data?.last_name}
-                                 </Typography>
-                              )}
+                              <Typography
+                                 variant='h6'
+                                 sx={{
+                                    fontSize: { xs: "24px", md: "24px" },
+                                    fontWeight: 500,
+                                    color: (theme) => theme.palette.text.primary,
+                                    lineHeight: "32px"
+                                 }}>
+                                 {watch("first_name")} {watch("last_name")}
+                              </Typography>
                               {/* Phone and Email */}
                               <Box
                                  sx={{
@@ -216,9 +204,8 @@ export const ProfileInfo = () => {
                                     gap: 2,
                                     mt: 2
                                  }}>
-                                 {isLoading && <Skeleton variant='text' width={160} height={35} />}
                                  {/* phone  */}
-                                 {data?.phone && (
+                                 {watch("phone") && (
                                     <Box
                                        sx={{
                                           display: "flex",
@@ -247,45 +234,41 @@ export const ProfileInfo = () => {
                                              fontWeight: 500,
                                              color: (theme) => theme.palette.text.secondary
                                           }}>
-                                          {data?.phone}
+                                          {watch("phone")}
                                        </Typography>
                                     </Box>
                                  )}
                                  {/* email  */}
-                                 {isLoading ? (
-                                    <Skeleton variant='text' width={160} height={35} />
-                                 ) : (
+                                 <Box
+                                    sx={{
+                                       display: "flex",
+                                       alignItems: "center",
+                                       gap: 1
+                                    }}>
                                     <Box
                                        sx={{
+                                          bgcolor: (theme) => theme.palette.background.default,
+                                          color: (theme) => theme.palette.primary.main,
+                                          border: "1px solid ",
+                                          borderColor: (theme) => theme.palette.divider,
+                                          width: "32px",
+                                          height: "32px",
                                           display: "flex",
+                                          justifyContent: "center",
                                           alignItems: "center",
-                                          gap: 1
+                                          borderRadius: "50px"
                                        }}>
-                                       <Box
-                                          sx={{
-                                             bgcolor: (theme) => theme.palette.background.default,
-                                             color: (theme) => theme.palette.primary.main,
-                                             border: "1px solid ",
-                                             borderColor: (theme) => theme.palette.divider,
-                                             width: "32px",
-                                             height: "32px",
-                                             display: "flex",
-                                             justifyContent: "center",
-                                             alignItems: "center",
-                                             borderRadius: "50px"
-                                          }}>
-                                          <CIcon icon={"ic:outline-email"} size={16} color='primary.main' />
-                                       </Box>
-                                       <Typography
-                                          sx={{
-                                             fontSize: { xs: "14px", md: "18px" },
-                                             fontWeight: 500,
-                                             color: (theme) => theme.palette.text.secondary
-                                          }}>
-                                          {data?.email}
-                                       </Typography>
+                                       <CIcon icon={"ic:outline-email"} size={16} color='primary.main' />
                                     </Box>
-                                 )}
+                                    <Typography
+                                       sx={{
+                                          fontSize: { xs: "14px", md: "18px" },
+                                          fontWeight: 500,
+                                          color: (theme) => theme.palette.text.secondary
+                                       }}>
+                                       {watch("email")}
+                                    </Typography>
+                                 </Box>
                               </Box>
                            </Box>
                         </Box>

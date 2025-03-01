@@ -1,27 +1,36 @@
-"use client"
-
-import { useState } from "react"
-import { Stack } from "@mui/material"
-import { IUserSession } from "../../types/user"
-import ProfileHeader from "./header"
-import { ProfileInfo } from "./info"
-import { ChangePassword } from "./change-password"
+"use server"
+import { auth } from "../../lib/auth"
+import { findOne } from "../../lib/strapi"
+import { MyProfileClient } from "./profile"
 
 type Props = {
    block: any
-   session?: IUserSession | null | any
    language?: string
    data?: any
 }
 
-export const MyProfile = ({}: Props) => {
-   const [activeMenu, setActiveMenu] = useState("profile-info")
+export const MyProfile = async ({ block, language }: Props) => {
+   // Get user session
+   const session = await auth()
 
-   return (
-      <Stack spacing={4} mb={5}>
-         <ProfileHeader activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
-         {activeMenu === "profile-info" && <ProfileInfo />}
-         {activeMenu === "security" && <ChangePassword />}
-      </Stack>
-   )
+   // get user data
+   const userId = session?.user?.id
+   const { data: userData } = userId
+      ? await findOne(
+           "api/users",
+           userId,
+           {
+              populate: {
+                 avatar: {
+                    fields: ["url"]
+                 }
+              },
+              fields: ["id", "first_name", "last_name", "email", "phone"],
+              locale: language ?? ["en"]
+           },
+           "no-store"
+        )
+      : {}
+
+   return <MyProfileClient block={block} language={language} userData={userData} />
 }

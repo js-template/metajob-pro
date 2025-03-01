@@ -1,5 +1,5 @@
 "use server"
-import { find } from "@/lib/strapi"
+import { find } from "../../lib/strapi"
 import { ICategoryCardBlock, IUserSession } from "./types"
 import { CategoryCard } from "./card"
 

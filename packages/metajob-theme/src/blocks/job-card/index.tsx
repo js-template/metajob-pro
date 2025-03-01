@@ -1,8 +1,7 @@
 "use server"
 import { IJobCardBlock, IUserSession } from "./types"
-import { find } from "@/lib/strapi"
+import { find } from "../../lib/strapi"
 import { JobCardClient } from "./card"
-//import { jobData } from "@/single-type/job-details/data"
 
 type Props = {
    block: IJobCardBlock
@@ -12,7 +11,7 @@ type Props = {
 }
 
 export const JobCard = async ({ block, language }: Props) => {
-   const { data: JobsData, error: JobsError } = await find(
+   const { data: JobsData } = await find(
       "api/metajob-backend/jobs",
       {
          populate: {

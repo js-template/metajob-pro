@@ -8,7 +8,10 @@ import { Card } from "../../common/card"
 import { ISingleJob } from "./types"
 import CIcon from "../../../components/common/icon"
 
-export const JobItem = ({ data }: { data: ISingleJob }) => {
+type Props = {
+   data: ISingleJob
+}
+export const JobItem = ({ data }: Props) => {
    const { theme: mode } = useTheme()
    const theme = muiTheme()
 

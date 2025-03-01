@@ -68,7 +68,7 @@ const GoogleMap = ({
    watch
 }: InputFieldProps) => {
    // *** Search Box Ref and Map Ref
-   const mapRef = useRef<any>()
+   const mapRef = useRef<any>(null)
    const theme = useTheme()
    const searchBoxRef = useRef<google.maps.places.SearchBox | null>(null)
    const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string

@@ -146,7 +146,7 @@ const NavLink = ({
             }}
             fullWidth
             loading={loading}
-            loadingPosition='end'
+            // loadingPosition='end'
             sx={{
                justifyContent: open ? "initial" : "center",
                pl: 2,

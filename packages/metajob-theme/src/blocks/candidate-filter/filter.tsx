@@ -155,7 +155,6 @@ export default function CandidateFilterSection({ search, loading, filterFormData
                         }
                      }}
                      variant='outlined'
-                     disableUnderline
                      size='small'
                      value={filterFormData?.categories || ""}
                      onChange={(e) =>
