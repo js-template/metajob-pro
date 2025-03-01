@@ -82,7 +82,7 @@ const CustomAppBar = ({
    const toggleTheme = () => {
       setTheme(mode === "dark" ? "light" : "dark")
    }
-   const isTablet = useMediaQuery(theme.breakpoints.down("sm"))
+   const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
    const { changeLang } = useChangeLang()
    const { changeDirection } = useChangeDirection()
