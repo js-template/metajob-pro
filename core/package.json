@@ -1,8 +1,8 @@
 {
-   "name": "@padmadev/core",
-   "version": "1.0.0-alpha.0",
-   "description": "Padma- Nextjs frontend",
-   "license": "MIT",
+   "name": "@jstemplate/metajob-frontend",
+   "version": "1.0.0",
+   "description": "Metajob Frontend",
+   "license": "EULA",
    "author": {
       "name": "JS Template",
       "email": "support@jstemplate.net"
@@ -15,6 +15,7 @@
       "format": "prettier --write . --ignore-path .prettierignore"
    },
    "dependencies": {
+      "@jstemplate/metajob-theme": "workspace:*",
       "@emotion/cache": "latest",
       "@emotion/react": "latest",
       "@emotion/styled": "latest",

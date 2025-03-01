@@ -24,7 +24,7 @@ export default async function NotFound(props: { children: React.ReactNode }) {
       {
          populate: "*",
          // publicationState: "live",
-         locale: language ? [language] : ["en"]
+         locale: language ?? ["en"]
       },
       "no-store"
    )

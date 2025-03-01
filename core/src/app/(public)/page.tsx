@@ -8,8 +8,6 @@ import { loadActiveTheme } from "config/theme-loader"
 export default async function Home() {
    const language = await getLanguageFromCookie()
 
-   console.log("Language", language)
-
    // TODO: Handle Error and Steramline
    const { data, error } = await find(
       "api/padma-backend/public-frontpage",
