@@ -250,7 +250,6 @@ export const JobFilter = ({ block, language }: Props) => {
                                           }
                                        }}
                                        variant='outlined'
-                                       disableUnderline
                                        size='small'
                                        value={searchOptions?.category || ""}
                                        onChange={(e) => {

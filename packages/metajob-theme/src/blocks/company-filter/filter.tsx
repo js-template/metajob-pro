@@ -115,7 +115,6 @@ const CompanyFilterSection = ({ search, formData, setFormData, loading }: Props)
                            }
                         }}
                         variant='outlined'
-                        disableUnderline
                         size='small'
                         value={formData.selectedIndustry || ""}
                         onChange={(e) => setFormData({ ...formData, selectedIndustry: e.target.value })}>
