@@ -427,8 +427,25 @@ export const PublicHeaderComponent = ({ block, language, userData }: Props) => {
                            </>
                         )}
                         {/* button (Ex: login/register) */}
-                        {menuButton &&
+                        {!isTablet &&
+                           menuButton &&
                            menuButton?.map((button: MenuItemProps, index: number) => (
+                              <Button
+                                 key={index}
+                                 size='small'
+                                 sx={{
+                                    py: 1
+                                 }}
+                                 variant='contained'
+                                 component={NextLink}
+                                 href={button?.link}
+                                 target={button?.target ?? "_self"}>
+                                 {button?.label}
+                              </Button>
+                           ))}
+                        {isTablet &&
+                           menuButton &&
+                           menuButton?.slice(0, 1)?.map((button: MenuItemProps, index: number) => (
                               <Button
                                  key={index}
                                  size='small'
