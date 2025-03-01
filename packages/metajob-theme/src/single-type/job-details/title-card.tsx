@@ -349,7 +349,6 @@ const JobTitleCard = ({ data, session }: Props) => {
                item
                xs={12}
                sm={4}
-               spacing={3}
                sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -402,7 +401,7 @@ const JobTitleCard = ({ data, session }: Props) => {
                      <LoadingButton
                         onClick={jobApplyHandler}
                         loading={applyLoading || isLoading}
-                        loadingPosition='start'
+                        // loadingPosition='start'
                         size='small'
                         sx={{
                            py: 1,
