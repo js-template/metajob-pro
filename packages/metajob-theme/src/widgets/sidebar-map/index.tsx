@@ -20,7 +20,7 @@ type Props = {
 export const SidebarMap = ({ location }: Props) => {
    const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string
 
-   const mapRef = useRef<any>()
+   const mapRef = useRef<any>(null)
    const { isLoaded } = useJsApiLoader({
       id: "google-map-script",
       googleMapsApiKey: googleApiKey,
