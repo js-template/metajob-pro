@@ -5,7 +5,7 @@
     <img src="https://github.com/user-attachments/assets/bddc9e5b-7f94-4950-b5bc-44c73fccf534" alt="thumbspng" />
 </a>
 
-### Get the production license from [Metajob- Job Board App with Nextjs & Strapi](https://jstemplate.net/item/job-board-app-with-nextjs-strapi?utm_source=github&utm_medium=social&utm_campaign=job_board_app)
+### Get the Production license from [Metajob- Job Board App with Nextjs & Strapi](https://jstemplate.net/item/job-board-app-with-nextjs-strapi?utm_source=github&utm_medium=social&utm_campaign=job_board_app)
 
 ## **Getting Started:**
 

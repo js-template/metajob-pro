@@ -54,7 +54,9 @@ export const CardItem = ({ data }: { data: ISingleCategory }) => {
 
             <Stack>
                <Typography
-                  color={(theme) => theme.palette.text.primary}
+                  sx={{
+                     color: (theme) => theme.palette.text.primary,
+                   }}
                   fontWeight={400}
                   fontSize={16}
                   textAlign={"center"}

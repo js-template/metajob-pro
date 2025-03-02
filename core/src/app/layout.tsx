@@ -14,15 +14,14 @@ import { cookies } from "next/headers"
 
 import { find } from "@/lib/strapi"
 import { StyledEngineProvider } from "@mui/material/styles"
+import { getLanguageFromCookie } from "@/utils/language"
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
    const session = await auth()
    const cookieStore = cookies()
-   const Lang = cookieStore.get("lang")
 
-   //console.log("Lang", Lang)
+   const language = await getLanguageFromCookie()
 
-   const language = Lang ? Lang.value : "en"
    // console.log("language after cookie", language)
 
    const dir = cookieStore.get("direction")
@@ -33,13 +32,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       "api/padma-backend/layout",
       {
          populate: "*",
-         // publicationState: "live",
          locale: language ?? ["en"]
       },
       "no-store"
    )
-
-   //console.log("Public Layout Loaded", data, error)
 
    return (
       <html lang={language} dir={direction} suppressHydrationWarning={true}>

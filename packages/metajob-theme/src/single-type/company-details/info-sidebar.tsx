@@ -16,7 +16,9 @@ const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
             display: data ? "block" : "none"
          }}>
          <Stack spacing={2}>
-            <Typography fontWeight={700} fontSize={20} color={(theme) => theme.palette.text.primary}>
+            <Typography fontWeight={700} fontSize={20}   sx={{
+               color: (theme) => theme.palette.text.primary
+               }}>
                Company Info
             </Typography>
             {industry && (
@@ -30,10 +32,14 @@ const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
                      <CIcon icon={"pajamas:work"} size={24} color='primary.main' />
                   </Box>
                   <Stack>
-                     <Typography fontWeight={500} fontSize={14} color={(theme) => theme.palette.text.primary}>
+                     <Typography fontWeight={500} fontSize={14}   sx={{
+     color: (theme) => theme.palette.text.primary
+   }}>
                         Industry
                      </Typography>
-                     <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.disabled}>
+                     <Typography fontWeight={400} fontSize={16} sx={{
+ color: (theme) => theme.palette.text.disabled
+}}>
                         {industry?.title}
                      </Typography>
                   </Stack>
@@ -50,10 +56,14 @@ const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
                      <CIcon icon={"ph:watch-light"} size={24} color='primary.main' />
                   </Box>
                   <Stack>
-                     <Typography fontWeight={500} fontSize={14} color={(theme) => theme.palette.text.primary}>
+                     <Typography fontWeight={500} fontSize={14}   sx={{
+     color: (theme) => theme.palette.text.primary
+   }}>
                         Company Size
                      </Typography>
-                     <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.disabled}>
+                     <Typography fontWeight={400} fontSize={16} sx={{
+ color: (theme) => theme.palette.text.disabled
+}}>
                         {company_size?.title}
                      </Typography>
                   </Stack>
@@ -70,10 +80,14 @@ const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
                      <CIcon icon={"mdi:dollar"} size={24} color='primary.main' />
                   </Box>
                   <Stack>
-                     <Typography fontWeight={500} fontSize={14} color={(theme) => theme.palette.text.primary}>
+                     <Typography fontWeight={500} fontSize={14}   sx={{
+     color: (theme) => theme.palette.text.primary
+   }}>
                         AVG. Salary
                      </Typography>
-                     <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.disabled}>
+                     <Typography fontWeight={400} fontSize={16} sx={{
+ color: (theme) => theme.palette.text.disabled
+}}>
                         {avg_salary?.title}
                      </Typography>
                   </Stack>
@@ -90,10 +104,14 @@ const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
                      <CIcon icon={"ph:map-pin"} size={24} color='primary.main' />
                   </Box>
                   <Stack>
-                     <Typography fontWeight={500} fontSize={14} color={(theme) => theme.palette.text.primary}>
+                     <Typography fontWeight={500} fontSize={14}   sx={{
+                        color: (theme) => theme.palette.text.primary
+                        }}>
                         Location
                      </Typography>
-                     <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.disabled}>
+                     <Typography fontWeight={400} fontSize={16} sx={{
+                        color: (theme) => theme.palette.text.disabled
+                        }}>
                         {location?.address}
                      </Typography>
                   </Stack>

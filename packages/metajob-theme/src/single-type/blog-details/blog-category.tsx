@@ -49,7 +49,9 @@ const BlogCategory = ({ language }: Props) => {
             borderColor: (theme) => theme.palette.divider
          }}>
          <Stack spacing={4}>
-            <Typography fontSize={20} fontWeight={700} color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}>
+            <Typography fontSize={20} fontWeight={700}   sx={{
+                                 color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+                               }}>
                Category
             </Typography>
             {blogCategories && blogCategories?.length > 0 && (
@@ -71,13 +73,18 @@ const BlogCategory = ({ language }: Props) => {
                            <Typography
                               fontSize={16}
                               fontWeight={600}
-                              color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}>
+                              sx={{
+                                 color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+                               }}>
                               {title}
                            </Typography>
                            <Typography
                               fontSize={16}
                               fontWeight={600}
-                              color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}>
+                              sx={{
+                                 color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+                               }}
+                              >
                               {count}
                            </Typography>
                         </Stack>

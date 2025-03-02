@@ -1,8 +1,8 @@
 {
-   "name": "@padmadev/core",
-   "version": "1.0.0-alpha.0",
-   "description": "Padma- Nextjs frontend",
-   "license": "MIT",
+   "name": "@jstemplate/metajob-frontend",
+   "version": "1.0.0",
+   "description": "Metajob Frontend",
+   "license": "EULA",
    "author": {
       "name": "JS Template",
       "email": "support@jstemplate.net"
@@ -15,10 +15,11 @@
       "format": "prettier --write . --ignore-path .prettierignore"
    },
    "dependencies": {
+      "@jstemplate/metajob-theme": "workspace:*",
       "@emotion/cache": "latest",
       "@emotion/react": "latest",
       "@emotion/styled": "latest",
-      "@mui/icons-material": "latest",
+      "@mui/icons-material": "^6.1.8",
       "@mui/lab": "^5.0.0-alpha.165",
       "@mui/material": "^5.15.10",
       "@mui/material-nextjs": "^5.15.3",
@@ -51,7 +52,7 @@
       "@types/lodash": "^4.14.202",
       "@types/node": "latest",
       "@types/qs": "^6.9.15",
-      "@types/react": "latest",
+      "@types/react": "^18.2.0",
       "@types/react-copy-to-clipboard": "^5.0.7",
       "@types/react-dom": "latest",
       "@types/react-slick": "^0.23.13",

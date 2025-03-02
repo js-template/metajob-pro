@@ -51,7 +51,9 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                borderRadius: 2,
                p: 2
             }}>
-            <Typography variant={"h1"} fontWeight={700} fontSize={20} color={(theme) => theme.palette.text.primary}>
+            <Typography variant={"h1"} fontWeight={700} fontSize={20}   sx={{
+     color: (theme) => theme.palette.text.primary
+   }}>
                Job Overview
             </Typography>
             <Stack spacing={2} pt={2}>
@@ -72,14 +74,18 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            variant={"body1"}
                            fontWeight={500}
                            fontSize={14}
-                           color={(theme) => theme.palette.text.primary}>
+                           sx={{
+                              color: (theme) => theme.palette.text.primary
+                            }}>
                            Job Posted
                         </Typography>
                         <Typography
                            variant={"body1"}
                            fontWeight={400}
                            fontSize={16}
-                           color={(theme) => theme.palette.text.disabled}>
+                           sx={{
+                              color: (theme) => theme.palette.text.disabled
+                             }}>
                            {moment(publishedAt)?.format("DD MMMM YYYY")}
                         </Typography>
                      </Stack>
@@ -102,14 +108,18 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            variant={"body1"}
                            fontWeight={500}
                            fontSize={14}
-                           color={(theme) => theme.palette.text.primary}>
+                           sx={{
+                              color: (theme) => theme.palette.text.primary
+                            }}>
                            Deadline
                         </Typography>
                         <Typography
                            variant={"body1"}
                            fontWeight={400}
                            fontSize={16}
-                           color={(theme) => theme.palette.text.disabled}>
+                           sx={{
+                              color: (theme) => theme.palette.text.disabled
+                             }}>
                            {moment(endDate)?.format("DD MMMM YYYY")}
                         </Typography>
                      </Stack>
@@ -131,7 +141,9 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            variant={"body1"}
                            fontWeight={500}
                            fontSize={14}
-                           color={(theme) => theme.palette.text.primary}>
+                           sx={{
+                              color: (theme) => theme.palette.text.primary
+                            }}>
                            Job Type
                         </Typography>
                         <Stack direction={"row"} spacing={0.5}>
@@ -139,7 +151,9 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                               variant={"body1"}
                               fontWeight={400}
                               fontSize={16}
-                              color={(theme) => theme.palette.text.disabled}>
+                              sx={{
+                                 color: (theme) => theme.palette.text.disabled
+                                }}>
                               {type?.title}
                            </Typography>
                         </Stack>
@@ -162,14 +176,18 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            variant={"body1"}
                            fontWeight={500}
                            fontSize={14}
-                           color={(theme) => theme.palette.text.primary}>
+                           sx={{
+                              color: (theme) => theme.palette.text.primary
+                            }}>
                            Salary
                         </Typography>
                         <Typography
                            variant={"body1"}
                            fontWeight={400}
                            fontSize={16}
-                           color={(theme) => theme.palette.text.disabled}>
+                           sx={{
+                              color: (theme) => theme.palette.text.disabled
+                             }}>
                            {price}
                         </Typography>
                      </Stack>
@@ -228,7 +246,9 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                         fontWeight={700}
                         fontSize={20}
                         textAlign={"center"}
-                        color={(theme) => theme.palette.text.primary}>
+                        sx={{
+                           color: (theme) => theme.palette.text.primary
+                         }}>
                         {companyName}
                      </Typography>
                   )}
@@ -238,7 +258,9 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                         fontWeight={400}
                         fontSize={16}
                         textAlign={"center"}
-                        color={(theme) => theme.palette.text.primary}>
+                        sx={{
+                           color: (theme) => theme.palette.text.primary
+                         }}>
                         {tagline}
                      </Typography>
                   )}
@@ -249,7 +271,9 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                         fontWeight={400}
                         fontSize={18}
                         textAlign={"center"}
-                        color={(theme) => theme.palette.text.primary}>
+                        sx={{
+                           color: (theme) => theme.palette.text.primary
+                         }}>
                         {email}
                      </Typography>
                   )}
@@ -258,7 +282,9 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                         textAlign={"center"}
                         fontWeight={400}
                         fontSize={18}
-                        color={(theme) => theme.palette.text.primary}>
+                        sx={{
+                           color: (theme) => theme.palette.text.primary
+                         }}>
                         {phone}
                      </Typography>
                   )}

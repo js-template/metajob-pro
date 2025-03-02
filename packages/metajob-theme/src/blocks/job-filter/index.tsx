@@ -159,14 +159,16 @@ export const JobFilter = ({ block, language }: Props) => {
                               direction={"row"}
                               justifyItems={"center"}
                               justifyContent={"space-between"}>
-                              <Typography fontSize={16} fontWeight={700} color={(theme) => theme.palette.text.primary}>
+                              <Typography fontSize={16} fontWeight={700}   sx={{
+     color: (theme) => theme.palette.text.secondary,
+   }}>
                                  {searchTitle}
                               </Typography>
                               <Typography
                                  fontSize={16}
                                  fontWeight={700}
-                                 color={(theme) => theme.palette.error.main}
                                  sx={{
+                                    color: (theme) => theme.palette.error.main,
                                     cursor: "pointer",
                                     display:
                                        searchOptions?.searchText || searchOptions?.location || searchOptions?.category
@@ -296,7 +298,9 @@ export const JobFilter = ({ block, language }: Props) => {
                               <Typography
                                  fontSize={16}
                                  fontWeight={600}
-                                 color={(theme) => theme.palette.text.primary}
+                                 sx={{
+                                    color: (theme) => theme.palette.text.primary,
+                                  }}
                                  component={"span"}
                                  variant='h4'
                                  pl={2}>
@@ -305,7 +309,10 @@ export const JobFilter = ({ block, language }: Props) => {
                                     fontSize={16}
                                     fontWeight={600}
                                     component={"span"}
-                                    color={(theme) => theme.palette.primary.main}>
+                                    sx={{
+                                       color: (theme) => theme.palette.primary.main,
+                                     }}
+                                    >
                                     {jobsData?.data?.length}
                                  </Typography>{" "}
                                  jobs
@@ -361,7 +368,9 @@ export const JobFilter = ({ block, language }: Props) => {
                               alignItems: "center",
                               py: 4
                            }}>
-                           <Typography fontSize={16} fontWeight={400} color={(theme) => theme.palette.error.main}>
+                           <Typography fontSize={16} fontWeight={400}    sx={{
+     color: (theme) => theme.palette.error.main,
+   }}>
                               {jobsError?.message}
                            </Typography>
                         </Stack>
@@ -401,7 +410,9 @@ export const JobFilter = ({ block, language }: Props) => {
                               alignItems: "center",
                               py: 4
                            }}>
-                           <Typography fontSize={16} fontWeight={400} color={(theme) => theme.palette.text.secondary}>
+                           <Typography fontSize={16} fontWeight={400}  sx={{
+     color: (theme) => theme.palette.text.secondary,
+   }}>
                               No Jobs Found
                            </Typography>
                         </Stack>

@@ -68,14 +68,18 @@ const RelatedJob = ({ data, language }: Props) => {
             <Stack spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                <Stack spacing={1}>
                   <Typography
-                     color={(theme) => theme.palette.primary.main}
+                     sx={{
+                        color: (theme) => theme.palette.primary.main
+                      }}
                      fontWeight={700}
                      fontSize={16}
                      textAlign={"center"}>
                      Related Jobs
                   </Typography>
                   <Typography
-                     color={(theme) => theme.palette.text.primary}
+                    sx={{
+                     color: (theme) => theme.palette.text.primary
+                   }}
                      fontWeight={700}
                      fontSize={32}
                      textAlign={"center"}>
@@ -112,7 +116,9 @@ const RelatedJob = ({ data, language }: Props) => {
                         alignItems: "center",
                         py: 4
                      }}>
-                     <Typography fontSize={16} fontWeight={400} color={(theme) => theme.palette.text.secondary}>
+                     <Typography fontSize={16} fontWeight={400}   sx={{
+     color: (theme) => theme.palette.text.secondary
+   }}>
                         No Jobs Found
                      </Typography>
                   </Stack>

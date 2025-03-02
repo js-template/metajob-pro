@@ -39,7 +39,9 @@ const CommentsSection = () => {
                variant={"h1"}
                fontWeight={700}
                fontSize={24}
-               color={(theme) => theme.palette.text.primary}
+               sx={{
+                  color: (theme) => theme.palette.text.primary
+                }}
                py={2}>
                Comments {"( "}
                {comments.length} {" )"}
@@ -62,11 +64,11 @@ const CommentsSection = () => {
                                  variant={"h3"}
                                  fontWeight={700}
                                  fontSize={20}
-                                 color={(theme) => theme.palette.text.primary} // gray 4
                                  sx={{
                                     display: "flex",
                                     alignItems: "center",
-                                    gap: 2
+                                    gap: 2,
+                                    color: (theme) => theme.palette.text.primary
                                  }}>
                                  {comment.name}
                                  <Stack component={"span"} direction='row' alignItems={"center"} spacing={1}>
@@ -75,17 +77,23 @@ const CommentsSection = () => {
                                        variant={"h3"}
                                        fontWeight={700}
                                        fontSize={16}
-                                       color={(theme) => theme.palette.warning.light} // gray 4
+                                       sx={{
+                                          color: (theme) => theme.palette.warning.light
+                                         }}
                                     >
                                        {comment.rating}
                                     </Typography>
                                  </Stack>
                               </Typography>
-                              <Typography fontWeight={400} fontSize={12} color={(theme) => theme.palette.text.disabled}>
+                              <Typography fontWeight={400} fontSize={12} sx={{
+ color: (theme) => theme.palette.text.disabled
+}}>
                                  {comment.date}
                               </Typography>
                            </Stack>
-                           <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.disabled}>
+                           <Typography fontWeight={400} fontSize={16} sx={{
+ color: (theme) => theme.palette.text.disabled
+}}>
                               {comment.comment}
                            </Typography>
                         </Stack>
@@ -100,7 +108,9 @@ const CommentsSection = () => {
    const CommentBox = () => {
       return (
          <Stack spacing={3}>
-            <Typography variant={"h1"} fontWeight={700} fontSize={24} color={(theme) => theme.palette.text.primary}>
+            <Typography variant={"h1"} fontWeight={700} fontSize={24}   sx={{
+     color: (theme) => theme.palette.text.primary
+   }}>
                Leave a Comment
             </Typography>
             <Stack direction='row' spacing={1.5}>

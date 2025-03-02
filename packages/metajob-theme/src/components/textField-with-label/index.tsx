@@ -33,7 +33,10 @@ export default function TextFieldWithLabel({
          <Typography
             fontSize={14}
             fontWeight={400}
-            color={(theme) => theme.palette.text.primary}
+            sx={{
+               color: (theme) => theme.palette.text.primary
+             }}
+          
             pb={1}
             {...labelProps}>
             {label}{" "}

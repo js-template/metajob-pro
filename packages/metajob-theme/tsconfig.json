@@ -17,7 +17,8 @@
       "isolatedModules": true,
       "jsx": "react-jsx", // Add or ensure this line is present
       "incremental": true,
-
+    "noImplicitAny": false,
+      "noImplicitThis": false,
       "esModuleInterop": true, // Helps with default imports from CommonJS modules
       "skipLibCheck": true, // Skip type checking of declaration files (declaration: true)
       "paths": {

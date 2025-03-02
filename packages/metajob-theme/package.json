@@ -1,6 +1,6 @@
 {
    "name": "@jstemplate/metajob-theme",
-   "version": "0.0.1-alpha.0",
+   "version": "0.0.2",
    "private": true,
    "main": "dist/index.js",
    "keywords": [],
@@ -21,8 +21,8 @@
       "@mdxeditor/editor": "^3.11.3",
       "@mui/icons-material": "^6.1.8",
       "@mui/lab": "^5.0.0-alpha.165",
-      "@mui/material": "^5.2.3",
-      "@mui/material-nextjs": "latest",
+      "@mui/material": "^5.15.10",
+      "@mui/material-nextjs": "^5.15.3",
       "@react-google-maps/api": "^2.19.3",
       "@strapi/blocks-react-renderer": "^1.0.1",
       "@strapi/design-system": "^1.19.0",
@@ -53,7 +53,7 @@
    "devDependencies": {
       "@types/lodash": "^4.14.202",
       "@types/node": "latest",
-      "@types/react": "latest",
+      "@types/react": "^18.2.0",
       "@types/react-dom": "latest",
       "dashify": "^2.0.0",
       "node-fetch": "^2.6.1",

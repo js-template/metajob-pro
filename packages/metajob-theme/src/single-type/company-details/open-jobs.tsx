@@ -63,7 +63,9 @@ const OpenJobs = ({ id, language, empty }: Props) => {
 
    return (
       <Stack spacing={4}>
-         <Typography variant={"h1"} fontWeight={700} fontSize={24} color={(theme) => theme.palette.text.primary}>
+         <Typography variant={"h1"} fontWeight={700} fontSize={24}   sx={{
+     color: (theme) => theme.palette.text.primary
+   }}>
             Open Job
          </Typography>
          <Stack>
@@ -86,7 +88,9 @@ const OpenJobs = ({ id, language, empty }: Props) => {
                      alignItems: "center",
                      py: 4
                   }}>
-                  <Typography fontSize={16} fontWeight={400} color={(theme) => theme.palette.text.secondary}>
+                  <Typography fontSize={16} fontWeight={400}   sx={{
+     color: (theme) => theme.palette.text.secondary
+   }}>
                      {empty?.title || "No Open Job Found"}
                   </Typography>
                </Stack>

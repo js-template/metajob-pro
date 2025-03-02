@@ -20,7 +20,9 @@ export const ContactWidget = ({ block }: Props) => {
                md: 4
             }}>
             {title && (
-               <Typography fontSize={24} fontWeight={700} color={(theme) => theme.palette.primary.contrastText}>
+               <Typography fontSize={24} fontWeight={700}  sx={{
+                  color: (theme) => theme.palette.primary.contrastText
+               }}>
                   {title}
                </Typography>
             )}
@@ -28,14 +30,20 @@ export const ContactWidget = ({ block }: Props) => {
                <Typography
                   fontSize={18}
                   fontWeight={400}
-                  color={(theme) => hexToRGBA(theme.palette.primary.contrastText, 0.5)}>
+                  sx={{
+                     color: (theme) => hexToRGBA(theme.palette.primary.contrastText, 0.5)
+                  }}
+                  >
                   {description}
                </Typography>
             )}
             {location && (
                <Stack direction='row' gap={2} alignItems={"center"}>
                   <CIcon icon={"mynaui:location"} color='primary.main' />
-                  <Typography fontSize={18} fontWeight={400} color={(theme) => theme.palette.primary.contrastText}>
+                  <Typography fontSize={18} fontWeight={400} 
+                     sx={{
+                        color: (theme) => theme.palette.primary.contrastText
+                     }}>
                      {location}
                   </Typography>
                </Stack>
@@ -47,11 +55,11 @@ export const ContactWidget = ({ block }: Props) => {
                   <Typography
                      fontSize={18}
                      fontWeight={400}
-                     color={(theme) => theme.palette.primary.contrastText}
                      component={"a"}
                      href='tel:1-202-555-0106'
                      sx={{
-                        textDecoration: "none"
+                        textDecoration: "none",
+                        color: (theme) => theme.palette.primary.contrastText
                      }}>
                      {phone}
                   </Typography>
@@ -63,11 +71,11 @@ export const ContactWidget = ({ block }: Props) => {
                   <Typography
                      fontSize={18}
                      fontWeight={400}
-                     color={(theme) => theme.palette.primary.contrastText}
                      component={"a"}
                      href='mailto:info@example.com'
                      sx={{
-                        textDecoration: "none"
+                        textDecoration: "none",
+                        color: (theme) => theme.palette.primary.contrastText
                      }}>
                      {email}
                   </Typography>
