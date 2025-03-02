@@ -53,7 +53,9 @@ const BlockItem = ({ attributes }: ISingleCategory) => {
                   justifyContent: "center",
                   alignItems: "center"
                }}>
-               <Typography color={(theme) => theme.palette.text.primary} fontWeight={400} fontSize={18}>
+               <Typography  sx={{
+            color: (theme) => theme.palette.text.primary,
+            }} fontWeight={400} fontSize={18}>
                   {title}
                </Typography>
                {/* <Typography color={(theme) => theme.palette.text.secondary} fontWeight={400} fontSize={14}>

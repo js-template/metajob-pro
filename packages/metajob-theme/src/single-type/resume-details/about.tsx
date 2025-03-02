@@ -8,7 +8,9 @@ export default function AboutSection({ data }: any) {
 
    return (
       <Stack pl={1} spacing={2}>
-         <Typography fontSize={20} fontWeight={700} color={(theme) => theme.palette.text.primary}>
+         <Typography fontSize={20} fontWeight={700}   sx={{
+     color: (theme) => theme.palette.text.primary
+   }}>
             About
          </Typography>
          <MarkdownCustomPreview

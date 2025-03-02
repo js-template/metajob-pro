@@ -59,7 +59,9 @@ const ResumePreviewBox = ({ handleEdit, data, isLoading }: Props) => {
                                        <Typography
                                           fontSize={20}
                                           fontWeight={700}
-                                          color={(theme) => theme.palette.text.primary}
+                                          sx={{
+                                             color: (theme) => theme.palette.text.primary,
+                                           }}
                                           textAlign={"center"}>
                                           About Me
                                        </Typography>
@@ -120,7 +122,9 @@ const ResumePreviewBox = ({ handleEdit, data, isLoading }: Props) => {
                            <Typography
                               fontSize={20}
                               fontWeight={700}
-                              color={(theme) => theme.palette.text.secondary}
+                              sx={{
+                                 color: (theme) => theme.palette.text.secondary,
+                               }}
                               textAlign={"center"}>
                               No Resume Added yet, Please add your resume
                            </Typography>

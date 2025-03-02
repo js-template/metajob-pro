@@ -33,7 +33,8 @@ const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
       children: React.ReactElement<any, any>
    },
-   ref: React.Ref<unknown>
+   // ref: React.Ref<unknown>
+   ref: any
 ) {
    return <Slide direction='up' ref={ref} {...props} />
 })
@@ -909,7 +910,6 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                            variant='outlined'
                            id='company-industry'
                            size='small'
-                           placeholder='Select Category'
                            {...register("industry", {
                               required: "Company Industry is required"
                            })}
@@ -957,7 +957,6 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                            variant='outlined'
                            id='company-size'
                            size='small'
-                           placeholder='Select Company Size'
                            {...register("company_size", {
                               required: "Company Size is required"
                            })}
@@ -1006,7 +1005,6 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                            variant='outlined'
                            id='revenues'
                            size='small'
-                           placeholder='Select Revenue'
                            {...register("revenue")}
                            defaultValue={watch("revenue") || ""}
                            value={watch("revenue") || ""}
@@ -1052,7 +1050,6 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                            id='resume-salary'
                            displayEmpty
                            size='small'
-                           placeholder='Average Salary'
                            {...register("avg_salary", {
                               required: "Salary is required"
                            })}

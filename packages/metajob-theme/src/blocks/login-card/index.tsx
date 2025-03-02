@@ -71,7 +71,10 @@ export const LoginCard = ({
                                     <Typography
                                        fontSize={24}
                                        fontWeight={400}
-                                       color={(theme) => theme.palette.text.primary}>
+                                       sx={{
+                                          color: (theme) => theme.palette.text.primary,
+                                        }}
+                                     >
                                        Sign in with Email address
                                     </Typography>
                                  </Box>
@@ -257,10 +260,10 @@ export const LoginCard = ({
                               )}
                               <Typography
                                  variant='body2'
-                                 color={(theme) => theme.palette.text.secondary}
                                  fontSize={14}
                                  fontWeight={400}
                                  sx={{
+                                    color: (theme) => theme.palette.text.secondary,
                                     mt: 2,
                                     textAlign: "center"
                                  }}>
@@ -268,10 +271,10 @@ export const LoginCard = ({
                                  <Typography
                                     component={Link}
                                     href='/register'
-                                    color={(theme) => theme.palette.primary.main}
                                     fontSize={14}
                                     fontWeight={400}
                                     sx={{
+                                       color: (theme) => theme.palette.primary.main,
                                        textDecoration: "none",
                                        cursor: "pointer"
                                     }}>
