@@ -1,46 +1,30 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useSWR, { mutate } from "swr"
 import toast from "react-hot-toast"
-import { Button, IconButton } from "@mui/material"
+import { useSession } from "next-auth/react"
+import { Button, CircularProgress, IconButton } from "@mui/material"
 import { Avatar, Box, Grid, Stack, Typography } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
-import { ISingleJob, IUserSession } from "./types"
-import { createEntry, deleteEntry } from "../../lib/strapi"
+import { ISingleCompany, ISingleJob } from "./types"
+import { createEntry, deleteEntry, find } from "../../lib/strapi"
 import { fetcher } from "./hook"
 
 type Props = {
    data: ISingleJob
-   session?: IUserSession | null | any
+   companyData: ISingleCompany
 }
 
-const JobTitleCard = ({ data, session }: Props) => {
+const JobTitleCard = ({ data, companyData }: Props) => {
+   const { data: session } = useSession()
+
    const { documentId, title, company, category } = data || {}
    const userId = session?.user?.id
    const userRole = session?.user?.role?.type
 
-   //===================Starts fetching company data============
-   const companyQueryParams = {
-      populate: {
-         logo: {
-            fields: ["url"]
-         }
-      },
-      filters: {
-         documentId: {
-            $eq: company?.documentId
-         }
-      }
-   }
-   const companyQueryString = encodeURIComponent(JSON.stringify(companyQueryParams))
-   const companyAPiUrl = `/api/find?model=api/metajob-backend/companies&query=${companyQueryString}`
-   const { data: companyData } = useSWR(companyAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   const logo = companyData?.data?.[0]?.logo?.url || ""
+   const logo = companyData?.logo?.url || ""
    //===================Ends fetching company data============
 
    const companyName = company?.name || ""
@@ -119,33 +103,48 @@ const JobTitleCard = ({ data, session }: Props) => {
    //===================Starts bookmark jobs============
    const [bookmarkLoading, setBookmarkLoading] = useState(false)
    const [bookmarkIdentifier, setBookmarkIdentifier] = useState(false)
-   const bookmarkQueryParams = {
-      filters: {
-         owner: {
-            id: {
-               $eq: userId || undefined
-            }
-         },
-         job: {
-            id: {
-               $eq: data?.id || undefined
-            }
+   const [bookmarkData, setBookmarkData] = useState<{ documentId: string }[] | []>([])
+
+   // *** get the bookmark data
+   useEffect(() => {
+      const getBookmark = async () => {
+         setBookmarkLoading(true)
+         const { data: bookmarkDataAll, error: bookmarkError } = await find(
+            "api/metajob-backend/bookmarks",
+            {
+               filters: {
+                  owner: {
+                     id: {
+                        $eq: userId || undefined
+                     }
+                  },
+                  job: {
+                     id: {
+                        $eq: data?.id || undefined
+                     }
+                  }
+               },
+               populate: "*"
+            },
+            "no-store"
+         )
+         if (!bookmarkError) {
+            setBookmarkData(bookmarkDataAll?.data)
+            setBookmarkLoading(false)
+         } else {
+            setBookmarkData([])
+            setBookmarkLoading(false)
          }
-      },
-      populate: "*"
-   }
+      }
+      if (userId) {
+         if (!data?.id) return
+         getBookmark()
+      }
 
-   // Convert queryParams to a string for the URL
-   const bookmarkQueryString = encodeURIComponent(JSON.stringify(bookmarkQueryParams))
-   // Construct the API URL
-   const bookmarkApiUrl = userId
-      ? `/api/find?model=api/metajob-backend/bookmarks&query=${bookmarkQueryString}&cache=no-store`
-      : null
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId, bookmarkIdentifier])
 
-   const { data: bookmarkListMain, isLoading: isBookmarkLoading } = useSWR(bookmarkApiUrl, fetcher)
-   // check the job is applied
-   const isBookmarked = bookmarkListMain?.data?.length > 0 || bookmarkIdentifier
-
+   const isBookmarked = bookmarkData?.length > 0 || bookmarkIdentifier
    // apply job handler
    const jobBookmarkHandler = async () => {
       try {
@@ -154,7 +153,10 @@ const JobTitleCard = ({ data, session }: Props) => {
          }
          setBookmarkLoading(true)
          if (isBookmarked) {
-            const bookmarkDocId = bookmarkListMain?.data?.[0]?.documentId
+            if (!bookmarkData?.[0]?.documentId) {
+               return toast.error("Please wait to load bookmark status")
+            }
+            const bookmarkDocId = bookmarkData?.[0]?.documentId
             const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId)
 
             if (error) {
@@ -162,7 +164,7 @@ const JobTitleCard = ({ data, session }: Props) => {
             }
 
             if (success) {
-               mutate(bookmarkApiUrl)
+               // mutate(bookmarkApiUrl)
                setBookmarkIdentifier(false)
                return toast.success("Bookmarked Removed")
             }
@@ -190,7 +192,7 @@ const JobTitleCard = ({ data, session }: Props) => {
 
             if (bookmarkData) {
                setBookmarkIdentifier(true)
-               mutate(bookmarkApiUrl)
+               // mutate(bookmarkApiUrl)
                return toast.success("Bookmarked Successfully")
             }
          }
@@ -200,7 +202,7 @@ const JobTitleCard = ({ data, session }: Props) => {
          setBookmarkLoading(false)
       }
    }
-   //===================Ends apply jobs============
+   //===================Ends bookmark jobs============
 
    return (
       <Card
@@ -239,7 +241,7 @@ const JobTitleCard = ({ data, session }: Props) => {
                               fontSize={24}
                               sx={{
                                  color: (theme) => theme.palette.text.primary
-                               }}>
+                              }}>
                               {title}
                            </Typography>
                         )}
@@ -250,7 +252,7 @@ const JobTitleCard = ({ data, session }: Props) => {
                               fontSize={14}
                               sx={{
                                  color: (theme) => theme.palette.text.disabled
-                                 }}>
+                              }}>
                               {categoryName}
                            </Typography>
                         )}
@@ -270,7 +272,7 @@ const JobTitleCard = ({ data, session }: Props) => {
                            fontSize={14}
                            sx={{
                               color: (theme) => theme.palette.text.disabled
-                              }}>
+                           }}>
                            Share on
                         </Typography>
                         <Stack
@@ -361,32 +363,45 @@ const JobTitleCard = ({ data, session }: Props) => {
                   gap: 5,
                   justifyContent: "space-between"
                }}>
-               <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
-                  {isBookmarked ? (
-                     <IconButton onClick={jobBookmarkHandler} color='primary'>
-                        <CIcon
-                           icon='mdi:heart'
-                           size={24}
+               {bookmarkLoading ? (
+                  <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                     <IconButton color='primary'>
+                        <CircularProgress
+                           size={20}
                            sx={{
-                              cursor: "pointer",
-                              color: "primary.main"
+                              color: (theme) => theme.palette.primary.main
                            }}
                         />
                      </IconButton>
-                  ) : (
-                     <IconButton onClick={jobBookmarkHandler} color='primary'>
-                        <CIcon
-                           icon='mdi:heart-outline'
-                           size={24}
-                           color='text.primary'
-                           sx={{
-                              color: "primary.main",
-                              cursor: "pointer"
-                           }}
-                        />
-                     </IconButton>
-                  )}
-               </Stack>
+                  </Stack>
+               ) : (
+                  <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                     {isBookmarked ? (
+                        <IconButton onClick={jobBookmarkHandler} color='primary'>
+                           <CIcon
+                              icon='mdi:heart'
+                              size={24}
+                              sx={{
+                                 cursor: "pointer",
+                                 color: "primary.main"
+                              }}
+                           />
+                        </IconButton>
+                     ) : (
+                        <IconButton onClick={jobBookmarkHandler} color='primary'>
+                           <CIcon
+                              icon='mdi:heart-outline'
+                              size={24}
+                              color='text.primary'
+                              sx={{
+                                 color: "primary.main",
+                                 cursor: "pointer"
+                              }}
+                           />
+                        </IconButton>
+                     )}
+                  </Stack>
+               )}
                <Stack display={"flex"} alignItems={"flex-end"} gap={1}>
                   {isApplied ? (
                      <Button
