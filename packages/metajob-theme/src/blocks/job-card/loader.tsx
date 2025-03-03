@@ -122,7 +122,7 @@ const JobCardLoader = () => {
                </Grid>
 
                <Box>
-                  <Skeleton variant='rectangular' width={136} height={48} />
+                  <Skeleton variant='rounded' width={136} height={48} />
                </Box>
             </Stack>
          </Container>
