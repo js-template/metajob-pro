@@ -1,15 +1,13 @@
 "use server"
 import { find } from "../../lib/strapi"
-import { ICategoryCardBlock, IUserSession } from "./types"
+import { ICategoryCardBlock } from "./types"
 import { CategoryCard } from "./card"
 import { Suspense } from "react"
 import JobCategoryLoader from "./loader"
 
 type Props = {
    block: ICategoryCardBlock
-   data: any
    language?: string
-   session?: IUserSession | null | any
 }
 
 export const JobCategory = async ({ block, language }: Props) => {
