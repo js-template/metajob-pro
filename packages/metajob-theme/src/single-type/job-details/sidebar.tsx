@@ -1,48 +1,26 @@
 "use client"
 import NextLink from "next/link"
 import Image from "next/image"
-import { Box, Skeleton, Stack, Typography } from "@mui/material"
+import { Box, Stack, Typography } from "@mui/material"
 import moment from "moment"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
-import { ISingleJob } from "./types"
-import { fetcher } from "./hook"
-import useSWR from "swr"
+import { ISingleCompany, ISingleJob } from "./types"
 
-export default function Sidebar({ data }: { data: ISingleJob }) {
+type Props = {
+   data: ISingleJob
+   companyData: ISingleCompany
+}
+
+const Sidebar = ({ data, companyData }: Props) => {
    const { company, publishedAt, type, endDate, price } = data || {}
    const { name: companyName, tagline, email, phone, website, slug, about } = company || {}
 
-   // const { coordinates } = location || {}
-
-   //===================Starts fetching company data============
-   const companyQueryParams = {
-      populate: {
-         logo: {
-            fields: ["url"]
-         },
-         social_links: {
-            populate: "*"
-         }
-      },
-      filters: {
-         documentId: {
-            $eq: company?.documentId
-         }
-      }
-   }
-   const companyQueryString = encodeURIComponent(JSON.stringify(companyQueryParams))
-   const companyAPiUrl = `/api/find?model=api/metajob-backend/companies&query=${companyQueryString}`
-   const { data: companyData, isLoading: companyLoading } = useSWR(companyAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   const logo = companyData?.data?.[0]?.logo?.url || ""
-   const socialLinks = companyData?.data?.[0]?.social_links || []
+   const logo = companyData?.logo?.url || ""
+   const socialLinks = companyData?.social_links || []
    const facebook = socialLinks?.find((item: { type: string }) => item.type === "facebook")?.link || ""
    const twitter = socialLinks?.find((item: { type: string }) => item.type === "twitter")?.link || ""
-   //===================Ends fetching company data============
 
    return (
       <Stack spacing={4}>
@@ -51,9 +29,13 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                borderRadius: 2,
                p: 2
             }}>
-            <Typography variant={"h1"} fontWeight={700} fontSize={20}   sx={{
-     color: (theme) => theme.palette.text.primary
-   }}>
+            <Typography
+               variant={"h1"}
+               fontWeight={700}
+               fontSize={20}
+               sx={{
+                  color: (theme) => theme.palette.text.primary
+               }}>
                Job Overview
             </Typography>
             <Stack spacing={2} pt={2}>
@@ -76,7 +58,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            fontSize={14}
                            sx={{
                               color: (theme) => theme.palette.text.primary
-                            }}>
+                           }}>
                            Job Posted
                         </Typography>
                         <Typography
@@ -85,7 +67,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            fontSize={16}
                            sx={{
                               color: (theme) => theme.palette.text.disabled
-                             }}>
+                           }}>
                            {moment(publishedAt)?.format("DD MMMM YYYY")}
                         </Typography>
                      </Stack>
@@ -110,7 +92,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            fontSize={14}
                            sx={{
                               color: (theme) => theme.palette.text.primary
-                            }}>
+                           }}>
                            Deadline
                         </Typography>
                         <Typography
@@ -119,7 +101,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            fontSize={16}
                            sx={{
                               color: (theme) => theme.palette.text.disabled
-                             }}>
+                           }}>
                            {moment(endDate)?.format("DD MMMM YYYY")}
                         </Typography>
                      </Stack>
@@ -143,7 +125,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            fontSize={14}
                            sx={{
                               color: (theme) => theme.palette.text.primary
-                            }}>
+                           }}>
                            Job Type
                         </Typography>
                         <Stack direction={"row"} spacing={0.5}>
@@ -153,7 +135,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                               fontSize={16}
                               sx={{
                                  color: (theme) => theme.palette.text.disabled
-                                }}>
+                              }}>
                               {type?.title}
                            </Typography>
                         </Stack>
@@ -178,7 +160,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            fontSize={14}
                            sx={{
                               color: (theme) => theme.palette.text.primary
-                            }}>
+                           }}>
                            Salary
                         </Typography>
                         <Typography
@@ -187,7 +169,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                            fontSize={16}
                            sx={{
                               color: (theme) => theme.palette.text.disabled
-                             }}>
+                           }}>
                            {price}
                         </Typography>
                      </Stack>
@@ -238,7 +220,6 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                }}
                spacing={2}>
                {logo && <Image src={logo} alt={companyName || "company logo"} width={150} height={150} />}
-               {companyLoading && <Skeleton variant='rounded' width={150} height={150} />}
                <Stack spacing={1}>
                   {companyName && (
                      <Typography
@@ -248,7 +229,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                         textAlign={"center"}
                         sx={{
                            color: (theme) => theme.palette.text.primary
-                         }}>
+                        }}>
                         {companyName}
                      </Typography>
                   )}
@@ -260,7 +241,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                         textAlign={"center"}
                         sx={{
                            color: (theme) => theme.palette.text.primary
-                         }}>
+                        }}>
                         {tagline}
                      </Typography>
                   )}
@@ -273,7 +254,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                         textAlign={"center"}
                         sx={{
                            color: (theme) => theme.palette.text.primary
-                         }}>
+                        }}>
                         {email}
                      </Typography>
                   )}
@@ -284,7 +265,7 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                         fontSize={18}
                         sx={{
                            color: (theme) => theme.palette.text.primary
-                         }}>
+                        }}>
                         {phone}
                      </Typography>
                   )}
@@ -345,11 +326,11 @@ export default function Sidebar({ data }: { data: ISingleJob }) {
                         <CIcon icon={"mdi:twitter"} size={20} />
                      </Box>
                   )}
-                  {companyLoading && <Skeleton variant='circular' width={40} height={40} />}
-                  {companyLoading && <Skeleton variant='circular' width={40} height={40} />}
                </Stack>
             </Stack>
          </Card>
       </Stack>
    )
 }
+
+export default Sidebar

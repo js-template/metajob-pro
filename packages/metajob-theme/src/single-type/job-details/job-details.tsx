@@ -14,9 +14,10 @@ type Props = {
    session?: IUserSession | null | any
    block: IJobDetailsBlock
    companyData: ISingleCompany
+   relatedJobsData: ISingleJob[]
 }
 
-const JobDetailsClient = ({ data, block, language, companyData }: Props) => {
+const JobDetailsClient = ({ data, block, language, companyData, relatedJobsData }: Props) => {
    const { title, empty, related_lists } = block || {}
 
    if (!data) {
@@ -48,12 +49,12 @@ const JobDetailsClient = ({ data, block, language, companyData }: Props) => {
                      </Stack>
                   </Grid>
                   <Grid item xs={12} md={4}>
-                     <Sidebar data={data} />
+                     <Sidebar data={data} companyData={companyData} />
                   </Grid>
                </Grid>
             </Container>
          </Stack>
-         {data && related_lists && <RelatedJob data={data} language={language} />}
+         {data && related_lists && <RelatedJob relatedJobsData={relatedJobsData} />}
       </Stack>
    )
 }

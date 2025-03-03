@@ -20,6 +20,12 @@ export type ISingleCompany = {
    logo: {
       url: string
    }
+   social_links: [
+      {
+         link: string
+         type: string
+      }
+   ]
 }
 
 export type ISingleJob = {
