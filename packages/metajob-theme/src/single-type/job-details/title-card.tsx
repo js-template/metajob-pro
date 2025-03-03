@@ -1,6 +1,5 @@
 "use client"
 import { useEffect, useState } from "react"
-import useSWR, { mutate } from "swr"
 import toast from "react-hot-toast"
 import { useSession } from "next-auth/react"
 import { Button, CircularProgress, IconButton } from "@mui/material"
@@ -10,7 +9,6 @@ import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
 import { ISingleCompany, ISingleJob } from "./types"
 import { createEntry, deleteEntry, find } from "../../lib/strapi"
-import { fetcher } from "./hook"
 
 type Props = {
    data: ISingleJob
@@ -25,35 +23,58 @@ const JobTitleCard = ({ data, companyData }: Props) => {
    const userRole = session?.user?.role?.type
 
    const logo = companyData?.logo?.url || ""
-   //===================Ends fetching company data============
 
    const companyName = company?.name || ""
    const categoryName = category?.title || ""
 
-   //===================Starts apply jobs============
    const [applyLoading, setApplyLoading] = useState(false)
    const [applyIdentifier, setApplyIdentifier] = useState(false)
-   const queryParams = {
-      filters: {
-         owner: {
-            id: {
-               $eq: userId || undefined
-            }
-         },
-         job: {
-            id: {
-               $eq: data?.id || undefined
-            }
+   const [applyData, setApplyData] = useState<{ documentId: string }[] | []>([])
+   const [bookmarkLoading, setBookmarkLoading] = useState(false)
+   const [bookmarkIdentifier, setBookmarkIdentifier] = useState(false)
+   const [bookmarkData, setBookmarkData] = useState<{ documentId: string }[] | []>([])
+
+   //===================Starts apply job============
+   // get the job-apply data
+   useEffect(() => {
+      const getApplyData = async () => {
+         setApplyLoading(true)
+         const { data: applyDataAll, error: applyDataError } = await find(
+            "api/metajob-backend/applied-jobs",
+            {
+               filters: {
+                  owner: {
+                     id: {
+                        $eq: userId || undefined
+                     }
+                  },
+                  job: {
+                     id: {
+                        $eq: data?.id || undefined
+                     }
+                  }
+               },
+               populate: "*"
+            },
+            "no-store"
+         )
+         if (!applyDataError) {
+            setApplyData(applyDataAll?.data)
+            setApplyLoading(false)
+         } else {
+            setApplyData([])
+            setApplyLoading(false)
          }
-      },
-      populate: "*"
-   }
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   // Construct the API URL
-   const apiUrl = userId ? `/api/find?model=api/metajob-backend/applied-jobs&query=${queryString}&cache=no-store` : null
-   const { data: appliedListMain, error, isLoading } = useSWR(apiUrl, fetcher)
-   // check the job is applied
-   const isApplied = appliedListMain?.data?.length > 0 || applyIdentifier
+      }
+      if (userId) {
+         if (!data?.id) return
+         getApplyData()
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId, applyIdentifier])
+
+   const isApplied = applyData?.length > 0 || applyIdentifier
 
    // apply job handler
    const jobApplyHandler = async () => {
@@ -88,9 +109,7 @@ const JobTitleCard = ({ data, companyData }: Props) => {
 
          if (applyData) {
             setApplyIdentifier(true)
-            return toast.success("Job Applied Successfully", {
-               icon: "🚀"
-            })
+            return toast.success("Job Applied Successfully")
          }
       } catch (err: any) {
          toast.error(err.message || "An Error Occurred")
@@ -101,11 +120,7 @@ const JobTitleCard = ({ data, companyData }: Props) => {
    //===================Ends apply jobs============
 
    //===================Starts bookmark jobs============
-   const [bookmarkLoading, setBookmarkLoading] = useState(false)
-   const [bookmarkIdentifier, setBookmarkIdentifier] = useState(false)
-   const [bookmarkData, setBookmarkData] = useState<{ documentId: string }[] | []>([])
-
-   // *** get the bookmark data
+   // get the bookmark data
    useEffect(() => {
       const getBookmark = async () => {
          setBookmarkLoading(true)
@@ -145,17 +160,18 @@ const JobTitleCard = ({ data, companyData }: Props) => {
    }, [userId, bookmarkIdentifier])
 
    const isBookmarked = bookmarkData?.length > 0 || bookmarkIdentifier
-   // apply job handler
+   // bookmark handler
    const jobBookmarkHandler = async () => {
       try {
          if (!session) {
             return toast.error("Please login to bookmark for this job")
          }
-         setBookmarkLoading(true)
+
          if (isBookmarked) {
             if (!bookmarkData?.[0]?.documentId) {
                return toast.error("Please wait to load bookmark status")
             }
+            setBookmarkLoading(true)
             const bookmarkDocId = bookmarkData?.[0]?.documentId
             const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId)
 
@@ -421,7 +437,7 @@ const JobTitleCard = ({ data, companyData }: Props) => {
                   ) : (
                      <LoadingButton
                         onClick={jobApplyHandler}
-                        loading={applyLoading || isLoading}
+                        loading={applyLoading}
                         // loadingPosition='start'
                         size='small'
                         sx={{
@@ -433,7 +449,7 @@ const JobTitleCard = ({ data, companyData }: Props) => {
                         }}
                         variant='contained'
                         color='primary'>
-                        {isLoading ? "Checking" : "Apply Now"}
+                        {applyLoading ? "Checking" : "Apply Now"}
                      </LoadingButton>
                   )}
                </Stack>
