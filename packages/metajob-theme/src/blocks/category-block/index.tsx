@@ -1,5 +1,4 @@
 "use client"
-import { ICategories } from "../../types/job-filter"
 import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
 import Item from "./item"
 import useSWR from "swr"
