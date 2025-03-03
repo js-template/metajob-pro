@@ -2,9 +2,7 @@
 import _ from "lodash"
 import { Divider, FormControl, MenuItem, Select, Stack, TextField, Typography, Button } from "@mui/material"
 import { Card } from "../../components/common/card"
-import { fetcher } from "./hook"
-import useSWR from "swr"
-import { ICompanyFilterProps } from "./types"
+import { ICompanyFilterProps, ISingleCategory } from "./types"
 
 type Props = {
    search: {
@@ -16,25 +14,11 @@ type Props = {
    setFormData: (data: ICompanyFilterProps) => void
    formData: ICompanyFilterProps
    loading: boolean
+   categoryData?: ISingleCategory[]
 }
 
-const CompanyFilterSection = ({ search, formData, setFormData, loading }: Props) => {
+const CompanyFilterSection = ({ search, formData, setFormData, loading, categoryData }: Props) => {
    const { title: searchTitle, search_placeholder, category_placeholder, button_placeholder } = search || {}
-
-   //===================Starts fetching category data============
-   const categoryQueryParams = {
-      fields: ["title", "slug"]
-   }
-   const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
-   const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
-   const {
-      data: categoryData,
-      error: categoryError,
-      isLoading: categoryIsLoading
-   } = useSWR(categoryAPiUrl, fetcher, {
-      fallbackData: []
-   })
-   //===================Ends fetching category data============
 
    return (
       <Card
@@ -44,17 +28,19 @@ const CompanyFilterSection = ({ search, formData, setFormData, loading }: Props)
          }}>
          <Stack spacing={2} pb={3}>
             <Stack px={3} pt={2} direction={"row"} justifyItems={"center"} justifyContent={"space-between"}>
-               <Typography fontSize={16} fontWeight={700}   sx={{
-     color: (theme) => theme.palette.text.primary,
-   }}
->
+               <Typography
+                  fontSize={16}
+                  fontWeight={700}
+                  sx={{
+                     color: (theme) => theme.palette.text.primary
+                  }}>
                   {searchTitle}
                </Typography>
                <Typography
                   fontSize={16}
                   fontWeight={700}
                   sx={{
-                     color:(theme) => theme.palette.error.main,
+                     color: (theme) => theme.palette.error.main,
                      cursor: "pointer",
                      display:
                         formData?.companyName ||
@@ -124,7 +110,7 @@ const CompanyFilterSection = ({ search, formData, setFormData, loading }: Props)
                         <MenuItem value='' sx={{ fontSize: "16px" }}>
                            {category_placeholder}
                         </MenuItem>
-                        {_.map(categoryData?.data, (item, index) => (
+                        {_.map(categoryData, (item, index) => (
                            <MenuItem key={index} value={item?.title} sx={{ fontSize: "16px" }}>
                               {item?.title}
                            </MenuItem>

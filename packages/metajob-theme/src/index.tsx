@@ -42,7 +42,7 @@ import { JobCard } from "./blocks/job-card"
 import { BlogCard } from "./blocks/blog-card"
 import { ReviewCard } from "./blocks/review-card"
 import { JobFilter } from "./blocks/job-filter"
-import CompanyFilter from "./blocks/company-filter"
+import { CompanyFilter } from "./blocks/company-filter"
 import { CandidateFilter } from "./blocks/candidate-filter"
 import { BlogFilter } from "./blocks/blog-filter"
 // single-type import

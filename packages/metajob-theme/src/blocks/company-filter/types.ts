@@ -79,3 +79,9 @@ export type ICompanyFilterProps = {
    selectedRevenue: string
    companyName?: string
 }
+
+export type ISingleCategory = {
+   id: number
+   documentId: string
+   title: string
+}

@@ -1,11 +1,9 @@
 "use client"
-export const categoryFetcher = async (url: string) => {
+export const fetcher = async (url: string) => {
    const response = await fetch(url)
    if (!response.ok) {
       throw new Error("An error occurred while fetching the data.")
    }
    const result = await response.json()
-
-   const categoryData = result?.data?.data || []
-   return categoryData
+   return result.data // Return the nested data
 }
