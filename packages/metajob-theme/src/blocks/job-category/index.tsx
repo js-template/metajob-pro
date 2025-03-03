@@ -2,6 +2,8 @@
 import { find } from "../../lib/strapi"
 import { ICategoryCardBlock, IUserSession } from "./types"
 import { CategoryCard } from "./card"
+import { Suspense } from "react"
+import JobCategoryLoader from "./loader"
 
 type Props = {
    block: ICategoryCardBlock
@@ -26,5 +28,9 @@ export const JobCategory = async ({ block, language }: Props) => {
       "no-store"
    )
 
-   return <CategoryCard block={block} categoryData={categoryData?.data} />
+   return (
+      <Suspense fallback={<JobCategoryLoader />}>
+         <CategoryCard block={block} categoryData={categoryData?.data} />
+      </Suspense>
+   )
 }
