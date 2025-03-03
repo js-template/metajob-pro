@@ -11,7 +11,7 @@ type Props = {
 }
 
 export const JobCategory = async ({ block, language }: Props) => {
-   const { data: categoryData, error: categoryError } = await find(
+   const { data: categoryData } = await find(
       "api/metajob-backend/job-categories",
       {
          populate: {

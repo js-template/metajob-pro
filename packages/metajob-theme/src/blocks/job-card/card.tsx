@@ -2,11 +2,8 @@
 import NextLink from "next/link"
 import { useTheme } from "next-themes"
 import _ from "lodash"
-
 import { Box, Button, Container, Grid, Stack, Typography, useTheme as muiTheme } from "@mui/material"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
-
-import JobCardLoader from "./loader"
 import { IJobCardBlock, IUserSession } from "./types"
 import { SectionTitle } from "../../components/section-title"
 import { JobItem } from "../../components/cards/job-item"
@@ -37,7 +34,6 @@ export const JobCardClient = ({ block, JobsData }: { block: any; JobsData: any }
                   <Grid container spacing={2}>
                      {_.map(JobsData?.data, (item) => (
                         <Grid key={item?.id} item xs={mobile || 12} sm={tab || 6} md={desktop || 3}>
-                           {/* <CardItem data={item} /> */}
                            <JobItem data={item} />
                         </Grid>
                      ))}
