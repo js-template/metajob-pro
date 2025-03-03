@@ -65,7 +65,9 @@ const CandidateCardItem = ({ data }: { data: ISingleCandidate }) => {
                <Typography
                   fontSize={18}
                   fontWeight={400}
-                  color={(theme) => theme.palette.text.primary}
+                  sx={{
+                     color: (theme) => theme.palette.text.primary,
+                   }}
                   textAlign={"center"}>
                   {name}
                </Typography>
@@ -75,7 +77,9 @@ const CandidateCardItem = ({ data }: { data: ISingleCandidate }) => {
                      textAlign={"center"}
                      fontSize={14}
                      fontWeight={400}
-                     color={(theme) => theme.palette.text.secondary}>
+                     sx={{
+                        color: (theme) => theme.palette.text.secondary,
+                      }}>
                      {tagline}
                   </Typography>
                )}
@@ -90,7 +94,9 @@ const CandidateCardItem = ({ data }: { data: ISingleCandidate }) => {
                         color: (theme) => theme.palette.text.secondary
                      }}
                   />
-                  <Typography fontSize={14} fontWeight={400} color={(theme) => theme.palette.text.secondary}>
+                  <Typography fontSize={14} fontWeight={400}   sx={{
+     color: (theme) => theme.palette.text.secondary,
+   }}>
                      {location}
                   </Typography>
                </Stack>

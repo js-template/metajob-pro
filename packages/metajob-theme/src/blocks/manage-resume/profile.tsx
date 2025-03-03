@@ -9,8 +9,6 @@ import { Box, Grid, MenuItem, Select, TextField, useTheme } from "@mui/material"
 import { IJobCategory, ResumeFormProps } from "./types"
 import { fetcher } from "./hook"
 
-const EditorComp = dynamic(() => import("./editor"), { ssr: false })
-
 type Props = {
    register: UseFormRegister<ResumeFormProps>
    setValue: UseFormSetValue<ResumeFormProps>
@@ -194,7 +192,6 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                variant='outlined'
                id='resume-resume-category'
                size='small'
-               placeholder='Select Category'
                {...register("category", {
                   required: "Resume Category is required"
                })}
@@ -243,7 +240,6 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                id='resume-experience-time'
                displayEmpty
                size='small'
-               placeholder='Select Time'
                {...register("experience_time", {
                   required: "Experience Time is required"
                })}
@@ -297,7 +293,6 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                id='resume-languages'
                displayEmpty
                size='small'
-               placeholder='Select Languages'
                {...register("language", {
                   required: "Languages are required"
                })}
@@ -372,7 +367,6 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                id='resume-salary'
                displayEmpty
                size='small'
-               placeholder='Salary'
                {...register("salary", {
                   required: "Salary is required"
                })}
@@ -419,7 +413,6 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                id='resume-salary-type'
                displayEmpty
                size='small'
-               placeholder='Select Salary Type'
                {...register("salary_type", {
                   required: "Salary Type is required"
                })}

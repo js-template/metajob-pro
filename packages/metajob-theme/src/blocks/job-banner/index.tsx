@@ -39,7 +39,7 @@ export const JobBanner = ({ block, language }: Props) => {
 
    const handleSearch = () => {
       // route with search query : endpoint is find-jobs
-      const queryParams = []
+      const queryParams: string[] = []
 
       if (searchText) {
          queryParams.push(`search=${encodeURIComponent(searchText)}`)
@@ -104,7 +104,9 @@ export const JobBanner = ({ block, language }: Props) => {
                      fontWeight={700}
                      maxWidth={650}
                      textAlign={"center"}
-                     color={(theme) => theme.palette.primary.contrastText}>
+                     sx={{
+                        color: (theme) => theme.palette.primary.contrastText,
+                      }}>
                      {title}
                   </Typography>
                   <Typography
@@ -112,7 +114,9 @@ export const JobBanner = ({ block, language }: Props) => {
                      maxWidth={650}
                      textAlign={"center"}
                      fontWeight={400}
-                     color={(theme) => theme.palette.primary.contrastText}>
+                     sx={{
+                        color: (theme) => theme.palette.primary.contrastText,
+                      }}>
                      {sub_title}
                   </Typography>
                </Stack>

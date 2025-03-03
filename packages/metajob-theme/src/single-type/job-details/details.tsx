@@ -46,7 +46,9 @@ export default function Details({ data }: Props) {
                      variant={"h1"}
                      fontWeight={700}
                      fontSize={20}
-                     color={(theme) => theme.palette.text.primary}>
+                     sx={{
+                        color: (theme) => theme.palette.text.secondary
+                      }}>
                      Skills
                   </Typography>
                   <Stack direction={"row"} gap={1} flexWrap={"wrap"}>
@@ -54,6 +56,7 @@ export default function Details({ data }: Props) {
                         <Typography
                            key={index}
                            sx={{
+                              color: (theme) => theme.palette.text.disabled,
                               bgcolor: (theme) => theme.palette.background.paper,
                               borderColor: (theme) => theme.palette.divider,
                               borderWidth: 1,
@@ -65,7 +68,7 @@ export default function Details({ data }: Props) {
                            variant={"body1"}
                            fontWeight={400}
                            fontSize={14}
-                           color={(theme) => theme.palette.text.disabled}>
+                           >
                            {item?.title}
                         </Typography>
                      ))}

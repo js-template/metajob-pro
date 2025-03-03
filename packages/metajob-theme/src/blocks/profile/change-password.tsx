@@ -65,8 +65,8 @@ export const ChangePassword = () => {
                   md: 24
                }}
                fontWeight={700}
-               color={(theme) => theme.palette.text.primary}
                sx={{
+                  color: (theme) => theme.palette.text.primary,
                   borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
                   py: 2,
                   px: 4
@@ -249,7 +249,9 @@ export const ChangePassword = () => {
                            )
                         }}
                      />
-                     <Typography fontSize={14} fontWeight={400} pt={1} color={(theme) => theme.palette.text.disabled}>
+                     <Typography fontSize={14} fontWeight={400} pt={1} sx={{
+ color: (theme) => theme.palette.text.disabled,
+}}>
                         6 characters or longer. Combine letters and numbers.
                      </Typography>
                   </Grid>

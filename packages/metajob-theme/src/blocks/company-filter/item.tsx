@@ -52,7 +52,9 @@ const CompanyCardItem = ({ data }: Props) => {
                <Typography
                   fontSize={16}
                   fontWeight={400}
-                  color={(theme) => theme.palette.text.primary}
+                  sx={{
+                     color: (theme) => theme.palette.text.primary,
+                    }}
                   textAlign={"center"}>
                   {name}
                </Typography>
@@ -61,7 +63,9 @@ const CompanyCardItem = ({ data }: Props) => {
                <Typography
                   fontSize={14}
                   fontWeight={400}
-                  color={(theme) => theme.palette.text.disabled}
+                  sx={{
+                     color: (theme) => theme.palette.text.disabled,
+                    }}
                   textAlign={"center"}>
                   {tagline}
                </Typography>
@@ -78,7 +82,9 @@ const CompanyCardItem = ({ data }: Props) => {
                         color: (theme) => theme.palette.text.disabled
                      }}
                   />
-                  <Typography fontSize={14} fontWeight={400} color={(theme) => theme.palette.text.disabled}>
+                  <Typography fontSize={14} fontWeight={400} sx={{
+ color: (theme) => theme.palette.text.disabled,
+}}>
                      {company_size?.title} Employee
                   </Typography>
                </Stack>
@@ -93,7 +99,9 @@ const CompanyCardItem = ({ data }: Props) => {
                      }}
                   />
                   {revenue && (
-                     <Typography fontSize={14} fontWeight={400} color={(theme) => theme.palette.text.disabled}>
+                     <Typography fontSize={14} fontWeight={400} sx={{
+                        color: (theme) => theme.palette.text.disabled,
+                       }}>
                         {revenue?.title} Revenue
                      </Typography>
                   )}

@@ -15,7 +15,10 @@ export const MenuWidget = ({ block }: Props) => {
    return (
       <Grid item xs={style?.mobile || 12} sm={style?.tab || 6} md={style?.desktop || 3}>
          <Stack gap={2}>
-            <Typography fontSize={24} fontWeight={700} color={(theme) => theme.palette.primary.contrastText}>
+            <Typography fontSize={24} fontWeight={700}
+               sx={{
+                  color:(theme) => theme.palette.primary.contrastText,
+                 }}>
                {title}
             </Typography>
             <Stack gap={2}>
@@ -24,11 +27,11 @@ export const MenuWidget = ({ block }: Props) => {
                      key={item?.id}
                      fontSize={16}
                      fontWeight={400}
-                     color={(theme) => hexToRGBA(theme.palette.primary.contrastText, 0.5)}
                      component={Link}
                      href={item?.link ?? "#"}
                      target={item?.target ?? "_self"}
                      sx={{
+                        color: (theme) => hexToRGBA(theme.palette.primary.contrastText, 0.5),
                         textDecoration: "none",
                         "&:hover": {
                            color: (theme) => theme.palette.primary.main

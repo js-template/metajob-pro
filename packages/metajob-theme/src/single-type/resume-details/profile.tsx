@@ -25,7 +25,9 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
             <Typography
                fontWeight={400}
                fontSize={14}
-               color={(theme) => theme.palette.primary.contrastText}
+               sx={{
+                  color: (theme) => theme.palette.primary.contrastText
+                  }}
                bgcolor={(theme) => theme.palette.primary.main}
                borderRadius={1.5}
                px={1}
@@ -61,7 +63,9 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                      <Typography
                         fontWeight={700}
                         fontSize={24}
-                        color={(theme) => theme.palette.text.primary}
+                        sx={{
+                           color: (theme) => theme.palette.text.primary
+                         }}
                         textAlign={"center"}>
                         {name}
                      </Typography>
@@ -70,7 +74,9 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                      <Typography
                         fontWeight={400}
                         fontSize={16}
-                        color={(theme) => theme.palette.text.disabled}
+                        sx={{
+                           color: (theme) => theme.palette.text.disabled
+                           }}
                         textAlign={"center"}>
                         {tagline}
                      </Typography>
@@ -113,10 +119,18 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                         <CIcon icon={"bytesize:work"} size={24} color='primary.main' />
                      </Box>
                      <Stack>
-                        <Typography fontWeight={500} fontSize={14} color={(theme) => theme.palette.text.primary}>
+                        <Typography fontWeight={500} fontSize={14} 
+                           sx={{
+                              color: (theme) => theme.palette.text.primary
+                             }}
+                           >
                            Industry
                         </Typography>
-                        <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.disabled}>
+                        <Typography fontWeight={400} fontSize={16}
+                           sx={{
+                              color: (theme) => theme.palette.text.disabled
+                             }}
+                             >
                            {industry}
                         </Typography>
                      </Stack>
@@ -133,10 +147,17 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                         <CIcon icon={"ri:award-line"} size={24} color='primary.main' />
                      </Box>
                      <Stack>
-                        <Typography fontWeight={500} fontSize={14} color={(theme) => theme.palette.text.primary}>
+                        <Typography fontWeight={500} fontSize={14} 
+                             sx={{
+                              color: (theme) => theme.palette.text.primary
+                            }}
+                           >
                            Experience
                         </Typography>
-                        <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.disabled}>
+                        <Typography fontWeight={400} fontSize={16} 
+                         sx={{
+                           color: (theme) => theme.palette.text.disabled
+                        }}>
                            {experience_time?.title}
                         </Typography>
                      </Stack>
@@ -153,10 +174,14 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                         <CIcon icon={"ph:map-pin"} size={24} color='primary.main' />
                      </Box>
                      <Stack>
-                        <Typography fontWeight={500} fontSize={14} color={(theme) => theme.palette.text.primary}>
+                        <Typography fontWeight={500} fontSize={14}    sx={{
+     color: (theme) => theme.palette.text.primary
+   }}>
                            Location
                         </Typography>
-                        <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.disabled}>
+                        <Typography fontWeight={400} fontSize={16} sx={{
+color: (theme) => theme.palette.text.disabled
+}}>
                            {location}
                         </Typography>
                      </Stack>
@@ -173,10 +198,18 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                         <CIcon icon={"uil:calender"} size={24} color='primary.main' />
                      </Box>
                      <Stack>
-                        <Typography fontWeight={500} fontSize={14} color={(theme) => theme.palette.text.primary}>
+                        <Typography fontWeight={500} fontSize={14} 
+                            sx={{
+                              color: (theme) => theme.palette.text.primary
+                             }}
+                           >
                            Member Since
                         </Typography>
-                        <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.disabled}>
+                        <Typography fontWeight={400} fontSize={16} 
+                           sx={{
+                              color: (theme) => theme.palette.text.disabled
+                             }}
+                           >
                            {moment(createdAt).format("DD MMMM YYYY")}
                         </Typography>
                      </Stack>

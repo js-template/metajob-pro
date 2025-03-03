@@ -64,7 +64,9 @@ const CompanyHeader = ({ data, session }: Props) => {
                               variant={"h1"}
                               fontWeight={700}
                               fontSize={20}
-                              color={(theme) => theme.palette.text.primary}>
+                              sx={{
+                                 color: (theme) => theme.palette.text.primary
+                               }}>
                               {name}
                            </Typography>
                         )}
@@ -73,7 +75,9 @@ const CompanyHeader = ({ data, session }: Props) => {
                               variant={"body1"}
                               fontWeight={400}
                               fontSize={16}
-                              color={(theme) => theme.palette.text.disabled}>
+                              sx={{
+                                 color: (theme) => theme.palette.text.disabled
+                                }}>
                               {tagline}
                            </Typography>
                         )}

@@ -45,7 +45,11 @@ const RecentPost = ({ language }: { language?: string }) => {
             borderColor: (theme) => theme.palette.divider
          }}>
          <Stack spacing={4}>
-            <Typography fontSize={20} fontWeight={700} color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}>
+            <Typography fontSize={20} fontWeight={700} 
+            sx={{
+               color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+              }}
+           >
                Latest Post
             </Typography>
             {recentBlogs && recentBlogs?.length > 0 && (
@@ -76,8 +80,8 @@ const RecentPost = ({ language }: { language?: string }) => {
                               <Typography
                                  fontSize={18}
                                  fontWeight={700}
-                                 color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}
                                  sx={{
+                                    color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9),
                                     "&:hover": {
                                        color: (theme) => theme.palette.primary.main,
                                        cursor: "pointer",
@@ -89,7 +93,9 @@ const RecentPost = ({ language }: { language?: string }) => {
                                  href={`/blog/${item?.slug}`}>
                                  {item?.title}
                               </Typography>
-                              <Typography fontSize={14} fontWeight={400} color={(theme) => theme.palette.text.disabled}>
+                              <Typography fontSize={14} fontWeight={400} sx={{
+ color: (theme) => theme.palette.text.disabled
+}}>
                                  {/* {item.datePosted} */}
                                  {moment(item?.publishedAt).format("DD MMMM YYYY")}
                               </Typography>

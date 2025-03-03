@@ -65,7 +65,9 @@ export const SignUpCard = ({
                            fontSize={24}
                            fontWeight={400}
                            textAlign={"center"}
-                           color={(theme) => theme.palette.text.primary}>
+                           sx={{
+                              color: (theme) => theme.palette.text.primary
+                            }}>
                            Create an account
                         </Typography>
                         <Stack direction={"row"} gap={2}>
@@ -173,10 +175,10 @@ export const SignUpCard = ({
                         </Stack>
                         <Typography
                            variant='body2'
-                           color={(theme) => theme.palette.text.secondary}
                            fontSize={14}
                            fontWeight={400}
                            sx={{
+                              color: (theme) => theme.palette.text.secondary,
                               mt: 2,
                               textAlign: "center"
                            }}>
@@ -184,10 +186,10 @@ export const SignUpCard = ({
                            <Typography
                               component={Link}
                               href='/login'
-                              color={(theme) => theme.palette.primary.main}
                               fontSize={14}
                               fontWeight={400}
                               sx={{
+                                 color: (theme) => theme.palette.primary.main,
                                  textDecoration: "none",
                                  cursor: "pointer"
                               }}>

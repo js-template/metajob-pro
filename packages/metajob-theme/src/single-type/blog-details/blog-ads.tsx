@@ -16,7 +16,9 @@ const BlogAds = () => {
             <Typography
                fontSize={14}
                fontWeight={400}
-               color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}
+               sx={{
+                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+                }}
                textAlign={"center"}>
                Advertisement
             </Typography>
@@ -24,14 +26,18 @@ const BlogAds = () => {
                fontSize={24}
                fontWeight={600}
                textAlign={"center"}
-               color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}>
+               sx={{
+                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+                }}>
                You can place ads
             </Typography>
             <Typography
                fontSize={16}
                fontWeight={400}
                textAlign={"center"}
-               color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}>
+               sx={{
+                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+                }}>
                250x360
             </Typography>
          </Card>

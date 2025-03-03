@@ -46,14 +46,16 @@ export default function CandidateFilterSection({ search, loading, filterFormData
          }}>
          <Stack spacing={2} pb={3}>
             <Stack px={3} pt={2} direction={"row"} justifyItems={"center"} justifyContent={"space-between"}>
-               <Typography fontSize={16} fontWeight={700} color={(theme) => theme.palette.text.primary}>
+               <Typography fontSize={16} fontWeight={700}  sx={{
+     color: (theme) => theme.palette.text.primary,
+   }}>
                   {searchTitle}
                </Typography>
                <Typography
                   fontSize={16}
                   fontWeight={700}
-                  color={(theme) => theme.palette.text.primary}
                   sx={{
+                     color: (theme) => theme.palette.text.primary,
                      cursor: "pointer",
                      display:
                         filterFormData?.search ||

@@ -237,7 +237,9 @@ const JobTitleCard = ({ data, session }: Props) => {
                               variant={"h4"}
                               fontWeight={700}
                               fontSize={24}
-                              color={(theme) => theme.palette.text.primary}>
+                              sx={{
+                                 color: (theme) => theme.palette.text.primary
+                               }}>
                               {title}
                            </Typography>
                         )}
@@ -246,7 +248,9 @@ const JobTitleCard = ({ data, session }: Props) => {
                               variant={"body1"}
                               fontWeight={400}
                               fontSize={14}
-                              color={(theme) => theme.palette.text.disabled}>
+                              sx={{
+                                 color: (theme) => theme.palette.text.disabled
+                                 }}>
                               {categoryName}
                            </Typography>
                         )}
@@ -264,7 +268,9 @@ const JobTitleCard = ({ data, session }: Props) => {
                            variant={"h1"}
                            fontWeight={700}
                            fontSize={14}
-                           color={(theme) => theme.palette.text.disabled}>
+                           sx={{
+                              color: (theme) => theme.palette.text.disabled
+                              }}>
                            Share on
                         </Typography>
                         <Stack

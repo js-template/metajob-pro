@@ -801,7 +801,6 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
                         variant='outlined'
                         id='company-industry'
                         size='small'
-                        placeholder='Select Category'
                         {...register("industry", {
                            required: "Company Industry is required"
                         })}
@@ -848,7 +847,6 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
                         variant='outlined'
                         id='company-size'
                         size='small'
-                        placeholder='Select Company Size'
                         {...register("company_size", {
                            required: "Company Size is required"
                         })}
@@ -896,7 +894,6 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
                         variant='outlined'
                         id='revenues'
                         size='small'
-                        placeholder='Select Revenue'
                         {...register("revenue")}
                         defaultValue={watch("revenue") || ""}
                         error={Boolean(errors.revenue)}>
@@ -941,7 +938,6 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
                         id='resume-salary'
                         displayEmpty
                         size='small'
-                        placeholder='Average Salary'
                         {...register("avg_salary", {
                            required: "Salary is required"
                         })}
