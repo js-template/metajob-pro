@@ -1,5 +1,5 @@
 "use server"
-import { IJobCardBlock, IUserSession } from "./types"
+import { IJobCardBlock } from "./types"
 import { find } from "../../lib/strapi"
 import { JobCardClient } from "./card"
 import JobCardLoader from "./loader"
@@ -9,7 +9,6 @@ type Props = {
    block: IJobCardBlock
    data?: any
    language?: string
-   session?: IUserSession | null | any
 }
 
 export const JobCard = async ({ block, language }: Props) => {
@@ -28,7 +27,7 @@ export const JobCard = async ({ block, language }: Props) => {
 
    return (
       <Suspense fallback={<JobCardLoader />}>
-         <JobCardClient block={block} JobsData={JobsData} />
+         <JobCardClient block={block} JobsData={JobsData?.data} />
       </Suspense>
    )
 }

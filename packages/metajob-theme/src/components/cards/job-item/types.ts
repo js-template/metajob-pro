@@ -5,9 +5,7 @@ export type ISingleJob = {
    description: string
    endDate: Date
    price: number
-   location: {
-      address: string
-   }
+   location: any //this filed will be update after location map adding
    publishedAt: Date
    type: { title: string }
    vacancy: number
@@ -16,7 +14,7 @@ export type ISingleJob = {
    company: {
       name: string
       logo: {
-         url: string
+         url?: string
       }
    }
 }
