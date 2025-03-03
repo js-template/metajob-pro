@@ -2,6 +2,8 @@
 import { IReviewsBlock } from "./types"
 import { ReviewCardClient } from "./card"
 import { find } from "../../lib/strapi"
+import { ReviewCardLoader } from "./loadet"
+import { Suspense } from "react"
 
 type Props = {
    block: IReviewsBlock
@@ -19,5 +21,9 @@ export const ReviewCard = async ({ block, language }: Props) => {
    )
    const testimonialData = testimonialsAll?.data
 
-   return <ReviewCardClient block={block} language={language} testimonialData={testimonialData} />
+   return (
+      <Suspense fallback={<ReviewCardLoader />}>
+         <ReviewCardClient block={block} language={language} testimonialData={testimonialData} />
+      </Suspense>
+   )
 }
