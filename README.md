@@ -66,17 +66,13 @@ pnpm install
    ```
 2. **Strapi backend** will now be running at `http://localhost:1337`.
 
-## How to Customize
-*To be added later.*
+## 📩 Support  
+For any questions or support, contact us at **[info@jstemplate.net](mailto:info@jstemplate.net)**  
 
----
+## 📖 Documentation  
+Find the complete installation and setup guide here: **[MetaJob Documentation](https://docs.jstemplate.net/metajob/get-started/intro/)**  
 
-## How to Deploy
-*To be added later.*
+## 🔗 Product Link  
+[Visit the Product Page](#) (Replace with the actual product link)  
 
-## **Tech Stack:**
-
-- **Backend:**  Powered by a headless Strapi CMS with PostgreSQL as the database. [Learn more about Strapi](https://strapi.io/documentation)
-   
-- **Frontend:**  Built with Next.js for fast rendering and MUI for a modern, responsive user interface.
 
