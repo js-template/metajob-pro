@@ -17,7 +17,15 @@ export const JobCard = async ({ block, language }: Props) => {
       {
          populate: {
             company: {
-               populate: "*"
+               fields: ["name"],
+               populate: {
+                  logo: {
+                     fields: ["url"]
+                  }
+               }
+            },
+            type: {
+               fields: ["title"]
             }
          },
          locale: language ?? ["en"]
