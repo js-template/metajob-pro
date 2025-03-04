@@ -52,6 +52,13 @@ export type IJobCategory = {
    title: string
 }
 
+export type IResumeAttribute = {
+   categoryData: IJobCategory[]
+   experienceData: IJobCategory[]
+   avgSalaryData: IJobCategory[]
+   salaryTypesData: IJobCategory[]
+}
+
 export type ISingleResume = {
    id: number
    documentId: string
