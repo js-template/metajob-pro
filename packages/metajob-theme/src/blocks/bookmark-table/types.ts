@@ -37,7 +37,7 @@ export type IBookmarkAttribute = {
       title: string
       price: string
       slug: string
-      status: string
+      job_status: string
    }
    company?: {
       name: string

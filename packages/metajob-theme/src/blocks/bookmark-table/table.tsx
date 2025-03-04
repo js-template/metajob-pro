@@ -3,22 +3,18 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow }
 import _ from "lodash"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import BookmarkTableItem from "./item"
+import { IBookmarkItem } from "./types"
 
 const AllBookmarkTable = ({
    headCells,
    data,
    direction,
-   mutateUrl
+   handleMute
 }: {
    headCells: { value: string }[]
-   data: {
-      title: string
-      company: string
-      location: string
-      status: string
-   }[]
+   data: IBookmarkItem[]
+   handleMute: () => void
    direction: "ltr" | "rtl"
-   mutateUrl: string
 }) => {
    const totalHeader = 5
    if (headCells && headCells.length > 0 && headCells.length < totalHeader) {
@@ -69,7 +65,7 @@ const AllBookmarkTable = ({
                   </TableHead>
                   <TableBody>
                      {data?.map((item: any, index: number) => (
-                        <BookmarkTableItem mutateUrl={mutateUrl} key={index} row={item} direction={direction} />
+                        <BookmarkTableItem handleMute={handleMute} key={index} row={item} direction={direction} />
                      ))}
                   </TableBody>
                </Table>
