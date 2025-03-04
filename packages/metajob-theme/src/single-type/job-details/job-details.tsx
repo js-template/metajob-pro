@@ -11,7 +11,6 @@ import RelatedJob from "./related-job"
 type Props = {
    data: ISingleJob
    language?: string
-   session?: IUserSession | null | any
    block: IJobDetailsBlock
    companyData: ISingleCompany
    relatedJobsData: ISingleJob[]
