@@ -1,25 +1,74 @@
 "use client"
-import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
-import Item from "./item"
 import useSWR from "swr"
-import { fetcher } from "./hook"
+import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
 import { useState } from "react"
-import ItemLoader from "./loader"
+import CandidateFilterSection from "./filter"
+import { fetcher } from "./hook"
+import { ICandidateFilterBlock, ICandidateFilterProps, ISingleCategory } from "./types"
+import CandidateLists from "./lists"
 
-type IProps = {
-   id: number
-   __component: string
+type Props = {
+   block: ICandidateFilterBlock
+   language?: string
+   categoryData?: ISingleCategory[]
 }
-export const CategoryBlock = ({ block, language }: { block: IProps; language?: string }) => {
-   const [page, setPage] = useState<number>(1)
 
+const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
+   const { show_filter, search, empty } = block || {}
+
+   const [page, setPage] = useState<number>(1)
+   const [formData, setFilterFormData] = useState<ICandidateFilterProps>({
+      search: "",
+      skills: "",
+      categories: "",
+      rate: ""
+   })
+
+   //===================Starts fetching resume data============
    const queryParams = {
+      //sort: "name:asc",
+      filters: {
+         name: {
+            $containsi: formData?.search || undefined // Apply filter dynamically
+         },
+         category: {
+            id: {
+               $eq: formData?.categories || undefined
+            }
+         }
+         //   skills: {
+         //     $containsi: formData.skills || undefined, // Apply filter dynamically
+         //   },
+         //   company_size: {
+         //     $containsi: formData.categories || undefined, // Apply filter dynamically
+         //   },
+         //   rate: {
+         //     $containsi: formData.rate || undefined, // Apply filter dynamically
+         //   },
+      },
       populate: {
-         image: {
-            fields: ["url"]
+         user: {
+            populate: {
+               avatar: {
+                  fields: ["url"]
+               }
+            }
          }
       },
-      fields: ["title"], // Fields to include in the response
+      // populate: {
+      //    user: {
+      //       fields: ["avatar"],
+      //       populate: {
+      //          avatar: {
+      //             field: ["url"]
+      //          }
+      //       }
+      //    },
+      //    contact: {
+      //       fields: ["location"]
+      //    }
+      // },
+      // fields: ["name", "tagline", "slug", "slug"], // Fields to include in the response
       pagination: {
          pageSize: 12,
          page: page
@@ -27,48 +76,40 @@ export const CategoryBlock = ({ block, language }: { block: IProps; language?: s
       publicationState: "live",
       locale: language ?? ["en"]
    }
-
-   // Convert queryParams to a string for the URL
    const queryString = encodeURIComponent(JSON.stringify(queryParams))
-
    // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-strapi/job-categories&query=${queryString}&cache=no-store`
-   // fetch job  data
-   const { data: CategoriesAll, isLoading, error: candidateError } = useSWR(apiUrl, fetcher)
+   const apiUrl = `/api/find?model=api/metajob-backend/resumes&query=${queryString}`
+   const { data: resumeData, error: resumeError, isLoading } = useSWR(apiUrl, fetcher)
+   const totalPage = resumeData?.meta?.pagination?.pageCount || 0
+   //===================Ends fetching resume data============
 
-   const totalPage = CategoriesAll?.meta?.pagination?.pageCount || 0
-   const categoryData = CategoriesAll?.data
+   //   const handleSubmitForm = (e: any) => {
+   //     e.preventDefault();
+   //     fetchCandidate();
+   //     setPage(1);
+   //   };
 
    return (
       <Stack>
-         <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
-            <Container maxWidth='lg'>
-               {categoryData && categoryData?.length > 0 && (
-                  <Grid container spacing={2}>
-                     {categoryData?.map((item: any, index: number) => {
-                        return (
-                           <Grid item xs={12} sm={4} md={3} key={index}>
-                              <Item {...item} />
-                           </Grid>
-                        )
-                     })}
+         <Container maxWidth='lg' sx={{ py: 6 }}>
+            <Grid container spacing={4}>
+               {show_filter && (
+                  <Grid item xs={12} md={3}>
+                     <CandidateFilterSection
+                        search={search}
+                        filterFormData={formData}
+                        setFilterFormData={setFilterFormData}
+                        // handleSubmitForm={handleSubmitForm}
+                        loading={isLoading}
+                        categoryData={categoryData}
+                     />
                   </Grid>
                )}
-               {/* loader */}
-               {isLoading && (
-                  <Grid container spacing={2}>
-                     {[...Array(12)].map((_, index) => (
-                        <Grid item key={index} xs={12} sm={4} md={3}>
-                           <ItemLoader />
-                        </Grid>
-                     ))}
-                  </Grid>
-               )}
-
-               <Grid item xs={12} md={12} sx={{ pt: 5 }}>
+               <Grid item xs={12} md={show_filter ? 9 : 12}>
                   <Stack spacing={4}>
+                     <CandidateLists loading={isLoading} error={resumeError} data={resumeData?.data ?? []} />
                      {/* pagination */}
-                     {!candidateError && !isLoading && totalPage > 0 && (
+                     {!resumeError && !isLoading && totalPage > 0 && (
                         <Stack
                            sx={{
                               display: "flex",
@@ -121,8 +162,10 @@ export const CategoryBlock = ({ block, language }: { block: IProps; language?: s
                      )}
                   </Stack>
                </Grid>
-            </Container>
-         </Stack>
+            </Grid>
+         </Container>
       </Stack>
    )
 }
+
+export default CandidateFilterClient

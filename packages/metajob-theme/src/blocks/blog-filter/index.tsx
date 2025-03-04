@@ -1,6 +1,5 @@
 "use client"
 import { useState } from "react"
-import { useTheme } from "next-themes"
 import _ from "lodash"
 import useSWR from "swr"
 import {
@@ -16,7 +15,6 @@ import {
    useTheme as muiTheme
 } from "@mui/material"
 import CardItem from "./item"
-import { IUserSession } from "../../types/user"
 import { fetcher } from "./hook"
 import { IBogFilterBlock } from "./types"
 
@@ -24,7 +22,6 @@ type Props = {
    block: IBogFilterBlock
    data?: any
    language?: string
-   session?: IUserSession | null | any
 }
 
 export const BlogFilter = ({ block, language }: Props) => {

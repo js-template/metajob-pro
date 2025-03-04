@@ -1,6 +1,6 @@
 "use client"
 import NextLink from "next/link"
-import { ISingleCategory } from "../../types/job-filter"
+import { ISingleCategory } from "./types"
 import { Box, Icon, Stack, Typography } from "@mui/material"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -53,9 +53,12 @@ const BlockItem = ({ attributes }: ISingleCategory) => {
                   justifyContent: "center",
                   alignItems: "center"
                }}>
-               <Typography  sx={{
-            color: (theme) => theme.palette.text.primary,
-            }} fontWeight={400} fontSize={18}>
+               <Typography
+                  sx={{
+                     color: (theme) => theme.palette.text.primary
+                  }}
+                  fontWeight={400}
+                  fontSize={18}>
                   {title}
                </Typography>
                {/* <Typography color={(theme) => theme.palette.text.secondary} fontWeight={400} fontSize={14}>

@@ -1,25 +1,53 @@
 "use client"
-import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
-import Item from "./item"
+import React from "react"
 import useSWR from "swr"
+import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
+import CompanyFilterSection from "./filter"
 import { fetcher } from "./hook"
-import { useState } from "react"
-import ItemLoader from "./loader"
+import { ICompanyFilterBlockData, ICompanyFilterProps, ISingleCategory } from "./types"
+import CompanyList from "./company-list"
 
-type IProps = {
-   id: number
-   __component: string
+type Props = {
+   block: ICompanyFilterBlockData
+   language?: string
+   categoryData?: ISingleCategory[]
 }
-export const CategoryBlock = ({ block, language }: { block: IProps; language?: string }) => {
-   const [page, setPage] = useState<number>(1)
 
+const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
+   const { title, description, show_filter, search, empty } = block || {}
+
+   const [page, setPage] = React.useState<number>(1)
+   const [formData, setFormData] = React.useState<ICompanyFilterProps>({
+      selectedIndustry: "",
+      selectedCompanySize: "",
+      selectedAverageSalary: "",
+      selectedRevenue: "",
+      companyName: ""
+   })
+
+   //===================Starts fetching company data============
    const queryParams = {
-      populate: {
-         image: {
-            fields: ["url"]
+      filters: {
+         name: {
+            $containsi: formData?.companyName || undefined
+         },
+         industry: {
+            title: {
+               $eq: formData?.selectedIndustry || undefined
+            }
          }
+         // company_size: {
+         //    $containsi: formData.selectedCompanySize || undefined // Apply filter dynamically
+         // },
+         // avg_salary: {
+         //    $containsi: formData.selectedAverageSalary || undefined // Apply filter dynamically
+         // },
+         // revenue: {
+         //    $containsi: formData.selectedRevenue || undefined // Apply filter dynamically
+         // }
       },
-      fields: ["title"], // Fields to include in the response
+      populate: "*",
+      // fields: ["name", "tagline", "slug", "revenue", "company_size", "location"],
       pagination: {
          pageSize: 12,
          page: page
@@ -28,47 +56,43 @@ export const CategoryBlock = ({ block, language }: { block: IProps; language?: s
       locale: language ?? ["en"]
    }
 
-   // Convert queryParams to a string for the URL
    const queryString = encodeURIComponent(JSON.stringify(queryParams))
 
    // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-strapi/job-categories&query=${queryString}&cache=no-store`
-   // fetch job  data
-   const { data: CategoriesAll, isLoading, error: candidateError } = useSWR(apiUrl, fetcher)
+   const apiUrl = `/api/find?model=api/metajob-backend/companies&query=${queryString}`
 
-   const totalPage = CategoriesAll?.meta?.pagination?.pageCount || 0
-   const categoryData = CategoriesAll?.data
+   const { data: companyData, error: companyError, isLoading } = useSWR(apiUrl, fetcher)
+
+   const totalPage = companyData?.meta?.pagination?.pageCount || 0
+   //===================Ends fetching company data============
 
    return (
       <Stack>
-         <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
-            <Container maxWidth='lg'>
-               {categoryData && categoryData?.length > 0 && (
-                  <Grid container spacing={2}>
-                     {categoryData?.map((item: any, index: number) => {
-                        return (
-                           <Grid item xs={12} sm={4} md={3} key={index}>
-                              <Item {...item} />
-                           </Grid>
-                        )
-                     })}
-                  </Grid>
-               )}
-               {/* loader */}
-               {isLoading && (
-                  <Grid container spacing={2}>
-                     {[...Array(12)].map((_, index) => (
-                        <Grid item key={index} xs={12} sm={4} md={3}>
-                           <ItemLoader />
-                        </Grid>
-                     ))}
+         <Container maxWidth='lg' sx={{ py: 6 }}>
+            <Grid container spacing={4}>
+               {show_filter && (
+                  <Grid item xs={12} md={3}>
+                     <CompanyFilterSection
+                        search={search}
+                        formData={formData}
+                        setFormData={setFormData}
+                        loading={isLoading}
+                        categoryData={categoryData}
+                     />
                   </Grid>
                )}
 
-               <Grid item xs={12} md={12} sx={{ pt: 5 }}>
+               {/* cards and pagination  */}
+               <Grid item xs={12} md={show_filter ? 9 : 12}>
                   <Stack spacing={4}>
-                     {/* pagination */}
-                     {!candidateError && !isLoading && totalPage > 0 && (
+                     <CompanyList
+                        companies={companyData?.data}
+                        loading={isLoading}
+                        error={companyError}
+                        empty={empty}
+                     />
+                     {/* pagination  */}
+                     {!companyError && totalPage > 0 && (
                         <Stack
                            sx={{
                               display: "flex",
@@ -121,8 +145,10 @@ export const CategoryBlock = ({ block, language }: { block: IProps; language?: s
                      )}
                   </Stack>
                </Grid>
-            </Container>
-         </Stack>
+            </Grid>
+         </Container>
       </Stack>
    )
 }
+
+export default CompanyFilterClient
