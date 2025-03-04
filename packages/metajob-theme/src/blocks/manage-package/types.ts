@@ -33,13 +33,9 @@ export type IPackageData = {
    }[]
 }
 
-export type subscriptionItemProps = {
-   id: number
-   title?: string
-   description?: string
-   price?: number
-   reward_percentage?: number
-   features?: {
-      title: string
-   }[]
+export type IMemberShip = {
+   documentId: string
+   user_plan: {
+      documentId: string
+   }
 }
