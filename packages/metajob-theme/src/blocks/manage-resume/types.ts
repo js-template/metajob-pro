@@ -4,29 +4,29 @@ export type IManageResumeBlock = {
 }
 
 export type ResumeFormProps = {
-   name: ""
-   slug: ""
-   tagline: ""
-   qualification: ""
-   language: ""
-   experience_time: string | ""
-   salary_type: string | ""
-   salary: string | ""
-   category: string | ""
+   name: string
+   slug: string
+   tagline: string
+   qualification: string
+   language: string
+   experience_time: string
+   salary_type: string
+   salary: string
+   category: string
    about: string
    education: {
       title: string
-      institution: string
+      description: string
       startDate: string
       endDate: string
-      description: string
+      institution: string
    }[]
    experience: {
       title: string
-      institution: string
+      description: string
       startDate: string
       endDate: string
-      description: string
+      institution: string
    }[]
    portfolio: {
       title: string
@@ -50,4 +50,87 @@ export type IJobCategory = {
    id: number
    documentId: string
    title: string
+}
+
+export type ISingleResume = {
+   id: number
+   documentId: string
+   description: string
+   name: string
+   tagline: string
+   about: string
+   show_profile: "Show" | "Hide"
+   language: string
+   slug: string
+   createdAt: Date
+   updatedAt: Date
+   publishedAt: Date
+   category: {
+      id: number
+      documentId: string
+      title: string
+      description: string
+      slug: string
+   }
+   salary: {
+      documentId: string
+      title: string
+      value: string
+   }
+   salary_type: {
+      documentId: string
+      title: string
+      value: string
+   }
+   experience_time: {
+      documentId: string
+      title: string
+      value: string
+   }
+   qualification: {
+      title: string
+      value: string
+   }
+   contact: {
+      friendlyAddress: null //this field will be updated
+      location: null
+   }
+   education: {
+      title: string
+      description: string
+      startDate: string
+      endDate: string
+      institution: string
+   }[]
+   experience: {
+      title: string
+      description: string
+      startDate: string
+      endDate: string
+      institution: string
+   }[]
+   portfolio: {
+      id: number
+      title: string
+      description: string
+      link: {
+         link: string
+         label: string
+         type: string
+         target: string
+      }
+      image?: {
+         url: string
+      }
+   }[]
+   user: {
+      id: number
+      documentId: string
+      username: string
+      phone: string
+      email: string
+      avatar: {
+         url: string
+      }
+   }
 }

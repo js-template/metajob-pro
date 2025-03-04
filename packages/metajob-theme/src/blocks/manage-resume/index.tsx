@@ -2,23 +2,20 @@
 import { Fragment, useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import toast from "react-hot-toast"
-import useSWR from "swr"
 import { useForm, FormProvider, useFieldArray } from "react-hook-form"
 import { Box, Button, Grid, Step, StepButton, Stepper, Typography } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import ExperienceForm from "./experince"
-import { IManageResumeBlock, ResumeFormProps } from "./types"
+import { IManageResumeBlock, ISingleResume, ResumeFormProps } from "./types"
 import EducationForm from "./education"
 import { ProfileForm } from "./profile"
 import { createEntry, find, updateOne } from "../../lib/strapi"
 import { ContactForm } from "./contact"
-import { fetcher } from "../../utils/swr-fetcher"
 import PortfolioForm from "./portfolio"
 import ResumeLoader from "./resumeLoader"
 import ResumePreviewBox from "./resumePreview"
 import { steps } from "./data"
 import { removeIdFromObjects } from "./hook"
-import { mutate } from "swr"
 import { AccessError } from "../../shared/error-table"
 
 type Props = {
@@ -36,6 +33,8 @@ export const ManageResume = ({ block, language }: Props) => {
    const [loading, setLoading] = useState(false)
    const [activeStep, setActiveStep] = useState(0)
    const [completed, setCompleted] = useState<{ [k: number]: boolean }>({})
+   const [isLoading, setIsLoading] = useState(false)
+   const [resumeData, setResumeData] = useState<ISingleResume | null>(null)
 
    const methods = useForm<ResumeFormProps>({
       defaultValues: {
@@ -121,35 +120,49 @@ export const ManageResume = ({ block, language }: Props) => {
       handleNext()
    }
 
-   // fetch resume-data from db
-   const queryParams = {
-      filters: {
-         user: {
-            id: userId
+   //  fetch resume-data from db
+   useEffect(() => {
+      const getResume = async () => {
+         setIsLoading(true)
+         const { data: resumeDataAll, error: resumeError } = await find(
+            "api/metajob-backend/resumes",
+            {
+               filters: {
+                  user: {
+                     id: userId
+                  }
+               },
+               populate: [
+                  "experience",
+                  "education",
+                  "contact",
+                  "category",
+                  "salary",
+                  "salary_type",
+                  "experience_time",
+                  "portfolio",
+                  "portfolio.link",
+                  "user",
+                  "user.avatar"
+               ]
+            },
+            "no-store"
+         )
+         if (!resumeError) {
+            setResumeData(resumeDataAll?.data?.[0])
+            setIsLoading(false)
+         } else {
+            setResumeData(null)
+            setIsLoading(false)
          }
-      },
-      //   populate: "*",
-      populate: [
-         "experience",
-         "education",
-         "contact",
-         "category",
-         "salary",
-         "salary_type",
-         "experience_time",
-         "portfolio",
-         "portfolio.link",
-         "user",
-         "user.avatar"
-      ]
-   }
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   // Construct the API URL
-   const apiUrl = userId ? `/api/find?model=api/metajob-backend/resumes&query=${queryString}&cache=no-store` : null
-   const { data: myResumeDataAll, error: myResumeError, isLoading } = useSWR(apiUrl, fetcher)
-   // const myResumeData = myResumeDataAll?.data?.[0]
-   const myResumeData = myResumeDataAll?.data?.[0]
+      }
+      if (userId) {
+         if (!userId) return
+         getResume()
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId, isPreview])
 
    const handleReset = () => {
       setActiveStep(0)
@@ -167,7 +180,7 @@ export const ManageResume = ({ block, language }: Props) => {
 
          setLoading(true) // Start loading
 
-         if (myResumeData) {
+         if (resumeData) {
             const updateInput = {
                data: {
                   ...data,
@@ -197,7 +210,7 @@ export const ManageResume = ({ block, language }: Props) => {
             }
             const resumeResponse = await updateOne(
                "metajob-backend/resumes",
-               myResumeData?.documentId,
+               resumeData?.documentId,
                updateInput,
                "/dashboard/my-resume/",
                "page"
@@ -207,7 +220,6 @@ export const ManageResume = ({ block, language }: Props) => {
             if (resumeResponse.error) {
                toast.error(resumeResponse?.error)
             } else {
-               mutate(apiUrl)
                // Success case
                toast.success("Resume updated successfully")
                setIsPreview(true)
@@ -263,7 +275,6 @@ export const ManageResume = ({ block, language }: Props) => {
             if (resumeResponse.error) {
                toast.error(resumeResponse?.error)
             } else {
-               mutate(apiUrl)
                // Success case
                toast.success("Resume created successfully")
                setIsPreview(true)
@@ -280,8 +291,8 @@ export const ManageResume = ({ block, language }: Props) => {
 
    // fill data from db
    useEffect(() => {
-      if (myResumeData && !myResumeError) {
-         const resumeDataValue = myResumeData
+      if (resumeData) {
+         const resumeDataValue = resumeData
 
          setValue("name", resumeDataValue?.name || "")
          setValue("slug", resumeDataValue?.slug || "")
@@ -299,9 +310,7 @@ export const ManageResume = ({ block, language }: Props) => {
          setValue("category", resumeDataValue?.category?.documentId || "")
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [myResumeData])
-
-   if (myResumeError) return <div>Error loading data.</div>
+   }, [resumeData])
 
    const handleEdit = () => {
       setIsPreview(false)
@@ -312,7 +321,7 @@ export const ManageResume = ({ block, language }: Props) => {
          <Box>
             {isPreview ? (
                // resume preview
-               <ResumePreviewBox handleEdit={handleEdit} data={myResumeData} isLoading={isLoading} />
+               <ResumePreviewBox handleEdit={handleEdit} data={resumeData} isLoading={isLoading} />
             ) : (
                // resume submit
                <Box
