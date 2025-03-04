@@ -1,3 +1,4 @@
+"use client"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Box, Chip, Grid, LinearProgress, Skeleton, Typography, useTheme } from "@mui/material"
 import { Fragment } from "react/jsx-runtime"
@@ -31,9 +32,11 @@ const EducationSection = ({ educationData, isLoading }: Props) => {
    ) : (
       <Box>
          {educationData?.length === 0 && (
-            <Typography fontSize={16} fontWeight={400} 
-            sx={{
-               color: (theme) => theme.palette.text.disabled
+            <Typography
+               fontSize={16}
+               fontWeight={400}
+               sx={{
+                  color: (theme) => theme.palette.text.disabled
                }}>
                No education data added
             </Typography>
@@ -47,7 +50,7 @@ const EducationSection = ({ educationData, isLoading }: Props) => {
                   mb={1.5}
                   sx={{
                      color: (theme) => theme.palette.text.primary
-                   }}
+                  }}
                   textAlign={"left"}>
                   Education
                </Typography>
@@ -64,9 +67,12 @@ const EducationSection = ({ educationData, isLoading }: Props) => {
                         }
                      }}>
                      <Grid item xs={12} md={3}>
-                        <Typography fontSize={20} fontWeight={500}   sx={{
-     color: (theme) => theme.palette.text.primary
-   }}>
+                        <Typography
+                           fontSize={20}
+                           fontWeight={500}
+                           sx={{
+                              color: (theme) => theme.palette.text.primary
+                           }}>
                            {educationData?.length > 1 && index + 1 + "."} {item?.title}
                         </Typography>
                         <Chip
