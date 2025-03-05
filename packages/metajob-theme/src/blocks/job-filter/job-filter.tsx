@@ -32,8 +32,6 @@ type Props = {
 }
 
 export const JobFilterClient = ({ block, language, categoryData }: Props) => {
-   const [page, setPage] = useState<number>(1)
-   const [loading, setLoading] = useState<boolean>(false)
    const searchParams = useSearchParams()
 
    // get params data
@@ -42,13 +40,13 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
       location: urlLocation,
       category: urlCategory
    } = Object.fromEntries(searchParams.entries())
-
    const [searchOptions, setSearchOptions] = useState({
       searchText: "",
       location: "",
       category: "",
       sort: ""
    })
+   const [page, setPage] = useState<number>(1)
    const [jobsData, setJobsData] = useState<ISingleJob[]>([])
    const [isLoading, setIsLoading] = useState(false)
    const [totalPage, setTotalPage] = useState(0)
@@ -123,8 +121,6 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [page, searchOptions])
-
-   //===================Ends job search============
 
    // Handle form submission
    const handleSubmit = (e: any) => {
@@ -280,7 +276,7 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
 
                               {button_placeholder && <Divider />}
                               {button_placeholder && (
-                                 <Button disabled={loading} variant='contained' type='submit'>
+                                 <Button disabled={isLoading} variant='contained' type='submit'>
                                     {button_placeholder}
                                  </Button>
                               )}

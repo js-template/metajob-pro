@@ -9,7 +9,7 @@ import { ISingleCompany } from "./types"
 type Props = {
    companies: ISingleCompany[]
    loading: boolean
-   error: any
+   error: string | null
    empty?: {
       title: string
       description: string
@@ -32,8 +32,8 @@ const CompanyList = ({ companies, loading, error, empty }: Props) => {
                      fontSize={16}
                      fontWeight={600}
                      sx={{
-                        color: (theme) => theme.palette.text.primary,
-                      }}
+                        color: (theme) => theme.palette.text.primary
+                     }}
                      component={"span"}
                      variant='h4'
                      pl={2}>
@@ -43,8 +43,8 @@ const CompanyList = ({ companies, loading, error, empty }: Props) => {
                         fontWeight={600}
                         component={"span"}
                         sx={{
-                           color: (theme) => theme.palette.primary.main,
-                          }}>
+                           color: (theme) => theme.palette.primary.main
+                        }}>
                         {companies?.length}
                      </Typography>
                   </Typography>
@@ -83,9 +83,12 @@ const CompanyList = ({ companies, loading, error, empty }: Props) => {
                      alignItems: "center",
                      py: 4
                   }}>
-                  <Typography fontSize={16} fontWeight={400}   sx={{
-     color: (theme) => theme.palette.text.secondary,
-   }}>
+                  <Typography
+                     fontSize={16}
+                     fontWeight={400}
+                     sx={{
+                        color: (theme) => theme.palette.text.secondary
+                     }}>
                      {emptyTitle}
                   </Typography>
                </Stack>
@@ -99,11 +102,13 @@ const CompanyList = ({ companies, loading, error, empty }: Props) => {
                      alignItems: "center",
                      py: 4
                   }}>
-                  <Typography fontSize={16} fontWeight={400}   sx={{
-     color: (theme) => theme.palette.error.main,
-   }}
->
-                     {error?.message}
+                  <Typography
+                     fontSize={16}
+                     fontWeight={400}
+                     sx={{
+                        color: (theme) => theme.palette.error.main
+                     }}>
+                     {error}
                   </Typography>
                </Stack>
             )}
