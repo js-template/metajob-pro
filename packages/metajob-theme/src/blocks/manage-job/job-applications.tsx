@@ -37,7 +37,7 @@ type Props = {
    open: boolean
    handleClose: () => void
    jobDocID: string
-   mutate: KeyedMutator<any>
+   handleMute: () => void
    blockData: IManageJobBock
    empty?: {
       title: string
@@ -45,7 +45,7 @@ type Props = {
    }
 }
 
-export default function JobApplications({ open, handleClose, jobDocID, mutate, blockData, empty }: Props) {
+export default function JobApplications({ open, handleClose, jobDocID, handleMute, blockData, empty }: Props) {
    const [loading, setLoading] = React.useState(false)
    const [jobApplyData, setJobApplyData] = React.useState<any | null>(null)
 
@@ -175,7 +175,7 @@ export default function JobApplications({ open, handleClose, jobDocID, mutate, b
                            ) : (
                               <TableBody>
                                  {jobApplyData?.data?.map((apply: IJobApplyData, index: number) => (
-                                    <ApplyItem key={index} apply={apply} mutate={mutate} />
+                                    <ApplyItem key={index} apply={apply} handleMute={handleMute} />
                                  ))}
 
                                  {/* Empty message */}
