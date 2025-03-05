@@ -12,7 +12,6 @@ export * from "./widgets/applied-job"
 export * from "./widgets/favorite-list"
 
 import { MessageLayout } from "./blocks/chats"
-import { LatestApplied } from "./blocks/latest-applied"
 import { LatestBookmarks } from "./blocks/latest-bookmarks"
 import { LatestNotifications } from "./blocks/latest-notification"
 
@@ -84,7 +83,6 @@ export const getPrivateComponents = {
    "shared.spacing": { component: Spacing },
    "block.bookmark-list": { component: LatestBookmarks },
    "block.recent-activities": { component: LatestNotifications },
-   "block.latest-applied": { component: LatestApplied },
    "metajob-config.message": { component: MessageLayout },
    "block.notification-list": { component: LatestNotifications },
 
