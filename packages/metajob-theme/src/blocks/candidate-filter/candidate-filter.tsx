@@ -1,11 +1,10 @@
 "use client"
-import useSWR from "swr"
 import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CandidateFilterSection from "./filter"
-import { fetcher } from "./hook"
-import { ICandidateFilterBlock, ICandidateFilterProps, ISingleCategory } from "./types"
+import { ICandidateFilterBlock, ICandidateFilterProps, ISingleCandidate, ISingleCategory } from "./types"
 import CandidateLists from "./lists"
+import { find } from "../../lib/strapi"
 
 type Props = {
    block: ICandidateFilterBlock
@@ -23,65 +22,86 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
       categories: "",
       rate: ""
    })
+   const [resumeData, setResumeData] = useState<ISingleCandidate[]>([])
+   const [isLoading, setIsLoading] = useState(false)
+   const [totalPage, setTotalPage] = useState(0)
+   const [resumeError, setResumeError] = useState(null)
 
-   //===================Starts fetching resume data============
-   const queryParams = {
-      //sort: "name:asc",
-      filters: {
-         name: {
-            $containsi: formData?.search || undefined // Apply filter dynamically
-         },
-         category: {
-            id: {
-               $eq: formData?.categories || undefined
-            }
+   //  fetch resume from db
+   useEffect(() => {
+      const getResumeData = async () => {
+         setIsLoading(true)
+         const { data: resumeDataAll, error: resumeDataError } = await find(
+            "api/metajob-backend/resumes",
+            {
+               //sort: "name:asc",
+               filters: {
+                  name: {
+                     $containsi: formData?.search || undefined // Apply filter dynamically
+                  },
+                  category: {
+                     id: {
+                        $eq: formData?.categories || undefined
+                     }
+                  }
+                  //   skills: {
+                  //     $containsi: formData.skills || undefined, // Apply filter dynamically
+                  //   },
+                  //   company_size: {
+                  //     $containsi: formData.categories || undefined, // Apply filter dynamically
+                  //   },
+                  //   rate: {
+                  //     $containsi: formData.rate || undefined, // Apply filter dynamically
+                  //   },
+               },
+               populate: {
+                  user: {
+                     populate: {
+                        avatar: {
+                           fields: ["url"]
+                        }
+                     }
+                  }
+               },
+               // populate: {
+               //    user: {
+               //       fields: ["avatar"],
+               //       populate: {
+               //          avatar: {
+               //             field: ["url"]
+               //          }
+               //       }
+               //    },
+               //    contact: {
+               //       fields: ["location"]
+               //    }
+               // },
+               // fields: ["name", "tagline", "slug", "slug"], // Fields to include in the response
+               pagination: {
+                  pageSize: 12,
+                  page: page
+               },
+               publicationState: "live",
+               locale: language ?? ["en"]
+            },
+            "no-store"
+         )
+         if (!resumeDataError) {
+            setResumeError(null)
+            setResumeData(resumeDataAll?.data)
+            setTotalPage(resumeDataAll?.meta?.pagination?.pageCount || 0)
+            setIsLoading(false)
+         } else {
+            setResumeError(resumeDataError)
+            setResumeData([])
+            setIsLoading(false)
          }
-         //   skills: {
-         //     $containsi: formData.skills || undefined, // Apply filter dynamically
-         //   },
-         //   company_size: {
-         //     $containsi: formData.categories || undefined, // Apply filter dynamically
-         //   },
-         //   rate: {
-         //     $containsi: formData.rate || undefined, // Apply filter dynamically
-         //   },
-      },
-      populate: {
-         user: {
-            populate: {
-               avatar: {
-                  fields: ["url"]
-               }
-            }
-         }
-      },
-      // populate: {
-      //    user: {
-      //       fields: ["avatar"],
-      //       populate: {
-      //          avatar: {
-      //             field: ["url"]
-      //          }
-      //       }
-      //    },
-      //    contact: {
-      //       fields: ["location"]
-      //    }
-      // },
-      // fields: ["name", "tagline", "slug", "slug"], // Fields to include in the response
-      pagination: {
-         pageSize: 12,
-         page: page
-      },
-      publicationState: "live",
-      locale: language ?? ["en"]
-   }
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-backend/resumes&query=${queryString}`
-   const { data: resumeData, error: resumeError, isLoading } = useSWR(apiUrl, fetcher)
-   const totalPage = resumeData?.meta?.pagination?.pageCount || 0
-   //===================Ends fetching resume data============
+      }
+
+      getResumeData()
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [page, formData])
 
    //   const handleSubmitForm = (e: any) => {
    //     e.preventDefault();
@@ -107,7 +127,7 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
                )}
                <Grid item xs={12} md={show_filter ? 9 : 12}>
                   <Stack spacing={4}>
-                     <CandidateLists loading={isLoading} error={resumeError} data={resumeData?.data ?? []} />
+                     <CandidateLists loading={isLoading} error={resumeError} data={resumeData ?? []} />
                      {/* pagination */}
                      {!resumeError && !isLoading && totalPage > 0 && (
                         <Stack
