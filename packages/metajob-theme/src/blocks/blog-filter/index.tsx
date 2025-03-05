@@ -1,7 +1,6 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import _ from "lodash"
-import useSWR from "swr"
 import {
    Box,
    Button,
@@ -15,8 +14,9 @@ import {
    useTheme as muiTheme
 } from "@mui/material"
 import CardItem from "./item"
-import { fetcher } from "./hook"
-import { IBogFilterBlock } from "./types"
+import { IBogFilterBlock, ISinglePost } from "./types"
+import { find } from "../../lib/strapi"
+import BlogItemLoader from "./loader"
 
 type Props = {
    block: IBogFilterBlock
@@ -32,31 +32,49 @@ export const BlogFilter = ({ block, language }: Props) => {
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
 
    const [page, setPage] = useState<number>(1)
+   const [recentBlogs, setRecentBlogs] = useState<ISinglePost[]>([])
+   const [isLoading, setIsLoading] = useState(false)
+   const [totalPage, setTotalPage] = useState(0)
+   const [blogsError, setBlogsError] = useState(null)
 
-   const queryParams = {
-      populate: {
-         featuredImage: {
-            fields: ["url"]
+   //  fetch blogs from db
+   useEffect(() => {
+      const getBlogsData = async () => {
+         setIsLoading(true)
+         const { data: blogsDataAll, error: blogsDataError } = await find(
+            "api/padma-backend/posts",
+            {
+               populate: {
+                  featuredImage: {
+                     fields: ["url"]
+                  }
+               },
+               sort: ["createdAt:desc"], //sorting to the most recent data
+               pagination: {
+                  pageSize: 12,
+                  page: page
+               },
+               publicationState: "live",
+               locale: language ?? ["en"]
+            },
+            "no-store"
+         )
+         if (!blogsDataError) {
+            setBlogsError(null)
+            setRecentBlogs(blogsDataAll?.data)
+            setTotalPage(blogsDataAll?.meta?.pagination?.pageCount || 0)
+            setIsLoading(false)
+         } else {
+            setBlogsError(blogsDataError)
+            setRecentBlogs([])
+            setIsLoading(false)
          }
-      },
-      sort: ["createdAt:desc"], //sorting to the most recent data
-      pagination: {
-         pageSize: 12,
-         page: page
-      },
-      publicationState: "live",
-      locale: language ?? ["en"]
-   }
+      }
 
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
+      getBlogsData()
 
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/padma-backend/posts&query=${queryString}&cache=no-store`
-   // fetch related list data
-   const { data: recentBlogsData, error: blogsError, isLoading } = useSWR(apiUrl, fetcher)
-   const totalPage = recentBlogsData?.meta?.pagination?.pageCount || 0
-   const recentBlogs = recentBlogsData?.data
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [page])
 
    return (
       <Stack bgcolor={backgroundColor ? backgroundColor : theme.palette.background.paper}>
@@ -68,6 +86,17 @@ export const BlogFilter = ({ block, language }: Props) => {
                      {_.map(recentBlogs, (item) => (
                         <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
                            <CardItem data={item} />
+                        </Grid>
+                     ))}
+                  </Grid>
+               )}
+
+               {/* loader  */}
+               {isLoading && (
+                  <Grid container spacing={2}>
+                     {[...Array(3)]?.map((_, index) => (
+                        <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={index}>
+                           <BlogItemLoader />
                         </Grid>
                      ))}
                   </Grid>
