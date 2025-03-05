@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
-import useSWR from "swr"
 import _ from "lodash"
-import { fetcher } from "./hook"
 import {
    Stack,
    Container,
@@ -24,7 +22,8 @@ import {
 } from "@mui/material"
 import ListCardLoader from "./loader"
 import { JobItem } from "../../components/cards/job-item"
-import { IJobFilterData, ISingleCategory } from "./types"
+import { IJobFilterData, ISingleCategory, ISingleJob } from "./types"
+import { find } from "../../lib/strapi"
 
 type Props = {
    block: IJobFilterData
@@ -50,6 +49,10 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
       category: "",
       sort: ""
    })
+   const [jobsData, setJobsData] = useState<ISingleJob[]>([])
+   const [isLoading, setIsLoading] = useState(false)
+   const [totalPage, setTotalPage] = useState(0)
+   const [jobsError, setJobsError] = useState(null)
 
    // Update state based on URL search params
    useEffect(() => {
@@ -61,52 +64,66 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
       }))
    }, [urlSearch, urlLocation, urlCategory])
 
-   //===================Starts job search============
-   const queryParams = {
-      // sort: sortParam ? [sortParam] : [],
-      filters: {
-         title: {
-            $containsi: searchOptions.searchText || undefined
-         },
-         category: {
-            title: {
-               $eq: searchOptions?.category || undefined
-            }
-         },
-         job_status: "open"
-      },
-      populate: {
-         company: {
-            populate: {
-               logo: {
-                  fields: ["url"]
-               }
-            }
-         },
-         type: {
-            fields: ["title"]
-         },
-         category: {
-            fields: ["title"]
+   //  fetch jobs from db
+   useEffect(() => {
+      const getJobsData = async () => {
+         setIsLoading(true)
+         const { data: jobsDataAll, error: jobDataError } = await find(
+            "api/metajob-backend/jobs",
+            {
+               // sort: sortParam ? [sortParam] : [],
+               filters: {
+                  title: {
+                     $containsi: searchOptions.searchText || undefined
+                  },
+                  category: {
+                     title: {
+                        $eq: searchOptions?.category || undefined
+                     }
+                  },
+                  job_status: "open"
+               },
+               populate: {
+                  company: {
+                     populate: {
+                        logo: {
+                           fields: ["url"]
+                        }
+                     }
+                  },
+                  type: {
+                     fields: ["title"]
+                  },
+                  category: {
+                     fields: ["title"]
+                  }
+               },
+               pagination: {
+                  pageSize: 12,
+                  page: page
+               },
+               publicationState: "live",
+               locale: language ?? ["en"]
+            },
+            "no-store"
+         )
+         if (!jobDataError) {
+            setJobsError(null)
+            setJobsData(jobsDataAll?.data)
+            setTotalPage(jobsDataAll?.meta?.pagination?.pageCount || 0)
+            setIsLoading(false)
+         } else {
+            setJobsError(jobDataError)
+            setJobsData([])
+            setIsLoading(false)
          }
-      },
-      pagination: {
-         pageSize: 12,
-         page: page
-      },
-      publicationState: "live",
-      locale: language ?? ["en"]
-   }
+      }
 
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
+      getJobsData()
 
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-backend/jobs&query=${queryString}&cache=no-store`
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [page, searchOptions])
 
-   const { data: jobsData, error: jobsError, isLoading } = useSWR(apiUrl, fetcher)
-
-   const totalPage = jobsData?.meta?.pagination?.pageCount || 0
    //===================Ends job search============
 
    // Handle form submission
@@ -301,7 +318,7 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
                                     sx={{
                                        color: (theme) => theme.palette.primary.main
                                     }}>
-                                    {jobsData?.data?.length}
+                                    {jobsData?.length}
                                  </Typography>{" "}
                                  jobs
                               </Typography>
@@ -362,7 +379,7 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
                               sx={{
                                  color: (theme) => theme.palette.error.main
                               }}>
-                              {jobsError?.message}
+                              {jobsError}
                            </Typography>
                         </Stack>
                      )}
@@ -380,10 +397,10 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
                         </Stack>
                      )}
                      {/* render jobs */}
-                     {jobsData?.data?.length > 0 && (
+                     {jobsData?.length > 0 && (
                         <Stack>
                            <Grid container spacing={2}>
-                              {_.map(jobsData?.data, (item: any, index: number) => (
+                              {_.map(jobsData, (item: any, index: number) => (
                                  <Grid item xs={12} sm={6} md={4} key={index}>
                                     {/* <Item {...item} /> */}
                                     <JobItem data={item} />
@@ -393,7 +410,7 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
                         </Stack>
                      )}
                      {/* not data found */}
-                     {!jobsError && jobsData?.data === 0 && (
+                     {!jobsError && jobsData?.length === 0 && (
                         <Stack
                            sx={{
                               display: "flex",
