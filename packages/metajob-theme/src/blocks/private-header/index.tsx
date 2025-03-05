@@ -1,5 +1,6 @@
 "use server"
-import { find } from "../../lib/strapi"
+import { auth } from "../../lib/auth"
+import { find, findOne } from "../../lib/strapi"
 import { PrivateHeaderComponent } from "./private-header"
 import { IPrivateHeaderProps } from "./types"
 
@@ -9,6 +10,10 @@ type Props = {
 }
 
 export const PrivateHeader = async ({ block, language }: Props) => {
+   // Get user session
+   const session = await auth()
+
+   // fetch private header data
    const { data } = await find(
       "api/padma-backend/private-layout",
       {
@@ -36,5 +41,26 @@ export const PrivateHeader = async ({ block, language }: Props) => {
       ...block,
       ...data?.data?.header?.[0]
    }
-   return <PrivateHeaderComponent block={combineBlockData} language={language} />
+
+   // get user data
+   const userId = session?.user?.id
+   const { data: userData } = userId
+      ? await findOne(
+           "api/users",
+           userId,
+           {
+              populate: {
+                 avatar: {
+                    fields: ["url"]
+                 }
+              },
+              fields: ["id"],
+              publicationState: "live",
+              locale: language ?? ["en"]
+           },
+           "no-store"
+        )
+      : {}
+
+   return <PrivateHeaderComponent block={combineBlockData} language={language} userData={userData} />
 }
