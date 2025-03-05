@@ -10,7 +10,6 @@ import BreadCrumbs from "./components/breadcrumbs"
 import Spacing from "./shared/spacing"
 export * from "./widgets/applied-job"
 export * from "./widgets/favorite-list"
-export * from "./widgets/matched-list"
 
 import { MessageLayout } from "./blocks/chats"
 import { LatestApplied } from "./blocks/latest-applied"
@@ -19,7 +18,6 @@ import { LatestNotifications } from "./blocks/latest-notification"
 
 import { AppliedJob } from "./widgets/applied-job"
 import { FavoriteList } from "./widgets/favorite-list"
-import { MatchedList } from "./widgets/matched-list"
 
 import { CategoryBlock } from "./blocks/category-block"
 
@@ -83,7 +81,6 @@ export const getPrivateComponents = {
    // ?? Dashboard blocks mapping
    "widget.applied-list": { component: AppliedJob },
    "widget.favorite-list": { component: FavoriteList },
-   "widget.matched-list": { component: MatchedList },
    "shared.spacing": { component: Spacing },
    "block.bookmark-list": { component: LatestBookmarks },
    "block.recent-activities": { component: LatestNotifications },
