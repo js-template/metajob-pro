@@ -4,14 +4,12 @@ import toast from "react-hot-toast"
 import { formProps } from "../../types/forms"
 import DynamicForm from "../../form"
 import { createEntry, find, updateOne, uploadImage } from "../../lib/strapi"
-import { KeyedMutator } from "swr"
 
 type addCompanyProps = {
    open: boolean
    handleClose: () => void
    data: formProps
    userId?: number
-   mutate: KeyedMutator<any>
 }
 
 /**
@@ -29,7 +27,7 @@ type addCompanyProps = {
  *   userId={userId}
  * />
  */
-const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps) => {
+const AddCompany = ({ open, handleClose, data, userId }: addCompanyProps) => {
    const [loading, setLoading] = React.useState(false)
    // *** data format
    const { title, buttonsText, stepLabels, fields } = data
@@ -140,23 +138,22 @@ const AddCompany = ({ open, handleClose, data, userId, mutate }: addCompanyProps
          }
 
          setLoading(false)
-         await mutate().finally(() => {
-            toast.success("Company Created Successfully", {
-               icon: "🚀"
-            })
-            handleClose()
-            setLoading(false)
-         })
-         return true
-      }
+         // await mutate()
 
-      await mutate().finally(() => {
-         setLoading(false)
-         toast.error("Company Created Successfully", {
+         toast.success("Company Created Successfully", {
             icon: "🚀"
          })
          handleClose()
+         setLoading(false)
+         return true
+      }
+
+      // await mutate()
+      setLoading(false)
+      toast.error("Company Created Successfully", {
+         icon: "🚀"
       })
+      handleClose()
 
       return true
    }
