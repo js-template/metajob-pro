@@ -3,7 +3,6 @@ import * as React from "react"
 import Dialog from "@mui/material/Dialog"
 import Slide from "@mui/material/Slide"
 import { TransitionProps } from "@mui/material/transitions"
-import { KeyedMutator } from "swr"
 import { find } from "../../lib/strapi"
 import _ from "lodash"
 import toast from "react-hot-toast"
@@ -58,7 +57,7 @@ export default function JobApplications({ open, handleClose, jobDocID, handleMut
       }
    }
 
-   // *** get the list data by the jobDocID
+   // *** get the applied-jobs data by the jobDocID
    React.useEffect(() => {
       const getApplications = async () => {
          setLoading(true)
@@ -171,7 +170,9 @@ export default function JobApplications({ open, handleClose, jobDocID, handleMut
                               </TableRow>
                            </TableHead>
                            {loading ? (
-                              <ApplyTableLoader numberOfRows={3} />
+                              <TableBody>
+                                 <ApplyTableLoader numberOfRows={3} />
+                              </TableBody>
                            ) : (
                               <TableBody>
                                  {jobApplyData?.data?.map((apply: IJobApplyData, index: number) => (

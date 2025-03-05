@@ -3,7 +3,6 @@ import { Button, MenuItem, Select, TableCell, TableRow, Typography, useTheme } f
 import { Fragment, useState } from "react"
 import CIcon from "../../components/common/icon"
 import toast from "react-hot-toast"
-import { KeyedMutator } from "swr"
 import { IJobApplyData } from "./types"
 import _ from "lodash"
 import { updateOne } from "../../lib/strapi"
