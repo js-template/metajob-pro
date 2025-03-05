@@ -18,8 +18,6 @@ import { LatestNotifications } from "./blocks/latest-notification"
 import { AppliedJob } from "./widgets/applied-job"
 import { FavoriteList } from "./widgets/favorite-list"
 
-import { CategoryBlock } from "./blocks/category-block"
-
 /**------------------------------------------------
  *          Public Components import
  -------------------------------------------------*/
@@ -108,7 +106,6 @@ export const getPublicComponents = {
    "metajob-block.job-category": { component: JobCategory },
    "block.category-card": { component: PlaceholderComponent },
    "metajob-block.job-card": { component: JobCard },
-   "block.category-list": { component: CategoryBlock },
    "block.blog-card": { component: BlogCard },
    "block.review-block": { component: ReviewCard },
    "block.job-filter": { component: JobFilter },
