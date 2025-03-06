@@ -1,5 +1,4 @@
 "use client"
-
 import { Fragment } from "react/jsx-runtime"
 import NextLink from "next/link"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
@@ -39,9 +38,12 @@ const PortfolioSection = ({ portfolioData, isLoading }: Props) => {
    ) : (
       <Box>
          {portfolioData?.length === 0 && (
-            <Typography fontSize={16} fontWeight={400}  sx={{
-               color: (theme) => theme.palette.text.disabled
-             }}>
+            <Typography
+               fontSize={16}
+               fontWeight={400}
+               sx={{
+                  color: (theme) => theme.palette.text.disabled
+               }}>
                No portfolio data added
             </Typography>
          )}
@@ -54,7 +56,7 @@ const PortfolioSection = ({ portfolioData, isLoading }: Props) => {
                   mb={1.5}
                   sx={{
                      color: (theme) => theme.palette.text.primary
-                   }}
+                  }}
                   textAlign={"left"}>
                   Portfolio
                </Typography>
@@ -80,11 +82,12 @@ const PortfolioSection = ({ portfolioData, isLoading }: Props) => {
                               borderStyle: "solid",
                               boxShadow: "none"
                            }}>
-                           <Typography fontSize={20} fontWeight={500} 
-                                sx={{
+                           <Typography
+                              fontSize={20}
+                              fontWeight={500}
+                              sx={{
                                  color: (theme) => theme.palette.text.primary
-                               }}
-                              >
+                              }}>
                               {portfolioData?.length > 1 && index + 1 + "."} {item?.title}
                            </Typography>
                            <Chip

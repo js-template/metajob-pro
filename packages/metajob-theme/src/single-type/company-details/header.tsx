@@ -3,15 +3,14 @@ import NextLink from "next/link"
 import { Avatar, Box, Grid, Stack, Typography } from "@mui/material"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
-import { ISingleCompany, IUserSession } from "./types"
+import { ISingleCompany } from "./types"
 import { getSocialLink } from "./hook"
 
 type Props = {
    data: ISingleCompany
-   session?: IUserSession | null | any
 }
 
-const CompanyHeader = ({ data, session }: Props) => {
+const CompanyHeader = ({ data }: Props) => {
    const { logo, name, email, phone, tagline, website, social_links } = data || {}
    const companyLogo = logo?.url || ""
 
@@ -66,7 +65,7 @@ const CompanyHeader = ({ data, session }: Props) => {
                               fontSize={20}
                               sx={{
                                  color: (theme) => theme.palette.text.primary
-                               }}>
+                              }}>
                               {name}
                            </Typography>
                         )}
@@ -77,7 +76,7 @@ const CompanyHeader = ({ data, session }: Props) => {
                               fontSize={16}
                               sx={{
                                  color: (theme) => theme.palette.text.disabled
-                                }}>
+                              }}>
                               {tagline}
                            </Typography>
                         )}

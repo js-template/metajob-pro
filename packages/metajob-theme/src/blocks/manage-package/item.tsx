@@ -1,4 +1,6 @@
 "use client"
+import { useState } from "react"
+import toast from "react-hot-toast"
 import {
    Box,
    Card,
@@ -13,25 +15,18 @@ import {
 } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import CIcon from "../../components/common/icon"
-import { IPackageData } from "./types"
-import { useState } from "react"
+import { IMemberShip, IPackageData } from "./types"
 import { createEntry, updateOne } from "../../lib/strapi"
-import toast from "react-hot-toast"
-import { mutate } from "swr"
 
 type Props = {
    data?: IPackageData
    isLoader?: boolean
+   membershipLoading?: boolean
    userId?: boolean
-   mutateUrl?: string
-   membershipData?: {
-      documentId: string
-      user_plan: {
-         documentId: string
-      }
-   }
+   handleMute?: () => void
+   membershipData?: IMemberShip | null
 }
-export const PackageItem = ({ data, isLoader, membershipData, userId, mutateUrl }: Props) => {
+export const PackageItem = ({ data, isLoader, membershipData, userId, handleMute, membershipLoading }: Props) => {
    const theme = useTheme()
 
    const [loading, setLoading] = useState(false)
@@ -63,7 +58,9 @@ export const PackageItem = ({ data, isLoader, membershipData, userId, mutateUrl 
             if (resumeResponse.error) {
                toast.error(resumeResponse?.error)
             } else {
-               mutate(mutateUrl || "")
+               if (handleMute) {
+                  handleMute()
+               }
                toast.success("Package updated successfully")
             }
          } else {
@@ -71,7 +68,6 @@ export const PackageItem = ({ data, isLoader, membershipData, userId, mutateUrl 
             if (resumeResponse.error) {
                toast.error(resumeResponse?.error)
             } else {
-               mutate(mutateUrl || "")
                toast.success("Package created successfully")
             }
          }
@@ -223,8 +219,8 @@ export const PackageItem = ({ data, isLoader, membershipData, userId, mutateUrl 
                   />
                ) : (
                   <LoadingButton
-                     disabled={packageDocId === data?.documentId}
-                     loading={loading}
+                     disabled={membershipLoading || packageDocId === data?.documentId}
+                     loading={membershipLoading || loading}
                      fullWidth
                      color='primary'
                      variant='contained'
@@ -252,7 +248,8 @@ export const PackageItem = ({ data, isLoader, membershipData, userId, mutateUrl 
                            color: theme.palette.text.disabled
                         }
                      }}
-                     loadingPosition='end'>
+                     // loadingPosition='end'
+                  >
                      {loading
                         ? "...."
                         : packageDocId === data?.documentId

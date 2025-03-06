@@ -138,3 +138,10 @@ export type ICompanyFillData = {
       link: string
    }[]
 }
+
+export type ICompanyAttribute = {
+   categoryData: IJobCategory[]
+   companySizesData: IJobCategory[]
+   revenuesData: IJobCategory[]
+   avgSalaryData: IJobCategory[]
+}

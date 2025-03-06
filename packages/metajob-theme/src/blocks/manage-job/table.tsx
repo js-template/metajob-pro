@@ -4,29 +4,30 @@ import _ from "lodash"
 import toast from "react-hot-toast"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import TableItem from "./item"
-import { KeyedMutator } from "swr"
-import { IJobData, IManageJobBock } from "./types"
+import { IJobAttribute, IJobData, IManageJobBock } from "./types"
 import { TableLoader } from "./loader"
 
 const ManageListsTable = ({
    headCells,
    data,
-   mutate,
+   handleMute,
    isLoading,
    empty,
    pageSize,
-   blockData
+   blockData,
+   jobAttributes
 }: {
    headCells: { value: string }[]
    data: IJobData[]
    blockData: IManageJobBock
-   mutate: KeyedMutator<any>
+   handleMute: () => void
    isLoading: boolean
    empty?: {
       title: string
       description: string
    }
    pageSize: number
+   jobAttributes?: IJobAttribute
 }) => {
    const totalHeader = 6
    if (headCells && headCells?.length > 0 && headCells?.length < totalHeader) {
@@ -77,7 +78,9 @@ const ManageListsTable = ({
                         </TableRow>
                      </TableHead>
                      {isLoading ? (
-                        <TableLoader numberOfRows={pageSize} />
+                        <TableBody>
+                           <TableLoader numberOfRows={pageSize} />
+                        </TableBody>
                      ) : (
                         <TableBody>
                            {data?.map((job: IJobData) => (
@@ -85,7 +88,8 @@ const ManageListsTable = ({
                                  key={job.id}
                                  job={job}
                                  blockData={blockData}
-                                 mutate={mutate}
+                                 handleMute={handleMute}
+                                 jobAttributes={jobAttributes}
                                  noteFunctionHandler={() => {
                                     toast.error("Note function not implemented yet")
                                  }}

@@ -16,7 +16,6 @@ const BlogCardLoader = () => {
                </Stack>
                {/* posts section  */}
                <Grid container spacing={2}>
-                  {/* {_.map(recentBlogs, (item, index) => ( */}
                   {[...Array(isMobile ? 1 : 3)]?.map((_, index) => (
                      <Grid item xs={12} sm={6} md={4} key={index}>
                         <Stack

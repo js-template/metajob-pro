@@ -13,8 +13,8 @@ export const PublicHeader = async ({ block, language }: Props) => {
    // Get user session
    const session = await auth()
 
+   // fetch public header data
    const { data } = await find(
-      // fetch public header data
       "api/padma-backend/layout",
       {
          populate: {

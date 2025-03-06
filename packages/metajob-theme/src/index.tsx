@@ -10,18 +10,13 @@ import BreadCrumbs from "./components/breadcrumbs"
 import Spacing from "./shared/spacing"
 export * from "./widgets/applied-job"
 export * from "./widgets/favorite-list"
-export * from "./widgets/matched-list"
 
 import { MessageLayout } from "./blocks/chats"
-import { LatestApplied } from "./blocks/latest-applied"
 import { LatestBookmarks } from "./blocks/latest-bookmarks"
 import { LatestNotifications } from "./blocks/latest-notification"
 
 import { AppliedJob } from "./widgets/applied-job"
 import { FavoriteList } from "./widgets/favorite-list"
-import { MatchedList } from "./widgets/matched-list"
-
-import { CategoryBlock } from "./blocks/category-block"
 
 /**------------------------------------------------
  *          Public Components import
@@ -83,11 +78,9 @@ export const getPrivateComponents = {
    // ?? Dashboard blocks mapping
    "widget.applied-list": { component: AppliedJob },
    "widget.favorite-list": { component: FavoriteList },
-   "widget.matched-list": { component: MatchedList },
    "shared.spacing": { component: Spacing },
    "block.bookmark-list": { component: LatestBookmarks },
    "block.recent-activities": { component: LatestNotifications },
-   "block.latest-applied": { component: LatestApplied },
    "metajob-config.message": { component: MessageLayout },
    "block.notification-list": { component: LatestNotifications },
 
@@ -113,7 +106,6 @@ export const getPublicComponents = {
    "metajob-block.job-category": { component: JobCategory },
    "block.category-card": { component: PlaceholderComponent },
    "metajob-block.job-card": { component: JobCard },
-   "block.category-list": { component: CategoryBlock },
    "block.blog-card": { component: BlogCard },
    "block.review-block": { component: ReviewCard },
    "block.job-filter": { component: JobFilter },

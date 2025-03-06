@@ -1,11 +1,10 @@
 "use client"
-import React from "react"
-import useSWR from "swr"
+import React, { useEffect, useState } from "react"
 import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
 import CompanyFilterSection from "./filter"
-import { fetcher } from "./hook"
-import { ICompanyFilterBlockData, ICompanyFilterProps, ISingleCategory } from "./types"
+import { ICompanyFilterBlockData, ICompanyFilterProps, ISingleCategory, ISingleCompany } from "./types"
 import CompanyList from "./company-list"
+import { find } from "../../lib/strapi"
 
 type Props = {
    block: ICompanyFilterBlockData
@@ -24,47 +23,63 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
       selectedRevenue: "",
       companyName: ""
    })
+   const [companyData, setCompanyData] = useState<ISingleCompany[]>([])
+   const [isLoading, setIsLoading] = useState(false)
+   const [totalPage, setTotalPage] = useState(0)
+   const [companyError, setCompanyError] = useState(null)
 
-   //===================Starts fetching company data============
-   const queryParams = {
-      filters: {
-         name: {
-            $containsi: formData?.companyName || undefined
-         },
-         industry: {
-            title: {
-               $eq: formData?.selectedIndustry || undefined
-            }
+   //  fetch company from db
+   useEffect(() => {
+      const getCompanyData = async () => {
+         setIsLoading(true)
+         const { data: companyDataAll, error: companyDataError } = await find(
+            "api/metajob-backend/companies",
+            {
+               filters: {
+                  name: {
+                     $containsi: formData?.companyName || undefined
+                  },
+                  industry: {
+                     title: {
+                        $eq: formData?.selectedIndustry || undefined
+                     }
+                  }
+                  // company_size: {
+                  //    $containsi: formData.selectedCompanySize || undefined // Apply filter dynamically
+                  // },
+                  // avg_salary: {
+                  //    $containsi: formData.selectedAverageSalary || undefined // Apply filter dynamically
+                  // },
+                  // revenue: {
+                  //    $containsi: formData.selectedRevenue || undefined // Apply filter dynamically
+                  // }
+               },
+               populate: "*",
+               // fields: ["name", "tagline", "slug", "revenue", "company_size", "location"],
+               pagination: {
+                  pageSize: 12,
+                  page: page
+               },
+               publicationState: "live",
+               locale: language ?? ["en"]
+            },
+            "no-store"
+         )
+         if (!companyDataError) {
+            setCompanyError(null)
+            setCompanyData(companyDataAll?.data)
+            setTotalPage(companyDataAll?.meta?.pagination?.pageCount || 0)
+            setIsLoading(false)
+         } else {
+            setCompanyError(companyDataError)
+            setCompanyData([])
+            setIsLoading(false)
          }
-         // company_size: {
-         //    $containsi: formData.selectedCompanySize || undefined // Apply filter dynamically
-         // },
-         // avg_salary: {
-         //    $containsi: formData.selectedAverageSalary || undefined // Apply filter dynamically
-         // },
-         // revenue: {
-         //    $containsi: formData.selectedRevenue || undefined // Apply filter dynamically
-         // }
-      },
-      populate: "*",
-      // fields: ["name", "tagline", "slug", "revenue", "company_size", "location"],
-      pagination: {
-         pageSize: 12,
-         page: page
-      },
-      publicationState: "live",
-      locale: language ?? ["en"]
-   }
+      }
 
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-backend/companies&query=${queryString}`
-
-   const { data: companyData, error: companyError, isLoading } = useSWR(apiUrl, fetcher)
-
-   const totalPage = companyData?.meta?.pagination?.pageCount || 0
-   //===================Ends fetching company data============
+      getCompanyData()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [page, formData])
 
    return (
       <Stack>
@@ -85,12 +100,7 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
                {/* cards and pagination  */}
                <Grid item xs={12} md={show_filter ? 9 : 12}>
                   <Stack spacing={4}>
-                     <CompanyList
-                        companies={companyData?.data}
-                        loading={isLoading}
-                        error={companyError}
-                        empty={empty}
-                     />
+                     <CompanyList companies={companyData} loading={isLoading} error={companyError} empty={empty} />
                      {/* pagination  */}
                      {!companyError && totalPage > 0 && (
                         <Stack

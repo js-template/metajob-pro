@@ -1,13 +1,12 @@
 "use client"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
-import useSWR from "swr"
 import _ from "lodash"
 import { Box, Grid, Paper, Stack, Typography } from "@mui/material"
-import { IManagePackageBock } from "./types"
+import { IManagePackageBock, IMemberShip, IPackageData } from "./types"
 import { AccessError } from "../../shared/error-table"
 import { PackageItem } from "./item"
-import { fetcher } from "./hook"
+import { find } from "../../lib/strapi"
 
 type Props = {
    block: IManagePackageBock
@@ -24,36 +23,78 @@ export const ManagePackage = ({ block, language }: Props) => {
    const { title, description, empty, style } = block || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
 
-   const queryParams = {
-      populate: "*",
-      publicationState: "live",
-      locale: language ?? ["en"]
-   }
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-backend/packages&query=${queryString}&cache=no-store`
-   // fetch packages  data
-   const { data: packageDataAll, isLoading: packageIsLoading } = useSWR(apiUrl, fetcher)
-   const packageData = packageDataAll?.data
+   const [packageData, setPackageData] = useState<IPackageData[]>([])
+   const [packageIsLoading, setPackageIsLoading] = useState(false)
+   const [isMute, setIsMute] = useState(false)
+   const [membershipData, setMembershipData] = useState<IMemberShip | null>(null)
+   const [membershipLoading, setMembershipLoading] = useState(false)
 
-   const membershipQueryParams = {
-      populate: "*",
-      filters: {
-         owner: {
-            id: userId
-         }
-      },
-      publicationState: "live",
-      locale: language ?? ["en"]
+   const handleMute = () => {
+      setIsMute(!isMute)
    }
-   // Convert queryParams to a string for the URL
-   const membershipQueryString = encodeURIComponent(JSON.stringify(membershipQueryParams))
-   // Construct the API URL
-   const membershipApiUrl = `/api/find?model=api/metajob-backend/memberships&query=${membershipQueryString}&cache=no-store`
-   // fetch packages  data
-   const { data: membershipDataAll } = useSWR(membershipApiUrl, fetcher)
-   const membershipData = membershipDataAll?.data?.[0]
+
+   //  fetch package from db
+   useEffect(() => {
+      const getPackageData = async () => {
+         setPackageIsLoading(true)
+         const { data: packageDataAll, error: packageDataError } = await find(
+            "api/metajob-backend/packages",
+            {
+               populate: "*",
+               publicationState: "live",
+               locale: language ?? ["en"]
+            },
+            "no-store"
+         )
+         if (!packageDataError) {
+            setPackageData(packageDataAll?.data)
+            setPackageIsLoading(false)
+         } else {
+            setPackageData([])
+            setPackageIsLoading(false)
+         }
+      }
+      if (userId) {
+         if (!userId) return
+         getPackageData()
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId])
+
+   //  fetch membership from db
+   useEffect(() => {
+      const getMembership = async () => {
+         setMembershipLoading(true)
+         const { data: packageDataAll, error: packageDataError } = await find(
+            "api/metajob-backend/memberships",
+            {
+               populate: "*",
+               filters: {
+                  owner: {
+                     id: userId
+                  }
+               },
+               publicationState: "live",
+               locale: language ?? ["en"]
+            },
+            "no-store"
+         )
+         if (!packageDataError) {
+            setMembershipData(packageDataAll?.data?.[0])
+            setMembershipLoading(false)
+         } else {
+            setMembershipData(null)
+            setMembershipLoading(false)
+         }
+      }
+      if (userId) {
+         if (!userId) return
+         getMembership()
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId, isMute])
 
    return role === "employer" ? (
       <Grid item xs={12}>
@@ -104,7 +145,8 @@ export const ManagePackage = ({ block, language }: Props) => {
                               data={item}
                               membershipData={membershipData}
                               userId={userId}
-                              mutateUrl={membershipApiUrl}
+                              handleMute={handleMute}
+                              membershipLoading={membershipLoading}
                            />
                         </Grid>
                      ))}

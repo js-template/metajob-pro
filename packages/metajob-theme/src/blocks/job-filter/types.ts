@@ -19,3 +19,24 @@ export type ISingleCategory = {
    documentId: string
    title: string
 }
+
+export type ISingleJob = {
+   id: number
+   documentId: string
+   title: string
+   description: string
+   endDate: Date
+   price: number
+   location: any //this filed will be update after location map adding
+   publishedAt: Date
+   type: { title: string }
+   vacancy: number
+   slug: string
+   is_featured?: boolean
+   company: {
+      name: string
+      logo: {
+         url?: string
+      }
+   }
+}

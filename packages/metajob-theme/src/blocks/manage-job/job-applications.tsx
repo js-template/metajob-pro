@@ -3,7 +3,6 @@ import * as React from "react"
 import Dialog from "@mui/material/Dialog"
 import Slide from "@mui/material/Slide"
 import { TransitionProps } from "@mui/material/transitions"
-import { KeyedMutator } from "swr"
 import { find } from "../../lib/strapi"
 import _ from "lodash"
 import toast from "react-hot-toast"
@@ -37,7 +36,7 @@ type Props = {
    open: boolean
    handleClose: () => void
    jobDocID: string
-   mutate: KeyedMutator<any>
+   handleMute: () => void
    blockData: IManageJobBock
    empty?: {
       title: string
@@ -45,7 +44,7 @@ type Props = {
    }
 }
 
-export default function JobApplications({ open, handleClose, jobDocID, mutate, blockData, empty }: Props) {
+export default function JobApplications({ open, handleClose, jobDocID, handleMute, blockData, empty }: Props) {
    const [loading, setLoading] = React.useState(false)
    const [jobApplyData, setJobApplyData] = React.useState<any | null>(null)
 
@@ -58,7 +57,7 @@ export default function JobApplications({ open, handleClose, jobDocID, mutate, b
       }
    }
 
-   // *** get the list data by the jobDocID
+   // *** get the applied-jobs data by the jobDocID
    React.useEffect(() => {
       const getApplications = async () => {
          setLoading(true)
@@ -171,11 +170,13 @@ export default function JobApplications({ open, handleClose, jobDocID, mutate, b
                               </TableRow>
                            </TableHead>
                            {loading ? (
-                              <ApplyTableLoader numberOfRows={3} />
+                              <TableBody>
+                                 <ApplyTableLoader numberOfRows={3} />
+                              </TableBody>
                            ) : (
                               <TableBody>
                                  {jobApplyData?.data?.map((apply: IJobApplyData, index: number) => (
-                                    <ApplyItem key={index} apply={apply} mutate={mutate} />
+                                    <ApplyItem key={index} apply={apply} handleMute={handleMute} />
                                  ))}
 
                                  {/* Empty message */}

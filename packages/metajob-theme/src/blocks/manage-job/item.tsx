@@ -6,9 +6,8 @@ import CIcon, { SpinnersClock } from "../../components/common/icon"
 import { dateFormatter } from "../../lib/date-format"
 import { deleteEntry, updateOne } from "../../lib/strapi"
 import toast from "react-hot-toast"
-import { IJobData, IManageJobBock } from "./types"
+import { IJobAttribute, IJobData, IManageJobBock } from "./types"
 import EditJob from "./edit-job"
-import { KeyedMutator } from "swr"
 import JobApplications from "./job-applications"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import _ from "lodash"
@@ -16,12 +15,14 @@ import _ from "lodash"
 const TableItem = ({
    job,
    blockData,
-   mutate
+   handleMute,
+   jobAttributes
 }: {
    job: IJobData
    blockData: IManageJobBock
-   mutate: KeyedMutator<any>
+   handleMute: () => void
    noteFunctionHandler: () => void
+   jobAttributes?: IJobAttribute
 }) => {
    const { title, slug, publishedAt, job_status, applications, endDate, documentId } = job || {}
    const [loading, setLoading] = useState(false)
@@ -61,9 +62,8 @@ const TableItem = ({
             }
 
             // Set success message after successful deletion
-            mutate().finally(() => {
-               toast.success("Successfully deleted!")
-            })
+            handleMute()
+            toast.success("Successfully deleted!")
          } catch (err: any) {
             toast.error(err.message || "An error occurred during deletion")
          } finally {
@@ -262,13 +262,21 @@ const TableItem = ({
             </TableCell>
          </TableRow>
 
-         {show && <EditJob open={show} handleClose={handleClose} mutate={mutate} jobDocID={documentId} />}
+         {show && (
+            <EditJob
+               open={show}
+               handleClose={handleClose}
+               handleMute={handleMute}
+               jobAttributes={jobAttributes}
+               jobDocID={documentId}
+            />
+         )}
          {jobApplicationShow && (
             <JobApplications
                open={jobApplicationShow}
                handleClose={handleApplicationClose}
                jobDocID={documentId}
-               mutate={mutate}
+               handleMute={handleMute}
                blockData={blockData}
             />
          )}

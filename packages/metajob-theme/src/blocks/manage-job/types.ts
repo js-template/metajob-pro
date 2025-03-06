@@ -95,3 +95,10 @@ export type IEditJobData = {
       documentId: string
    }
 }
+
+export type IJobAttribute = {
+   companyData: { name: string; documentId: string }[]
+   categoryData: IJobCategory[]
+   skillsData: IJobCategory[]
+   jobTypesData: IJobCategory[]
+}

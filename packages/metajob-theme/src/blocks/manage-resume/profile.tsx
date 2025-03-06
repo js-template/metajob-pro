@@ -1,22 +1,19 @@
 "use client"
-
 import { useState } from "react"
-import useSWR from "swr"
-import dynamic from "next/dynamic"
 import MDEditor from "@uiw/react-md-editor"
 import { FieldErrors, UseFormRegister, UseFormSetValue, WatchInternal } from "react-hook-form"
 import { Box, Grid, MenuItem, Select, TextField, useTheme } from "@mui/material"
-import { IJobCategory, ResumeFormProps } from "./types"
-import { fetcher } from "./hook"
+import { IJobCategory, IResumeAttribute, ResumeFormProps } from "./types"
 
 type Props = {
    register: UseFormRegister<ResumeFormProps>
    setValue: UseFormSetValue<ResumeFormProps>
    errors: FieldErrors<ResumeFormProps>
    watch: WatchInternal<ResumeFormProps>
+   resumeAttributes?: IResumeAttribute
 }
 
-export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
+export const ProfileForm = ({ register, errors, setValue, watch, resumeAttributes }: Props) => {
    const theme = useTheme()
    const [aboutText, setAboutText] = useState("")
    const handleEditorChange = (value?: string) => {
@@ -24,36 +21,10 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
       setValue("about", value || "")
    }
 
-   // fetch job-category data
-   const categoryQueryParams = {
-      fields: ["title"]
-   }
-   const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
-   const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
-   const { data: categoryData, isLoading: categoryIsLoading } = useSWR(categoryAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch experience-level data
-   const experienceString = encodeURIComponent(JSON.stringify({}))
-   const experienceAPiUrl = `/api/find?model=api/metajob-backend/experience-levels&query=${experienceString}`
-   const { data: experienceData, isLoading: experienceIsLoading } = useSWR(experienceAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch avg-salary data
-   const avgSalaryString = encodeURIComponent(JSON.stringify({}))
-   const avgSalaryAPiUrl = `/api/find?model=api/metajob-backend/avg-salaries&query=${avgSalaryString}`
-   const { data: avgSalaryData, isLoading: avgSalaryIsLoading } = useSWR(avgSalaryAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch salary-types data
-   const salaryTypesString = encodeURIComponent(JSON.stringify({}))
-   const salaryTypesAPiUrl = `/api/find?model=api/metajob-backend/salary-types&query=${salaryTypesString}`
-   const { data: salaryTypesData, isLoading: salaryTypesIsLoading } = useSWR(salaryTypesAPiUrl, fetcher, {
-      fallbackData: []
-   })
+   const categoryData = resumeAttributes?.categoryData
+   const experienceData = resumeAttributes?.experienceData
+   const avgSalaryData = resumeAttributes?.avgSalaryData
+   const salaryTypesData = resumeAttributes?.salaryTypesData
 
    return (
       <>
@@ -249,14 +220,13 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                <MenuItem disabled value=''>
                   Select Time
                </MenuItem>
-               {experienceData?.length > 0 &&
-                  experienceData?.map(
-                     (expItem: { documentId: string; title: string; value: string }, index: number) => (
-                        <MenuItem key={index} value={expItem?.documentId}>
-                           {expItem?.title}
-                        </MenuItem>
-                     )
-                  )}
+               {experienceData &&
+                  experienceData?.length > 0 &&
+                  experienceData?.map((expItem: IJobCategory, index: number) => (
+                     <MenuItem key={index} value={expItem?.documentId}>
+                        {expItem?.title}
+                     </MenuItem>
+                  ))}
                {/* <MenuItem value='Freshers'>Freshers</MenuItem>
                <MenuItem value='Junior'>Junior</MenuItem>
                <MenuItem value='Mid-Level'>Mid-Level</MenuItem>
@@ -376,8 +346,9 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                <MenuItem disabled value=''>
                   Select Average Salary
                </MenuItem>
-               {avgSalaryData?.length > 0 &&
-                  avgSalaryData?.map((expItem: { documentId: string; title: string; value: string }, index: number) => (
+               {avgSalaryData &&
+                  avgSalaryData?.length > 0 &&
+                  avgSalaryData?.map((expItem: IJobCategory, index: number) => (
                      <MenuItem key={index} value={expItem?.documentId}>
                         {expItem?.title}
                      </MenuItem>
@@ -422,14 +393,13 @@ export const ProfileForm = ({ register, errors, setValue, watch }: Props) => {
                <MenuItem disabled value=''>
                   Select Salary Type
                </MenuItem>
-               {salaryTypesData?.length > 0 &&
-                  salaryTypesData?.map(
-                     (expItem: { documentId: string; title: string; value: string }, index: number) => (
-                        <MenuItem key={index} value={expItem?.documentId}>
-                           {expItem?.title}
-                        </MenuItem>
-                     )
-                  )}
+               {salaryTypesData &&
+                  salaryTypesData?.length > 0 &&
+                  salaryTypesData?.map((expItem: IJobCategory, index: number) => (
+                     <MenuItem key={index} value={expItem?.documentId}>
+                        {expItem?.title}
+                     </MenuItem>
+                  ))}
                {/* <MenuItem value='Monthly'>Monthly</MenuItem>
                <MenuItem value='Weekly'>Weekly</MenuItem>
                <MenuItem value='Hourly'>Hourly</MenuItem>
