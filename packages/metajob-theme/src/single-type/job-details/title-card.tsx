@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { useSession } from "next-auth/react"
 import { Button, CircularProgress, IconButton } from "@mui/material"
@@ -9,6 +9,8 @@ import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
 import { ISingleCompany, ISingleJob } from "./types"
 import { createEntry, deleteEntry, find } from "../../lib/strapi"
+import { FacebookShareButton, LinkedinShareButton, TwitterShareButton } from "react-share"
+import { ShareModal } from "./share-modal"
 
 type Props = {
    data: ISingleJob
@@ -33,7 +35,12 @@ const JobTitleCard = ({ data, companyData }: Props) => {
    const [bookmarkLoading, setBookmarkLoading] = useState(false)
    const [bookmarkIdentifier, setBookmarkIdentifier] = useState(false)
    const [bookmarkData, setBookmarkData] = useState<{ documentId: string }[] | []>([])
+   const [shareModalOpen, setShareModalOpen] = useState(false)
 
+   const handleCardModalOpen = () => setShareModalOpen(true)
+   const handleCardModalClose = () => {
+      setShareModalOpen(false)
+   }
    //===================Starts apply job============
    // get the job-apply data
    useEffect(() => {
@@ -221,110 +228,119 @@ const JobTitleCard = ({ data, companyData }: Props) => {
    //===================Ends bookmark jobs============
 
    return (
-      <Card
-         sx={{
-            borderRadius: 2,
-            p: 2
-         }}>
-         <Grid container spacing={4} alignItems={"center"}>
-            <Grid item xs={12} sm={8}>
-               <Stack
-                  direction={{
-                     sm: "row",
-                     xs: "column"
-                  }}
-                  alignItems={"center"}
-                  gap={4}>
-                  {logo && (
-                     <Avatar
-                        src={logo}
-                        alt={companyName || "company-logo"}
-                        sx={{
-                           width: 100,
-                           height: 100,
-                           fontWeight: 700
-                        }}>
-                        {companyName?.charAt(0) || ""}
-                     </Avatar>
-                  )}
+      <Fragment>
+         <Card
+            sx={{
+               borderRadius: 2,
+               p: 2
+            }}>
+            <Grid container spacing={4} alignItems={"center"}>
+               <Grid item xs={12} sm={8}>
+                  <Stack
+                     direction={{
+                        sm: "row",
+                        xs: "column"
+                     }}
+                     alignItems={"center"}
+                     gap={4}>
+                     {logo && (
+                        <Avatar
+                           src={logo}
+                           alt={companyName || "company-logo"}
+                           sx={{
+                              width: 100,
+                              height: 100,
+                              fontWeight: 700
+                           }}>
+                           {companyName?.charAt(0) || ""}
+                        </Avatar>
+                     )}
 
-                  <Stack spacing={2}>
-                     <Stack spacing={1}>
-                        {title && (
+                     <Stack spacing={2}>
+                        <Stack spacing={1}>
+                           {title && (
+                              <Typography
+                                 variant={"h4"}
+                                 fontWeight={700}
+                                 fontSize={24}
+                                 sx={{
+                                    color: (theme) => theme.palette.text.primary
+                                 }}>
+                                 {title}
+                              </Typography>
+                           )}
+                           {categoryName && (
+                              <Typography
+                                 variant={"body1"}
+                                 fontWeight={400}
+                                 fontSize={14}
+                                 sx={{
+                                    color: (theme) => theme.palette.text.disabled
+                                 }}>
+                                 {categoryName}
+                              </Typography>
+                           )}
+                        </Stack>
+                        {/* social-share  */}
+                        <Stack
+                           direction={{
+                              xs: "column",
+                              md: "row"
+                           }}
+                           gap={4}
+                           display={"flex"}
+                           alignItems={"center"}>
                            <Typography
-                              variant={"h4"}
+                              variant={"h1"}
                               fontWeight={700}
-                              fontSize={24}
-                              sx={{
-                                 color: (theme) => theme.palette.text.primary
-                              }}>
-                              {title}
-                           </Typography>
-                        )}
-                        {categoryName && (
-                           <Typography
-                              variant={"body1"}
-                              fontWeight={400}
                               fontSize={14}
                               sx={{
                                  color: (theme) => theme.palette.text.disabled
                               }}>
-                              {categoryName}
+                              Share on
                            </Typography>
-                        )}
-                     </Stack>
-                     {/* social-share  */}
-                     <Stack
-                        direction={{
-                           xs: "column",
-                           md: "row"
-                        }}
-                        gap={4}
-                        display={"flex"}
-                        alignItems={"center"}>
-                        <Typography
-                           variant={"h1"}
-                           fontWeight={700}
-                           fontSize={14}
-                           sx={{
-                              color: (theme) => theme.palette.text.disabled
-                           }}>
-                           Share on
-                        </Typography>
-                        <Stack
-                           direction={"row"}
-                           gap={2}
-                           display={"flex"}
-                           justifyContent={"center"}
-                           alignItems={"center"}
-                           component={"span"}>
-                           <Box
-                              sx={{
-                                 p: 1,
-                                 borderRadius: 50,
-                                 borderColor: (theme) => theme.palette.divider,
-                                 borderWidth: 1,
-                                 borderStyle: "solid",
-                                 "&:hover": {
-                                    bgcolor: (theme) => theme.palette.divider
-                                 }
-                              }}>
-                              <CIcon icon={"ri:facebook-fill"} size={20} />
-                           </Box>
-                           <Box
-                              sx={{
-                                 p: 1,
-                                 borderRadius: 50,
-                                 borderColor: (theme) => theme.palette.divider,
-                                 borderWidth: 1,
-                                 borderStyle: "solid",
-                                 "&:hover": {
-                                    bgcolor: (theme) => theme.palette.divider
-                                 }
-                              }}>
-                              <CIcon icon={"mdi:twitter"} size={20} />
-                           </Box>
-                           <Box
+                           <Stack
+                              direction={"row"}
+                              gap={2}
+                              display={"flex"}
+                              justifyContent={"center"}
+                              alignItems={"center"}
+                              component={"span"}>
+                              {/* facebook share link */}
+                              <FacebookShareButton url={`${process.env.NEXT_PUBLIC_BASE_URL}/job/${data?.slug}`}>
+                                 <Box
+                                    sx={{
+                                       p: 1,
+                                       borderRadius: 50,
+                                       borderColor: (theme) => theme.palette.divider,
+                                       borderWidth: 1,
+                                       borderStyle: "solid",
+                                       "&:hover": {
+                                          bgcolor: (theme) => theme.palette.divider
+                                       }
+                                    }}>
+                                    <CIcon icon={"ri:facebook-fill"} size={20} />
+                                 </Box>
+                              </FacebookShareButton>
+                              {/* twitter share link */}
+                              <TwitterShareButton
+                                 url={`${process.env.NEXT_PUBLIC_BASE_URL}/job/${data?.slug}`}
+                                 title={data?.title || ""}>
+                                 <Box
+                                    sx={{
+                                       p: 1,
+                                       borderRadius: 50,
+                                       borderColor: (theme) => theme.palette.divider,
+                                       borderWidth: 1,
+                                       borderStyle: "solid",
+                                       "&:hover": {
+                                          bgcolor: (theme) => theme.palette.divider
+                                       }
+                                    }}>
+                                    <CIcon icon={"mdi:twitter"} size={20} />
+                                 </Box>
+                              </TwitterShareButton>
+                              {/* <Box
                               sx={{
                                  p: 1,
                                  borderRadius: 50,
@@ -336,126 +352,140 @@ const JobTitleCard = ({ data, companyData }: Props) => {
                                  }
                               }}>
                               <CIcon icon={"mdi:instagram"} size={20} />
-                           </Box>
-                           <Box
-                              sx={{
-                                 p: 1,
-                                 borderRadius: 50,
-                                 borderColor: (theme) => theme.palette.divider,
-                                 borderWidth: 1,
-                                 borderStyle: "solid",
-                                 "&:hover": {
-                                    bgcolor: (theme) => theme.palette.divider
-                                 }
-                              }}>
-                              <CIcon icon={"akar-icons:linkedin-fill"} size={20} />
-                           </Box>
-                           <Box
-                              sx={{
-                                 p: 1,
-                                 borderRadius: 50,
-                                 borderColor: (theme) => theme.palette.divider,
-                                 borderWidth: 1,
-                                 borderStyle: "solid",
-                                 "&:hover": {
-                                    bgcolor: (theme) => theme.palette.divider
-                                 }
-                              }}>
-                              <CIcon icon={"solar:share-bold"} size={20} />
-                           </Box>
+                           </Box> */}
+                              {/* linkedin share link */}
+                              <LinkedinShareButton
+                                 url={`${process.env.NEXT_PUBLIC_BASE_URL}/job/${data?.slug}`}
+                                 source={`Metajob`}
+                                 title={data?.title || ""}
+                                 summary={data?.title || ""}>
+                                 <Box
+                                    sx={{
+                                       p: 1,
+                                       borderRadius: 50,
+                                       borderColor: (theme) => theme.palette.divider,
+                                       borderWidth: 1,
+                                       borderStyle: "solid",
+                                       "&:hover": {
+                                          bgcolor: (theme) => theme.palette.divider
+                                       }
+                                    }}>
+                                    <CIcon icon={"akar-icons:linkedin-fill"} size={20} />
+                                 </Box>
+                              </LinkedinShareButton>
+                              {/* More Share button  */}
+                              <Box
+                                 onClick={() => {
+                                    handleCardModalOpen()
+                                 }}
+                                 sx={{
+                                    cursor: "pointer",
+                                    p: 1,
+                                    borderRadius: 50,
+                                    borderColor: (theme) => theme.palette.divider,
+                                    borderWidth: 1,
+                                    borderStyle: "solid",
+                                    "&:hover": {
+                                       bgcolor: (theme) => theme.palette.divider
+                                    }
+                                 }}>
+                                 <CIcon icon={"solar:share-bold"} size={20} />
+                              </Box>
+                           </Stack>
                         </Stack>
                      </Stack>
                   </Stack>
-               </Stack>
-            </Grid>
-            {/* buttons  */}
-            <Grid
-               item
-               xs={12}
-               sm={4}
-               sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 5,
-                  justifyContent: "space-between"
-               }}>
-               {bookmarkLoading ? (
-                  <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
-                     <IconButton color='primary'>
-                        <CircularProgress
-                           size={20}
+               </Grid>
+               {/* buttons  */}
+               <Grid
+                  item
+                  xs={12}
+                  sm={4}
+                  sx={{
+                     display: "flex",
+                     flexDirection: "column",
+                     gap: 5,
+                     justifyContent: "space-between"
+                  }}>
+                  {bookmarkLoading ? (
+                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                        <IconButton color='primary'>
+                           <CircularProgress
+                              size={20}
+                              sx={{
+                                 color: (theme) => theme.palette.primary.main
+                              }}
+                           />
+                        </IconButton>
+                     </Stack>
+                  ) : (
+                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                        {isBookmarked ? (
+                           <IconButton onClick={jobBookmarkHandler} color='primary'>
+                              <CIcon
+                                 icon='mdi:heart'
+                                 size={24}
+                                 sx={{
+                                    cursor: "pointer",
+                                    color: "primary.main"
+                                 }}
+                              />
+                           </IconButton>
+                        ) : (
+                           <IconButton onClick={jobBookmarkHandler} color='primary'>
+                              <CIcon
+                                 icon='mdi:heart-outline'
+                                 size={24}
+                                 color='text.primary'
+                                 sx={{
+                                    color: "primary.main",
+                                    cursor: "pointer"
+                                 }}
+                              />
+                           </IconButton>
+                        )}
+                     </Stack>
+                  )}
+                  <Stack display={"flex"} alignItems={"flex-end"} gap={1}>
+                     {isApplied ? (
+                        <Button
+                           disabled
+                           size='small'
                            sx={{
-                              color: (theme) => theme.palette.primary.main
+                              py: 1,
+                              width: {
+                                 sm: 150,
+                                 xs: "100%"
+                              }
                            }}
-                        />
-                     </IconButton>
-                  </Stack>
-               ) : (
-                  <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
-                     {isBookmarked ? (
-                        <IconButton onClick={jobBookmarkHandler} color='primary'>
-                           <CIcon
-                              icon='mdi:heart'
-                              size={24}
-                              sx={{
-                                 cursor: "pointer",
-                                 color: "primary.main"
-                              }}
-                           />
-                        </IconButton>
+                           variant='contained'
+                           color='primary'>
+                           Applied
+                        </Button>
                      ) : (
-                        <IconButton onClick={jobBookmarkHandler} color='primary'>
-                           <CIcon
-                              icon='mdi:heart-outline'
-                              size={24}
-                              color='text.primary'
-                              sx={{
-                                 color: "primary.main",
-                                 cursor: "pointer"
-                              }}
-                           />
-                        </IconButton>
+                        <LoadingButton
+                           onClick={jobApplyHandler}
+                           loading={applyLoading}
+                           // loadingPosition='start'
+                           size='small'
+                           sx={{
+                              py: 1,
+                              width: {
+                                 sm: 150,
+                                 xs: "100%"
+                              }
+                           }}
+                           variant='contained'
+                           color='primary'>
+                           {applyLoading ? "Checking" : "Apply Now"}
+                        </LoadingButton>
                      )}
                   </Stack>
-               )}
-               <Stack display={"flex"} alignItems={"flex-end"} gap={1}>
-                  {isApplied ? (
-                     <Button
-                        disabled
-                        size='small'
-                        sx={{
-                           py: 1,
-                           width: {
-                              sm: 150,
-                              xs: "100%"
-                           }
-                        }}
-                        variant='contained'
-                        color='primary'>
-                        Applied
-                     </Button>
-                  ) : (
-                     <LoadingButton
-                        onClick={jobApplyHandler}
-                        loading={applyLoading}
-                        // loadingPosition='start'
-                        size='small'
-                        sx={{
-                           py: 1,
-                           width: {
-                              sm: 150,
-                              xs: "100%"
-                           }
-                        }}
-                        variant='contained'
-                        color='primary'>
-                        {applyLoading ? "Checking" : "Apply Now"}
-                     </LoadingButton>
-                  )}
-               </Stack>
+               </Grid>
             </Grid>
-         </Grid>
-      </Card>
+         </Card>
+         <ShareModal open={shareModalOpen} handleClose={handleCardModalClose} title='More Share Options' data={data} />
+      </Fragment>
    )
 }
 
