@@ -252,7 +252,7 @@ const CustomAppBar = ({
                                           }
                                           changeLang(lang?.link)
                                           window.location.reload()
-                                       } else if (lang?.link === "en" || lang?.link === "es") {
+                                       } else {
                                           if (changeDirection) {
                                              changeDirection("ltr")
                                           }

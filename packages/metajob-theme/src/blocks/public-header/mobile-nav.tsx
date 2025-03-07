@@ -109,7 +109,7 @@ const MobileNav = ({ open, setOpen, changeLang, changeDirection, lang, headerDat
                                     }
                                     changeLang(lang?.link)
                                     window.location.reload()
-                                 } else if (lang?.link === "en" || lang?.link === "es") {
+                                 } else {
                                     if (changeDirection) {
                                        changeDirection("ltr")
                                     }
