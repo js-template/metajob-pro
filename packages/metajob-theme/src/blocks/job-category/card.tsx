@@ -4,11 +4,8 @@ import NextLink from "next/link"
 import _ from "lodash"
 import { Box, Container, Grid, Stack, Typography, Button, useTheme } from "@mui/material"
 import { CardItem } from "./item"
-import { ICategoryCardBlock, ISingleCategory, IUserSession } from "./types"
+import { ICategoryCardBlock, ISingleCategory } from "./types"
 import { SectionTitle } from "../../components/section-title"
-import useSWR from "swr"
-import { fetcher } from "./hook"
-import CardItemLoader from "./loader"
 
 type Props = {
    block: ICategoryCardBlock
@@ -22,24 +19,6 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
    const { content, empty, style, button } = block || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
    const { label, link } = button || {}
-
-   //===================Starts fetching category data============
-   // const categoryQueryParams = {
-   //    populate: {
-   //       image: {
-   //          fields: ["url"]
-   //       }
-   //    },
-   //    fields: ["title"]
-   //    // locale: language ?? ["en"]
-   // }
-   // const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
-   // const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
-   // const { data: categories, isLoading: categoryIsLoading } = useSWR(categoryAPiUrl, fetcher, {
-   //    fallbackData: []
-   // })
-   // const categoryData = categories?.data
-   //===================Ends fetching category data============
 
    return (
       <Stack bgcolor={backgroundColor ? backgroundColor : theme.palette.background.default}>
@@ -59,16 +38,6 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
                   </Grid>
                )}
 
-               {/* loader */}
-               {/* {!categories && categoryIsLoading && (
-                  <Grid container spacing={2}>
-                     {[...Array(12)]?.map((_, index) => (
-                        <Grid item xs={mobile || 12} sm={4} md={tab || 3} lg={desktop || 2} key={index}>
-                           <CardItemLoader />
-                        </Grid>
-                     ))}
-                  </Grid>
-               )} */}
                {/* empty data */}
                {categoryData && categoryData?.length == 0 && (
                   <Grid container justifyContent={"center"} spacing={2}>

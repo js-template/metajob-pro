@@ -2,23 +2,19 @@
 import NextLink from "next/link"
 import { useTheme } from "next-themes"
 import _ from "lodash"
-
 import { Box, Button, Container, Grid, Stack, Typography, useTheme as muiTheme } from "@mui/material"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
-
-import JobCardLoader from "./loader"
-import { IJobCardBlock, IUserSession } from "./types"
+import { IJobCardBlock, ISingleJob } from "./types"
 import { SectionTitle } from "../../components/section-title"
 import { JobItem } from "../../components/cards/job-item"
 
 type Props = {
    block: IJobCardBlock
-   data?: any
    language?: string
-   session?: IUserSession | null | any
+   JobsData?: ISingleJob[]
 }
 
-export const JobCardClient = ({ block, JobsData }: { block: any; JobsData: any }) => {
+export const JobCardClient = ({ block, JobsData }: Props) => {
    const { theme: mode } = useTheme()
    const theme = muiTheme()
 
@@ -33,11 +29,10 @@ export const JobCardClient = ({ block, JobsData }: { block: any; JobsData: any }
             <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
                {content && <SectionTitle data={content} />}
-               {JobsData && JobsData?.data?.length > 0 && (
+               {JobsData && JobsData?.length > 0 && (
                   <Grid container spacing={2}>
-                     {_.map(JobsData?.data, (item) => (
+                     {_.map(JobsData, (item) => (
                         <Grid key={item?.id} item xs={mobile || 12} sm={tab || 6} md={desktop || 3}>
-                           {/* <CardItem data={item} /> */}
                            <JobItem data={item} />
                         </Grid>
                      ))}
@@ -45,7 +40,7 @@ export const JobCardClient = ({ block, JobsData }: { block: any; JobsData: any }
                )}
 
                {/* empty data */}
-               {JobsData?.data?.length == 0 && (
+               {JobsData?.length == 0 && (
                   <Grid container justifyContent={"center"} spacing={2}>
                      <Stack
                         sx={{

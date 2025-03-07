@@ -1,7 +1,6 @@
 "use client"
 import * as React from "react"
 import _ from "lodash"
-import useSWR, { KeyedMutator } from "swr"
 import { Controller, useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import {
@@ -26,14 +25,15 @@ import { hexToRGBA } from "../../lib/hex-to-rgba"
 import CIcon from "../../components/common/icon"
 import MDEditor from "@uiw/react-md-editor"
 import { LoadingButton } from "@mui/lab"
-import { fetcher, getSocialLik } from "./hook"
-import { ICompanyFillData, IJobCategory } from "./types"
+import { getSocialLik } from "./hook"
+import { ICompanyAttribute, ICompanyFillData, IJobCategory } from "./types"
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
       children: React.ReactElement<any, any>
    },
-   ref: React.Ref<unknown>
+   // ref: React.Ref<unknown>
+   ref: any
 ) {
    return <Slide direction='up' ref={ref} {...props} />
 })
@@ -42,11 +42,22 @@ type EditCompanyProps = {
    open: boolean
    handleClose: () => void
    companyDocID: string
-   mutate: KeyedMutator<any>
+   handleMute: () => void
+   companyAttributes?: ICompanyAttribute
 }
 
-export default function EditCompany({ open, handleClose, companyDocID, mutate }: EditCompanyProps) {
+export default function EditCompany({
+   open,
+   handleClose,
+   companyDocID,
+   handleMute,
+   companyAttributes
+}: EditCompanyProps) {
    const theme = useTheme()
+
+   // attributes data destructuring
+   const { categoryData, companySizesData, revenuesData, avgSalaryData } = companyAttributes || {}
+
    const [loading, setLoading] = React.useState(false)
    const [isLogoRemove, setIsLogoRemove] = React.useState(false)
    const [companyData, setCompanyData] = React.useState<ICompanyFillData | null>(null)
@@ -155,7 +166,7 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
             const { data: uploadLogoData, error: uploadLogoError } = await uploadImage(formData)
 
             if (uploadLogoError) {
-               mutate()
+               handleMute()
                handleClose()
                return toast.error("Failed to upload image")
             }
@@ -181,11 +192,11 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                })
             }
 
-            mutate()
+            handleMute()
             toast.success("Company Updated Successfully")
             handleClose()
          } else {
-            mutate()
+            handleMute()
             toast.success("Company Updated Successfully")
             handleClose()
          }
@@ -254,43 +265,6 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [open])
-
-   // fetch job-category data
-   const categoryQueryParams = {
-      fields: ["title"]
-   }
-   const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
-   const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
-   const { data: categoryData, isLoading: categoryIsLoading } = useSWR(categoryAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch company-size data
-   const companySizesQueryParams = {
-      fields: ["title"]
-   }
-   const companySizesQueryString = encodeURIComponent(JSON.stringify(companySizesQueryParams))
-   const companySizesAPiUrl = `/api/find?model=api/metajob-backend/company-sizes&query=${companySizesQueryString}`
-   const { data: companySizesData, isLoading: companySizesIsLoading } = useSWR(companySizesAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch revenues data
-   const revenuesQueryParams = {
-      fields: ["title"]
-   }
-   const revenuesQueryString = encodeURIComponent(JSON.stringify(revenuesQueryParams))
-   const revenuesAPiUrl = `/api/find?model=api/metajob-backend/revenues&query=${revenuesQueryString}`
-   const { data: revenuesData, isLoading: revenuesIsLoading } = useSWR(revenuesAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch avg-salary data
-   const avgSalaryString = encodeURIComponent(JSON.stringify({}))
-   const avgSalaryAPiUrl = `/api/find?model=api/metajob-backend/avg-salaries&query=${avgSalaryString}`
-   const { data: avgSalaryData, isLoading: avgSalaryIsLoading } = useSWR(avgSalaryAPiUrl, fetcher, {
-      fallbackData: []
-   })
 
    return (
       <Dialog
@@ -909,7 +883,6 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                            variant='outlined'
                            id='company-industry'
                            size='small'
-                           placeholder='Select Category'
                            {...register("industry", {
                               required: "Company Industry is required"
                            })}
@@ -957,7 +930,6 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                            variant='outlined'
                            id='company-size'
                            size='small'
-                           placeholder='Select Company Size'
                            {...register("company_size", {
                               required: "Company Size is required"
                            })}
@@ -1006,7 +978,6 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                            variant='outlined'
                            id='revenues'
                            size='small'
-                           placeholder='Select Revenue'
                            {...register("revenue")}
                            defaultValue={watch("revenue") || ""}
                            value={watch("revenue") || ""}
@@ -1052,7 +1023,6 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                            id='resume-salary'
                            displayEmpty
                            size='small'
-                           placeholder='Average Salary'
                            {...register("avg_salary", {
                               required: "Salary is required"
                            })}
@@ -1062,14 +1032,13 @@ export default function EditCompany({ open, handleClose, companyDocID, mutate }:
                            <MenuItem disabled value=''>
                               Select Average Salary
                            </MenuItem>
-                           {avgSalaryData?.length > 0 &&
-                              avgSalaryData?.map(
-                                 (expItem: { documentId: string; title: string; value: string }, index: number) => (
-                                    <MenuItem key={index} value={expItem?.documentId}>
-                                       {expItem?.title}
-                                    </MenuItem>
-                                 )
-                              )}
+                           {avgSalaryData &&
+                              avgSalaryData?.length > 0 &&
+                              avgSalaryData?.map((expItem: IJobCategory, index: number) => (
+                                 <MenuItem key={index} value={expItem?.documentId}>
+                                    {expItem?.title}
+                                 </MenuItem>
+                              ))}
                         </Select>
                      </Grid>
                      {/* Facebook Url */}

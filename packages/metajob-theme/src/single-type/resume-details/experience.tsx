@@ -1,5 +1,4 @@
 "use client"
-
 import { Fragment } from "react/jsx-runtime"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Box, Chip, Grid, LinearProgress, Skeleton, Typography, useTheme } from "@mui/material"
@@ -33,7 +32,12 @@ const ExperienceSection = ({ experienceData, isLoading }: Props) => {
    ) : (
       <Box>
          {experienceData?.length === 0 && (
-            <Typography fontSize={16} fontWeight={400} color={(theme) => theme.palette.text.disabled}>
+            <Typography
+               fontSize={16}
+               fontWeight={400}
+               sx={{
+                  color: (theme) => theme.palette.text.disabled
+               }}>
                No experience data added
             </Typography>
          )}
@@ -44,7 +48,9 @@ const ExperienceSection = ({ experienceData, isLoading }: Props) => {
                   fontSize={20}
                   fontWeight={700}
                   mb={1.5}
-                  color={(theme) => theme.palette.text.primary}
+                  sx={{
+                     color: (theme) => theme.palette.text.primary
+                  }}
                   textAlign={"left"}>
                   Experience
                </Typography>
@@ -62,7 +68,12 @@ const ExperienceSection = ({ experienceData, isLoading }: Props) => {
                         }
                      }}>
                      <Grid item xs={12} md={3}>
-                        <Typography fontSize={20} fontWeight={500} color={(theme) => theme.palette.text.primary}>
+                        <Typography
+                           fontSize={20}
+                           fontWeight={500}
+                           sx={{
+                              color: (theme) => theme.palette.text.primary
+                           }}>
                            {experienceData?.length > 1 && index + 1 + "."} {item?.title}
                         </Typography>
                         <Chip

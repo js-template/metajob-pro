@@ -52,14 +52,18 @@ const CardItem = ({ data }: { data: ISinglePost }) => {
             />
          </Box>
          <Stack spacing={1}>
-            <Typography fontSize={14} fontWeight={400} color={(theme) => theme.palette.text.disabled}>
+            <Typography fontSize={14} fontWeight={400} 
+sx={{
+ color: (theme) => theme.palette.text.disabled,
+}}>
                {moment(publishedAt).format("DD MMMM YYYY")}
             </Typography>
             <Typography
                fontSize={20}
                fontWeight={700}
-               color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}
                sx={{
+                  
+                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9),
                   "&:hover": {
                      color: (theme) => theme.palette.primary.main,
                      cursor: "pointer",
@@ -72,7 +76,10 @@ const CardItem = ({ data }: { data: ISinglePost }) => {
                {title}
             </Typography>
          </Stack>
-         <Typography fontSize={16} fontWeight={400} color={(theme) => theme.palette.text.disabled}>
+         <Typography fontSize={16} fontWeight={400} 
+sx={{
+ color: (theme) => theme.palette.text.disabled,
+}}>
             {short_description}
          </Typography>
          <Button

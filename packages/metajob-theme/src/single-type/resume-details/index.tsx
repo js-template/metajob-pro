@@ -1,98 +1,50 @@
-"use client"
-
-import { useParams } from "next/navigation"
-import useSWR from "swr"
-import { Container, Grid, Stack } from "@mui/material"
-import ProfileSection from "./profile"
-import DetailsSection from "./details"
-import { Card } from "../../components/common/card"
-import PageHeader from "../../components/common/public-page-header"
-import { resumeFetcher } from "./hook"
+"use server"
+import { findOne } from "../../lib/strapi"
+import ResumeDetailsClient from "./resume-details"
 import { IResumeDetailsBlock, ISingleResume } from "./types"
 
-export const ResumeDetails = ({
-   data,
-   language,
-   block
-}: {
+type Props = {
    data: ISingleResume
    language?: string
    block: IResumeDetailsBlock
-}) => {
-   const params = useParams<{ slug: string; item: string }>()
-   const pageSlug = params.slug as string
-   const itemSlug = params.item as string
+}
 
-   const { title, empty } = block
-
-   const queryParams = {
-      filters: {
-         slug: {
-            $eq: itemSlug
-         }
-      },
-      // populate: "*",
-      populate: {
-         user: {
-            populate: {
-               avatar: {
-                  fields: ["url"]
+export const ResumeDetails = async ({ data, block, language }: Props) => {
+   // fetch resumes-data
+   const resumeDocID = data?.documentId
+   const { data: resumeDataAll } = await findOne(
+      "api/metajob-backend/resumes",
+      resumeDocID,
+      {
+         populate: {
+            user: {
+               populate: {
+                  avatar: {
+                     fields: ["url"]
+                  }
                }
+            },
+            experience: {
+               populate: "*"
+            },
+            education: {
+               populate: "*"
+            },
+            portfolio: {
+               populate: "*"
+            },
+            experience_time: {
+               populate: "*"
+            },
+            category: {
+               populate: "*"
             }
          },
-         experience: {
-            populate: "*"
-         },
-         education: {
-            populate: "*"
-         },
-         portfolio: {
-            populate: "*"
-         },
-         experience_time: {
-            populate: "*"
-         },
-         category: {
-            populate: "*"
-         }
+         publicationState: "live",
+         locale: language ?? ["en"]
       },
-      publicationState: "live",
-      locale: language ?? ["en"]
-   }
-
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-backend/resumes&query=${queryString}&cache=no-store`
-
-   const {
-      data: resumeData,
-      error: resumeError,
-      isLoading
-   } = useSWR(apiUrl, resumeFetcher, {
-      fallback: data
-   })
-
-   return (
-      <Stack>
-         <PageHeader title={title || "Candidate Profile"} />
-         <Container maxWidth='lg' sx={{ py: 6 }}>
-            <Grid container spacing={4}>
-               <Grid item xs={12} md={4}>
-                  <ProfileSection data={resumeData} />
-               </Grid>
-               <Grid item xs={12} md={8}>
-                  <Card
-                     sx={{
-                        p: 3,
-                        borderRadius: 2
-                     }}>
-                     <DetailsSection data={resumeData} isLoading={isLoading} />
-                  </Card>
-               </Grid>
-            </Grid>
-         </Container>
-      </Stack>
+      "no-store"
    )
+
+   return <ResumeDetailsClient block={block} data={resumeDataAll?.data} language={language} />
 }

@@ -2,13 +2,12 @@
 import * as React from "react"
 import Dialog from "@mui/material/Dialog"
 import Slide from "@mui/material/Slide"
+import _ from "lodash"
+import toast from "react-hot-toast"
 import { TransitionProps } from "@mui/material/transitions"
-import { KeyedMutator } from "swr"
 import { formProps } from "@/types/forms"
 import DynamicForm from "../../form"
 import { findOne, updateOne, uploadImage } from "../../lib/strapi"
-import _ from "lodash"
-import toast from "react-hot-toast"
 import { urlToFile } from "../../lib/urlToFile"
 
 const Transition = React.forwardRef(function Transition(
@@ -25,18 +24,10 @@ type EditCompanyProps = {
    handleClickOpen: () => void
    handleClose: () => void
    companyDocID: string
-   mutate: KeyedMutator<any>
    formData: formProps
 }
 
-export default function EditCompany({
-   open,
-   handleClickOpen,
-   handleClose,
-   companyDocID,
-   mutate,
-   formData
-}: EditCompanyProps) {
+export default function EditCompany({ open, handleClickOpen, handleClose, companyDocID, formData }: EditCompanyProps) {
    const [loading, setLoading] = React.useState(false)
    const [companyData, setCompanyData] = React.useState<{
       id: number
@@ -163,22 +154,21 @@ export default function EditCompany({
          }
 
          setLoading(false)
-         await mutate().finally(() => {
-            toast.success("Company Updated Successfully", {
-               icon: "🚀"
-            })
-            handleClose()
-         })
-         return true
-      }
+         // await mutate()
 
-      await mutate().finally(() => {
-         setLoading(false)
-         toast.error("Company Updated Successfully", {
+         toast.success("Company Updated Successfully", {
             icon: "🚀"
          })
          handleClose()
+         return true
+      }
+
+      // await mutate()
+      setLoading(false)
+      toast.error("Company Updated Successfully", {
+         icon: "🚀"
       })
+      handleClose()
 
       return true
    }

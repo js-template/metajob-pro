@@ -1,6 +1,12 @@
 export type IPrivateHeaderProps = {
    block: IPrivateHeaderBlock
    language?: string
+   userData?: {
+      id: number
+      avatar?: {
+         url: string
+      }
+   }
 }
 
 export type IPrivateHeaderBlock = {

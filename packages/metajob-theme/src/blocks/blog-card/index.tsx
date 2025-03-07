@@ -1,6 +1,8 @@
 "use server"
+import { Suspense } from "react"
 import { find } from "../../lib/strapi"
 import { BlogCardClient } from "./card"
+import BlogCardLoader from "./loader"
 import { IPostBlock } from "./types"
 
 type Props = {
@@ -28,5 +30,9 @@ export const BlogCard = async ({ block, data, language }: Props) => {
       "no-store"
    )
 
-   return <BlogCardClient block={block} recentBlogs={recentBlogsAll?.data} data={data} />
+   return (
+      <Suspense fallback={<BlogCardLoader />}>
+         <BlogCardClient block={block} recentBlogs={recentBlogsAll?.data} data={data} />
+      </Suspense>
+   )
 }

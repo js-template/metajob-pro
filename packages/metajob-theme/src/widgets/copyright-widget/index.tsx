@@ -27,8 +27,12 @@ export const CopyrightWidget = ({ block }: Props) => {
             <Typography
                fontSize={16}
                fontWeight={400}
-               color={(theme) => theme.palette.primary.contrastText}
-               textAlign='center'>
+              
+               textAlign='center'
+               sx={{
+                  color:(theme) => theme.palette.primary.contrastText
+               }}
+               >
                {content}
             </Typography>
             {social_link && social_link?.length > 0 && (

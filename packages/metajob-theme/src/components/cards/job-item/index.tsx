@@ -71,8 +71,8 @@ export const JobItem = ({ data }: Props) => {
             bgcolor: theme.palette.background.paper
          }}
          spacing={2}>
-         {type && (
-            <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"} gap={1}>
+         <Stack direction={"row"} justifyContent={type ? "space-between" : "flex-end"} alignItems={"center"} gap={1}>
+            {type && (
                <Card
                   sx={{
                      bgcolor: getTagsColor(type?.title, theme),
@@ -85,17 +85,17 @@ export const JobItem = ({ data }: Props) => {
                      {type?.title}
                   </Typography>
                </Card>
-               {is_featured && (
-                  <CIcon
-                     icon='ic:round-star'
-                     size={24}
-                     sx={{
-                        color: theme.palette.primary.main
-                     }}
-                  />
-               )}
-            </Stack>
-         )}
+            )}
+            {is_featured && (
+               <CIcon
+                  icon='ic:round-star'
+                  size={24}
+                  sx={{
+                     color: theme.palette.primary.main
+                  }}
+               />
+            )}
+         </Stack>
          <Stack
             sx={{
                justifyContent: "center",

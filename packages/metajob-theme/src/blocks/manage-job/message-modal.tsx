@@ -4,13 +4,11 @@ import React, { useEffect, useState } from "react"
 import { Box, IconButton, Typography, useTheme, Modal, Stack, TextField, CircularProgress } from "@mui/material"
 import CIcon from "../../components/common/icon"
 import { useForm } from "react-hook-form"
-import { createEntry } from "../../lib/strapi"
+import { createEntry, find } from "../../lib/strapi"
 import toast from "react-hot-toast"
 import { LoadingButton } from "@mui/lab"
 import { IJobApplyData } from "./types"
 import { useSession } from "next-auth/react"
-import useSWR, { mutate } from "swr"
-import { fetcher } from "./hook"
 
 type Props = {
    open: boolean
@@ -46,37 +44,67 @@ export const MessageModal = ({ open, handleClose, title, modalData }: Props) => 
       }
    })
 
-   const queryParams = {
-      populate: "*",
-      filters: {
-         sender: {
-            id: {
-               $eq: userId || undefined
-            }
-         },
-         receiver: {
-            documentId: {
-               $eq: candidateDocId || undefined
-            }
-         },
-         job: {
-            documentId: {
-               $eq: jobDocId || undefined
-            }
+   const [sessionData, setSessionData] = useState<{ documentId: string }[]>([])
+   const [sessionLoading, setSessionLoading] = useState(false)
+   const [isMute, setIsMute] = useState(false)
+
+   const isMessaged = sessionData?.length > 0 || messageIdentifier
+   const messageListData = sessionData?.[0]
+
+   const handleMute = () => {
+      setIsMute(!isMute)
+   }
+
+   //  fetch chat session data
+   useEffect(() => {
+      const getSessionData = async () => {
+         setSessionLoading(true)
+         const { data: sessionDataAll, error: sessionError } = await find(
+            "api/metajob-backend/chats",
+            {
+               populate: "*",
+               filters: {
+                  sender: {
+                     id: {
+                        $eq: userId || undefined
+                     }
+                  },
+                  receiver: {
+                     documentId: {
+                        $eq: candidateDocId || undefined
+                     }
+                  },
+                  job: {
+                     documentId: {
+                        $eq: jobDocId || undefined
+                     }
+                  }
+               }
+            },
+            "no-store"
+         )
+         if (!sessionError) {
+            setSessionData(sessionDataAll?.data)
+            setSessionLoading(false)
+         } else {
+            setSessionData([])
+            setSessionLoading(false)
          }
       }
-   }
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   // Construct the API URL
-   const apiUrl = userId ? `/api/find?model=api/metajob-backend/chats&query=${queryString}&cache=no-store` : null
-   const { data: messageListMain, error, isLoading: messageIsLoading } = useSWR(apiUrl, fetcher)
-   // check the job is applied
-   const isMessaged = messageListMain?.length > 0 || messageIdentifier
-   const messageListData = messageListMain?.[0]
+      if (userId) {
+         if (!userId) return
+         getSessionData()
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId, candidateDocId, jobDocId, isMute])
 
    // *** message send function handler ***
    const onSubmit = async (data: any) => {
       try {
+         if (sessionLoading) {
+            return toast.error("Please wait for the data load")
+         }
          setLoading(true)
          // if already message session
          if (isMessaged) {
@@ -162,7 +190,7 @@ export const MessageModal = ({ open, handleClose, title, modalData }: Props) => 
                } else {
                   setMessageIdentifier(true)
                   handleClose()
-                  mutate(apiUrl)
+                  handleMute()
                   toast.success("Message Sent!")
                }
             }

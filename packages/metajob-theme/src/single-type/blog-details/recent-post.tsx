@@ -3,39 +3,16 @@ import Link from "next/link"
 import Image from "next/image"
 import moment from "moment"
 import _ from "lodash"
-import useSWR from "swr"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Box, Stack, Typography } from "@mui/material"
 import { Card } from "../../components/common/card"
-import { fetcher } from "./hook"
 import { ISinglePost } from "./types"
 
-const RecentPost = ({ language }: { language?: string }) => {
-   const queryParams = {
-      populate: {
-         featuredImage: {
-            fields: ["url"]
-         }
-      },
-      fields: ["title", "slug", "publishedAt"], // Fields to include in the response
-      pagination: {
-         pageSize: 3, //fetch 3 recent post
-         page: 1
-      },
-      publicationState: "live",
-      locale: language ?? ["en"]
-   }
-
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/padma-backend/posts&query=${queryString}&cache=no-store`
-   // fetch related list data
-   const { data: recentBlogsData, error: blogsError, isLoading } = useSWR(apiUrl, fetcher)
-   const recentBlogs = recentBlogsData?.data
-
-   return (
+type Props = {
+   recentBlogsData?: ISinglePost[]
+}
+const RecentPost = ({ recentBlogsData }: Props) => {
+   return recentBlogsData && recentBlogsData?.length > 0 ? (
       <Card
          sx={{
             p: 2,
@@ -45,12 +22,17 @@ const RecentPost = ({ language }: { language?: string }) => {
             borderColor: (theme) => theme.palette.divider
          }}>
          <Stack spacing={4}>
-            <Typography fontSize={20} fontWeight={700} color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}>
+            <Typography
+               fontSize={20}
+               fontWeight={700}
+               sx={{
+                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+               }}>
                Latest Post
             </Typography>
-            {recentBlogs && recentBlogs?.length > 0 && (
+            {recentBlogsData && recentBlogsData?.length > 0 && (
                <Stack>
-                  {_.map(recentBlogs, (item: ISinglePost) => {
+                  {_.map(recentBlogsData, (item: ISinglePost) => {
                      return (
                         <Stack key={item?.id} gap={2} direction={"row"} alignItems='center'>
                            <Box
@@ -76,8 +58,8 @@ const RecentPost = ({ language }: { language?: string }) => {
                               <Typography
                                  fontSize={18}
                                  fontWeight={700}
-                                 color={(theme) => hexToRGBA(theme.palette.text.primary, 0.9)}
                                  sx={{
+                                    color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9),
                                     "&:hover": {
                                        color: (theme) => theme.palette.primary.main,
                                        cursor: "pointer",
@@ -89,7 +71,12 @@ const RecentPost = ({ language }: { language?: string }) => {
                                  href={`/blog/${item?.slug}`}>
                                  {item?.title}
                               </Typography>
-                              <Typography fontSize={14} fontWeight={400} color={(theme) => theme.palette.text.disabled}>
+                              <Typography
+                                 fontSize={14}
+                                 fontWeight={400}
+                                 sx={{
+                                    color: (theme) => theme.palette.text.disabled
+                                 }}>
                                  {/* {item.datePosted} */}
                                  {moment(item?.publishedAt).format("DD MMMM YYYY")}
                               </Typography>
@@ -101,6 +88,8 @@ const RecentPost = ({ language }: { language?: string }) => {
             )}
          </Stack>
       </Card>
+   ) : (
+      <></>
    )
 }
 

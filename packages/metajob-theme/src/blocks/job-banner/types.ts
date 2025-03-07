@@ -29,23 +29,3 @@ type UserRole = {
    createdAt: Date
    updatedAt: Date
 }
-
-type User = {
-   name: string
-   email: string
-   id: string
-   role: UserRole
-   username: string
-   provider: string
-   confirmed: boolean
-   blocked: boolean
-   createdAt: Date
-   updatedAt: Date
-   jwtToken: string
-   membership: string | null
-}
-
-export type IUserSession = {
-   user: User
-   expires: Date
-}

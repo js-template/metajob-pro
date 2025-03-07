@@ -1,11 +1,8 @@
 "use client"
-
-import useSWR from "swr"
 import { Button, Divider, FormControl, MenuItem, Select, Stack, TextField, Typography } from "@mui/material"
 import _ from "lodash"
 import { Card } from "../../components/common/card"
-import { categoryFetcher } from "./hook"
-import { ICandidateFilterProps } from "./types"
+import { ICandidateFilterProps, ISingleCategory } from "./types"
 
 type Props = {
    search: {
@@ -18,25 +15,17 @@ type Props = {
    setFilterFormData: (data: ICandidateFilterProps) => void
    //handleSubmitForm: (e: React.FormEvent<HTMLFormElement>) => void;
    loading: boolean
+   categoryData?: ISingleCategory[]
 }
 
-export default function CandidateFilterSection({ search, loading, filterFormData, setFilterFormData }: Props) {
+export default function CandidateFilterSection({
+   search,
+   loading,
+   filterFormData,
+   setFilterFormData,
+   categoryData
+}: Props) {
    const { title: searchTitle, search_placeholder, category_placeholder, button_placeholder } = search || {}
-
-   //===================Starts fetching category data============
-   const categoryQueryParams = {
-      fields: ["title", "slug"]
-   }
-   const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
-   const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
-   const {
-      data: categoryData,
-      error: categoryError,
-      isLoading: categoryIsLoading
-   } = useSWR(categoryAPiUrl, categoryFetcher, {
-      fallbackData: []
-   })
-   //===================Ends fetching category data============
 
    return (
       <Card
@@ -46,14 +35,19 @@ export default function CandidateFilterSection({ search, loading, filterFormData
          }}>
          <Stack spacing={2} pb={3}>
             <Stack px={3} pt={2} direction={"row"} justifyItems={"center"} justifyContent={"space-between"}>
-               <Typography fontSize={16} fontWeight={700} color={(theme) => theme.palette.text.primary}>
+               <Typography
+                  fontSize={16}
+                  fontWeight={700}
+                  sx={{
+                     color: (theme) => theme.palette.text.primary
+                  }}>
                   {searchTitle}
                </Typography>
                <Typography
                   fontSize={16}
                   fontWeight={700}
-                  color={(theme) => theme.palette.text.primary}
                   sx={{
+                     color: (theme) => theme.palette.text.primary,
                      cursor: "pointer",
                      display:
                         filterFormData?.search ||

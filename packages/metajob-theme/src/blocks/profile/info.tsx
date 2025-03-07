@@ -137,11 +137,11 @@ export const ProfileInfo = ({ userData: data }: Props) => {
             <Typography
                fontSize={{ xs: 18, md: 24 }}
                fontWeight={700}
-               color={(theme) => theme.palette.text.primary}
                sx={{
                   borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
                   py: 2,
-                  px: 4
+                  px: 4,
+                  color: (theme) => theme.palette.text.primary
                }}>
                My Profile
             </Typography>
@@ -228,7 +228,6 @@ export const ProfileInfo = ({ userData: data }: Props) => {
                                           <CIcon icon={"solar:phone-outline"} size={16} color='primary.main' />
                                        </Box>
                                        <Typography
-                                          color={(theme) => theme.palette.text.secondary}
                                           sx={{
                                              fontSize: { xs: "14px", md: "18px" },
                                              fontWeight: 500,

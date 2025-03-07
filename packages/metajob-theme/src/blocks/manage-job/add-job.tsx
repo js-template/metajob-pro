@@ -4,7 +4,6 @@ import _ from "lodash"
 import toast from "react-hot-toast"
 import { useForm } from "react-hook-form"
 import MDEditor from "@uiw/react-md-editor"
-import useSWR, { KeyedMutator } from "swr"
 import {
    Box,
    CircularProgress,
@@ -18,21 +17,23 @@ import {
 } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
-import { IJobCategory } from "./types"
+import { IJobAttribute, IJobCategory } from "./types"
 import { createEntry, find } from "../../lib/strapi"
 import CIcon from "../../components/common/icon"
-import { fetcher } from "./hook"
 
 type addListProps = {
    handleClose: () => void
    userId?: number
-   mutate: KeyedMutator<any>
+   handleMute: () => void
+   jobAttributes?: IJobAttribute
 }
 
-const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
+const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps) => {
    const theme = useTheme()
-   const [loading, setLoading] = React.useState(false)
+   //  destructure job Attributes data
+   const { companyData, categoryData, skillsData, jobTypesData } = jobAttributes || {}
 
+   const [loading, setLoading] = React.useState(false)
    const {
       handleSubmit,
       register,
@@ -113,7 +114,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
          if (error) {
             return toast.error(message || "Failed to create list")
          } else {
-            mutate()
+            handleMute()
             toast.success("Successfully created!")
             handleClose()
          }
@@ -123,51 +124,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
          setLoading(false)
       }
    }
-
-   // fetch company data
-   const queryParams = {
-      filters: {
-         owner: {
-            id: userId
-         }
-      },
-      fields: ["name"]
-   }
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-backend/companies&query=${queryString}&cache=no-store`
-   const { data: companyData, isLoading: companyIsLoading } = useSWR(apiUrl, fetcher)
-
-   // fetch job-category data
-   const categoryQueryParams = {
-      fields: ["title"]
-   }
-   const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
-   const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
-   const { data: categoryData, isLoading: categoryIsLoading } = useSWR(categoryAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch job-skills data
-   const skillsQueryParams = {
-      fields: ["title"]
-   }
-   const skillsQueryString = encodeURIComponent(JSON.stringify(skillsQueryParams))
-   const skillsAPiUrl = `/api/find?model=api/metajob-backend/skills&query=${skillsQueryString}`
-   const { data: skillsData, isLoading: skillsIsLoading } = useSWR(skillsAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch job-type data
-   const jobTypesQueryParams = {
-      fields: ["title"]
-   }
-   const jobTypesQueryString = encodeURIComponent(JSON.stringify(jobTypesQueryParams))
-   const jobTypesAPiUrl = `/api/find?model=api/metajob-backend/job-types&query=${jobTypesQueryString}`
-   const { data: jobTypesData, isLoading: jobTypesIsLoading } = useSWR(jobTypesAPiUrl, fetcher, {
-      fallbackData: []
-   })
 
    return (
       <Box
@@ -280,7 +236,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            {...register("company", {
                               required: "Job Company is required"
                            })}
-                           defaultValue={watch("company") || ""}
+                           value={watch("company") || ""}
                            error={Boolean(errors.company)}>
                            <MenuItem disabled value=''>
                               Select Company
@@ -701,7 +657,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            {...register("category", {
                               required: "Job Category is required"
                            })}
-                           defaultValue={watch("category") || ""}
+                           value={watch("category") || ""}
                            error={Boolean(errors.category)}>
                            <MenuItem disabled value=''>
                               Select Category
@@ -747,7 +703,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            id='revenues'
                            size='small'
                            {...register("type")}
-                           defaultValue={watch("type") || ""}
+                           value={watch("type") || ""}
                            error={Boolean(errors.type)}>
                            <MenuItem disabled value=''>
                               Select Job Type
@@ -793,7 +749,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            id='skills'
                            size='small'
                            {...register("skills")}
-                           defaultValue={watch("skills") || ""}
+                           value={watch("skills") || ""}
                            error={Boolean(errors.skills)}>
                            <MenuItem disabled value=''>
                               Select Job Skill

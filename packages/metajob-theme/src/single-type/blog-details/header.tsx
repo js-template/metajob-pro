@@ -51,7 +51,10 @@ const BlogHeader = ({ bg, title }: Props) => {
                   fontWeight={{ sm: 700, xs: 600 }}
                   variant={"h1"}
                   maxWidth={800}
-                  color={(theme) => theme.palette.primary.contrastText}>
+                  sx={{
+                     color: (theme) => theme.palette.primary.contrastText
+                   }}
+                  >
                   {title}
                </Typography>
             )}

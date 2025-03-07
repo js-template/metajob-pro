@@ -27,7 +27,9 @@ const BlogContent = ({ data }: { data: ISinglePost }) => {
             <Typography
                fontWeight={400}
                fontSize={14}
-               color={(theme) => theme.palette.primary.contrastText}
+               sx={{
+                  color: (theme) =>theme.palette.primary.contrastText
+                }}
                bgcolor={(theme) => theme.palette.primary.main}
                borderRadius={1.5}
                px={1}
@@ -47,12 +49,16 @@ const BlogContent = ({ data }: { data: ISinglePost }) => {
                   {username.charAt(0).toUpperCase()}
                </Avatar>
                {username && (
-                  <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.primary}>
+                  <Typography fontWeight={400} fontSize={16}   sx={{
+                     color: (theme) => theme.palette.text.primary
+                   }}>
                      {username}
                   </Typography>
                )}
                {publishedAt && (
-                  <Typography fontWeight={400} fontSize={16} color={(theme) => theme.palette.text.primary}>
+                  <Typography fontWeight={400} fontSize={16}   sx={{
+                     color: (theme) => theme.palette.text.primary
+                   }}>
                      {moment(publishedAt).format("DD MMMM YYYY")}
                   </Typography>
                )}

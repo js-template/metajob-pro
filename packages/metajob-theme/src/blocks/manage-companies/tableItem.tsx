@@ -1,31 +1,34 @@
 "use client"
-import { Box, IconButton, Stack, TableCell, TableRow, Typography } from "@mui/material"
-import Image from "next/image"
-import { Fragment, useState } from "react"
-import CIcon, { SpinnersClock } from "../../components/common/icon"
-import _ from "lodash"
 import Link from "next/link"
-import { deleteEntry } from "../../lib/strapi"
-import toast from "react-hot-toast"
-import { KeyedMutator } from "swr"
+import Image from "next/image"
 import dynamic from "next/dynamic"
+import { Fragment, useState } from "react"
+import _ from "lodash"
+import toast from "react-hot-toast"
+import { Box, IconButton, Stack, TableCell, TableRow, Typography } from "@mui/material"
+import CIcon, { SpinnersClock } from "../../components/common/icon"
+import { deleteEntry } from "../../lib/strapi"
 import { getValueFromWebsite } from "./hook"
-import { ISingleCompany } from "./types"
+import { ICompanyAttribute, ISingleCompany } from "./types"
 const EditCompany = dynamic(() => import("./edit-company"))
+
+type Props = {
+   row: ISingleCompany
+   direction: "ltr" | "rtl"
+   selectAll: boolean
+   noteFunctionHandler: () => void
+   handleMute: () => void
+   companyAttributes?: ICompanyAttribute
+}
 
 const ManageCompaniesTableItem = ({
    row,
    selectAll,
    noteFunctionHandler,
    direction,
-   mutate
-}: {
-   row: ISingleCompany
-   direction: "ltr" | "rtl"
-   selectAll: boolean
-   noteFunctionHandler: () => void
-   mutate: KeyedMutator<any>
-}) => {
+   handleMute,
+   companyAttributes
+}: Props) => {
    const [show, setShow] = useState(false)
    const [loading, setLoading] = useState(false)
 
@@ -56,9 +59,8 @@ const ManageCompaniesTableItem = ({
             throw new Error(error)
          }
          // Set success message after successful deletion
-         mutate().finally(() => {
-            toast.success("Successfully deleted!")
-         })
+         handleMute()
+         toast.success("Successfully deleted!")
       } catch (err: any) {
          toast.error(err.message || "An error occurred during deletion")
       } finally {
@@ -150,7 +152,13 @@ const ManageCompaniesTableItem = ({
             </TableCell>
          </TableRow>
          {/*  Edit Company */}
-         <EditCompany open={show} handleClose={handleClose} companyDocID={documentId} mutate={mutate} />
+         <EditCompany
+            open={show}
+            handleClose={handleClose}
+            companyDocID={documentId}
+            handleMute={handleMute}
+            companyAttributes={companyAttributes}
+         />
       </Fragment>
    )
 }

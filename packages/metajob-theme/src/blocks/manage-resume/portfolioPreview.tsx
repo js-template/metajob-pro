@@ -1,10 +1,10 @@
-import { Fragment } from "react"
+"use client"
 import NextLink from "next/link"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Box, Chip, Grid, LinearProgress, Paper, Skeleton, Typography, useTheme } from "@mui/material"
 
 type Props = {
-   portfolioData: {
+   portfolioData?: {
       title: string
       description: string
       link: {
@@ -35,18 +35,25 @@ const PortfolioPreview = ({ portfolioData, isLoading }: Props) => {
    ) : (
       <Box>
          {portfolioData?.length === 0 && (
-            <Typography fontSize={16} fontWeight={400} color={(theme) => theme.palette.text.disabled}>
+            <Typography
+               fontSize={16}
+               fontWeight={400}
+               sx={{
+                  color: (theme) => theme.palette.text.disabled
+               }}>
                No portfolio data added
             </Typography>
          )}
 
-         {portfolioData?.length > 0 && (
-            <Fragment>
+         {portfolioData && portfolioData?.length > 0 && (
+            <>
                <Typography
                   fontSize={20}
                   fontWeight={700}
                   mb={1.5}
-                  color={(theme) => theme.palette.text.primary}
+                  sx={{
+                     color: (theme) => theme.palette.text.primary
+                  }}
                   textAlign={"left"}>
                   Portfolio
                </Typography>
@@ -72,7 +79,12 @@ const PortfolioPreview = ({ portfolioData, isLoading }: Props) => {
                               borderStyle: "solid",
                               boxShadow: "none"
                            }}>
-                           <Typography fontSize={20} fontWeight={500} color={(theme) => theme.palette.text.primary}>
+                           <Typography
+                              fontSize={20}
+                              fontWeight={500}
+                              sx={{
+                                 color: (theme) => theme.palette.text.primary
+                              }}>
                               {portfolioData?.length > 1 && index + 1 + "."} {item?.title}
                            </Typography>
                            {item?.link && (
@@ -102,7 +114,7 @@ const PortfolioPreview = ({ portfolioData, isLoading }: Props) => {
                      </Grid>
                   ))}
                </Grid>
-            </Fragment>
+            </>
          )}
       </Box>
    )
