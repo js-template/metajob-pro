@@ -15,7 +15,8 @@ const ManageListsTable = ({
    empty,
    pageSize,
    blockData,
-   jobAttributes
+   jobAttributes,
+   jobCount
 }: {
    headCells: { value: string }[]
    data: IJobData[]
@@ -25,6 +26,10 @@ const ManageListsTable = ({
    empty?: {
       title: string
       description: string
+   }
+   jobCount?: {
+      total: number
+      featured: number
    }
    pageSize: number
    jobAttributes?: IJobAttribute
@@ -90,6 +95,7 @@ const ManageListsTable = ({
                                  blockData={blockData}
                                  handleMute={handleMute}
                                  jobAttributes={jobAttributes}
+                                 jobCount={jobCount}
                                  noteFunctionHandler={() => {
                                     toast.error("Note function not implemented yet")
                                  }}

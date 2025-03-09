@@ -13,6 +13,7 @@ import { AccessError } from "../../shared/error-table"
 import { IJobAttribute, IJobData, IManageJobBock } from "./types"
 import AddJob from "./add-job"
 import { find } from "../../lib/strapi"
+import { getFeaturedCount } from "./hook"
 
 type Props = {
    block: IManageJobBock
@@ -51,20 +52,25 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
    })
    const [addList, setAddList] = useState(false)
    const [search, setSearch] = useState("")
-   const [listsData, setListsData] = useState<IJobData[]>([])
+   const [jobsData, setJobsData] = useState<IJobData[]>([])
    const [isLoading, setIsLoading] = useState(false)
+   const [jobCount, setJobCount] = useState({
+      total: 0,
+      featured: 0
+   })
    const [isMute, setIsMute] = useState(false)
 
    //  fetch jobs from db
    useEffect(() => {
       const getJobsData = async () => {
          setIsLoading(true)
-         const { data: jobsDataAll, error: resumeError } = await find(
+         const { data: jobsDataAll, error: jobError } = await find(
             "api/metajob-backend/jobs",
             {
                populate: {
                   applications: { count: true }
                },
+               sort: ["createdAt:desc"],
                pagination: {
                   page: pagination.page,
                   pageSize: pagination.pageSize,
@@ -96,12 +102,21 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
             },
             "no-store"
          )
-         if (!resumeError) {
-            setListsData(jobsDataAll?.data)
+         if (!jobError) {
+            setJobsData(jobsDataAll?.data)
             setPagination(jobsDataAll?.meta?.pagination)
+            const featuredJobCount = getFeaturedCount(jobsDataAll?.data)
+            setJobCount({
+               total: jobsDataAll?.data?.length || 0,
+               featured: featuredJobCount || 0
+            })
             setIsLoading(false)
          } else {
-            setListsData([])
+            setJobsData([])
+            setJobCount({
+               total: 0,
+               featured: 0
+            })
             setIsLoading(false)
          }
       }
@@ -241,13 +256,14 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
                   {/* Table */}
                   <ManageListsTable
                      headCells={tableHeader}
-                     data={listsData}
+                     data={jobsData}
                      blockData={block}
                      handleMute={handleMute}
                      isLoading={isLoading}
                      empty={empty}
                      pageSize={pagination.pageSize}
                      jobAttributes={jobAttributes}
+                     jobCount={jobCount}
                   />
 
                   {/* Box Footer */}

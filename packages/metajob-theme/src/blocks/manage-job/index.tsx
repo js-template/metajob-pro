@@ -57,11 +57,28 @@ export const ManageJobs = async ({ block, language }: Props) => {
       "no-store"
    )
 
+   // fetch membership data
+   const { data: packageDataAll } = await find(
+      "api/metajob-backend/memberships",
+      {
+         populate: "*",
+         filters: {
+            owner: {
+               id: userId
+            }
+         },
+         publicationState: "live",
+         locale: language ?? ["en"]
+      },
+      "no-store"
+   )
+
    const jobAttributes = {
       companyData: companyAll?.data,
       categoryData: jobCategoryAll?.data,
       skillsData: skillsDataAll?.data,
-      jobTypesData: jobTypesDataAll?.data
+      jobTypesData: jobTypesDataAll?.data,
+      userPackage: packageDataAll?.data
    }
 
    return <ManageJobsClient block={block} language={language} jobAttributes={jobAttributes} />
