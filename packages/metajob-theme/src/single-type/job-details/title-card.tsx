@@ -11,6 +11,7 @@ import { ISingleCompany, ISingleJob } from "./types"
 import { createEntry, deleteEntry, find } from "../../lib/strapi"
 import { FacebookShareButton, LinkedinShareButton, TwitterShareButton } from "react-share"
 import { ShareModal } from "./share-modal"
+import ApplyJobModal from "./apply-job-modal"
 
 type Props = {
    data: ISingleJob
@@ -36,11 +37,18 @@ const JobTitleCard = ({ data, companyData }: Props) => {
    const [bookmarkIdentifier, setBookmarkIdentifier] = useState(false)
    const [bookmarkData, setBookmarkData] = useState<{ documentId: string }[] | []>([])
    const [shareModalOpen, setShareModalOpen] = useState(false)
+   const [applyJobModalOpen, setApplyJobModalOpen] = useState(false)
 
    const handleCardModalOpen = () => setShareModalOpen(true)
    const handleCardModalClose = () => {
       setShareModalOpen(false)
    }
+
+   const handleApplyJobModalOpen = () => setApplyJobModalOpen(true)
+   const handleApplyJobModalClose = () => {
+      setApplyJobModalOpen(false)
+   }
+
    //===================Starts apply job============
    // get the job-apply data
    useEffect(() => {
@@ -84,7 +92,7 @@ const JobTitleCard = ({ data, companyData }: Props) => {
    const isApplied = applyData?.length > 0 || applyIdentifier
 
    // apply job handler
-   const jobApplyHandler = async () => {
+   const jobApplyHandler = async (letterValue?: string) => {
       try {
          if (!session) {
             return toast.error("Please login to apply for this job")
@@ -100,6 +108,7 @@ const JobTitleCard = ({ data, companyData }: Props) => {
             job: {
                connect: [documentId]
             },
+            cover_letter: letterValue || "",
             apply_status: "Pending"
          }
          const {
@@ -116,6 +125,7 @@ const JobTitleCard = ({ data, companyData }: Props) => {
 
          if (applyData) {
             setApplyIdentifier(true)
+            handleApplyJobModalClose()
             return toast.success("Job Applied Successfully")
          }
       } catch (err: any) {
@@ -464,7 +474,7 @@ const JobTitleCard = ({ data, companyData }: Props) => {
                         </Button>
                      ) : (
                         <LoadingButton
-                           onClick={jobApplyHandler}
+                           onClick={handleApplyJobModalOpen}
                            loading={applyLoading}
                            // loadingPosition='start'
                            size='small'
@@ -485,6 +495,14 @@ const JobTitleCard = ({ data, companyData }: Props) => {
             </Grid>
          </Card>
          <ShareModal open={shareModalOpen} handleClose={handleCardModalClose} title='More Share Options' data={data} />
+         <ApplyJobModal
+            open={applyJobModalOpen}
+            handleClose={handleApplyJobModalClose}
+            jobApplyHandler={jobApplyHandler}
+            applyLoading={applyLoading}
+            title='Apply Job'
+            data={data}
+         />
       </Fragment>
    )
 }
