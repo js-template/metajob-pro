@@ -26,12 +26,17 @@ type addListProps = {
    userId?: number
    handleMute: () => void
    jobAttributes?: IJobAttribute
+   jobCount?: {
+      total: number
+      featured: number
+   }
 }
 
-const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps) => {
+const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount }: addListProps) => {
    const theme = useTheme()
    //  destructure job Attributes data
-   const { companyData, categoryData, skillsData, jobTypesData, jobExperienceData } = jobAttributes || {}
+   const { companyData, categoryData, skillsData, jobTypesData, jobExperienceData, userPackage } = jobAttributes || {}
+   const create_ads_limit = userPackage?.[0]?.user_plan?.create_ads_limit || 0
 
    const [loading, setLoading] = React.useState(false)
    const {
@@ -62,6 +67,10 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps
    // *** handle form submit
    const handleFromSubmit = async (data: { [key: string]: any }) => {
       try {
+         if (jobCount?.total && jobCount?.total >= create_ads_limit) {
+            return toast.error("Limit filled, please update package.")
+         }
+
          setLoading(true)
          // ?? check if slug is already exist
          const { data: slugData } = await find(

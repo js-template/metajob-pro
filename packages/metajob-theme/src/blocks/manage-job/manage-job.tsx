@@ -156,6 +156,7 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
                   userId={userId}
                   handleMute={handleMute}
                   jobAttributes={jobAttributes}
+                  jobCount={jobCount}
                />
             ) : (
                <Box

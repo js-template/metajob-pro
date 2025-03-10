@@ -40,7 +40,7 @@ const TableItem = ({
    }
 }) => {
    const { userPackage } = jobAttributes || {}
-   const create_ads_limit = userPackage?.[0]?.user_plan?.create_ads_limit || 0
+
    const ads_boost_limit = userPackage?.[0]?.user_plan?.ads_boost_limit || 0
 
    const { title, slug, publishedAt, job_status, is_featured, applications, endDate, documentId } = job || {}
