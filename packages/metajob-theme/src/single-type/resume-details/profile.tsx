@@ -1,19 +1,129 @@
 "use client"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
-import { Avatar, Box, Button, Divider, Stack, Typography } from "@mui/material"
+import { Avatar, Box, Button, CircularProgress, Divider, IconButton, Stack, Typography } from "@mui/material"
 import _ from "lodash"
 import moment from "moment"
 import { useTheme } from "next-themes"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
 import { ISingleResume } from "./types"
+import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
+import { createEntry, deleteEntry, find } from "../../lib/strapi"
 
 export default function ProfileSection({ data }: { data: ISingleResume }) {
    const { theme: mode } = useTheme()
-   const { name, user, tagline, category, experience_time, contact, createdAt } = data || {}
+   const { documentId, name, user, tagline, category, experience_time, contact, createdAt } = data || {}
    const image = user?.avatar?.url || ""
    const industry = category?.title || ""
    const location = contact?.location || ""
+
+   const { data: session } = useSession()
+   const userId = session?.user?.id
+
+   const [bookmarkLoading, setBookmarkLoading] = useState(false)
+   const [bookmarkData, setBookmarkData] = useState<{ documentId: string }[] | []>([])
+   const [bookmarkIdentifier, setBookmarkIdentifier] = useState(false)
+
+   //===================Starts bookmark resume============
+   // get the bookmark data
+   useEffect(() => {
+      const getBookmark = async () => {
+         setBookmarkLoading(true)
+         const { data: bookmarkDataAll, error: bookmarkError } = await find(
+            "api/metajob-backend/bookmarks",
+            {
+               filters: {
+                  owner: {
+                     id: {
+                        $eq: userId || undefined
+                     }
+                  },
+                  resume: {
+                     id: {
+                        $eq: data?.id || undefined
+                     }
+                  }
+               },
+               populate: "*"
+            },
+            "no-store"
+         )
+         if (!bookmarkError) {
+            setBookmarkData(bookmarkDataAll?.data)
+            setBookmarkLoading(false)
+         } else {
+            setBookmarkData([])
+            setBookmarkLoading(false)
+         }
+      }
+      if (userId) {
+         if (!data?.id) return
+         getBookmark()
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId, bookmarkIdentifier])
+
+   const isBookmarked = bookmarkData?.length > 0 || bookmarkIdentifier
+   // bookmark handler
+   const resumeBookmarkHandler = async () => {
+      try {
+         if (!session) {
+            return toast.error("Please login to bookmark")
+         }
+
+         if (isBookmarked) {
+            if (!bookmarkData?.[0]?.documentId) {
+               return toast.error("Please wait to load bookmark status")
+            }
+            setBookmarkLoading(true)
+            const bookmarkDocId = bookmarkData?.[0]?.documentId
+            const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId)
+
+            if (error) {
+               return toast.error(error?.message || "Something went wrong")
+            }
+
+            if (success) {
+               setBookmarkIdentifier(false)
+               return toast.success("Bookmarked Removed")
+            }
+         } else {
+            const inputData = {
+               type: "resume",
+               owner: {
+                  id: session?.user?.id
+               },
+               resume: {
+                  connect: [documentId]
+               }
+            }
+            const {
+               data: bookmarkData,
+               error,
+               message
+            } = await createEntry("metajob-backend/bookmarks", {
+               data: inputData
+            })
+
+            if (error) {
+               return toast.error(message || "Something went wrong")
+            }
+
+            if (bookmarkData) {
+               setBookmarkIdentifier(true)
+               return toast.success("Bookmarked Successfully")
+            }
+         }
+      } catch (err: any) {
+         return toast.error(err.message || "An Error Occurred")
+      } finally {
+         setBookmarkLoading(false)
+      }
+   }
+   //===================Ends bookmark resume============
 
    return (
       <Card
@@ -22,19 +132,60 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
             borderRadius: 2
          }}>
          <Stack spacing={2}>
-            <Typography
-               fontWeight={400}
-               fontSize={14}
-               sx={{
-                  color: (theme) => theme.palette.primary.contrastText
+            <Stack display={"flex"} direction={"row"} alignItems={"center"} justifyContent={"space-between"} gap={1}>
+               <Typography
+                  fontWeight={400}
+                  fontSize={14}
+                  sx={{
+                     color: (theme) => theme.palette.primary.contrastText
                   }}
-               bgcolor={(theme) => theme.palette.primary.main}
-               borderRadius={1.5}
-               px={1}
-               py={0.5}
-               width={"fit-content"}>
-               Open To Work
-            </Typography>
+                  bgcolor={(theme) => theme.palette.primary.main}
+                  borderRadius={1.5}
+                  px={1}
+                  py={0.5}
+                  width={"fit-content"}>
+                  Open To Work
+               </Typography>
+               {bookmarkLoading ? (
+                  <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                     <IconButton color='primary'>
+                        <CircularProgress
+                           size={20}
+                           sx={{
+                              color: (theme) => theme.palette.primary.main
+                           }}
+                        />
+                     </IconButton>
+                  </Stack>
+               ) : (
+                  <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                     {isBookmarked ? (
+                        <IconButton onClick={resumeBookmarkHandler} color='primary'>
+                           <CIcon
+                              icon='mdi:heart'
+                              size={24}
+                              sx={{
+                                 cursor: "pointer",
+                                 color: "primary.main"
+                              }}
+                           />
+                        </IconButton>
+                     ) : (
+                        <IconButton onClick={resumeBookmarkHandler} color='primary'>
+                           <CIcon
+                              icon='mdi:heart-outline'
+                              size={24}
+                              color='text.primary'
+                              sx={{
+                                 color: "primary.main",
+                                 cursor: "pointer"
+                              }}
+                           />
+                        </IconButton>
+                     )}
+                  </Stack>
+               )}
+            </Stack>
             <Stack justifyContent={"center"} alignItems={"center"} spacing={2}>
                {/* avatar  */}
                <Box
@@ -65,7 +216,7 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                         fontSize={24}
                         sx={{
                            color: (theme) => theme.palette.text.primary
-                         }}
+                        }}
                         textAlign={"center"}>
                         {name}
                      </Typography>
@@ -76,7 +227,7 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                         fontSize={16}
                         sx={{
                            color: (theme) => theme.palette.text.disabled
-                           }}
+                        }}
                         textAlign={"center"}>
                         {tagline}
                      </Typography>
@@ -119,18 +270,20 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                         <CIcon icon={"bytesize:work"} size={24} color='primary.main' />
                      </Box>
                      <Stack>
-                        <Typography fontWeight={500} fontSize={14} 
+                        <Typography
+                           fontWeight={500}
+                           fontSize={14}
                            sx={{
                               color: (theme) => theme.palette.text.primary
-                             }}
-                           >
+                           }}>
                            Industry
                         </Typography>
-                        <Typography fontWeight={400} fontSize={16}
+                        <Typography
+                           fontWeight={400}
+                           fontSize={16}
                            sx={{
                               color: (theme) => theme.palette.text.disabled
-                             }}
-                             >
+                           }}>
                            {industry}
                         </Typography>
                      </Stack>
@@ -147,17 +300,20 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                         <CIcon icon={"ri:award-line"} size={24} color='primary.main' />
                      </Box>
                      <Stack>
-                        <Typography fontWeight={500} fontSize={14} 
-                             sx={{
+                        <Typography
+                           fontWeight={500}
+                           fontSize={14}
+                           sx={{
                               color: (theme) => theme.palette.text.primary
-                            }}
-                           >
+                           }}>
                            Experience
                         </Typography>
-                        <Typography fontWeight={400} fontSize={16} 
-                         sx={{
-                           color: (theme) => theme.palette.text.disabled
-                        }}>
+                        <Typography
+                           fontWeight={400}
+                           fontSize={16}
+                           sx={{
+                              color: (theme) => theme.palette.text.disabled
+                           }}>
                            {experience_time?.title}
                         </Typography>
                      </Stack>
@@ -174,14 +330,20 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                         <CIcon icon={"ph:map-pin"} size={24} color='primary.main' />
                      </Box>
                      <Stack>
-                        <Typography fontWeight={500} fontSize={14}    sx={{
-     color: (theme) => theme.palette.text.primary
-   }}>
+                        <Typography
+                           fontWeight={500}
+                           fontSize={14}
+                           sx={{
+                              color: (theme) => theme.palette.text.primary
+                           }}>
                            Location
                         </Typography>
-                        <Typography fontWeight={400} fontSize={16} sx={{
-color: (theme) => theme.palette.text.disabled
-}}>
+                        <Typography
+                           fontWeight={400}
+                           fontSize={16}
+                           sx={{
+                              color: (theme) => theme.palette.text.disabled
+                           }}>
                            {location}
                         </Typography>
                      </Stack>
@@ -198,18 +360,20 @@ color: (theme) => theme.palette.text.disabled
                         <CIcon icon={"uil:calender"} size={24} color='primary.main' />
                      </Box>
                      <Stack>
-                        <Typography fontWeight={500} fontSize={14} 
-                            sx={{
+                        <Typography
+                           fontWeight={500}
+                           fontSize={14}
+                           sx={{
                               color: (theme) => theme.palette.text.primary
-                             }}
-                           >
+                           }}>
                            Member Since
                         </Typography>
-                        <Typography fontWeight={400} fontSize={16} 
+                        <Typography
+                           fontWeight={400}
+                           fontSize={16}
                            sx={{
                               color: (theme) => theme.palette.text.disabled
-                             }}
-                           >
+                           }}>
                            {moment(createdAt).format("DD MMMM YYYY")}
                         </Typography>
                      </Stack>
