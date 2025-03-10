@@ -1,27 +1,131 @@
 "use client"
 import NextLink from "next/link"
-import { Avatar, Box, Grid, Stack, Typography } from "@mui/material"
+import { Avatar, Box, CircularProgress, Grid, IconButton, Stack, Typography } from "@mui/material"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
 import { ISingleCompany } from "./types"
 import { getSocialLink } from "./hook"
+import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
+import toast from "react-hot-toast"
+import { createEntry, deleteEntry, find } from "../../lib/strapi"
 
 type Props = {
    data: ISingleCompany
 }
 
 const CompanyHeader = ({ data }: Props) => {
-   const { logo, name, email, phone, tagline, website, social_links } = data || {}
+   const { data: session } = useSession()
+   const userId = session?.user?.id
+
+   const { documentId, logo, name, email, phone, tagline, website, social_links } = data || {}
    const companyLogo = logo?.url || ""
 
    const facebook = getSocialLink("facebook", social_links)
    const twitter = getSocialLink("twitter", social_links)
 
-   // const CompanyBookmarkHandler = () => {
-   //    if (!session) {
-   //       toast.error("Please login to bookmark")
-   //    }
-   // }
+   const [bookmarkLoading, setBookmarkLoading] = useState(false)
+   const [bookmarkData, setBookmarkData] = useState<{ documentId: string }[] | []>([])
+   const [bookmarkIdentifier, setBookmarkIdentifier] = useState(false)
+
+   //===================Starts bookmark company============
+   // get the bookmark data
+   useEffect(() => {
+      const getBookmark = async () => {
+         setBookmarkLoading(true)
+         const { data: bookmarkDataAll, error: bookmarkError } = await find(
+            "api/metajob-backend/bookmarks",
+            {
+               filters: {
+                  owner: {
+                     id: {
+                        $eq: userId || undefined
+                     }
+                  },
+                  company: {
+                     id: {
+                        $eq: data?.id || undefined
+                     }
+                  }
+               },
+               populate: "*"
+            },
+            "no-store"
+         )
+         if (!bookmarkError) {
+            setBookmarkData(bookmarkDataAll?.data)
+            setBookmarkLoading(false)
+         } else {
+            setBookmarkData([])
+            setBookmarkLoading(false)
+         }
+      }
+      if (userId) {
+         if (!data?.id) return
+         getBookmark()
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId, bookmarkIdentifier])
+
+   const isBookmarked = bookmarkData?.length > 0 || bookmarkIdentifier
+   // bookmark handler
+   const companyBookmarkHandler = async () => {
+      try {
+         if (!session) {
+            return toast.error("Please login to bookmark")
+         }
+
+         if (isBookmarked) {
+            if (!bookmarkData?.[0]?.documentId) {
+               return toast.error("Please wait to load bookmark status")
+            }
+            setBookmarkLoading(true)
+            const bookmarkDocId = bookmarkData?.[0]?.documentId
+            const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId)
+
+            if (error) {
+               return toast.error(error?.message || "Something went wrong")
+            }
+
+            if (success) {
+               setBookmarkIdentifier(false)
+               return toast.success("Bookmarked Removed")
+            }
+         } else {
+            const inputData = {
+               type: "company",
+               owner: {
+                  id: session?.user?.id
+               },
+               company: {
+                  connect: [documentId]
+               }
+            }
+            const {
+               data: bookmarkData,
+               error,
+               message
+            } = await createEntry("metajob-backend/bookmarks", {
+               data: inputData
+            })
+
+            if (error) {
+               return toast.error(message || "Something went wrong")
+            }
+
+            if (bookmarkData) {
+               setBookmarkIdentifier(true)
+               return toast.success("Bookmarked Successfully")
+            }
+         }
+      } catch (err: any) {
+         return toast.error(err.message || "An Error Occurred")
+      } finally {
+         setBookmarkLoading(false)
+      }
+   }
+   //===================Ends bookmark company============
 
    return (
       <Card
@@ -142,18 +246,45 @@ const CompanyHeader = ({ data }: Props) => {
             </Grid>
             <Grid item xs={12} sm={4}>
                <Stack display={"flex"} alignItems={"flex-end"} gap={1.5}>
-                  {/* <CIcon
-                     onClick={CompanyBookmarkHandler}
-                     icon='mdi:heart-outline'
-                     size={24}
-                     color='text.primary'
-                     sx={{
-                        "&:hover": {
-                           color: "primary.main",
-                           cursor: "pointer"
-                        }
-                     }}
-                  /> */}
+                  {bookmarkLoading ? (
+                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                        <IconButton color='primary'>
+                           <CircularProgress
+                              size={20}
+                              sx={{
+                                 color: (theme) => theme.palette.primary.main
+                              }}
+                           />
+                        </IconButton>
+                     </Stack>
+                  ) : (
+                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                        {isBookmarked ? (
+                           <IconButton onClick={companyBookmarkHandler} color='primary'>
+                              <CIcon
+                                 icon='mdi:heart'
+                                 size={24}
+                                 sx={{
+                                    cursor: "pointer",
+                                    color: "primary.main"
+                                 }}
+                              />
+                           </IconButton>
+                        ) : (
+                           <IconButton onClick={companyBookmarkHandler} color='primary'>
+                              <CIcon
+                                 icon='mdi:heart-outline'
+                                 size={24}
+                                 color='text.primary'
+                                 sx={{
+                                    color: "primary.main",
+                                    cursor: "pointer"
+                                 }}
+                              />
+                           </IconButton>
+                        )}
+                     </Stack>
+                  )}
                   <Stack display={"flex"} alignItems={"flex-end"}>
                      {email && (
                         <Typography
