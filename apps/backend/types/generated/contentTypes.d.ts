@@ -887,6 +887,10 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText;
     endDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    experience: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::metajob-backend.experience-level'
+    >;
     is_featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     job_status: Schema.Attribute.Enumeration<['open', 'closed', 'draft']> &
       Schema.Attribute.Required &

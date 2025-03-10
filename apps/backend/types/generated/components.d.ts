@@ -921,10 +921,12 @@ export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
   attributes: {
     button_placeholder: Schema.Attribute.String;
     category_placeholder: Schema.Attribute.String;
+    experience_placeholder: Schema.Attribute.String;
     location_placeholder: Schema.Attribute.String;
     search_placeholder: Schema.Attribute.String;
     sort_placeholder: Schema.Attribute.String;
     title: Schema.Attribute.String;
+    type_placeholder: Schema.Attribute.String;
   };
 }
 
