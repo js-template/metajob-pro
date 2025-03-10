@@ -31,7 +31,7 @@ type addListProps = {
 const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps) => {
    const theme = useTheme()
    //  destructure job Attributes data
-   const { companyData, categoryData, skillsData, jobTypesData } = jobAttributes || {}
+   const { companyData, categoryData, skillsData, jobTypesData, jobExperienceData } = jobAttributes || {}
 
    const [loading, setLoading] = React.useState(false)
    const {
@@ -51,6 +51,7 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps
          price: 0,
          type: "",
          skills: "",
+         experience: "",
          category: "",
          company: ""
       }
@@ -101,6 +102,10 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps
                //check if skills is exist then connect
                ...(data?.skills && {
                   skills: { connect: [data?.skills] }
+               }),
+               //check if experience is exist then connect
+               ...(data?.experience && {
+                  experience: { connect: [data?.experience] }
                }),
                //check if job-type is exist then connect
                ...(data?.type && {
@@ -759,6 +764,52 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps
                                  return (
                                     <MenuItem key={index} value={revenueItem?.documentId}>
                                        {revenueItem?.title}
+                                    </MenuItem>
+                                 )
+                              })}
+                        </Select>
+                     </Grid>
+                     {/* Experience */}
+                     <Grid item xs={12} sm={6}>
+                        <Box
+                           component={"label"}
+                           htmlFor='experience'
+                           sx={{
+                              display: "block",
+                              fontSize: "0.875rem",
+                              fontWeight: 500,
+                              color: "text.primary",
+                              mb: 1
+                           }}>
+                           Job Experience
+                           <Typography
+                              component='span'
+                              sx={{
+                                 fontSize: 14,
+                                 color: (theme) => theme.palette.text.secondary,
+                                 ml: 0.5
+                              }}>
+                              (optional)
+                           </Typography>
+                        </Box>
+                        <Select
+                           inputProps={{ readOnly: !isCompanySelected }}
+                           displayEmpty
+                           fullWidth
+                           variant='outlined'
+                           id='experience'
+                           size='small'
+                           {...register("experience")}
+                           value={watch("experience") || ""}
+                           error={Boolean(errors.experience)}>
+                           <MenuItem disabled value=''>
+                              Select Job Experience
+                           </MenuItem>
+                           {jobExperienceData &&
+                              jobExperienceData?.map((expItem: IJobCategory, index: number) => {
+                                 return (
+                                    <MenuItem key={index} value={expItem?.documentId}>
+                                       {expItem?.title}
                                     </MenuItem>
                                  )
                               })}

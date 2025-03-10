@@ -92,6 +92,9 @@ export type IEditJobData = {
    skills: {
       documentId: string
    }[]
+   experience: {
+      documentId: string
+   }
    category: {
       documentId: string
    }
@@ -116,5 +119,6 @@ export type IJobAttribute = {
    categoryData: IJobCategory[]
    skillsData: IJobCategory[]
    jobTypesData: IJobCategory[]
+   jobExperienceData: IJobCategory[]
    userPackage: IMembership[]
 }

@@ -57,6 +57,16 @@ export const ManageJobs = async ({ block, language }: Props) => {
       "no-store"
    )
 
+   // fetch experience-level data
+   const { data: experienceDataAll } = await find(
+      "api/metajob-backend/experience-levels",
+      {
+         fields: ["title"],
+         locale: language ?? ["en"]
+      },
+      "no-store"
+   )
+
    // fetch membership data
    const { data: packageDataAll } = await find(
       "api/metajob-backend/memberships",
@@ -78,6 +88,7 @@ export const ManageJobs = async ({ block, language }: Props) => {
       categoryData: jobCategoryAll?.data,
       skillsData: skillsDataAll?.data,
       jobTypesData: jobTypesDataAll?.data,
+      jobExperienceData: experienceDataAll?.data,
       userPackage: packageDataAll?.data
    }
 
