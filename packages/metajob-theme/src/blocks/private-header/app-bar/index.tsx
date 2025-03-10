@@ -28,6 +28,7 @@ import { signOut, useSession } from "next-auth/react"
 import { useChangeDirection, useChangeLang } from "../utils"
 import { IPrivateHeaderBlock } from "../types"
 import { SignOut } from "../../../utils/user"
+import NotificationBar from "./notification-bar"
 
 interface AppBarProps extends MuiAppBarProps {
    open?: boolean
@@ -62,7 +63,8 @@ const CustomAppBar = ({
    lang,
    headerData,
    userRole,
-   userData
+   userData,
+   emailHistoryData
 }: {
    open: boolean
    handleDrawerOpen: () => void
@@ -78,6 +80,10 @@ const CustomAppBar = ({
          url: string
       }
    }
+   emailHistoryData: {
+      createdAt: string
+      title: string
+   }[]
 }) => {
    const theme = useTheme()
    const { data, status } = useSession()
@@ -303,11 +309,8 @@ const CustomAppBar = ({
                   </>
                )}
                {/* notification-button  */}
-               {notification && (
-                  <IconButton size='large' color='inherit'>
-                     <CIcon icon='tabler:bell' />
-                  </IconButton>
-               )}
+               {notification && <NotificationBar emailHistoryData={emailHistoryData} />}
+
                {/* user-menu  */}
                <Box>
                   <Tooltip title={status === "authenticated" ? "Open Settings" : "loading..."}>

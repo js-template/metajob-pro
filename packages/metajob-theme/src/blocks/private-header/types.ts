@@ -7,6 +7,10 @@ export type IPrivateHeaderProps = {
          url: string
       }
    }
+   emailHistoryData: {
+      createdAt: string
+      title: string
+   }[]
 }
 
 export type IPrivateHeaderBlock = {

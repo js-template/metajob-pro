@@ -62,5 +62,26 @@ export const PrivateHeader = async ({ block, language }: Props) => {
         )
       : {}
 
-   return <PrivateHeaderComponent block={combineBlockData} language={language} userData={userData} />
+   // fetch email-history data
+   const { data: emailHistoryAll } = await find(
+      "api/metajob-backend/email-histories",
+      {
+         filters: {
+            owner: userId
+         },
+         fields: ["title", "createdAt"]
+      },
+      "no-store"
+   )
+
+   const emailHistoryData = emailHistoryAll?.data || []
+
+   return (
+      <PrivateHeaderComponent
+         block={combineBlockData}
+         language={language}
+         userData={userData}
+         emailHistoryData={emailHistoryData}
+      />
+   )
 }
