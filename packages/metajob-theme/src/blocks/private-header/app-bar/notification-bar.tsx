@@ -96,7 +96,7 @@ const NotificationBar = ({ emailHistoryData }: Props) => {
                      key={index}>
                      <Box>
                         <TableContainer component={Box}>
-                           <Table sx={{ minWidth: 350 }} aria-label='simple table'>
+                           <Table sx={{ minWidth: { xs: "100%", md: "500px" } }} aria-label='simple table'>
                               <TableBody>
                                  <TableRow
                                     sx={{
@@ -107,8 +107,7 @@ const NotificationBar = ({ emailHistoryData }: Props) => {
                                        },
                                        "& td": {
                                           py: "10px"
-                                       },
-                                       "&:last-child td, &:last-child th": { border: 0 }
+                                       }
                                     }}>
                                     <TableCell>
                                        <Box

@@ -8,6 +8,6 @@ export type recentActivitiesProps = {
 }
 
 export type recentActivitiesItemProps = {
-   dateTime: string
+   createdAt: string
    title: string
 }

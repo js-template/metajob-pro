@@ -69,6 +69,7 @@ export const PrivateHeader = async ({ block, language }: Props) => {
          filters: {
             owner: userId
          },
+         sort: ["createdAt:desc"],
          fields: ["title", "createdAt"]
       },
       "no-store"
