@@ -67,6 +67,9 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount }: ad
    // *** handle form submit
    const handleFromSubmit = async (data: { [key: string]: any }) => {
       try {
+         if (!userPackage?.[0]?.user_plan) {
+            return toast.error("Please get a User package.")
+         }
          if (jobCount?.total && jobCount?.total >= create_ads_limit) {
             return toast.error("Limit filled, please update package.")
          }
