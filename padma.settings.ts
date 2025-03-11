@@ -3,5 +3,6 @@ export const settings = {
 };
 
 export const themeResolver: Record<string, () => Promise<any>> = {
+  // @ts-ignore
   "@jstemplate/metajob-theme": () => import("@jstemplate/metajob-theme"),
 };
