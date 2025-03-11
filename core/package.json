@@ -15,7 +15,6 @@
       "format": "prettier --write . --ignore-path .prettierignore"
    },
    "dependencies": {
-      "@jstemplate/metajob-theme": "workspace:*",
       "@emotion/cache": "latest",
       "@emotion/react": "latest",
       "@emotion/styled": "latest",
