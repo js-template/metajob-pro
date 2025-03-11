@@ -1,6 +1,6 @@
 {
    "name": "@jstemplate/metajob-theme",
-   "version": "0.0.5",
+   "version": "0.0.1",
    "private": true,
    "main": "dist/index.js",
    "keywords": [],
