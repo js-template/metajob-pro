@@ -8,24 +8,28 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
   // bootstrap phase
 
   // Subscribing to applied-job model lifecycle events
+  // @ts-ignore
   strapi.db.lifecycles.subscribe({
     models: ["plugin::metajob-backend.applied-job"],
     ...appliedJobLifecycle,
   });
 
   // Subscribing to resume model lifecycle events
+  // @ts-ignore
   strapi.db.lifecycles.subscribe({
     models: ["plugin::metajob-backend.resume"],
     ...resumeLifecycle,
   });
 
   // Subscribing to company model lifecycle events
+  // @ts-ignore
   strapi.db.lifecycles.subscribe({
     models: ["plugin::metajob-backend.company"],
     ...companyLifecycle,
   });
 
   // Registering lifecycle for the job model
+  // @ts-ignore
   strapi.db.lifecycles.subscribe({
     models: ["plugin::metajob-backend.job"],
     ...jobLifecycle,
