@@ -15,8 +15,6 @@ export default async function DynamicPages({
 }) {
    const pageSlug = params?.slug
 
-   //console.log("Page Slug", pageSlug)
-
    const language = await getLanguageFromCookie()
 
    const { data, error } = await find(
@@ -40,11 +38,7 @@ export default async function DynamicPages({
    const activeTheme = await loadActiveTheme()
    const getPrivateComponents = activeTheme?.getPrivateComponents || {}
 
-   //console.log("Private Page Data", data?.data)
-
    const blocks = data?.data[0]?.blocks || []
-
-   //console.log("Private Page Blocks Loaded", blocks)
 
    // *** if blocks is empty, return 404 ***
    if (!blocks || blocks?.length === 0) {

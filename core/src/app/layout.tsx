@@ -22,8 +22,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
    const language = await getLanguageFromCookie()
 
-   // console.log("language after cookie", language)
-
    const dir = cookieStore.get("direction")
    const direction = dir ? dir.value : "ltr"
 

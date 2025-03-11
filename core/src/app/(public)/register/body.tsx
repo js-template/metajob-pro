@@ -51,7 +51,6 @@ const RegisterBody = () => {
          // Redirect to the dashboard upon successful login
       } catch (error) {
          // Handle any unexpected errors during the login process
-         console.error(error)
          toast.error("Username or Email already exists")
          setLoading(false)
          // reset()

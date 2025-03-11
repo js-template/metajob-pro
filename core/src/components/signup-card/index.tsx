@@ -30,7 +30,7 @@ export const SignUpCard = ({
    facebookSignUpHandler,
    linkedinSignUpHandler
 }: Props) => {
-   const [selectedButton, setSelectedButton] = useState("")
+   const [selectedButton, setSelectedButton] = useState(0)
    const { theme: mode } = useTheme()
 
    const {
@@ -88,7 +88,6 @@ export const SignUpCard = ({
       getRoles()
    }, [])
 
-   // console.log("allRoles", allRoles)
    //    provider present validator
    const noProvider = !googleSignUpHandler && !facebookSignUpHandler && !linkedinSignUpHandler
 

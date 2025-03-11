@@ -49,7 +49,7 @@ export default {
         },
       );
     } catch (err) {
-      console.log("applied-job lifecycle error:", err);
+      return true;
     }
   },
 };

@@ -17,7 +17,6 @@ interface EditorProps {
 const Editor: FC<EditorProps> = ({ markdown, editorRef }) => {
    return (
       <MDXEditor
-         onChange={(e) => console.log(e)}
          ref={editorRef}
          markdown={markdown}
          plugins={[

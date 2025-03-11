@@ -50,7 +50,7 @@ export default {
         },
       );
     } catch (err) {
-      console.log("create company lifecycle error:", err);
+      return true;
     }
   },
 };

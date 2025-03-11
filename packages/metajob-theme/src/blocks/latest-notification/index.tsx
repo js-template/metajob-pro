@@ -3,7 +3,6 @@ import { IUserSession } from "../../types/user"
 import { Grid, Paper, Box, Typography } from "@mui/material"
 import { NotificationBody } from "./table-body"
 import { find } from "../../lib/strapi"
-import { table } from "console"
 
 export const LatestNotifications = async ({
    block,
