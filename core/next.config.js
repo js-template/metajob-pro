@@ -11,9 +11,6 @@ module.exports = {
       STRAPI_AUTH_TOKEN: process.env.STRAPI_AUTH_TOKEN,
       NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL
    },
-   typescript: {
-      ignoreBuildErrors: true
-   },
    images: {
       remotePatterns: [
          {
