@@ -1,6 +1,16 @@
 "use client"
 import NextLink from "next/link"
-import { Chip, IconButton, MenuItem, Select, TableCell, TableRow, Typography, useTheme } from "@mui/material"
+import {
+   Chip,
+   CircularProgress,
+   IconButton,
+   MenuItem,
+   Select,
+   TableCell,
+   TableRow,
+   Typography,
+   useTheme
+} from "@mui/material"
 import { Fragment, useState } from "react"
 import CIcon, { SpinnersClock } from "../../components/common/icon"
 import { dateFormatter } from "../../lib/date-format"
@@ -16,15 +26,24 @@ const TableItem = ({
    job,
    blockData,
    handleMute,
-   jobAttributes
+   jobAttributes,
+   jobCount
 }: {
    job: IJobData
    blockData: IManageJobBock
    handleMute: () => void
    noteFunctionHandler: () => void
    jobAttributes?: IJobAttribute
+   jobCount?: {
+      total: number
+      featured: number
+   }
 }) => {
-   const { title, slug, publishedAt, job_status, applications, endDate, documentId } = job || {}
+   const { userPackage } = jobAttributes || {}
+
+   const ads_boost_limit = userPackage?.[0]?.user_plan?.ads_boost_limit || 0
+
+   const { title, slug, publishedAt, job_status, is_featured, applications, endDate, documentId } = job || {}
    const [loading, setLoading] = useState(false)
    const [statusLoading, setStatusLoading] = useState(false)
    const [statusValue, setStatusValue] = useState(job_status)
@@ -98,6 +117,53 @@ const TableItem = ({
          setStatusLoading(false)
       }
    }
+   // *** handle feature job status
+   const [featureLoading, setFeatureLoading] = useState(false)
+   const [featureValue, setFeatureValue] = useState(is_featured)
+   const handleFeatureJob = async () => {
+      try {
+         setFeatureLoading(true)
+         if (featureValue) {
+            const updateInput = {
+               data: {
+                  is_featured: false
+               }
+            }
+            const featureResponse = await updateOne("metajob-backend/jobs", documentId, updateInput)
+            // Check if the response has any errors
+            if (featureResponse.error) {
+               toast.error(featureResponse?.error || "Something went wrong")
+            } else {
+               setFeatureValue(false)
+               handleMute()
+               toast.success("Job un-featured successfully")
+            }
+         } else {
+            if (jobCount?.featured && jobCount?.featured >= ads_boost_limit) {
+               return toast.error("Limit filled, please update package.")
+            }
+            const updateInput = {
+               data: {
+                  is_featured: true
+               }
+            }
+            const featureResponse = await updateOne("metajob-backend/jobs", documentId, updateInput)
+            // Check if the response has any errors
+            if (featureResponse.error) {
+               toast.error(featureResponse?.error || "Something went wrong")
+            } else {
+               setFeatureValue(true)
+               handleMute()
+               // mutate("api/metajob-backend/applied-jobs")
+               toast.success("Job featured successfully")
+            }
+         }
+      } catch (error: any) {
+         toast.error(error?.message || "An unexpected error occurred. Please try again.")
+      } finally {
+         setFeatureLoading(false)
+      }
+   }
 
    return (
       <Fragment>
@@ -141,8 +207,35 @@ const TableItem = ({
                   {title}
                </Typography>
             </TableCell>
-            <TableCell>{dateFormatter(publishedAt)}</TableCell>
             <TableCell>{dateFormatter(endDate)}</TableCell>
+            <TableCell sx={{ cursor: "pointer" }} onClick={() => handleFeatureJob()}>
+               {featureLoading ? (
+                  <IconButton color='primary' sx={{ m: 0, p: 0 }}>
+                     <CircularProgress
+                        size={20}
+                        sx={{
+                           color: (theme) => theme.palette.primary.main
+                        }}
+                     />
+                  </IconButton>
+               ) : featureValue ? (
+                  <CIcon
+                     icon='mingcute:star-fill'
+                     size={24}
+                     sx={{
+                        color: theme.palette.primary.main
+                     }}
+                  />
+               ) : (
+                  <CIcon
+                     icon='mingcute:star-line'
+                     size={24}
+                     sx={{
+                        color: theme.palette.primary.main
+                     }}
+                  />
+               )}
+            </TableCell>
             <TableCell sx={{ cursor: "pointer" }} onClick={() => handleApplicationOpen()}>
                <Typography
                   variant='body2'

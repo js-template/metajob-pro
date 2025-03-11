@@ -19,5 +19,33 @@ export const JobFilter = async ({ block, language }: Props) => {
       "no-store"
    )
 
-   return <JobFilterClient block={block} categoryData={categoryDataAll?.data} language={language} />
+   // fetch job-type data
+   const { data: jobTypesDataAll } = await find(
+      "api/metajob-backend/job-types",
+      {
+         fields: ["title", "value"],
+         locale: language ?? ["en"]
+      },
+      "no-store"
+   )
+
+   // fetch experience-level data
+   const { data: experienceDataAll } = await find(
+      "api/metajob-backend/experience-levels",
+      {
+         fields: ["title", "value"],
+         locale: language ?? ["en"]
+      },
+      "no-store"
+   )
+
+   return (
+      <JobFilterClient
+         block={block}
+         categoryData={categoryDataAll?.data}
+         jobTypesData={jobTypesDataAll?.data}
+         jobExperienceData={experienceDataAll?.data}
+         language={language}
+      />
+   )
 }

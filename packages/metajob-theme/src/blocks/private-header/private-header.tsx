@@ -60,7 +60,7 @@ export const DrawerHeader: React.FC = styled("div")(({ theme }) => ({
    ...theme.mixins.toolbar
 }))
 
-export const PrivateHeaderComponent = ({ block, language = "en", userData }: IPrivateHeaderProps) => {
+export const PrivateHeaderComponent = ({ block, language = "en", userData, emailHistoryData }: IPrivateHeaderProps) => {
    const { data: session } = useSession()
    const userRole = session?.user?.role?.type
    const theme = useTheme()
@@ -122,6 +122,7 @@ export const PrivateHeaderComponent = ({ block, language = "en", userData }: IPr
             lang={language}
             userRole={userRole}
             userData={userData}
+            emailHistoryData={emailHistoryData}
          />
          {/* Mobile main nav  */}
          {isTablet && <MobileNav open={open} setOpen={setOpen} headerData={block} lang={language} />}

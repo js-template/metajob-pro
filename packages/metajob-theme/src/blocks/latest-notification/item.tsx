@@ -9,7 +9,7 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
    const theme = useTheme()
    //const direction = theme.direction
 
-   const { title, dateTime } = item || {}
+   const { title, createdAt } = item || {}
 
    return (
       <Fragment>
@@ -96,7 +96,7 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
                               sx={{
                                  color: (theme) => theme.palette.text.primary + "80"
                               }}>
-                              {moment(dateTime).fromNow()}
+                              {moment(createdAt).fromNow()}
                            </Typography>
                            <Typography
                               variant='body1'

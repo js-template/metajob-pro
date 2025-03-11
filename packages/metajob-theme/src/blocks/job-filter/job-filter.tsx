@@ -18,20 +18,25 @@ import {
    Skeleton,
    Pagination,
    PaginationItem,
-   Icon
+   Icon,
+   FormControlLabel,
+   Checkbox as MuiCheckbox,
+   Box
 } from "@mui/material"
 import ListCardLoader from "./loader"
 import { JobItem } from "../../components/cards/job-item"
-import { IJobFilterData, ISingleCategory, ISingleJob } from "./types"
+import { IJobFilterData, IJobType, ISingleCategory, ISingleJob } from "./types"
 import { find } from "../../lib/strapi"
 
 type Props = {
    block: IJobFilterData
    language?: string
    categoryData?: ISingleCategory[]
+   jobTypesData?: IJobType[]
+   jobExperienceData?: IJobType[]
 }
 
-export const JobFilterClient = ({ block, language, categoryData }: Props) => {
+export const JobFilterClient = ({ block, language, categoryData, jobTypesData, jobExperienceData }: Props) => {
    const searchParams = useSearchParams()
 
    // get params data
@@ -51,6 +56,8 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
    const [isLoading, setIsLoading] = useState(false)
    const [totalPage, setTotalPage] = useState(0)
    const [jobsError, setJobsError] = useState(null)
+   const [selectedJobTypes, setSelectedJobTypes] = useState<string[]>([])
+   const [selectedJobExperience, setSelectedJobExperience] = useState<string[]>([])
 
    // Update state based on URL search params
    useEffect(() => {
@@ -61,6 +68,27 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
          location: urlLocation || prevOptions.location
       }))
    }, [urlSearch, urlLocation, urlCategory])
+
+   const handleJobTypesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { checked, name } = event.target
+      setSelectedJobTypes((prev) => {
+         if (checked) {
+            return [...prev, name] // Add to array if checked
+         } else {
+            return prev.filter((type) => type !== name) // Remove if unchecked
+         }
+      })
+   }
+   const handleJobExperienceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { checked, name } = event.target
+      setSelectedJobExperience((prev) => {
+         if (checked) {
+            return [...prev, name] // Add to array if checked
+         } else {
+            return prev.filter((type) => type !== name) // Remove if unchecked
+         }
+      })
+   }
 
    //  fetch jobs from db
    useEffect(() => {
@@ -79,7 +107,17 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
                         $eq: searchOptions?.category || undefined
                      }
                   },
-                  job_status: "open"
+                  job_status: "open",
+                  type: {
+                     value: {
+                        $in: selectedJobTypes
+                     }
+                  },
+                  experience: {
+                     value: {
+                        $in: selectedJobExperience
+                     }
+                  }
                },
                populate: {
                   company: {
@@ -120,7 +158,7 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
       getJobsData()
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [page, searchOptions])
+   }, [page, searchOptions, selectedJobTypes, selectedJobExperience])
 
    // Handle form submission
    const handleSubmit = (e: any) => {
@@ -136,6 +174,8 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
       search_placeholder,
       location_placeholder,
       category_placeholder,
+      experience_placeholder,
+      type_placeholder,
       sort_placeholder,
       button_placeholder
    } = search || {}
@@ -273,7 +313,92 @@ export const JobFilterClient = ({ block, language, categoryData }: Props) => {
                                     </Select>
                                  </FormControl>
                               )}
-
+                              {/* job-type check box  */}
+                              {type_placeholder && (
+                                 <Stack spacing={2}>
+                                    <Divider />
+                                    <Typography
+                                       fontSize={16}
+                                       fontWeight={700}
+                                       sx={{
+                                          color: (theme) => theme.palette.text.secondary
+                                       }}>
+                                       {type_placeholder || "Job Type"}
+                                    </Typography>
+                                    {_.map(jobTypesData, (typeItem: IJobType) => (
+                                       <FormControlLabel
+                                          key={typeItem?.id}
+                                          sx={{
+                                             color: (theme) => theme.palette.text.secondary
+                                          }}
+                                          control={
+                                             <MuiCheckbox
+                                                name={typeItem?.value}
+                                                checked={selectedJobTypes.includes(typeItem?.value)}
+                                                onChange={handleJobTypesChange}
+                                                icon={
+                                                   <Box
+                                                      sx={{
+                                                         bgcolor: (theme) => theme.palette.divider,
+                                                         height: 24,
+                                                         width: 24,
+                                                         transform: "scale(0.8)",
+                                                         borderRadius: 1
+                                                      }}
+                                                   />
+                                                }
+                                                sx={{ py: 0 }}
+                                                disableRipple
+                                             />
+                                          }
+                                          label={typeItem?.title}
+                                       />
+                                    ))}
+                                 </Stack>
+                              )}
+                              {/* job-experience check box  */}
+                              {experience_placeholder && (
+                                 <Stack spacing={2}>
+                                    <Divider />
+                                    <Typography
+                                       fontSize={16}
+                                       fontWeight={700}
+                                       sx={{
+                                          color: (theme) => theme.palette.text.secondary
+                                       }}>
+                                       {experience_placeholder || "Job Experience"}
+                                    </Typography>
+                                    {_.map(jobExperienceData, (expItem: IJobType) => (
+                                       <FormControlLabel
+                                          key={expItem?.id}
+                                          sx={{
+                                             color: (theme) => theme.palette.text.secondary
+                                          }}
+                                          control={
+                                             <MuiCheckbox
+                                                name={expItem?.value}
+                                                checked={selectedJobExperience.includes(expItem?.value)}
+                                                onChange={handleJobExperienceChange}
+                                                icon={
+                                                   <Box
+                                                      sx={{
+                                                         bgcolor: (theme) => theme.palette.divider,
+                                                         height: 24,
+                                                         width: 24,
+                                                         transform: "scale(0.8)",
+                                                         borderRadius: 1
+                                                      }}
+                                                   />
+                                                }
+                                                sx={{ py: 0 }}
+                                                disableRipple
+                                             />
+                                          }
+                                          label={expItem?.title}
+                                       />
+                                    ))}
+                                 </Stack>
+                              )}
                               {button_placeholder && <Divider />}
                               {button_placeholder && (
                                  <Button disabled={isLoading} variant='contained' type='submit'>

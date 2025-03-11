@@ -44,7 +44,7 @@ type EditListProps = {
 const EditJob = ({ open, handleClose, handleMute, jobDocID, jobAttributes }: EditListProps) => {
    const theme = useTheme()
    //  destructure job Attributes data
-   const { categoryData, skillsData, jobTypesData } = jobAttributes || {}
+   const { categoryData, skillsData, jobTypesData, jobExperienceData } = jobAttributes || {}
 
    const [loading, setLoading] = React.useState(false)
    const [jobData, setJobData] = React.useState<IEditJobData | null>(null)
@@ -66,6 +66,7 @@ const EditJob = ({ open, handleClose, handleMute, jobDocID, jobAttributes }: Edi
          price: 0,
          type: "",
          skills: "",
+         experience: "",
          category: "",
          company: ""
       }
@@ -91,6 +92,10 @@ const EditJob = ({ open, handleClose, handleMute, jobDocID, jobAttributes }: Edi
                //check if skills is exist then connect
                ...(data?.skills && {
                   skills: { connect: [data?.skills] }
+               }),
+               //check if experience is exist then connect
+               ...(data?.experience && {
+                  experience: { connect: [data?.experience] }
                }),
                //check if job-type is exist then connect
                ...(data?.type && {
@@ -162,6 +167,7 @@ const EditJob = ({ open, handleClose, handleMute, jobDocID, jobAttributes }: Edi
          setValue("price", jobData?.price || 0)
          setValue("type", jobData?.type?.documentId || "")
          setValue("skills", jobData?.skills?.[0]?.documentId || "")
+         setValue("experience", jobData?.experience?.documentId || "")
          setValue("category", jobData?.category?.documentId || "")
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -664,6 +670,51 @@ const EditJob = ({ open, handleClose, handleMute, jobDocID, jobAttributes }: Edi
                                  return (
                                     <MenuItem key={index} value={revenueItem?.documentId}>
                                        {revenueItem?.title}
+                                    </MenuItem>
+                                 )
+                              })}
+                        </Select>
+                     </Grid>
+                     {/* Experience */}
+                     <Grid item xs={12} sm={6}>
+                        <Box
+                           component={"label"}
+                           htmlFor='experience'
+                           sx={{
+                              display: "block",
+                              fontSize: "0.875rem",
+                              fontWeight: 500,
+                              color: "text.primary",
+                              mb: 1
+                           }}>
+                           Job Experience
+                           <Typography
+                              component='span'
+                              sx={{
+                                 fontSize: 14,
+                                 color: (theme) => theme.palette.text.secondary,
+                                 ml: 0.5
+                              }}>
+                              (optional)
+                           </Typography>
+                        </Box>
+                        <Select
+                           displayEmpty
+                           fullWidth
+                           variant='outlined'
+                           id='experience'
+                           size='small'
+                           {...register("experience")}
+                           value={watch("experience") || ""}
+                           error={Boolean(errors.experience)}>
+                           <MenuItem disabled value=''>
+                              Select Job Experience
+                           </MenuItem>
+                           {jobExperienceData &&
+                              jobExperienceData?.map((expItem: IJobCategory, index: number) => {
+                                 return (
+                                    <MenuItem key={index} value={expItem?.documentId}>
+                                       {expItem?.title}
                                     </MenuItem>
                                  )
                               })}

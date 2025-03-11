@@ -26,12 +26,17 @@ type addListProps = {
    userId?: number
    handleMute: () => void
    jobAttributes?: IJobAttribute
+   jobCount?: {
+      total: number
+      featured: number
+   }
 }
 
-const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps) => {
+const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount }: addListProps) => {
    const theme = useTheme()
    //  destructure job Attributes data
-   const { companyData, categoryData, skillsData, jobTypesData } = jobAttributes || {}
+   const { companyData, categoryData, skillsData, jobTypesData, jobExperienceData, userPackage } = jobAttributes || {}
+   const create_ads_limit = userPackage?.[0]?.user_plan?.create_ads_limit || 0
 
    const [loading, setLoading] = React.useState(false)
    const {
@@ -51,6 +56,7 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps
          price: 0,
          type: "",
          skills: "",
+         experience: "",
          category: "",
          company: ""
       }
@@ -61,6 +67,13 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps
    // *** handle form submit
    const handleFromSubmit = async (data: { [key: string]: any }) => {
       try {
+         if (!userPackage?.[0]?.user_plan) {
+            return toast.error("Please get a User package.")
+         }
+         if (jobCount?.total && jobCount?.total >= create_ads_limit) {
+            return toast.error("Limit filled, please update package.")
+         }
+
          setLoading(true)
          // ?? check if slug is already exist
          const { data: slugData } = await find(
@@ -101,6 +114,10 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps
                //check if skills is exist then connect
                ...(data?.skills && {
                   skills: { connect: [data?.skills] }
+               }),
+               //check if experience is exist then connect
+               ...(data?.experience && {
+                  experience: { connect: [data?.experience] }
                }),
                //check if job-type is exist then connect
                ...(data?.type && {
@@ -759,6 +776,52 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes }: addListProps
                                  return (
                                     <MenuItem key={index} value={revenueItem?.documentId}>
                                        {revenueItem?.title}
+                                    </MenuItem>
+                                 )
+                              })}
+                        </Select>
+                     </Grid>
+                     {/* Experience */}
+                     <Grid item xs={12} sm={6}>
+                        <Box
+                           component={"label"}
+                           htmlFor='experience'
+                           sx={{
+                              display: "block",
+                              fontSize: "0.875rem",
+                              fontWeight: 500,
+                              color: "text.primary",
+                              mb: 1
+                           }}>
+                           Job Experience
+                           <Typography
+                              component='span'
+                              sx={{
+                                 fontSize: 14,
+                                 color: (theme) => theme.palette.text.secondary,
+                                 ml: 0.5
+                              }}>
+                              (optional)
+                           </Typography>
+                        </Box>
+                        <Select
+                           inputProps={{ readOnly: !isCompanySelected }}
+                           displayEmpty
+                           fullWidth
+                           variant='outlined'
+                           id='experience'
+                           size='small'
+                           {...register("experience")}
+                           value={watch("experience") || ""}
+                           error={Boolean(errors.experience)}>
+                           <MenuItem disabled value=''>
+                              Select Job Experience
+                           </MenuItem>
+                           {jobExperienceData &&
+                              jobExperienceData?.map((expItem: IJobCategory, index: number) => {
+                                 return (
+                                    <MenuItem key={index} value={expItem?.documentId}>
+                                       {expItem?.title}
                                     </MenuItem>
                                  )
                               })}

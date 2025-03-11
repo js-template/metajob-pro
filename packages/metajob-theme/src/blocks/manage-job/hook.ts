@@ -1,3 +1,5 @@
+import { IJobData } from "./types"
+
 /**
  * Extracts the first part of an email address and returns it as a name.
  * @param {string} email - The email address.
@@ -16,4 +18,17 @@ export const getNameFromEmail = (email?: string) => {
 
    // Return the extracted name
    return name
+}
+
+/**
+ * Get featured-job count.
+ * @param {IJobData} data -
+ * @returns {number} -
+ */
+export const getFeaturedCount = (data: IJobData[]) => {
+   if (!data || data?.length === 0) {
+      return 0
+   }
+   const featuredJobs = data.filter((item) => item?.is_featured)
+   return featuredJobs?.length || 0
 }
