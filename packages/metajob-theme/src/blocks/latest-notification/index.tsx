@@ -26,7 +26,9 @@ export const LatestNotifications = async ({
       {
          filters: {
             owner: userId
-         }
+         },
+         sort: ["createdAt:desc"],
+         fields: ["title", "createdAt"]
       },
       "no-store"
    )

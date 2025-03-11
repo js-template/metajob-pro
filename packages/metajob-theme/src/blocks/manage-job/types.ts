@@ -39,6 +39,7 @@ export type IJobData = {
    vacancy: number
    publishedAt: string
    endDate: string
+   is_featured?: boolean
    applications: {
       count?: number
    }
@@ -91,9 +92,26 @@ export type IEditJobData = {
    skills: {
       documentId: string
    }[]
+   experience: {
+      documentId: string
+   }
    category: {
       documentId: string
    }
+}
+
+type IMembership = {
+   id: number
+   documentId: string
+
+   user_plan: {
+      id: number
+      documentId: string
+      title: "Extended Package"
+      create_ads_limit: number
+      ads_boost_limit: number
+   }
+   localizations: []
 }
 
 export type IJobAttribute = {
@@ -101,4 +119,6 @@ export type IJobAttribute = {
    categoryData: IJobCategory[]
    skillsData: IJobCategory[]
    jobTypesData: IJobCategory[]
+   jobExperienceData: IJobCategory[]
+   userPackage: IMembership[]
 }

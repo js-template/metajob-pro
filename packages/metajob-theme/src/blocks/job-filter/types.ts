@@ -9,6 +9,8 @@ export type IJobFilterData = {
       search_placeholder: string
       location_placeholder: string
       category_placeholder: string
+      experience_placeholder: string
+      type_placeholder: string
       sort_placeholder: string
       button_placeholder: string
    }
@@ -18,6 +20,12 @@ export type ISingleCategory = {
    id: number
    documentId: string
    title: string
+}
+export type IJobType = {
+   id: number
+   documentId: string
+   title: string
+   value: string
 }
 
 export type ISingleJob = {
