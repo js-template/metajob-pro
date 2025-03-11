@@ -11,9 +11,6 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "title": {
-      "type": "string"
-    },
     "datetime": {
       "type": "datetime"
     },
@@ -24,6 +21,9 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "title": {
+      "type": "string"
     }
   }
 }

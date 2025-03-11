@@ -1,5 +1,5 @@
 {
-   "name": "@jstemplate/metajob-frontend",
+   "name": "core",
    "version": "1.0.0",
    "description": "Metajob Frontend",
    "license": "EULA",
