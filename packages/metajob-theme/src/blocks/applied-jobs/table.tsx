@@ -71,7 +71,9 @@ const ListsTable = ({
                         </TableRow>
                      </TableHead>
                      {isLoading ? (
-                        <TableLoader numberOfRows={pageSize} />
+                        <TableBody>
+                           <TableLoader numberOfRows={pageSize} />
+                        </TableBody>
                      ) : (
                         <TableBody>
                            {data?.map((item: IApplyJobData, index: number) => (

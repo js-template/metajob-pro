@@ -1,8 +1,9 @@
 "use client"
 import React from "react"
 import toast from "react-hot-toast"
+import _ from "lodash"
+import { Controller, useForm } from "react-hook-form"
 import { createEntry, find, updateOne, uploadImage } from "../../lib/strapi"
-import useSWR, { KeyedMutator } from "swr"
 import {
    Avatar,
    Box,
@@ -19,21 +20,23 @@ import {
 } from "@mui/material"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import CIcon from "../../components/common/icon"
-import { Controller, useForm } from "react-hook-form"
-import { fetcher } from "./hook"
-import { IJobCategory } from "./types"
+import { ICompanyAttribute, IJobCategory } from "./types"
 import MDEditor from "@uiw/react-md-editor"
 import { LoadingButton } from "@mui/lab"
-import _ from "lodash"
 
 type addCompanyProps = {
    handleClose: () => void
    userId?: number
-   mutate: KeyedMutator<any>
+   handleMute: () => void
+   companyAttributes?: ICompanyAttribute
 }
 
-const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
+const AddCompany = ({ handleClose, userId, handleMute, companyAttributes }: addCompanyProps) => {
    const theme = useTheme()
+
+   // attributes data destructuring
+   const { categoryData, companySizesData, revenuesData, avgSalaryData } = companyAttributes || {}
+
    const [loading, setLoading] = React.useState(false)
 
    const {
@@ -157,7 +160,7 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
                formData.append("files", data.logo[0])
                const { data: uploadData, error: uploadError } = await uploadImage(formData)
                if (uploadError) {
-                  mutate()
+                  handleMute()
                   handleClose()
                   return toast.error("Failed to upload image")
                }
@@ -181,11 +184,11 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
                      icon: "❌"
                   })
                }
-               mutate()
+               handleMute()
                toast.success("Company created successfully")
                handleClose()
             } else {
-               mutate()
+               handleMute()
                toast.success("Company created successfully")
                handleClose()
             }
@@ -196,47 +199,6 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
          setLoading(false)
       }
    }
-
-   // fetch job-category data
-   const categoryQueryParams = {
-      fields: ["title"]
-   }
-   const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
-   const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
-   const {
-      data: categoryData,
-      error: categoryError,
-      isLoading: categoryIsLoading
-   } = useSWR(categoryAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch company-size data
-   const companySizesQueryParams = {
-      fields: ["title"]
-   }
-   const companySizesQueryString = encodeURIComponent(JSON.stringify(companySizesQueryParams))
-   const companySizesAPiUrl = `/api/find?model=api/metajob-backend/company-sizes&query=${companySizesQueryString}`
-   const { data: companySizesData, isLoading: companySizesIsLoading } = useSWR(companySizesAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch revenues data
-   const revenuesQueryParams = {
-      fields: ["title"]
-   }
-   const revenuesQueryString = encodeURIComponent(JSON.stringify(revenuesQueryParams))
-   const revenuesAPiUrl = `/api/find?model=api/metajob-backend/revenues&query=${revenuesQueryString}`
-   const { data: revenuesData, isLoading: revenuesIsLoading } = useSWR(revenuesAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch avg-salary data
-   const avgSalaryString = encodeURIComponent(JSON.stringify({}))
-   const avgSalaryAPiUrl = `/api/find?model=api/metajob-backend/avg-salaries&query=${avgSalaryString}`
-   const { data: avgSalaryData, isLoading: avgSalaryIsLoading } = useSWR(avgSalaryAPiUrl, fetcher, {
-      fallbackData: []
-   })
 
    return (
       <Box
@@ -947,14 +909,13 @@ const AddCompany = ({ handleClose, userId, mutate }: addCompanyProps) => {
                         <MenuItem disabled value=''>
                            Select Average Salary
                         </MenuItem>
-                        {avgSalaryData?.length > 0 &&
-                           avgSalaryData?.map(
-                              (expItem: { documentId: string; title: string; value: string }, index: number) => (
-                                 <MenuItem key={index} value={expItem?.documentId}>
-                                    {expItem?.title}
-                                 </MenuItem>
-                              )
-                           )}
+                        {avgSalaryData &&
+                           avgSalaryData?.length > 0 &&
+                           avgSalaryData?.map((expItem: IJobCategory, index: number) => (
+                              <MenuItem key={index} value={expItem?.documentId}>
+                                 {expItem?.title}
+                              </MenuItem>
+                           ))}
                      </Select>
                   </Grid>
                   {/* Website */}

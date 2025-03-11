@@ -1,17 +1,4 @@
-export const fetcher = async (url: string) => {
-   const response = await fetch(url)
-
-   if (!response.ok) {
-      throw new Error("An error occurred while fetching the data.")
-   }
-   const result = await response.json()
-
-   // Return the nested data to match fallbackData structure
-   // const blocks = result?.data
-   const blocks = result?.data?.data || []
-
-   return blocks
-}
+import { IJobData } from "./types"
 
 /**
  * Extracts the first part of an email address and returns it as a name.
@@ -31,4 +18,17 @@ export const getNameFromEmail = (email?: string) => {
 
    // Return the extracted name
    return name
+}
+
+/**
+ * Get featured-job count.
+ * @param {IJobData} data -
+ * @returns {number} -
+ */
+export const getFeaturedCount = (data: IJobData[]) => {
+   if (!data || data?.length === 0) {
+      return 0
+   }
+   const featuredJobs = data.filter((item) => item?.is_featured)
+   return featuredJobs?.length || 0
 }

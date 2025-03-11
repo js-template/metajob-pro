@@ -2,7 +2,6 @@
 import React from "react"
 import { formProps } from "../../types/forms"
 import DynamicForm from "../../form"
-import { KeyedMutator } from "swr"
 import { Box, CircularProgress } from "@mui/material"
 import { IManageJobBock } from "./types"
 import { createEntry, find } from "../../lib/strapi"
@@ -14,7 +13,6 @@ type addListProps = {
    handleClose: () => void
    data: formProps
    userId?: number
-   mutate: KeyedMutator<any>
    blockData: IManageJobBock
 }
 
@@ -24,7 +22,6 @@ type addListProps = {
  * @param {function} handleClose - close modal
  * @param {formProps} data - form data object
  * @param {number} userId - user id of the list owner
- * @param {mutate} - mutate function from swr
  * @param {ManageListsDataProps} - list data object for the form
  * @returns {React.ReactElement} - React Component
  * @example
@@ -37,7 +34,7 @@ type addListProps = {
  *   blockData={blockData}
  * />
  */
-const AddList = ({ open, handleClose, data, userId, mutate, blockData }: addListProps) => {
+const AddList = ({ open, handleClose, data, userId, blockData }: addListProps) => {
    const [loading, setLoading] = React.useState(false)
    // *** data format
    const { buttonsText, stepLabels, fields } = data
@@ -96,11 +93,10 @@ const AddList = ({ open, handleClose, data, userId, mutate, blockData }: addList
 
       // ?? check if newJob exist
       if (newJob) {
-         await mutate().finally(() => {
-            toast.success("Successfully created!")
-            handleClose()
-            setLoading(false)
-         })
+         // await mutate()
+         toast.success("Successfully created!")
+         handleClose()
+         setLoading(false)
 
          return true
       }

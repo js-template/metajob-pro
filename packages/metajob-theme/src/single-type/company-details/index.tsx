@@ -1,57 +1,51 @@
-"use client"
-import { Box, Container, Grid, Stack } from "@mui/material"
-import GoBackBtn from "../../components/common/go-back-btn"
-import PageHeader from "../../components/common/public-page-header"
-import { Sidebar } from "./sidebar"
-import CompanyHeader from "./header"
-import AboutSection from "./about"
-import { ICompanyDetailsBlock, ISingleCompany, IUserSession } from "./types"
-import OpenJobs from "./open-jobs"
+"use server"
+import { find } from "../../lib/strapi"
+import CompanyDetailsClient from "./company-details"
+import { ICompanyDetailsBlock, ISingleCompany } from "./types"
 
 type Props = {
    data: ISingleCompany
    language?: string
-   session?: IUserSession | null | any
    block: ICompanyDetailsBlock
 }
 
-export const CompanyDetails = ({ data, language, session, block }: Props) => {
-   const { title, empty, open_jobs } = block || {}
-
-   if (!data) {
-      return (
-         <Stack bgcolor={(theme) => theme.palette.background.default}>
-            <PageHeader title={title || "Company Profile"} />
-            <Stack
-               sx={{
-                  minHeight: "50vh",
-                  justifyContent: "center",
-                  alignItems: "center"
-               }}>
-               <h3>{empty?.title}</h3>
-               <GoBackBtn />
-            </Stack>
-         </Stack>
-      )
-   }
-   return (
-      <Stack>
-         <PageHeader title={title || "Company Profile"} />
-         <Container maxWidth='lg' sx={{ py: 6 }}>
-            <Grid container spacing={4}>
-               <Grid item xs={12} md={8}>
-                  <Stack spacing={4}>
-                     <CompanyHeader data={data} session={session} />
-                     <AboutSection data={data?.about} />
-                     {open_jobs && <OpenJobs id={data?.id} language={language} empty={empty} />}
-                     {/* <CommentsSection /> */}
-                  </Stack>
-               </Grid>
-               <Grid item xs={12} md={4}>
-                  <Sidebar data={data} />
-               </Grid>
-            </Grid>
-         </Container>
-      </Stack>
+export const CompanyDetails = async ({ data, block, language }: Props) => {
+   // fetch open-jobs data
+   const companyId = data?.id
+   const { data: openJobsDataAll } = await find(
+      "api/metajob-backend/jobs",
+      {
+         filters: {
+            company: {
+               id: {
+                  $eq: companyId || undefined
+               }
+            }
+         },
+         populate: {
+            company: {
+               populate: {
+                  logo: {
+                     fields: ["url"]
+                  }
+               }
+            },
+            type: {
+               fields: ["title"]
+            },
+            category: {
+               fields: ["title", "documentId"]
+            }
+         },
+         pagination: {
+            pageSize: 5,
+            page: 1
+         },
+         publicationState: "live",
+         locale: language ?? ["en"]
+      },
+      "no-store"
    )
+
+   return <CompanyDetailsClient block={block} data={data} language={language} openJobsData={openJobsDataAll?.data} />
 }

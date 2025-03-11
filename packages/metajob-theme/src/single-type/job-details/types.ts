@@ -7,6 +7,27 @@ export type IJobDetailsBlock = {
    }
 }
 
+export type ISingleCompany = {
+   id: number
+   documentId: string
+   name: string
+   tagline: string
+   email: string
+   phone: string
+   website: string
+   slug: string
+   about: string
+   logo: {
+      url: string
+   }
+   social_links: [
+      {
+         link: string
+         type: string
+      }
+   ]
+}
+
 export type ISingleJob = {
    id: number
    documentId: string

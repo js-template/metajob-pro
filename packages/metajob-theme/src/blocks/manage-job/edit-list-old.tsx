@@ -3,7 +3,6 @@ import * as React from "react"
 import Dialog from "@mui/material/Dialog"
 import Slide from "@mui/material/Slide"
 import { TransitionProps } from "@mui/material/transitions"
-import { KeyedMutator } from "swr"
 import { formProps } from "@/types/forms"
 import DynamicForm from "../../form"
 import { findOne, updateOne } from "../../lib/strapi"
@@ -25,7 +24,6 @@ type EditListProps = {
    handleClickOpen: () => void
    handleClose: () => void
    listID: number
-   mutate: KeyedMutator<any>
    userId?: number
    formData: formProps
    blockData: IManageJobBock
@@ -36,7 +34,6 @@ export default function EditList({
    handleClickOpen,
    handleClose,
    listID,
-   mutate,
    userId,
    formData,
    blockData
@@ -106,13 +103,12 @@ export default function EditList({
          }
 
          if (updateList) {
-            await mutate().finally(() => {
-               setLoading(false)
-               toast.error("Job Updated Successfully", {
-                  icon: "🚀"
-               })
-               handleClose()
+            // await mutate()
+            setLoading(false)
+            toast.error("Job Updated Successfully", {
+               icon: "🚀"
             })
+            handleClose()
             return true
          }
          return false

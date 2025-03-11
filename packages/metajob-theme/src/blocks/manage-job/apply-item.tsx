@@ -3,7 +3,6 @@ import { Button, MenuItem, Select, TableCell, TableRow, Typography, useTheme } f
 import { Fragment, useState } from "react"
 import CIcon from "../../components/common/icon"
 import toast from "react-hot-toast"
-import { KeyedMutator } from "swr"
 import { IJobApplyData } from "./types"
 import _ from "lodash"
 import { updateOne } from "../../lib/strapi"
@@ -11,7 +10,7 @@ import { CoveModal } from "./cover-modal"
 import { getNameFromEmail } from "./hook"
 import { MessageModal } from "./message-modal"
 
-const ApplyItem = ({ apply, mutate }: { apply: IJobApplyData; mutate: KeyedMutator<any> }) => {
+const ApplyItem = ({ apply, handleMute }: { apply: IJobApplyData; handleMute: () => void }) => {
    const theme = useTheme()
    const { documentId, cover_letter, apply_status, publishedAt, owner, job } = apply || {}
    const { email, first_name, last_name } = owner || {}

@@ -4,7 +4,6 @@ import _ from "lodash"
 import toast from "react-hot-toast"
 import { useForm } from "react-hook-form"
 import MDEditor from "@uiw/react-md-editor"
-import useSWR, { KeyedMutator } from "swr"
 import {
    Box,
    CircularProgress,
@@ -18,21 +17,28 @@ import {
 } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
-import { IJobCategory } from "./types"
+import { IJobAttribute, IJobCategory } from "./types"
 import { createEntry, find } from "../../lib/strapi"
 import CIcon from "../../components/common/icon"
-import { fetcher } from "./hook"
 
 type addListProps = {
    handleClose: () => void
    userId?: number
-   mutate: KeyedMutator<any>
+   handleMute: () => void
+   jobAttributes?: IJobAttribute
+   jobCount?: {
+      total: number
+      featured: number
+   }
 }
 
-const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
+const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount }: addListProps) => {
    const theme = useTheme()
-   const [loading, setLoading] = React.useState(false)
+   //  destructure job Attributes data
+   const { companyData, categoryData, skillsData, jobTypesData, jobExperienceData, userPackage } = jobAttributes || {}
+   const create_ads_limit = userPackage?.[0]?.user_plan?.create_ads_limit || 0
 
+   const [loading, setLoading] = React.useState(false)
    const {
       handleSubmit,
       register,
@@ -50,6 +56,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
          price: 0,
          type: "",
          skills: "",
+         experience: "",
          category: "",
          company: ""
       }
@@ -60,6 +67,13 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
    // *** handle form submit
    const handleFromSubmit = async (data: { [key: string]: any }) => {
       try {
+         if (!userPackage?.[0]?.user_plan) {
+            return toast.error("Please get a User package.")
+         }
+         if (jobCount?.total && jobCount?.total >= create_ads_limit) {
+            return toast.error("Limit filled, please update package.")
+         }
+
          setLoading(true)
          // ?? check if slug is already exist
          const { data: slugData } = await find(
@@ -101,6 +115,10 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                ...(data?.skills && {
                   skills: { connect: [data?.skills] }
                }),
+               //check if experience is exist then connect
+               ...(data?.experience && {
+                  experience: { connect: [data?.experience] }
+               }),
                //check if job-type is exist then connect
                ...(data?.type && {
                   type: { connect: [data?.type] }
@@ -113,7 +131,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
          if (error) {
             return toast.error(message || "Failed to create list")
          } else {
-            mutate()
+            handleMute()
             toast.success("Successfully created!")
             handleClose()
          }
@@ -123,51 +141,6 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
          setLoading(false)
       }
    }
-
-   // fetch company data
-   const queryParams = {
-      filters: {
-         owner: {
-            id: userId
-         }
-      },
-      fields: ["name"]
-   }
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-backend/companies&query=${queryString}&cache=no-store`
-   const { data: companyData, isLoading: companyIsLoading } = useSWR(apiUrl, fetcher)
-
-   // fetch job-category data
-   const categoryQueryParams = {
-      fields: ["title"]
-   }
-   const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
-   const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
-   const { data: categoryData, isLoading: categoryIsLoading } = useSWR(categoryAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch job-skills data
-   const skillsQueryParams = {
-      fields: ["title"]
-   }
-   const skillsQueryString = encodeURIComponent(JSON.stringify(skillsQueryParams))
-   const skillsAPiUrl = `/api/find?model=api/metajob-backend/skills&query=${skillsQueryString}`
-   const { data: skillsData, isLoading: skillsIsLoading } = useSWR(skillsAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch job-type data
-   const jobTypesQueryParams = {
-      fields: ["title"]
-   }
-   const jobTypesQueryString = encodeURIComponent(JSON.stringify(jobTypesQueryParams))
-   const jobTypesAPiUrl = `/api/find?model=api/metajob-backend/job-types&query=${jobTypesQueryString}`
-   const { data: jobTypesData, isLoading: jobTypesIsLoading } = useSWR(jobTypesAPiUrl, fetcher, {
-      fallbackData: []
-   })
 
    return (
       <Box
@@ -280,7 +253,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            {...register("company", {
                               required: "Job Company is required"
                            })}
-                           defaultValue={watch("company") || ""}
+                           value={watch("company") || ""}
                            error={Boolean(errors.company)}>
                            <MenuItem disabled value=''>
                               Select Company
@@ -701,7 +674,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            {...register("category", {
                               required: "Job Category is required"
                            })}
-                           defaultValue={watch("category") || ""}
+                           value={watch("category") || ""}
                            error={Boolean(errors.category)}>
                            <MenuItem disabled value=''>
                               Select Category
@@ -747,7 +720,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            id='revenues'
                            size='small'
                            {...register("type")}
-                           defaultValue={watch("type") || ""}
+                           value={watch("type") || ""}
                            error={Boolean(errors.type)}>
                            <MenuItem disabled value=''>
                               Select Job Type
@@ -793,7 +766,7 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                            id='skills'
                            size='small'
                            {...register("skills")}
-                           defaultValue={watch("skills") || ""}
+                           value={watch("skills") || ""}
                            error={Boolean(errors.skills)}>
                            <MenuItem disabled value=''>
                               Select Job Skill
@@ -803,6 +776,52 @@ const AddJob = ({ handleClose, userId, mutate }: addListProps) => {
                                  return (
                                     <MenuItem key={index} value={revenueItem?.documentId}>
                                        {revenueItem?.title}
+                                    </MenuItem>
+                                 )
+                              })}
+                        </Select>
+                     </Grid>
+                     {/* Experience */}
+                     <Grid item xs={12} sm={6}>
+                        <Box
+                           component={"label"}
+                           htmlFor='experience'
+                           sx={{
+                              display: "block",
+                              fontSize: "0.875rem",
+                              fontWeight: 500,
+                              color: "text.primary",
+                              mb: 1
+                           }}>
+                           Job Experience
+                           <Typography
+                              component='span'
+                              sx={{
+                                 fontSize: 14,
+                                 color: (theme) => theme.palette.text.secondary,
+                                 ml: 0.5
+                              }}>
+                              (optional)
+                           </Typography>
+                        </Box>
+                        <Select
+                           inputProps={{ readOnly: !isCompanySelected }}
+                           displayEmpty
+                           fullWidth
+                           variant='outlined'
+                           id='experience'
+                           size='small'
+                           {...register("experience")}
+                           value={watch("experience") || ""}
+                           error={Boolean(errors.experience)}>
+                           <MenuItem disabled value=''>
+                              Select Job Experience
+                           </MenuItem>
+                           {jobExperienceData &&
+                              jobExperienceData?.map((expItem: IJobCategory, index: number) => {
+                                 return (
+                                    <MenuItem key={index} value={expItem?.documentId}>
+                                       {expItem?.title}
                                     </MenuItem>
                                  )
                               })}

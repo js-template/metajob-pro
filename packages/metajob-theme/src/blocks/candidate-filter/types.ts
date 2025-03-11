@@ -92,3 +92,9 @@ export type ICandidateFilterProps = {
    categories: string
    rate: string
 }
+
+export type ISingleCategory = {
+   id: number
+   documentId: string
+   title: string
+}

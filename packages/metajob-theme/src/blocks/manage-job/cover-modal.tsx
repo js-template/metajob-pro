@@ -3,6 +3,7 @@
 import React from "react"
 import { Box, IconButton, Typography, useTheme, Modal } from "@mui/material"
 import CIcon from "../../components/common/icon"
+import MarkdownCustomPreview from "../../components/markdown-preview"
 
 type Props = {
    open: boolean
@@ -69,7 +70,15 @@ export const CoveModal = ({ open, handleClose, title, data }: Props) => {
                </IconButton>
             </Box>
             {/* content  */}
-            <Box sx={{ p: 2 }}>{data}</Box>
+            {/* <Box sx={{ p: 2 }}>{data}</Box> */}
+            <Box sx={{ p: 2 }}>
+               <MarkdownCustomPreview
+                  source={data}
+                  wrapperElement={{
+                     "data-color-mode": theme.palette.mode
+                  }}
+               />
+            </Box>
          </Box>
       </Modal>
    )

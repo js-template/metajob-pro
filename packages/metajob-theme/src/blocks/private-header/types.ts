@@ -1,6 +1,16 @@
 export type IPrivateHeaderProps = {
    block: IPrivateHeaderBlock
    language?: string
+   userData?: {
+      id: number
+      avatar?: {
+         url: string
+      }
+   }
+   emailHistoryData: {
+      createdAt: string
+      title: string
+   }[]
 }
 
 export type IPrivateHeaderBlock = {

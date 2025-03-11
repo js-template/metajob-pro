@@ -4,9 +4,24 @@ import _ from "lodash"
 import toast from "react-hot-toast"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import ManageCompaniesTableItem from "./tableItem"
-import { KeyedMutator } from "swr"
 import { TableLoader } from "../../components/loader"
-import { ISingleCompany } from "./types"
+import { ICompanyAttribute, ISingleCompany } from "./types"
+
+type Props = {
+   headCells: { value: string }[]
+   selectAll: boolean
+   setSelectAll: (value: boolean) => void
+   direction: "ltr" | "rtl"
+   data: ISingleCompany[]
+   handleMute: () => void
+   isLoading: boolean
+   empty?: {
+      title: string
+      description: string
+   }
+   pageSize: number
+   companyAttributes?: ICompanyAttribute
+}
 
 const ManageCompaniesTable = ({
    headCells,
@@ -14,24 +29,12 @@ const ManageCompaniesTable = ({
    setSelectAll,
    direction,
    data,
-   mutate,
+   handleMute,
    isLoading,
    empty,
-   pageSize
-}: {
-   headCells: { value: string }[]
-   selectAll: boolean
-   setSelectAll: (value: boolean) => void
-   direction: "ltr" | "rtl"
-   data: any
-   mutate: KeyedMutator<any>
-   isLoading: boolean
-   empty?: {
-      title: string
-      description: string
-   }
-   pageSize: number
-}) => {
+   pageSize,
+   companyAttributes
+}: Props) => {
    const totalHeader = 4
    if (headCells && headCells.length > 0 && headCells.length < totalHeader) {
       const remainHeader = totalHeader - headCells.length
@@ -92,16 +95,19 @@ const ManageCompaniesTable = ({
                   </TableHead>
 
                   {isLoading ? (
-                     <TableLoader numberOfRows={pageSize} />
+                     <TableBody>
+                        <TableLoader numberOfRows={pageSize} />
+                     </TableBody>
                   ) : (
                      <TableBody>
-                        {data?.data.map((row: ISingleCompany, index: number) => (
+                        {data?.map((row: ISingleCompany, index: number) => (
                            <ManageCompaniesTableItem
                               key={index}
                               row={row}
                               selectAll={selectAll}
                               direction={direction}
-                              mutate={mutate}
+                              handleMute={handleMute}
+                              companyAttributes={companyAttributes}
                               noteFunctionHandler={() => {
                                  toast.error("Note function not implemented yet")
                               }}
@@ -109,7 +115,7 @@ const ManageCompaniesTable = ({
                         ))}
 
                         {/* Empty message */}
-                        {data?.data.length === 0 && (
+                        {data?.length === 0 && (
                            <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                               <TableCell colSpan={headCells.length} sx={{ py: 9.7 }}>
                                  <Box

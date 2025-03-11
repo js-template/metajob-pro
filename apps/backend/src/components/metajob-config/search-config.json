@@ -18,6 +18,12 @@
     "category_placeholder": {
       "type": "string"
     },
+    "experience_placeholder": {
+      "type": "string"
+    },
+    "type_placeholder": {
+      "type": "string"
+    },
     "sort_placeholder": {
       "type": "string"
     },

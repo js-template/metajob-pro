@@ -1,6 +1,6 @@
 "use client"
 import { Box, Card, CardContent, Divider, Grid, Skeleton, Typography, useTheme } from "@mui/material"
-import { ResumeFormProps } from "./types"
+import { ISingleResume } from "./types"
 import MarkdownCustomPreview from "../../components/markdown-preview"
 import { Fragment } from "react/jsx-runtime"
 import EducationPreview from "./educationPreview"
@@ -10,14 +10,14 @@ import PreviewHeader from "./previewHeader"
 import PreviewActions from "./previewActions"
 
 type Props = {
-   data: ResumeFormProps
+   data?: ISingleResume | null
    handleEdit: () => void
    isLoading?: boolean
 }
 
 const ResumePreviewBox = ({ handleEdit, data, isLoading }: Props) => {
    const theme = useTheme()
-   const noResume = !data || (Object.keys(data).length === 0 && isLoading === false)
+   const noResume = isLoading === false && (!data || Object.keys(data).length === 0)
 
    return (
       <Box>
@@ -60,8 +60,8 @@ const ResumePreviewBox = ({ handleEdit, data, isLoading }: Props) => {
                                           fontSize={20}
                                           fontWeight={700}
                                           sx={{
-                                             color: (theme) => theme.palette.text.primary,
-                                           }}
+                                             color: (theme) => theme.palette.text.primary
+                                          }}
                                           textAlign={"center"}>
                                           About Me
                                        </Typography>
@@ -116,19 +116,15 @@ const ResumePreviewBox = ({ handleEdit, data, isLoading }: Props) => {
                            justifyContent: "center",
                            height: "400px"
                         }}>
-                        {isLoading ? (
-                           <Skeleton variant='text' width={200} height={40} />
-                        ) : (
-                           <Typography
-                              fontSize={20}
-                              fontWeight={700}
-                              sx={{
-                                 color: (theme) => theme.palette.text.secondary,
-                               }}
-                              textAlign={"center"}>
-                              No Resume Added yet, Please add your resume
-                           </Typography>
-                        )}
+                        <Typography
+                           fontSize={20}
+                           fontWeight={700}
+                           sx={{
+                              color: (theme) => theme.palette.text.secondary
+                           }}
+                           textAlign={"center"}>
+                           No Resume Added yet, Please add your resume
+                        </Typography>
                      </CardContent>
                   </Card>
                )}

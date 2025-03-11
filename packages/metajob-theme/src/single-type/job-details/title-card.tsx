@@ -1,78 +1,98 @@
 "use client"
-import { useState } from "react"
-import useSWR, { mutate } from "swr"
+import { Fragment, useEffect, useState } from "react"
 import toast from "react-hot-toast"
-import { Button, IconButton } from "@mui/material"
+import { useSession } from "next-auth/react"
+import { Button, CircularProgress, IconButton } from "@mui/material"
 import { Avatar, Box, Grid, Stack, Typography } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
-import { ISingleJob, IUserSession } from "./types"
-import { createEntry, deleteEntry } from "../../lib/strapi"
-import { fetcher } from "./hook"
+import { ISingleCompany, ISingleJob } from "./types"
+import { createEntry, deleteEntry, find } from "../../lib/strapi"
+import { FacebookShareButton, LinkedinShareButton, TwitterShareButton } from "react-share"
+import { ShareModal } from "./share-modal"
+import ApplyJobModal from "./apply-job-modal"
 
 type Props = {
    data: ISingleJob
-   session?: IUserSession | null | any
+   companyData: ISingleCompany
 }
 
-const JobTitleCard = ({ data, session }: Props) => {
+const JobTitleCard = ({ data, companyData }: Props) => {
+   const { data: session } = useSession()
+
    const { documentId, title, company, category } = data || {}
    const userId = session?.user?.id
    const userRole = session?.user?.role?.type
 
-   //===================Starts fetching company data============
-   const companyQueryParams = {
-      populate: {
-         logo: {
-            fields: ["url"]
-         }
-      },
-      filters: {
-         documentId: {
-            $eq: company?.documentId
-         }
-      }
-   }
-   const companyQueryString = encodeURIComponent(JSON.stringify(companyQueryParams))
-   const companyAPiUrl = `/api/find?model=api/metajob-backend/companies&query=${companyQueryString}`
-   const { data: companyData } = useSWR(companyAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   const logo = companyData?.data?.[0]?.logo?.url || ""
-   //===================Ends fetching company data============
+   const logo = companyData?.logo?.url || ""
 
    const companyName = company?.name || ""
    const categoryName = category?.title || ""
 
-   //===================Starts apply jobs============
    const [applyLoading, setApplyLoading] = useState(false)
    const [applyIdentifier, setApplyIdentifier] = useState(false)
-   const queryParams = {
-      filters: {
-         owner: {
-            id: {
-               $eq: userId || undefined
-            }
-         },
-         job: {
-            id: {
-               $eq: data?.id || undefined
-            }
-         }
-      },
-      populate: "*"
+   const [applyData, setApplyData] = useState<{ documentId: string }[] | []>([])
+   const [bookmarkLoading, setBookmarkLoading] = useState(false)
+   const [bookmarkIdentifier, setBookmarkIdentifier] = useState(false)
+   const [bookmarkData, setBookmarkData] = useState<{ documentId: string }[] | []>([])
+   const [shareModalOpen, setShareModalOpen] = useState(false)
+   const [applyJobModalOpen, setApplyJobModalOpen] = useState(false)
+
+   const handleCardModalOpen = () => setShareModalOpen(true)
+   const handleCardModalClose = () => {
+      setShareModalOpen(false)
    }
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   // Construct the API URL
-   const apiUrl = userId ? `/api/find?model=api/metajob-backend/applied-jobs&query=${queryString}&cache=no-store` : null
-   const { data: appliedListMain, error, isLoading } = useSWR(apiUrl, fetcher)
-   // check the job is applied
-   const isApplied = appliedListMain?.data?.length > 0 || applyIdentifier
+
+   const handleApplyJobModalOpen = () => setApplyJobModalOpen(true)
+   const handleApplyJobModalClose = () => {
+      setApplyJobModalOpen(false)
+   }
+
+   //===================Starts apply job============
+   // get the job-apply data
+   useEffect(() => {
+      const getApplyData = async () => {
+         setApplyLoading(true)
+         const { data: applyDataAll, error: applyDataError } = await find(
+            "api/metajob-backend/applied-jobs",
+            {
+               filters: {
+                  owner: {
+                     id: {
+                        $eq: userId || undefined
+                     }
+                  },
+                  job: {
+                     id: {
+                        $eq: data?.id || undefined
+                     }
+                  }
+               },
+               populate: "*"
+            },
+            "no-store"
+         )
+         if (!applyDataError) {
+            setApplyData(applyDataAll?.data)
+            setApplyLoading(false)
+         } else {
+            setApplyData([])
+            setApplyLoading(false)
+         }
+      }
+      if (userId) {
+         if (!data?.id) return
+         getApplyData()
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId, applyIdentifier])
+
+   const isApplied = applyData?.length > 0 || applyIdentifier
 
    // apply job handler
-   const jobApplyHandler = async () => {
+   const jobApplyHandler = async (letterValue?: string) => {
       try {
          if (!session) {
             return toast.error("Please login to apply for this job")
@@ -88,6 +108,7 @@ const JobTitleCard = ({ data, session }: Props) => {
             job: {
                connect: [documentId]
             },
+            cover_letter: letterValue || "",
             apply_status: "Pending"
          }
          const {
@@ -104,9 +125,8 @@ const JobTitleCard = ({ data, session }: Props) => {
 
          if (applyData) {
             setApplyIdentifier(true)
-            return toast.success("Job Applied Successfully", {
-               icon: "🚀"
-            })
+            handleApplyJobModalClose()
+            return toast.success("Job Applied Successfully")
          }
       } catch (err: any) {
          toast.error(err.message || "An Error Occurred")
@@ -117,44 +137,59 @@ const JobTitleCard = ({ data, session }: Props) => {
    //===================Ends apply jobs============
 
    //===================Starts bookmark jobs============
-   const [bookmarkLoading, setBookmarkLoading] = useState(false)
-   const [bookmarkIdentifier, setBookmarkIdentifier] = useState(false)
-   const bookmarkQueryParams = {
-      filters: {
-         owner: {
-            id: {
-               $eq: userId || undefined
-            }
-         },
-         job: {
-            id: {
-               $eq: data?.id || undefined
-            }
+   // get the bookmark data
+   useEffect(() => {
+      const getBookmark = async () => {
+         setBookmarkLoading(true)
+         const { data: bookmarkDataAll, error: bookmarkError } = await find(
+            "api/metajob-backend/bookmarks",
+            {
+               filters: {
+                  owner: {
+                     id: {
+                        $eq: userId || undefined
+                     }
+                  },
+                  job: {
+                     id: {
+                        $eq: data?.id || undefined
+                     }
+                  }
+               },
+               populate: "*"
+            },
+            "no-store"
+         )
+         if (!bookmarkError) {
+            setBookmarkData(bookmarkDataAll?.data)
+            setBookmarkLoading(false)
+         } else {
+            setBookmarkData([])
+            setBookmarkLoading(false)
          }
-      },
-      populate: "*"
-   }
+      }
+      if (userId) {
+         if (!data?.id) return
+         getBookmark()
+      }
 
-   // Convert queryParams to a string for the URL
-   const bookmarkQueryString = encodeURIComponent(JSON.stringify(bookmarkQueryParams))
-   // Construct the API URL
-   const bookmarkApiUrl = userId
-      ? `/api/find?model=api/metajob-backend/bookmarks&query=${bookmarkQueryString}&cache=no-store`
-      : null
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId, bookmarkIdentifier])
 
-   const { data: bookmarkListMain, isLoading: isBookmarkLoading } = useSWR(bookmarkApiUrl, fetcher)
-   // check the job is applied
-   const isBookmarked = bookmarkListMain?.data?.length > 0 || bookmarkIdentifier
-
-   // apply job handler
+   const isBookmarked = bookmarkData?.length > 0 || bookmarkIdentifier
+   // bookmark handler
    const jobBookmarkHandler = async () => {
       try {
          if (!session) {
             return toast.error("Please login to bookmark for this job")
          }
-         setBookmarkLoading(true)
+
          if (isBookmarked) {
-            const bookmarkDocId = bookmarkListMain?.data?.[0]?.documentId
+            if (!bookmarkData?.[0]?.documentId) {
+               return toast.error("Please wait to load bookmark status")
+            }
+            setBookmarkLoading(true)
+            const bookmarkDocId = bookmarkData?.[0]?.documentId
             const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId)
 
             if (error) {
@@ -162,7 +197,7 @@ const JobTitleCard = ({ data, session }: Props) => {
             }
 
             if (success) {
-               mutate(bookmarkApiUrl)
+               // mutate(bookmarkApiUrl)
                setBookmarkIdentifier(false)
                return toast.success("Bookmarked Removed")
             }
@@ -190,7 +225,7 @@ const JobTitleCard = ({ data, session }: Props) => {
 
             if (bookmarkData) {
                setBookmarkIdentifier(true)
-               mutate(bookmarkApiUrl)
+               // mutate(bookmarkApiUrl)
                return toast.success("Bookmarked Successfully")
             }
          }
@@ -200,113 +235,122 @@ const JobTitleCard = ({ data, session }: Props) => {
          setBookmarkLoading(false)
       }
    }
-   //===================Ends apply jobs============
+   //===================Ends bookmark jobs============
 
    return (
-      <Card
-         sx={{
-            borderRadius: 2,
-            p: 2
-         }}>
-         <Grid container spacing={4} alignItems={"center"}>
-            <Grid item xs={12} sm={8}>
-               <Stack
-                  direction={{
-                     sm: "row",
-                     xs: "column"
-                  }}
-                  alignItems={"center"}
-                  gap={4}>
-                  {logo && (
-                     <Avatar
-                        src={logo}
-                        alt={companyName || "company-logo"}
-                        sx={{
-                           width: 100,
-                           height: 100,
-                           fontWeight: 700
-                        }}>
-                        {companyName?.charAt(0) || ""}
-                     </Avatar>
-                  )}
+      <Fragment>
+         <Card
+            sx={{
+               borderRadius: 2,
+               p: 2
+            }}>
+            <Grid container spacing={4} alignItems={"center"}>
+               <Grid item xs={12} sm={8}>
+                  <Stack
+                     direction={{
+                        sm: "row",
+                        xs: "column"
+                     }}
+                     alignItems={"center"}
+                     gap={4}>
+                     {logo && (
+                        <Avatar
+                           src={logo}
+                           alt={companyName || "company-logo"}
+                           sx={{
+                              width: 100,
+                              height: 100,
+                              fontWeight: 700
+                           }}>
+                           {companyName?.charAt(0) || ""}
+                        </Avatar>
+                     )}
 
-                  <Stack spacing={2}>
-                     <Stack spacing={1}>
-                        {title && (
+                     <Stack spacing={2}>
+                        <Stack spacing={1}>
+                           {title && (
+                              <Typography
+                                 variant={"h4"}
+                                 fontWeight={700}
+                                 fontSize={24}
+                                 sx={{
+                                    color: (theme) => theme.palette.text.primary
+                                 }}>
+                                 {title}
+                              </Typography>
+                           )}
+                           {categoryName && (
+                              <Typography
+                                 variant={"body1"}
+                                 fontWeight={400}
+                                 fontSize={14}
+                                 sx={{
+                                    color: (theme) => theme.palette.text.disabled
+                                 }}>
+                                 {categoryName}
+                              </Typography>
+                           )}
+                        </Stack>
+                        {/* social-share  */}
+                        <Stack
+                           direction={{
+                              xs: "column",
+                              md: "row"
+                           }}
+                           gap={4}
+                           display={"flex"}
+                           alignItems={"center"}>
                            <Typography
-                              variant={"h4"}
+                              variant={"h1"}
                               fontWeight={700}
-                              fontSize={24}
-                              sx={{
-                                 color: (theme) => theme.palette.text.primary
-                               }}>
-                              {title}
-                           </Typography>
-                        )}
-                        {categoryName && (
-                           <Typography
-                              variant={"body1"}
-                              fontWeight={400}
                               fontSize={14}
                               sx={{
                                  color: (theme) => theme.palette.text.disabled
-                                 }}>
-                              {categoryName}
+                              }}>
+                              Share on
                            </Typography>
-                        )}
-                     </Stack>
-                     {/* social-share  */}
-                     <Stack
-                        direction={{
-                           xs: "column",
-                           md: "row"
-                        }}
-                        gap={4}
-                        display={"flex"}
-                        alignItems={"center"}>
-                        <Typography
-                           variant={"h1"}
-                           fontWeight={700}
-                           fontSize={14}
-                           sx={{
-                              color: (theme) => theme.palette.text.disabled
-                              }}>
-                           Share on
-                        </Typography>
-                        <Stack
-                           direction={"row"}
-                           gap={2}
-                           display={"flex"}
-                           justifyContent={"center"}
-                           alignItems={"center"}
-                           component={"span"}>
-                           <Box
-                              sx={{
-                                 p: 1,
-                                 borderRadius: 50,
-                                 borderColor: (theme) => theme.palette.divider,
-                                 borderWidth: 1,
-                                 borderStyle: "solid",
-                                 "&:hover": {
-                                    bgcolor: (theme) => theme.palette.divider
-                                 }
-                              }}>
-                              <CIcon icon={"ri:facebook-fill"} size={20} />
-                           </Box>
-                           <Box
-                              sx={{
-                                 p: 1,
-                                 borderRadius: 50,
-                                 borderColor: (theme) => theme.palette.divider,
-                                 borderWidth: 1,
-                                 borderStyle: "solid",
-                                 "&:hover": {
-                                    bgcolor: (theme) => theme.palette.divider
-                                 }
-                              }}>
-                              <CIcon icon={"mdi:twitter"} size={20} />
-                           </Box>
-                           <Box
+                           <Stack
+                              direction={"row"}
+                              gap={2}
+                              display={"flex"}
+                              justifyContent={"center"}
+                              alignItems={"center"}
+                              component={"span"}>
+                              {/* facebook share link */}
+                              <FacebookShareButton url={`${process.env.NEXT_PUBLIC_BASE_URL}/job/${data?.slug}`}>
+                                 <Box
+                                    sx={{
+                                       p: 1,
+                                       borderRadius: 50,
+                                       borderColor: (theme) => theme.palette.divider,
+                                       borderWidth: 1,
+                                       borderStyle: "solid",
+                                       "&:hover": {
+                                          bgcolor: (theme) => theme.palette.divider
+                                       }
+                                    }}>
+                                    <CIcon icon={"ri:facebook-fill"} size={20} />
+                                 </Box>
+                              </FacebookShareButton>
+                              {/* twitter share link */}
+                              <TwitterShareButton
+                                 url={`${process.env.NEXT_PUBLIC_BASE_URL}/job/${data?.slug}`}
+                                 title={data?.title || ""}>
+                                 <Box
+                                    sx={{
+                                       p: 1,
+                                       borderRadius: 50,
+                                       borderColor: (theme) => theme.palette.divider,
+                                       borderWidth: 1,
+                                       borderStyle: "solid",
+                                       "&:hover": {
+                                          bgcolor: (theme) => theme.palette.divider
+                                       }
+                                    }}>
+                                    <CIcon icon={"mdi:twitter"} size={20} />
+                                 </Box>
+                              </TwitterShareButton>
+                              {/* <Box
                               sx={{
                                  p: 1,
                                  borderRadius: 50,
@@ -318,113 +362,148 @@ const JobTitleCard = ({ data, session }: Props) => {
                                  }
                               }}>
                               <CIcon icon={"mdi:instagram"} size={20} />
-                           </Box>
-                           <Box
-                              sx={{
-                                 p: 1,
-                                 borderRadius: 50,
-                                 borderColor: (theme) => theme.palette.divider,
-                                 borderWidth: 1,
-                                 borderStyle: "solid",
-                                 "&:hover": {
-                                    bgcolor: (theme) => theme.palette.divider
-                                 }
-                              }}>
-                              <CIcon icon={"akar-icons:linkedin-fill"} size={20} />
-                           </Box>
-                           <Box
-                              sx={{
-                                 p: 1,
-                                 borderRadius: 50,
-                                 borderColor: (theme) => theme.palette.divider,
-                                 borderWidth: 1,
-                                 borderStyle: "solid",
-                                 "&:hover": {
-                                    bgcolor: (theme) => theme.palette.divider
-                                 }
-                              }}>
-                              <CIcon icon={"solar:share-bold"} size={20} />
-                           </Box>
+                           </Box> */}
+                              {/* linkedin share link */}
+                              <LinkedinShareButton
+                                 url={`${process.env.NEXT_PUBLIC_BASE_URL}/job/${data?.slug}`}
+                                 source={`Metajob`}
+                                 title={data?.title || ""}
+                                 summary={data?.title || ""}>
+                                 <Box
+                                    sx={{
+                                       p: 1,
+                                       borderRadius: 50,
+                                       borderColor: (theme) => theme.palette.divider,
+                                       borderWidth: 1,
+                                       borderStyle: "solid",
+                                       "&:hover": {
+                                          bgcolor: (theme) => theme.palette.divider
+                                       }
+                                    }}>
+                                    <CIcon icon={"akar-icons:linkedin-fill"} size={20} />
+                                 </Box>
+                              </LinkedinShareButton>
+                              {/* More Share button  */}
+                              <Box
+                                 onClick={() => {
+                                    handleCardModalOpen()
+                                 }}
+                                 sx={{
+                                    cursor: "pointer",
+                                    p: 1,
+                                    borderRadius: 50,
+                                    borderColor: (theme) => theme.palette.divider,
+                                    borderWidth: 1,
+                                    borderStyle: "solid",
+                                    "&:hover": {
+                                       bgcolor: (theme) => theme.palette.divider
+                                    }
+                                 }}>
+                                 <CIcon icon={"solar:share-bold"} size={20} />
+                              </Box>
+                           </Stack>
                         </Stack>
                      </Stack>
                   </Stack>
-               </Stack>
-            </Grid>
-            {/* buttons  */}
-            <Grid
-               item
-               xs={12}
-               sm={4}
-               sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 5,
-                  justifyContent: "space-between"
-               }}>
-               <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
-                  {isBookmarked ? (
-                     <IconButton onClick={jobBookmarkHandler} color='primary'>
-                        <CIcon
-                           icon='mdi:heart'
-                           size={24}
-                           sx={{
-                              cursor: "pointer",
-                              color: "primary.main"
-                           }}
-                        />
-                     </IconButton>
+               </Grid>
+               {/* buttons  */}
+               <Grid
+                  item
+                  xs={12}
+                  sm={4}
+                  sx={{
+                     display: "flex",
+                     flexDirection: "column",
+                     gap: 5,
+                     justifyContent: "space-between"
+                  }}>
+                  {bookmarkLoading ? (
+                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                        <IconButton color='primary'>
+                           <CircularProgress
+                              size={20}
+                              sx={{
+                                 color: (theme) => theme.palette.primary.main
+                              }}
+                           />
+                        </IconButton>
+                     </Stack>
                   ) : (
-                     <IconButton onClick={jobBookmarkHandler} color='primary'>
-                        <CIcon
-                           icon='mdi:heart-outline'
-                           size={24}
-                           color='text.primary'
+                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                        {isBookmarked ? (
+                           <IconButton onClick={jobBookmarkHandler} color='primary'>
+                              <CIcon
+                                 icon='mdi:heart'
+                                 size={24}
+                                 sx={{
+                                    cursor: "pointer",
+                                    color: "primary.main"
+                                 }}
+                              />
+                           </IconButton>
+                        ) : (
+                           <IconButton onClick={jobBookmarkHandler} color='primary'>
+                              <CIcon
+                                 icon='mdi:heart-outline'
+                                 size={24}
+                                 color='text.primary'
+                                 sx={{
+                                    color: "primary.main",
+                                    cursor: "pointer"
+                                 }}
+                              />
+                           </IconButton>
+                        )}
+                     </Stack>
+                  )}
+                  <Stack display={"flex"} alignItems={"flex-end"} gap={1}>
+                     {isApplied ? (
+                        <Button
+                           disabled
+                           size='small'
                            sx={{
-                              color: "primary.main",
-                              cursor: "pointer"
+                              py: 1,
+                              width: {
+                                 sm: 150,
+                                 xs: "100%"
+                              }
                            }}
-                        />
-                     </IconButton>
-                  )}
-               </Stack>
-               <Stack display={"flex"} alignItems={"flex-end"} gap={1}>
-                  {isApplied ? (
-                     <Button
-                        disabled
-                        size='small'
-                        sx={{
-                           py: 1,
-                           width: {
-                              sm: 150,
-                              xs: "100%"
-                           }
-                        }}
-                        variant='contained'
-                        color='primary'>
-                        Applied
-                     </Button>
-                  ) : (
-                     <LoadingButton
-                        onClick={jobApplyHandler}
-                        loading={applyLoading || isLoading}
-                        // loadingPosition='start'
-                        size='small'
-                        sx={{
-                           py: 1,
-                           width: {
-                              sm: 150,
-                              xs: "100%"
-                           }
-                        }}
-                        variant='contained'
-                        color='primary'>
-                        {isLoading ? "Checking" : "Apply Now"}
-                     </LoadingButton>
-                  )}
-               </Stack>
+                           variant='contained'
+                           color='primary'>
+                           Applied
+                        </Button>
+                     ) : (
+                        <LoadingButton
+                           onClick={handleApplyJobModalOpen}
+                           loading={applyLoading}
+                           // loadingPosition='start'
+                           size='small'
+                           sx={{
+                              py: 1,
+                              width: {
+                                 sm: 150,
+                                 xs: "100%"
+                              }
+                           }}
+                           variant='contained'
+                           color='primary'>
+                           {applyLoading ? "Checking" : "Apply Now"}
+                        </LoadingButton>
+                     )}
+                  </Stack>
+               </Grid>
             </Grid>
-         </Grid>
-      </Card>
+         </Card>
+         <ShareModal open={shareModalOpen} handleClose={handleCardModalClose} title='More Share Options' data={data} />
+         <ApplyJobModal
+            open={applyJobModalOpen}
+            handleClose={handleApplyJobModalClose}
+            jobApplyHandler={jobApplyHandler}
+            applyLoading={applyLoading}
+            title='Apply Job'
+            data={data}
+         />
+      </Fragment>
    )
 }
 

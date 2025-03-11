@@ -1,5 +1,4 @@
 "use client"
-import useSWR from "swr"
 import CIcon from "../../../components/common/icon"
 import MenuIcon from "@mui/icons-material/Menu"
 import { LoadingButton } from "@mui/lab"
@@ -23,13 +22,13 @@ import _ from "lodash"
 import NextLink from "next/link"
 import React from "react"
 import toast from "react-hot-toast"
-import { fetcher } from "./hook"
 import { getLanguageValue } from "../../../utils"
 import { useTheme as modeUseTheme } from "next-themes"
 import { signOut, useSession } from "next-auth/react"
 import { useChangeDirection, useChangeLang } from "../utils"
 import { IPrivateHeaderBlock } from "../types"
 import { SignOut } from "../../../utils/user"
+import NotificationBar from "./notification-bar"
 
 interface AppBarProps extends MuiAppBarProps {
    open?: boolean
@@ -63,7 +62,9 @@ const CustomAppBar = ({
    anchorElUser,
    lang,
    headerData,
-   userRole
+   userRole,
+   userData,
+   emailHistoryData
 }: {
    open: boolean
    handleDrawerOpen: () => void
@@ -73,10 +74,22 @@ const CustomAppBar = ({
    lang: string
    headerData: IPrivateHeaderBlock
    userRole?: string
+   userData?: {
+      id: number
+      avatar?: {
+         url: string
+      }
+   }
+   emailHistoryData: {
+      createdAt: string
+      title: string
+   }[]
 }) => {
    const theme = useTheme()
-   const [loading, setLoading] = React.useState(false)
    const { data, status } = useSession()
+
+   const userAvatar = userData?.avatar?.url || ""
+   const userName = data?.user?.name || ""
 
    const { theme: mode, setTheme } = modeUseTheme()
    const toggleTheme = () => {
@@ -84,6 +97,7 @@ const CustomAppBar = ({
    }
    const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
+   const [loading, setLoading] = React.useState(false)
    const { changeLang } = useChangeLang()
    const { changeDirection } = useChangeDirection()
 
@@ -128,23 +142,6 @@ const CustomAppBar = ({
          })
       })
    }
-
-   // const queryParams = {
-   //    populate: "avatar, role",
-   //    publicationState: "live"
-   // }
-   const queryParams = {
-      populate: "*"
-   }
-
-   // fetch user avatar data
-   const userId = data?.user?.id
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-   const apiUrl = userId ? `/api/find?model=api/users/${userId}&query=${queryString}&cache=no-store` : null
-
-   const { data: userData, error } = useSWR(apiUrl, fetcher)
-   const userAvatar = userData?.avatar?.url || ""
-   const userName = data?.user?.name || ""
 
    return (
       <AppBar
@@ -261,7 +258,7 @@ const CustomAppBar = ({
                                           }
                                           changeLang(lang?.link)
                                           window.location.reload()
-                                       } else if (lang?.link === "en" || lang?.link === "es") {
+                                       } else {
                                           if (changeDirection) {
                                              changeDirection("ltr")
                                           }
@@ -312,11 +309,8 @@ const CustomAppBar = ({
                   </>
                )}
                {/* notification-button  */}
-               {notification && (
-                  <IconButton size='large' color='inherit'>
-                     <CIcon icon='tabler:bell' />
-                  </IconButton>
-               )}
+               {notification && <NotificationBar emailHistoryData={emailHistoryData} />}
+
                {/* user-menu  */}
                <Box>
                   <Tooltip title={status === "authenticated" ? "Open Settings" : "loading..."}>

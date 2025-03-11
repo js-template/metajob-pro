@@ -1,12 +1,12 @@
 import { Fragment } from "react"
 import { Avatar, Box, Skeleton, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material"
-import { ResumeFormProps } from "./types"
+import { ISingleResume } from "./types"
 import CIcon from "../../components/common/icon"
 import NextLink from "next/link"
 
 type Props = {
    handleEdit: () => void
-   data?: ResumeFormProps
+   data?: ISingleResume | null
    isLoading?: boolean
 }
 

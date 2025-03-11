@@ -4,7 +4,6 @@ import Dialog from "@mui/material/Dialog"
 import _ from "lodash"
 import toast from "react-hot-toast"
 import Slide from "@mui/material/Slide"
-import useSWR, { KeyedMutator } from "swr"
 import { useForm } from "react-hook-form"
 import MDEditor from "@uiw/react-md-editor"
 import {
@@ -21,9 +20,8 @@ import {
 import { LoadingButton } from "@mui/lab"
 import { TransitionProps } from "@mui/material/transitions"
 import { findOne, updateOne } from "../../lib/strapi"
-import { IEditJobData, IJobCategory } from "./types"
+import { IEditJobData, IJobAttribute, IJobCategory } from "./types"
 import CIcon from "../../components/common/icon"
-import { fetcher } from "./hook"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 
 const Transition = React.forwardRef(function Transition(
@@ -38,12 +36,16 @@ const Transition = React.forwardRef(function Transition(
 type EditListProps = {
    open: boolean
    handleClose: () => void
-   mutate: KeyedMutator<any>
+   handleMute: () => void
    jobDocID: string
+   jobAttributes?: IJobAttribute
 }
 
-const EditJob = ({ open, handleClose, mutate, jobDocID }: EditListProps) => {
+const EditJob = ({ open, handleClose, handleMute, jobDocID, jobAttributes }: EditListProps) => {
    const theme = useTheme()
+   //  destructure job Attributes data
+   const { categoryData, skillsData, jobTypesData, jobExperienceData } = jobAttributes || {}
+
    const [loading, setLoading] = React.useState(false)
    const [jobData, setJobData] = React.useState<IEditJobData | null>(null)
 
@@ -64,6 +66,7 @@ const EditJob = ({ open, handleClose, mutate, jobDocID }: EditListProps) => {
          price: 0,
          type: "",
          skills: "",
+         experience: "",
          category: "",
          company: ""
       }
@@ -90,6 +93,10 @@ const EditJob = ({ open, handleClose, mutate, jobDocID }: EditListProps) => {
                ...(data?.skills && {
                   skills: { connect: [data?.skills] }
                }),
+               //check if experience is exist then connect
+               ...(data?.experience && {
+                  experience: { connect: [data?.experience] }
+               }),
                //check if job-type is exist then connect
                ...(data?.type && {
                   type: { connect: [data?.type] }
@@ -107,7 +114,7 @@ const EditJob = ({ open, handleClose, mutate, jobDocID }: EditListProps) => {
          }
 
          if (updateList) {
-            mutate()
+            handleMute()
             toast.success("Job Updated Successfully")
             handleClose()
          }
@@ -160,40 +167,11 @@ const EditJob = ({ open, handleClose, mutate, jobDocID }: EditListProps) => {
          setValue("price", jobData?.price || 0)
          setValue("type", jobData?.type?.documentId || "")
          setValue("skills", jobData?.skills?.[0]?.documentId || "")
+         setValue("experience", jobData?.experience?.documentId || "")
          setValue("category", jobData?.category?.documentId || "")
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [jobData])
-
-   // fetch job-category data
-   const categoryQueryParams = {
-      fields: ["title"]
-   }
-   const categoryQueryString = encodeURIComponent(JSON.stringify(categoryQueryParams))
-   const categoryAPiUrl = `/api/find?model=api/metajob-backend/job-categories&query=${categoryQueryString}`
-   const { data: categoryData, isLoading: categoryIsLoading } = useSWR(categoryAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch job-skills data
-   const skillsQueryParams = {
-      fields: ["title"]
-   }
-   const skillsQueryString = encodeURIComponent(JSON.stringify(skillsQueryParams))
-   const skillsAPiUrl = `/api/find?model=api/metajob-backend/skills&query=${skillsQueryString}`
-   const { data: skillsData, isLoading: skillsIsLoading } = useSWR(skillsAPiUrl, fetcher, {
-      fallbackData: []
-   })
-
-   // fetch job-type data
-   const jobTypesQueryParams = {
-      fields: ["title"]
-   }
-   const jobTypesQueryString = encodeURIComponent(JSON.stringify(jobTypesQueryParams))
-   const jobTypesAPiUrl = `/api/find?model=api/metajob-backend/job-types&query=${jobTypesQueryString}`
-   const { data: jobTypesData, isLoading: jobTypesIsLoading } = useSWR(jobTypesAPiUrl, fetcher, {
-      fallbackData: []
-   })
 
    return (
       <Dialog
@@ -692,6 +670,51 @@ const EditJob = ({ open, handleClose, mutate, jobDocID }: EditListProps) => {
                                  return (
                                     <MenuItem key={index} value={revenueItem?.documentId}>
                                        {revenueItem?.title}
+                                    </MenuItem>
+                                 )
+                              })}
+                        </Select>
+                     </Grid>
+                     {/* Experience */}
+                     <Grid item xs={12} sm={6}>
+                        <Box
+                           component={"label"}
+                           htmlFor='experience'
+                           sx={{
+                              display: "block",
+                              fontSize: "0.875rem",
+                              fontWeight: 500,
+                              color: "text.primary",
+                              mb: 1
+                           }}>
+                           Job Experience
+                           <Typography
+                              component='span'
+                              sx={{
+                                 fontSize: 14,
+                                 color: (theme) => theme.palette.text.secondary,
+                                 ml: 0.5
+                              }}>
+                              (optional)
+                           </Typography>
+                        </Box>
+                        <Select
+                           displayEmpty
+                           fullWidth
+                           variant='outlined'
+                           id='experience'
+                           size='small'
+                           {...register("experience")}
+                           value={watch("experience") || ""}
+                           error={Boolean(errors.experience)}>
+                           <MenuItem disabled value=''>
+                              Select Job Experience
+                           </MenuItem>
+                           {jobExperienceData &&
+                              jobExperienceData?.map((expItem: IJobCategory, index: number) => {
+                                 return (
+                                    <MenuItem key={index} value={expItem?.documentId}>
+                                       {expItem?.title}
                                     </MenuItem>
                                  )
                               })}

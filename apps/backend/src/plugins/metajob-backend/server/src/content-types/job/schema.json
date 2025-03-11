@@ -41,6 +41,11 @@
       "relation": "oneToOne",
       "target": "plugin::metajob-backend.job-type"
     },
+    "experience": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.experience-level"
+    },
     "vacancy": {
       "type": "integer"
     },

@@ -2,21 +2,12 @@
 
 import { IBookmarkAttribute } from "./types"
 
-export const fetcher = async (url: string) => {
-   const response = await fetch(url)
-   if (!response.ok) {
-      throw new Error("An error occurred while fetching the data.")
-   }
-   const result = await response.json()
-   return result.data // Return the nested data
-}
-
 export const getItemValue = (data: IBookmarkAttribute) => {
    const { type, job, company, resume } = data || {}
 
    // job data for job bookmark
    // const jobAttributes = job?.data?.attributes
-   const { title: jobTitle, price: jobPrice, slug: jobSlug, status: jobStatus } = job || {}
+   const { title: jobTitle, price: jobPrice, slug: jobSlug, job_status: jobStatus } = job || {}
 
    // company data for company bookmark
    const { name: companyTitle, avg_salary: companyPrice, slug: companySlug, createdAt: companyCreate } = company || {}

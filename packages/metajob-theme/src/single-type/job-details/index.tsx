@@ -1,58 +1,85 @@
-"use client"
-import { Container, Grid, Stack } from "@mui/material"
-import GoBackBtn from "../../components/common/go-back-btn"
-import PageHeader from "../../components/common/public-page-header"
-import Details from "./details"
-import JobTitleCard from "./title-card"
-import Sidebar from "./sidebar"
-import { IJobDetailsBlock, ISingleJob, IUserSession } from "./types"
-import RelatedJob from "./related-job"
+"use server"
+import { find } from "../../lib/strapi"
+import JobDetailsClient from "./job-details"
+import { IJobDetailsBlock, ISingleJob } from "./types"
 
 type Props = {
    data: ISingleJob
    language?: string
-   session?: IUserSession | null | any
    block: IJobDetailsBlock
 }
 
-export const JobDetails = ({ data, session, block, language }: Props) => {
-   const { title, empty, related_lists } = block || {}
+export const JobDetails = async ({ data, block, language }: Props) => {
+   const { company } = data || {}
 
-   if (!data) {
-      return (
-         <Stack bgcolor={(theme) => theme.palette.background.default}>
-            <PageHeader title={title || ""} />
-            <Stack
-               sx={{
-                  minHeight: "50vh",
-                  justifyContent: "center",
-                  alignItems: "center"
-               }}>
-               <h3>{empty?.title || "No Job Found"}</h3>
-               <GoBackBtn />
-            </Stack>
-         </Stack>
-      )
-   }
+   // fetch company data
+   const { data: companyDataAll } = await find(
+      "api/metajob-backend/companies",
+      {
+         populate: {
+            logo: {
+               fields: ["url"]
+            },
+            social_links: {
+               populate: "*"
+            }
+         },
+         filters: {
+            documentId: {
+               $eq: company?.documentId
+            }
+         }
+      },
+      "no-store"
+   )
+
+   // fetch related-job data
+   const categoryId = data?.category?.id
+   const { data: relatedJobsDataAll } = await find(
+      "api/metajob-backend/jobs",
+      {
+         filters: {
+            id: {
+               $ne: data?.id
+            },
+            category: {
+               id: {
+                  $eq: categoryId
+               }
+            }
+         },
+         populate: {
+            company: {
+               populate: {
+                  logo: {
+                     fields: ["url"]
+                  }
+               }
+            },
+            type: {
+               fields: ["title"]
+            },
+            category: {
+               fields: ["title", "documentId"]
+            }
+         },
+         pagination: {
+            pageSize: 4,
+            page: 1
+         },
+         publicationState: "live",
+         locale: language ?? ["en"]
+      },
+      "no-store"
+   )
+
    return (
-      <Stack>
-         <Stack bgcolor={(theme) => theme.palette.background.default}>
-            <PageHeader title={title || data?.title || ""} />
-            <Container maxWidth='lg' sx={{ py: 6 }}>
-               <Grid container spacing={4}>
-                  <Grid item xs={12} md={8}>
-                     <Stack spacing={4}>
-                        <JobTitleCard session={session} data={data} />
-                        <Details data={data} />
-                     </Stack>
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                     <Sidebar data={data} />
-                  </Grid>
-               </Grid>
-            </Container>
-         </Stack>
-         {data && related_lists && <RelatedJob data={data} language={language} />}
-      </Stack>
+      <JobDetailsClient
+         block={block}
+         data={data}
+         language={language}
+         companyData={companyDataAll?.data?.[0]}
+         relatedJobsData={relatedJobsDataAll?.data}
+      />
    )
 }

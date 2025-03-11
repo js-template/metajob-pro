@@ -1,6 +1,5 @@
 "use client"
-import { useState } from "react"
-import useSWR from "swr"
+import { useEffect, useState } from "react"
 import _ from "lodash"
 import { useSession } from "next-auth/react"
 import AllBookmarkTable from "./table"
@@ -19,7 +18,8 @@ import {
 } from "@mui/material"
 import { TableLoader } from "./loader"
 import CIcon from "../../components/common/icon"
-import { IBookmarkTableBock } from "./types"
+import { IBookmarkItem, IBookmarkTableBock } from "./types"
+import { find } from "../../lib/strapi"
 
 type Props = {
    block: IBookmarkTableBock
@@ -38,7 +38,6 @@ export const BookmarkTable = ({ block, language }: Props) => {
    const { title, style, empty, table_config, table_head: tableHeader } = block || {}
    const { label: tableLabel, enable_search: enableSearch, search_placeholder, default_data_count } = table_config || {}
 
-   const [search, setSearch] = useState("")
    const [pagination, setPagination] = useState<{
       page: number
       pageSize: number
@@ -50,75 +49,78 @@ export const BookmarkTable = ({ block, language }: Props) => {
       pageCount: 1,
       total: 0
    })
+   const [search, setSearch] = useState("")
+   const [bookmarkData, setBookmarkData] = useState<IBookmarkItem[]>([])
+   const [isLoading, setIsLoading] = useState(false)
+   const [isMute, setIsMute] = useState(false)
 
-   const fetcher = async (url: string) => {
-      const response = await fetch(url)
-      if (!response.ok) {
-         throw new Error("An error occurred while fetching the data.")
-      }
-      const result = await response.json()
-      setPagination(result?.data?.meta?.pagination)
-      return result.data // Return the nested data
-   }
-   const queryParams = {
-      pagination: {
-         page: pagination?.page,
-         pageSize: pagination?.pageSize,
-         withCount: true
-      },
-      filters: {
-         owner: {
-            id: {
-               $eq: userId
-            }
-         },
-         ...(search && {
-            $or: [
-               {
-                  job: { title: { $containsi: search } }
+   //  fetch bookmark from db
+   useEffect(() => {
+      const getBookmarkData = async () => {
+         setIsLoading(true)
+         const { data: bookmarkDataAll, error: resumeError } = await find(
+            "api/metajob-backend/bookmarks",
+            {
+               pagination: {
+                  page: pagination?.page,
+                  pageSize: pagination?.pageSize,
+                  withCount: true
                },
-               {
-                  company: { name: { $containsi: search } }
+               filters: {
+                  owner: {
+                     id: {
+                        $eq: userId
+                     }
+                  },
+                  ...(search && {
+                     $or: [
+                        {
+                           job: { title: { $containsi: search } }
+                        },
+                        {
+                           company: { name: { $containsi: search } }
+                        },
+                        {
+                           resume: { name: { $containsi: search } }
+                        }
+                     ]
+                  })
                },
-               {
-                  resume: { name: { $containsi: search } }
-               }
-            ]
-         })
-      },
-      populate: {
-         job: {
-            populate: "*"
-         },
-         resume: {
-            populate: "*"
-         },
-         company: {
-            populate: "*"
+               populate: {
+                  job: {
+                     populate: "*"
+                  },
+                  resume: {
+                     populate: "*"
+                  },
+                  company: {
+                     populate: "*"
+                  }
+               },
+               locale: language ?? ["en"]
+            },
+            "no-store"
+         )
+         if (!resumeError) {
+            setBookmarkData(bookmarkDataAll?.data)
+            setPagination(bookmarkDataAll?.meta?.pagination)
+            setIsLoading(false)
+         } else {
+            setBookmarkData([])
+            setIsLoading(false)
          }
       }
-      // populate: {
-      //    job: {
-      //       fields: ["title", "price", "slug", "status"]
-      //    },
-      //    resume: {
-      //       fields: ["name", "salary", "slug", "createdAt"]
-      //    },
-      //    company: {
-      //       fields: ["name", "avg_price", "slug", "createdAt"]
-      //    }
-      // }
+      if (userId) {
+         if (!userId) return
+         getBookmarkData()
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userId, pagination?.page, search, isMute])
+
+   const handleMute = () => {
+      setIsMute(!isMute)
    }
-   // Convert queryParams to a string for the URL
-   const queryString = encodeURIComponent(JSON.stringify(queryParams))
-
-   // Construct the API URL
-   const apiUrl = `/api/find?model=api/metajob-backend/bookmarks&query=${queryString}&cache=no-store`
-
-   const { data: bookmarkDataAll, error: bookmarkError, isLoading } = useSWR(apiUrl, fetcher)
-
-   const bookmarkData = bookmarkDataAll?.data || []
-
    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
       setSearch(e.target.value)
    }
@@ -159,7 +161,7 @@ export const BookmarkTable = ({ block, language }: Props) => {
                </Typography>
             </Box>
             {/* table data filter actions input fields */}
-            {enableSearch && bookmarkData?.length > 0 && (
+            {enableSearch && bookmarkData && (
                <Box
                   sx={{
                      px: 3,
@@ -275,17 +277,17 @@ export const BookmarkTable = ({ block, language }: Props) => {
             {isLoading && <TableLoader direction={direction as "ltr" | "rtl"} />}
 
             {/* Table */}
-            {!bookmarkError && !isLoading && bookmarkData && bookmarkData?.length > 0 && (
+            {!isLoading && bookmarkData && bookmarkData?.length > 0 && (
                <AllBookmarkTable
                   headCells={tableHeader}
                   data={bookmarkData}
                   direction={direction as "ltr" | "rtl"}
-                  mutateUrl={apiUrl}
+                  handleMute={handleMute}
                />
             )}
 
             {/* empty data */}
-            {!bookmarkError && !isLoading && bookmarkData?.length == 0 && (
+            {!isLoading && bookmarkData?.length == 0 && (
                <Stack
                   sx={{
                      display: "flex",
@@ -303,7 +305,7 @@ export const BookmarkTable = ({ block, language }: Props) => {
                </Stack>
             )}
             {/* Box Footer */}
-            {bookmarkData?.length > 0 && (
+            {bookmarkData && bookmarkData?.length > 0 && (
                <Box
                   sx={{
                      py: 2.5,
