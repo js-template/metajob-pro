@@ -14,7 +14,7 @@ export const revalidate = 60
 // ?? We'll prerender only the params from `generateStaticParams` at build time.
 // ?? If a request comes in for a path that hasn't been generated,
 // ?? Next.js will server-render the page on-demand.
-export const dynamicParams = false // or false, to 404 on unknown paths
+export const dynamicParams = true // or false, to 404 on unknown paths
 
 // *** generate page params type
 type Props = {
@@ -138,8 +138,6 @@ export async function generateStaticParams() {
    // ?? Get the singlePages from the permalink data
    const singlePages = data?.data?.singlePage || []
 
-   console.log("singlePages", singlePages)
-
    // ?? If no singlePages are found, return an empty array
    let params: Array<{ slug: string; item: string }> = []
 
@@ -158,8 +156,6 @@ export async function generateStaticParams() {
             locale: ["en"]
          })
 
-         console.log("collectionData", collectionData, "error", collectionError)
-
          // ?? Store all slugs in the params array
          const mappedSlugs = collectionData?.data?.map((single: any) => ({
             slug: page.slug,
@@ -170,7 +166,6 @@ export async function generateStaticParams() {
       })
    )
 
-   console.log("params", params)
    // ?? Return the params array
    return params?.map((post: { slug: string; item: string }) => ({
       slug: post?.slug,
@@ -215,10 +210,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
       "no-cache"
    )
-
-   if (seoError) {
-      console.error("Error fetching SEO data:", seoError)
-   }
 
    // ?? If no matching page is found, return 404
    if (!seoData) {

@@ -30,8 +30,6 @@ export default async function DashboardPage({
 
    const userRole = session?.user?.role?.name?.toLowerCase()
 
-   /// console.log("User role", userRole)
-
    if (!userRole) {
       return <div>You are not allowed to access this page.</div>
    }
@@ -40,7 +38,6 @@ export default async function DashboardPage({
    const roleComponentField =
       userRole === "candidate" ? "role1Components" : userRole === "employer" ? "role2Components" : null
 
-   //console.log("Role component field", roleComponentField)
    if (!roleComponentField) {
       return <div>You are not allowed to access this page.</div>
    }
@@ -63,7 +60,6 @@ export default async function DashboardPage({
    )
 
    if (error) {
-      console.error("Error fetching dashboard data:", error?.message)
       return <div>Error loading dashboard. Please try again later.</div>
    }
 

@@ -22,7 +22,6 @@ The **SignUpCard** component a auth sign up page collect user from info and trig
 import SignUpCard from "@padma/metajob-ui"
 
 const signUpHandler = (data: {username: string; email: string; password: string; confirmPassword: string}) => {
-   // console.log(data)
 }
 const googleSignUpHandler = () => {
    //  google sign up function here

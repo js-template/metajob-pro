@@ -23,7 +23,6 @@ export default async function PrivateLayoutFooter() {
 
    if (activeTheme) {
       getPrivateComponents = activeTheme.getPrivateComponents
-      // console.log(getPrivateComponents)
    } else {
       console.error("Active theme could not be loaded!")
    }
