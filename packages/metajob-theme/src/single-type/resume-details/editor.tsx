@@ -13,9 +13,7 @@ interface EditorProps {
  * proxying the ref is necessary. Next.js dynamically imported components don't support refs.
  */
 const Editor: FC<EditorProps> = ({ markdown, editorRef }) => {
-   return (
-      <MDXEditor onChange={(e) => console.log(e)} ref={editorRef} markdown={markdown} plugins={[headingsPlugin()]} />
-   )
+   return <MDXEditor ref={editorRef} markdown={markdown} plugins={[headingsPlugin()]} />
 }
 
 export default Editor

@@ -88,7 +88,6 @@ export const SignUpCard = ({
       getRoles()
    }, [])
 
-   // console.log("allRoles", allRoles)
    //    provider present validator
    const noProvider = !googleSignUpHandler && !facebookSignUpHandler && !linkedinSignUpHandler
 
