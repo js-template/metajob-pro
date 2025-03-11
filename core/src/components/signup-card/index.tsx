@@ -30,7 +30,7 @@ export const SignUpCard = ({
    facebookSignUpHandler,
    linkedinSignUpHandler
 }: Props) => {
-   const [selectedButton, setSelectedButton] = useState("")
+   const [selectedButton, setSelectedButton] = useState(0)
    const { theme: mode } = useTheme()
 
    const {
