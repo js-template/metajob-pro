@@ -7,7 +7,6 @@ scripts
 .pnp.js
 .yarn
 .turbo
-.npmrc
 # Local env files
 .env
 .env.local
