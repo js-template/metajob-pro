@@ -3,7 +3,7 @@ import { CountCard } from "../../shared/count-card"
 import TotalError from "./error"
 import CountCardLoader from "../../shared/count-card/loader"
 import { IUserSession } from "../../types/user"
-import { find } from "@/lib/strapi"
+import { find } from "../../lib/strapi"
 
 export const TotalJobs = async ({ block, session }: { block: any; session?: IUserSession | null }) => {
    // Extract user session details

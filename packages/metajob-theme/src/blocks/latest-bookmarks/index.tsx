@@ -6,7 +6,7 @@ import { bookmarksListsProps } from "./type"
 import { IUserSession } from "../../types/user"
 
 import { BookmarksBody } from "./table-body"
-import { find } from "@/lib/strapi"
+import { find } from "../../lib/strapi"
 
 export const LatestBookmarks = async ({
    block,
