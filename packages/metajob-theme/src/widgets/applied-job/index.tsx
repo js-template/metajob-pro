@@ -5,7 +5,7 @@ import _ from "lodash"
 
 import OpenError from "./error"
 import { IUserSession } from "../../types/user"
-import { find } from "@/lib/strapi"
+import { find } from "../../lib/strapi"
 
 export const AppliedJob = async ({
    block,
