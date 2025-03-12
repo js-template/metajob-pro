@@ -667,30 +667,30 @@ export const PublicHeaderComponent = ({ block, language, userData }: Props) => {
                                  <MenuItem
                                     key={index}
                                     onClick={() => {
-                                       if (setting?.label === "Logout") {
+                                       if (setting?.identifier === "logout") {
                                           LogOutHandler()
                                        } else {
                                           handleCloseUserMenu()
                                        }
                                     }}
-                                    component={setting?.label === "Logout" ? "div" : NextLink}
-                                    href={setting?.label === "Logout" ? undefined : setting?.link}
-                                    target={setting?.label === "Logout" ? undefined : (setting?.target ?? "_self")}
+                                    component={setting?.identifier === "logout" ? "div" : NextLink}
+                                    href={setting?.identifier === "logout" ? undefined : setting?.link}
+                                    target={setting?.identifier === "logout" ? undefined : (setting?.target ?? "_self")}
                                     sx={{
                                        gap: 1,
                                        color: theme.palette.text.primary,
                                        ":hover": {
                                           background:
-                                             setting?.label === "Logout"
+                                             setting?.identifier === "logout"
                                                 ? theme.palette.error.light
                                                 : theme.palette.background.default,
                                           color:
-                                             setting?.label === "Logout"
+                                             setting?.identifier === "logout"
                                                 ? theme.palette.text.primary
                                                 : theme.palette.primary.main,
                                           "& .user-menu-icon": {
                                              color:
-                                                setting?.label === "Logout"
+                                                setting?.identifier === "logout"
                                                    ? theme.palette.text.primary
                                                    : theme.palette.primary.main
                                           }

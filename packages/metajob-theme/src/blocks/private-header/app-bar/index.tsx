@@ -398,7 +398,7 @@ const CustomAppBar = ({
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}>
                         {_.map(user_menu, (setting: any, index: number) => {
-                           return setting.label !== "Logout" ? (
+                           return setting.identifier !== "logout" ? (
                               <MenuItem
                                  key={index}
                                  onClick={handleCloseUserMenu}
