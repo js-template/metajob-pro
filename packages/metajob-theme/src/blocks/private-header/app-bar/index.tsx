@@ -233,7 +233,7 @@ const CustomAppBar = ({
                               <CIcon
                                  icon='ri:arrow-down-s-line'
                                  sx={{
-                                    color: theme.palette.text.primary,
+                                    color: "inherit",
                                     transform: openLang ? "rotate(180deg)" : "rotate(0deg)",
                                     transition: theme.transitions.create("transform", {
                                        duration: theme.transitions.duration.shortest
