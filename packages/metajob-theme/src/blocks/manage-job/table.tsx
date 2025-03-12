@@ -8,6 +8,7 @@ import { IJobAttribute, IJobData, IManageJobBock } from "./types"
 import { TableLoader } from "./loader"
 
 const ManageListsTable = ({
+   language,
    headCells,
    data,
    handleMute,
@@ -18,6 +19,7 @@ const ManageListsTable = ({
    jobAttributes,
    jobCount
 }: {
+   language?: string
    headCells: { value: string }[]
    data: IJobData[]
    blockData: IManageJobBock
@@ -92,6 +94,7 @@ const ManageListsTable = ({
                               <TableItem
                                  key={job.id}
                                  job={job}
+                                 language={language}
                                  blockData={blockData}
                                  handleMute={handleMute}
                                  jobAttributes={jobAttributes}
