@@ -50,6 +50,7 @@ export interface BlockBlogFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
+    card_button: Schema.Attribute.String;
     description: Schema.Attribute.Text;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;

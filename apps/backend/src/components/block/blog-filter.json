@@ -18,6 +18,9 @@
     "description": {
       "type": "text"
     },
+    "card_button": {
+      "type": "string"
+    },
     "empty": {
       "type": "component",
       "repeatable": false,
