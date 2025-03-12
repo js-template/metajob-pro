@@ -14,6 +14,41 @@
     "title": {
       "type": "string"
     },
+    "share_placeholder": {
+      "type": "string"
+    },
+    "skill_placeholder": {
+      "type": "string"
+    },
+    "apply_placeholder": {
+      "type": "string"
+    },
+    "overview_placeholder": {
+      "type": "string"
+    },
+    "posted_placeholder": {
+      "type": "string"
+    },
+    "deadline_placeholder": {
+      "type": "string"
+    },
+    "type_placeholder": {
+      "type": "string"
+    },
+    "salary_placeholder": {
+      "type": "string"
+    },
+    "related_jobs_title": {
+      "type": "string"
+    },
+    "related_jobs_subtitle": {
+      "type": "string"
+    },
+    "card_button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
     "styles": {
       "type": "component",
       "repeatable": false,
