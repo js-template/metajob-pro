@@ -996,10 +996,21 @@ export interface MetajobSingleTypeJobDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    apply_placeholder: Schema.Attribute.String;
+    card_button: Schema.Attribute.Component<'config.link', false>;
+    deadline_placeholder: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    overview_placeholder: Schema.Attribute.String;
+    posted_placeholder: Schema.Attribute.String;
+    related_jobs_subtitle: Schema.Attribute.String;
+    related_jobs_title: Schema.Attribute.String;
     related_lists: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    salary_placeholder: Schema.Attribute.String;
+    share_placeholder: Schema.Attribute.String;
+    skill_placeholder: Schema.Attribute.String;
     styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
+    type_placeholder: Schema.Attribute.String;
   };
 }
 

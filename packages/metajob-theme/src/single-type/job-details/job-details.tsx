@@ -17,7 +17,7 @@ type Props = {
 }
 
 const JobDetailsClient = ({ data, block, language, companyData, relatedJobsData }: Props) => {
-   const { title, empty, related_lists } = block || {}
+   const { title, empty, related_lists, skill_placeholder } = block || {}
 
    if (!data) {
       return (
@@ -43,17 +43,17 @@ const JobDetailsClient = ({ data, block, language, companyData, relatedJobsData 
                <Grid container spacing={4}>
                   <Grid item xs={12} md={8}>
                      <Stack spacing={4}>
-                        <JobTitleCard data={data} companyData={companyData} />
-                        <Details data={data} />
+                        <JobTitleCard data={data} companyData={companyData} block={block} />
+                        <Details data={data} skillTitle={skill_placeholder} />
                      </Stack>
                   </Grid>
                   <Grid item xs={12} md={4}>
-                     <Sidebar data={data} companyData={companyData} />
+                     <Sidebar data={data} companyData={companyData} block={block} />
                   </Grid>
                </Grid>
             </Container>
          </Stack>
-         {data && related_lists && <RelatedJob relatedJobsData={relatedJobsData} />}
+         {data && related_lists && <RelatedJob relatedJobsData={relatedJobsData} block={block} />}
       </Stack>
    )
 }
