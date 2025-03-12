@@ -629,11 +629,14 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
+    card_button: Schema.Attribute.Component<'config.link', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    result_placeholder: Schema.Attribute.String;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     show_filter: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -644,8 +647,10 @@ export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
+    card_button: Schema.Attribute.Component<'config.link', false>;
     description: Schema.Attribute.Text;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    result_placeholder: Schema.Attribute.String;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     show_filter: Schema.Attribute.Boolean &
       Schema.Attribute.Required &

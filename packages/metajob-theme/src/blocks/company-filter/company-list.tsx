@@ -4,18 +4,16 @@ import { Grid, Skeleton, Stack, Typography } from "@mui/material"
 import { Card } from "../../components/common/card"
 import CompanyCardItem from "./item"
 import CompanyCardLoader from "./loader"
-import { ISingleCompany } from "./types"
+import { ICompanyFilterBlockData, ISingleCompany } from "./types"
 
 type Props = {
    companies: ISingleCompany[]
    loading: boolean
    error: string | null
-   empty?: {
-      title: string
-      description: string
-   }
+   block: ICompanyFilterBlockData
 }
-const CompanyList = ({ companies, loading, error, empty }: Props) => {
+const CompanyList = ({ companies, loading, error, block }: Props) => {
+   const { empty, result_placeholder, card_button } = block || {}
    const { title: emptyTitle, description: emptyDescription } = empty || {}
    return (
       <Stack spacing={2}>
@@ -37,7 +35,7 @@ const CompanyList = ({ companies, loading, error, empty }: Props) => {
                      component={"span"}
                      variant='h4'
                      pl={2}>
-                     Found company search result{" "}
+                     {result_placeholder || "Total company found"}{" "}
                      <Typography
                         fontSize={16}
                         fontWeight={600}
@@ -69,7 +67,7 @@ const CompanyList = ({ companies, loading, error, empty }: Props) => {
                <Grid container spacing={2}>
                   {companies?.map((item: any) => (
                      <Grid item xs={12} sm={6} md={4} key={item?.id}>
-                        <CompanyCardItem data={item} />
+                        <CompanyCardItem data={item} button_label={card_button?.label} />
                      </Grid>
                   ))}
                </Grid>

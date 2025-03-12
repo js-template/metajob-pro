@@ -5,7 +5,7 @@ import _ from "lodash"
 import { useTheme } from "next-themes"
 import { ISingleCandidate } from "./types"
 
-const CandidateCardItem = ({ data }: { data: ISingleCandidate }) => {
+const CandidateCardItem = ({ data, button_label }: { data: ISingleCandidate; button_label?: string }) => {
    const { theme: mode } = useTheme()
 
    const { name, tagline, contact, slug, user } = data || {}
@@ -66,8 +66,8 @@ const CandidateCardItem = ({ data }: { data: ISingleCandidate }) => {
                   fontSize={18}
                   fontWeight={400}
                   sx={{
-                     color: (theme) => theme.palette.text.primary,
-                   }}
+                     color: (theme) => theme.palette.text.primary
+                  }}
                   textAlign={"center"}>
                   {name}
                </Typography>
@@ -78,8 +78,8 @@ const CandidateCardItem = ({ data }: { data: ISingleCandidate }) => {
                      fontSize={14}
                      fontWeight={400}
                      sx={{
-                        color: (theme) => theme.palette.text.secondary,
-                      }}>
+                        color: (theme) => theme.palette.text.secondary
+                     }}>
                      {tagline}
                   </Typography>
                )}
@@ -94,9 +94,12 @@ const CandidateCardItem = ({ data }: { data: ISingleCandidate }) => {
                         color: (theme) => theme.palette.text.secondary
                      }}
                   />
-                  <Typography fontSize={14} fontWeight={400}   sx={{
-     color: (theme) => theme.palette.text.secondary,
-   }}>
+                  <Typography
+                     fontSize={14}
+                     fontWeight={400}
+                     sx={{
+                        color: (theme) => theme.palette.text.secondary
+                     }}>
                      {location}
                   </Typography>
                </Stack>
@@ -136,7 +139,7 @@ const CandidateCardItem = ({ data }: { data: ISingleCandidate }) => {
                   bgcolor: (theme) => theme.palette.primary.main
                }
             }}>
-            View Candidate
+            {button_label || "View Candidate"}
          </Button>
       </Stack>
    )
