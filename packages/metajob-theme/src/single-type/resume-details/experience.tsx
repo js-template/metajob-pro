@@ -2,6 +2,7 @@
 import { Fragment } from "react/jsx-runtime"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Box, Chip, Grid, LinearProgress, Skeleton, Typography, useTheme } from "@mui/material"
+import { IResumeDetailsBlock } from "./types"
 
 type Props = {
    experienceData: {
@@ -13,10 +14,12 @@ type Props = {
       institution: string
    }[]
    isLoading?: boolean
+   block: IResumeDetailsBlock
 }
 
-const ExperienceSection = ({ experienceData, isLoading }: Props) => {
+const ExperienceSection = ({ experienceData, isLoading, block }: Props) => {
    const theme = useTheme()
+   const { experience_placeholder, empty } = block || {}
    return isLoading ? (
       <Box>
          <Skeleton
@@ -38,7 +41,7 @@ const ExperienceSection = ({ experienceData, isLoading }: Props) => {
                sx={{
                   color: (theme) => theme.palette.text.disabled
                }}>
-               No experience data added
+               {empty?.title || "No experience data added"}
             </Typography>
          )}
 
@@ -52,7 +55,7 @@ const ExperienceSection = ({ experienceData, isLoading }: Props) => {
                      color: (theme) => theme.palette.text.primary
                   }}
                   textAlign={"left"}>
-                  Experience
+                  {experience_placeholder || "Experience"}
                </Typography>
 
                {experienceData?.map((item, index) => (

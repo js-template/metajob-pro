@@ -3,7 +3,7 @@
 import React from "react"
 import { Fragment } from "react/jsx-runtime"
 import { Box, CardContent, Grid, Skeleton, Typography, useTheme } from "@mui/material"
-import { ISingleResume } from "./types"
+import { IResumeDetailsBlock, ISingleResume } from "./types"
 import CustomPreview from "../../components/markdown-preview"
 import EducationSection from "./education"
 import ExperienceSection from "./experience"
@@ -12,9 +12,10 @@ import PortfolioSection from "./portfolio"
 type Props = {
    data: ISingleResume
    isLoading?: boolean
+   block: IResumeDetailsBlock
 }
 
-const DetailsSection = ({ data, isLoading }: Props) => {
+const DetailsSection = ({ data, isLoading, block }: Props) => {
    const theme = useTheme()
 
    return (
@@ -37,9 +38,9 @@ const DetailsSection = ({ data, isLoading }: Props) => {
                            fontWeight={700}
                            sx={{
                               color: (theme) => theme.palette.text.primary
-                            }}
+                           }}
                            textAlign={"center"}>
-                           About Me
+                           {block?.about_placeholder || "About Me"}
                         </Typography>
                      )}
                   </Box>
@@ -66,11 +67,11 @@ const DetailsSection = ({ data, isLoading }: Props) => {
          </Grid>
 
          {/* education */}
-         <EducationSection educationData={data?.education} isLoading={isLoading} />
+         <EducationSection educationData={data?.education} isLoading={isLoading} block={block} />
          {/* experience */}
-         <ExperienceSection experienceData={data?.experience} isLoading={isLoading} />
+         <ExperienceSection experienceData={data?.experience} isLoading={isLoading} block={block} />
          {/* portfolio-section  */}
-         <PortfolioSection portfolioData={data?.portfolio} isLoading={isLoading} />
+         <PortfolioSection portfolioData={data?.portfolio} isLoading={isLoading} block={block} />
       </CardContent>
    )
 }

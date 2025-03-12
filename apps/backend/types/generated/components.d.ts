@@ -1027,7 +1027,14 @@ export interface MetajobSingleTypeResumeDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    about_placeholder: Schema.Attribute.String;
+    education_placeholder: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    experience_placeholder: Schema.Attribute.String;
+    industry_placeholder: Schema.Attribute.String;
+    member_placeholder: Schema.Attribute.String;
+    open_placeholder: Schema.Attribute.String;
+    portfolio_placeholder: Schema.Attribute.String;
     styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };

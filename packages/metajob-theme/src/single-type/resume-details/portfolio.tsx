@@ -3,6 +3,7 @@ import { Fragment } from "react/jsx-runtime"
 import NextLink from "next/link"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Box, Chip, Grid, LinearProgress, Paper, Skeleton, Typography, useTheme } from "@mui/material"
+import { IResumeDetailsBlock } from "./types"
 
 type Props = {
    portfolioData: {
@@ -19,10 +20,12 @@ type Props = {
       }
    }[]
    isLoading?: boolean
+   block: IResumeDetailsBlock
 }
 
-const PortfolioSection = ({ portfolioData, isLoading }: Props) => {
+const PortfolioSection = ({ portfolioData, isLoading, block }: Props) => {
    const theme = useTheme()
+   const { portfolio_placeholder, empty } = block || {}
    return isLoading ? (
       <Box>
          <Skeleton
@@ -44,7 +47,7 @@ const PortfolioSection = ({ portfolioData, isLoading }: Props) => {
                sx={{
                   color: (theme) => theme.palette.text.disabled
                }}>
-               No portfolio data added
+               {empty?.title || "No portfolio data added"}
             </Typography>
          )}
 
@@ -58,7 +61,7 @@ const PortfolioSection = ({ portfolioData, isLoading }: Props) => {
                      color: (theme) => theme.palette.text.primary
                   }}
                   textAlign={"left"}>
-                  Portfolio
+                  {portfolio_placeholder || "Portfolio"}
                </Typography>
 
                <Grid
