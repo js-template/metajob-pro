@@ -27,9 +27,6 @@ export type IJobCardBlock = {
    }
    card_button?: {
       label?: string
-      link: string
-      target: string
-      disabled: boolean
    }
 }
 
