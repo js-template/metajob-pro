@@ -980,10 +980,16 @@ export interface MetajobSingleTypeCompanyDetails
     icon: 'arrowRight';
   };
   attributes: {
+    card_button: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    industry_placeholder: Schema.Attribute.String;
+    info_placeholder: Schema.Attribute.String;
     open_jobs: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
+    open_jobs_title: Schema.Attribute.String;
+    salary_placeholder: Schema.Attribute.String;
+    size_placeholder: Schema.Attribute.String;
     styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
@@ -997,7 +1003,7 @@ export interface MetajobSingleTypeJobDetails extends Struct.ComponentSchema {
   };
   attributes: {
     apply_placeholder: Schema.Attribute.String;
-    card_button: Schema.Attribute.Component<'config.link', false>;
+    card_button: Schema.Attribute.String;
     deadline_placeholder: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     overview_placeholder: Schema.Attribute.String;

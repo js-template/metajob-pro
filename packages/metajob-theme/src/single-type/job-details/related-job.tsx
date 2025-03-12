@@ -53,7 +53,7 @@ const RelatedJob = ({ relatedJobsData, block }: Props) => {
                   <Grid container spacing={2}>
                      {relatedJobsData?.slice(0, 4)?.map((item: ISingleJob) => (
                         <Grid item xs={12} sm={6} md={3} key={item?.id}>
-                           <JobItem data={item} button_label={card_button?.label} />
+                           <JobItem data={item} button_label={card_button} />
                         </Grid>
                      ))}
                   </Grid>

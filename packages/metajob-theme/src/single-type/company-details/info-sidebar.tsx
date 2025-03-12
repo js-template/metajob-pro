@@ -3,9 +3,11 @@ import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Box, Stack, Typography } from "@mui/material"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
-import { ISingleCompany } from "./types"
+import { ICompanyDetailsBlock, ISingleCompany } from "./types"
 
-const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
+const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDetailsBlock }) => {
+   const { info_placeholder, industry_placeholder, size_placeholder, salary_placeholder } = block || {}
+
    const { industry, company_size, avg_salary, location } = data || {}
 
    return (
@@ -16,10 +18,13 @@ const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
             display: data ? "block" : "none"
          }}>
          <Stack spacing={2}>
-            <Typography fontWeight={700} fontSize={20}   sx={{
-               color: (theme) => theme.palette.text.primary
+            <Typography
+               fontWeight={700}
+               fontSize={20}
+               sx={{
+                  color: (theme) => theme.palette.text.primary
                }}>
-               Company Info
+               {info_placeholder || "Company Info"}
             </Typography>
             {industry && (
                <Stack spacing={2} direction='row'>
@@ -32,14 +37,20 @@ const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
                      <CIcon icon={"pajamas:work"} size={24} color='primary.main' />
                   </Box>
                   <Stack>
-                     <Typography fontWeight={500} fontSize={14}   sx={{
-     color: (theme) => theme.palette.text.primary
-   }}>
-                        Industry
+                     <Typography
+                        fontWeight={500}
+                        fontSize={14}
+                        sx={{
+                           color: (theme) => theme.palette.text.primary
+                        }}>
+                        {industry_placeholder || "Industry"}
                      </Typography>
-                     <Typography fontWeight={400} fontSize={16} sx={{
- color: (theme) => theme.palette.text.disabled
-}}>
+                     <Typography
+                        fontWeight={400}
+                        fontSize={16}
+                        sx={{
+                           color: (theme) => theme.palette.text.disabled
+                        }}>
                         {industry?.title}
                      </Typography>
                   </Stack>
@@ -56,14 +67,20 @@ const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
                      <CIcon icon={"ph:watch-light"} size={24} color='primary.main' />
                   </Box>
                   <Stack>
-                     <Typography fontWeight={500} fontSize={14}   sx={{
-     color: (theme) => theme.palette.text.primary
-   }}>
-                        Company Size
+                     <Typography
+                        fontWeight={500}
+                        fontSize={14}
+                        sx={{
+                           color: (theme) => theme.palette.text.primary
+                        }}>
+                        {size_placeholder || "Company Size"}
                      </Typography>
-                     <Typography fontWeight={400} fontSize={16} sx={{
- color: (theme) => theme.palette.text.disabled
-}}>
+                     <Typography
+                        fontWeight={400}
+                        fontSize={16}
+                        sx={{
+                           color: (theme) => theme.palette.text.disabled
+                        }}>
                         {company_size?.title}
                      </Typography>
                   </Stack>
@@ -80,14 +97,20 @@ const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
                      <CIcon icon={"mdi:dollar"} size={24} color='primary.main' />
                   </Box>
                   <Stack>
-                     <Typography fontWeight={500} fontSize={14}   sx={{
-     color: (theme) => theme.palette.text.primary
-   }}>
-                        AVG. Salary
+                     <Typography
+                        fontWeight={500}
+                        fontSize={14}
+                        sx={{
+                           color: (theme) => theme.palette.text.primary
+                        }}>
+                        {salary_placeholder || "AVG. Salary"}
                      </Typography>
-                     <Typography fontWeight={400} fontSize={16} sx={{
- color: (theme) => theme.palette.text.disabled
-}}>
+                     <Typography
+                        fontWeight={400}
+                        fontSize={16}
+                        sx={{
+                           color: (theme) => theme.palette.text.disabled
+                        }}>
                         {avg_salary?.title}
                      </Typography>
                   </Stack>
@@ -104,13 +127,19 @@ const InfoSidebar = ({ data }: { data: ISingleCompany }) => {
                      <CIcon icon={"ph:map-pin"} size={24} color='primary.main' />
                   </Box>
                   <Stack>
-                     <Typography fontWeight={500} fontSize={14}   sx={{
-                        color: (theme) => theme.palette.text.primary
+                     <Typography
+                        fontWeight={500}
+                        fontSize={14}
+                        sx={{
+                           color: (theme) => theme.palette.text.primary
                         }}>
                         Location
                      </Typography>
-                     <Typography fontWeight={400} fontSize={16} sx={{
-                        color: (theme) => theme.palette.text.disabled
+                     <Typography
+                        fontWeight={400}
+                        fontSize={16}
+                        sx={{
+                           color: (theme) => theme.palette.text.disabled
                         }}>
                         {location?.address}
                      </Typography>

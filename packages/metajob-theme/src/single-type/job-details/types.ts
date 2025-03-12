@@ -10,9 +10,7 @@ export type IJobDetailsBlock = {
    salary_placeholder?: string
    related_jobs_title?: string
    related_jobs_subtitle?: string
-   card_button?: {
-      label?: string
-   }
+   card_button?: string
    related_lists?: boolean
    empty?: {
       title: string
