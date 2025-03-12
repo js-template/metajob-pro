@@ -168,7 +168,8 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
    }
 
    // destructure  search data
-   const { search } = block || {}
+
+   const { search, result_placeholder, card_button } = block || {}
    const {
       title: searchTitle,
       search_placeholder,
@@ -431,7 +432,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                  component={"span"}
                                  variant='h4'
                                  pl={2}>
-                                 We have found{" "}
+                                 {result_placeholder || "Total jobs found"}{" "}
                                  <Typography
                                     fontSize={16}
                                     fontWeight={600}
@@ -441,7 +442,6 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                     }}>
                                     {jobsData?.length}
                                  </Typography>{" "}
-                                 jobs
                               </Typography>
                            )}
 
@@ -523,8 +523,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                            <Grid container spacing={2}>
                               {_.map(jobsData, (item: any, index: number) => (
                                  <Grid item xs={12} sm={6} md={4} key={index}>
-                                    {/* <Item {...item} /> */}
-                                    <JobItem data={item} />
+                                    <JobItem data={item} button_label={card_button?.label} />
                                  </Grid>
                               ))}
                            </Grid>

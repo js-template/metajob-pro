@@ -731,7 +731,9 @@ export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
+    card_button: Schema.Attribute.Component<'config.link', false>;
     description: Schema.Attribute.Text;
+    result_placeholder: Schema.Attribute.String;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     title: Schema.Attribute.String;
   };
