@@ -3,6 +3,10 @@ export type IJobFilterData = {
    __component: string
    title: string
    description: string
+   result_placeholder?: string
+   card_button?: {
+      label?: string
+   }
    search: {
       id: number
       title: string

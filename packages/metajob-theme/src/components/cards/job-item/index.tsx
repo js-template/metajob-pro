@@ -10,8 +10,9 @@ import CIcon from "../../../components/common/icon"
 
 type Props = {
    data: ISingleJob
+   button_label?: string
 }
-export const JobItem = ({ data }: Props) => {
+export const JobItem = ({ data, button_label }: Props) => {
    const { theme: mode } = useTheme()
    const theme = muiTheme()
 
@@ -150,7 +151,8 @@ export const JobItem = ({ data }: Props) => {
                      }}
                   />
                   <Typography fontSize={14} fontWeight={400} color={theme.palette.text.disabled}>
-                     {vacancy} Vacancy
+                     {vacancy}
+                     {/* {vacancy} Vacancy */}
                   </Typography>
                </Stack>
             )}
@@ -195,7 +197,7 @@ export const JobItem = ({ data }: Props) => {
                   bgcolor: theme.palette.primary.main
                }
             }}>
-            Apply Now
+            {button_label || "Apply Now"}
          </Button>
       </Stack>
    )

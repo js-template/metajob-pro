@@ -34,6 +34,7 @@ export interface BlockBlogCard extends Struct.ComponentSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'config.link', false>;
+    card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     posts: Schema.Attribute.Relation<'oneToMany', 'plugin::padma-backend.post'>;
@@ -49,6 +50,7 @@ export interface BlockBlogFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
+    card_button: Schema.Attribute.String;
     description: Schema.Attribute.Text;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
@@ -628,11 +630,14 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
+    card_button: Schema.Attribute.Component<'config.link', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    result_placeholder: Schema.Attribute.String;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     show_filter: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -643,8 +648,10 @@ export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
+    card_button: Schema.Attribute.Component<'config.link', false>;
     description: Schema.Attribute.Text;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    result_placeholder: Schema.Attribute.String;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     show_filter: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
@@ -702,6 +709,7 @@ export interface MetajobBlockJobCard extends Struct.ComponentSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'config.link', false>;
+    card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
@@ -729,7 +737,9 @@ export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
+    card_button: Schema.Attribute.Component<'config.link', false>;
     description: Schema.Attribute.Text;
+    result_placeholder: Schema.Attribute.String;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     title: Schema.Attribute.String;
   };
@@ -971,10 +981,16 @@ export interface MetajobSingleTypeCompanyDetails
     icon: 'arrowRight';
   };
   attributes: {
+    card_button: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    industry_placeholder: Schema.Attribute.String;
+    info_placeholder: Schema.Attribute.String;
     open_jobs: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
+    open_jobs_title: Schema.Attribute.String;
+    salary_placeholder: Schema.Attribute.String;
+    size_placeholder: Schema.Attribute.String;
     styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
@@ -987,10 +1003,21 @@ export interface MetajobSingleTypeJobDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    apply_placeholder: Schema.Attribute.String;
+    card_button: Schema.Attribute.String;
+    deadline_placeholder: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    overview_placeholder: Schema.Attribute.String;
+    posted_placeholder: Schema.Attribute.String;
+    related_jobs_subtitle: Schema.Attribute.String;
+    related_jobs_title: Schema.Attribute.String;
     related_lists: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    salary_placeholder: Schema.Attribute.String;
+    share_placeholder: Schema.Attribute.String;
+    skill_placeholder: Schema.Attribute.String;
     styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
+    type_placeholder: Schema.Attribute.String;
   };
 }
 
@@ -1001,7 +1028,14 @@ export interface MetajobSingleTypeResumeDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    about_placeholder: Schema.Attribute.String;
+    education_placeholder: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    experience_placeholder: Schema.Attribute.String;
+    industry_placeholder: Schema.Attribute.String;
+    member_placeholder: Schema.Attribute.String;
+    open_placeholder: Schema.Attribute.String;
+    portfolio_placeholder: Schema.Attribute.String;
     styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };

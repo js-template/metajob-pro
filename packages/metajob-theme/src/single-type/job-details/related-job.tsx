@@ -1,12 +1,15 @@
 "use client"
 import { Container, Grid, Stack, Typography } from "@mui/material"
-import { ISingleJob } from "./types"
+import { IJobDetailsBlock, ISingleJob } from "./types"
 import { JobItem } from "../../components/cards/job-item"
 
 type Props = {
    relatedJobsData?: ISingleJob[]
+   block: IJobDetailsBlock
 }
-const RelatedJob = ({ relatedJobsData }: Props) => {
+const RelatedJob = ({ relatedJobsData, block }: Props) => {
+   const { related_jobs_title, related_jobs_subtitle, card_button, empty } = block || {}
+
    return (
       <Stack bgcolor={(theme) => theme.palette.background.paper}>
          <Container
@@ -23,7 +26,7 @@ const RelatedJob = ({ relatedJobsData }: Props) => {
                      fontWeight={700}
                      fontSize={16}
                      textAlign={"center"}>
-                     Related Jobs
+                     {related_jobs_subtitle || "Related Jobs"}
                   </Typography>
                   <Typography
                      sx={{
@@ -32,7 +35,7 @@ const RelatedJob = ({ relatedJobsData }: Props) => {
                      fontWeight={700}
                      fontSize={32}
                      textAlign={"center"}>
-                     Latest Related Jobs For You
+                     {related_jobs_title || "Latest Related Jobs For You"}
                   </Typography>
                </Stack>
                {/* loader */}
@@ -50,7 +53,7 @@ const RelatedJob = ({ relatedJobsData }: Props) => {
                   <Grid container spacing={2}>
                      {relatedJobsData?.slice(0, 4)?.map((item: ISingleJob) => (
                         <Grid item xs={12} sm={6} md={3} key={item?.id}>
-                           <JobItem data={item} />
+                           <JobItem data={item} button_label={card_button} />
                         </Grid>
                      ))}
                   </Grid>
@@ -72,7 +75,7 @@ const RelatedJob = ({ relatedJobsData }: Props) => {
                            sx={{
                               color: (theme) => theme.palette.text.secondary
                            }}>
-                           No Jobs Found
+                           {empty?.title || "No Jobs Found"}
                         </Typography>
                      </Stack>
                   ))}

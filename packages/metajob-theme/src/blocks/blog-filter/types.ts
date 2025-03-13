@@ -3,6 +3,7 @@ export type IBogFilterBlock = {
    __component: string
    description?: string
    title?: string
+   card_button?: string
    style?: {
       id: 25
       color?: any

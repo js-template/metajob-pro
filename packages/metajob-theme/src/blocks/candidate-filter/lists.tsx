@@ -4,15 +4,17 @@ import _ from "lodash"
 import { Card } from "../../components/common/card"
 import CandidateCardItem from "./item"
 import CandidateCardLoader from "./loader"
-import { ISingleCandidate } from "./types"
+import { ICandidateFilterBlock, ISingleCandidate } from "./types"
 
 type CandidateRightSectionProps = {
    data: ISingleCandidate[]
    loading: boolean
    error: any
+   block: ICandidateFilterBlock
 }
 
-export default function CandidateLists({ data, loading, error }: CandidateRightSectionProps) {
+export default function CandidateLists({ data, loading, error, block }: CandidateRightSectionProps) {
+   const { result_placeholder, card_button } = block || {}
    return (
       <Stack spacing={2}>
          <Card
@@ -33,8 +35,7 @@ export default function CandidateLists({ data, loading, error }: CandidateRightS
                      component={"span"}
                      variant='h4'
                      pl={2}>
-                     {/* FIXME: Can not be static text. we need multilingual supported  */}
-                     We have found{" "}
+                     {result_placeholder || "Total candidate found"}{" "}
                      <Typography
                         fontSize={16}
                         fontWeight={600}
@@ -44,12 +45,11 @@ export default function CandidateLists({ data, loading, error }: CandidateRightS
                         }}>
                         {data?.length}
                      </Typography>{" "}
-                     Candidate
                   </Typography>
                )}
-               <Button sx={{ fontSize: 14, fontWeight: 400 }} variant='contained' color='primary'>
+               {/* <Button sx={{ fontSize: 14, fontWeight: 400 }} variant='contained' color='primary'>
                   Upload Your Resume
-               </Button>
+               </Button> */}
             </Stack>
          </Card>
          <Stack>
@@ -79,7 +79,7 @@ export default function CandidateLists({ data, loading, error }: CandidateRightS
             <Grid container spacing={3}>
                {_.map(data, (item) => (
                   <Grid item xs={12} sm={6} md={4} key={item?.id}>
-                     <CandidateCardItem data={item} />
+                     <CandidateCardItem data={item} button_label={card_button?.label} />
                   </Grid>
                ))}
             </Grid>

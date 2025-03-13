@@ -36,6 +36,7 @@ export type MenuItemProps = {
    type: string | null
    target: string | null
    icon: string
+   identifier?: string
    disabled: boolean
    child?: MenuItemProps[]
 }

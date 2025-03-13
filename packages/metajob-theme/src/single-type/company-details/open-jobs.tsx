@@ -1,17 +1,16 @@
 "use client"
 import { Grid, Stack, Typography } from "@mui/material"
 import { JobItem } from "../../components/cards/job-item"
-import { ISingleJob } from "./types"
+import { ICompanyDetailsBlock, ISingleJob } from "./types"
 
 type Props = {
    openJobsData?: ISingleJob[]
-   empty?: {
-      title: string
-      description: string
-   }
+   block: ICompanyDetailsBlock
 }
 
-const OpenJobs = ({ empty, openJobsData }: Props) => {
+const OpenJobs = ({ block, openJobsData }: Props) => {
+   const { empty, open_jobs_title, card_button } = block || {}
+   console.log("OpenJobs block", block)
    return (
       <Stack spacing={4}>
          <Typography
@@ -21,7 +20,7 @@ const OpenJobs = ({ empty, openJobsData }: Props) => {
             sx={{
                color: (theme) => theme.palette.text.primary
             }}>
-            Open Job
+            {open_jobs_title || "Open Job"}
          </Typography>
          <Stack>
             {/* {openJobsData && openJobsData?.data?.length > 0 && ( */}
@@ -29,7 +28,7 @@ const OpenJobs = ({ empty, openJobsData }: Props) => {
                <Grid container spacing={2}>
                   {openJobsData?.slice(0, 4)?.map((item: ISingleJob) => (
                      <Grid item xs={12} sm={6} md={4} key={item.id}>
-                        <JobItem data={item} />
+                        <JobItem data={item} button_label={card_button} />
                      </Grid>
                   ))}
                </Grid>

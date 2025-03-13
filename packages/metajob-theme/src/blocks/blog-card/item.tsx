@@ -6,7 +6,7 @@ import { Box, Button, Icon, Stack, Typography } from "@mui/material"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { ISinglePost } from "./types"
 
-const CardItem = ({ data }: { data: ISinglePost }) => {
+const CardItem = ({ data, button_label }: { data: ISinglePost; button_label?: string }) => {
    const { title, slug, featuredImage, short_description, publishedAt } = data || {}
    // const image = featuredImage?.url || "https://placehold.co/300x250/png"
    const image = featuredImage?.url
@@ -52,17 +52,18 @@ const CardItem = ({ data }: { data: ISinglePost }) => {
             />
          </Box>
          <Stack spacing={1}>
-            <Typography fontSize={14} fontWeight={400} 
-sx={{
- color: (theme) => theme.palette.text.disabled,
-}}>
+            <Typography
+               fontSize={14}
+               fontWeight={400}
+               sx={{
+                  color: (theme) => theme.palette.text.disabled
+               }}>
                {moment(publishedAt).format("DD MMMM YYYY")}
             </Typography>
             <Typography
                fontSize={20}
                fontWeight={700}
                sx={{
-                  
                   color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9),
                   "&:hover": {
                      color: (theme) => theme.palette.primary.main,
@@ -76,10 +77,12 @@ sx={{
                {title}
             </Typography>
          </Stack>
-         <Typography fontSize={16} fontWeight={400} 
-sx={{
- color: (theme) => theme.palette.text.disabled,
-}}>
+         <Typography
+            fontSize={16}
+            fontWeight={400}
+            sx={{
+               color: (theme) => theme.palette.text.disabled
+            }}>
             {short_description}
          </Typography>
          <Button
@@ -95,7 +98,7 @@ sx={{
             LinkComponent={Link}
             href={`blog/${slug}`}
             endIcon={<Icon className='icon-arrow-right' />}>
-            Read More
+            {button_label || "Read More"}
          </Button>
       </Stack>
    )

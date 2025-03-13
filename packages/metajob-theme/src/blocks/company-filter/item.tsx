@@ -6,8 +6,9 @@ import { ISingleCompany } from "./types"
 
 type Props = {
    data: ISingleCompany
+   button_label?: string
 }
-const CompanyCardItem = ({ data }: Props) => {
+const CompanyCardItem = ({ data, button_label }: Props) => {
    const { theme: mode } = useTheme()
 
    const { name, tagline, slug, revenue, company_size, location, logo } = data || {}
@@ -53,8 +54,8 @@ const CompanyCardItem = ({ data }: Props) => {
                   fontSize={16}
                   fontWeight={400}
                   sx={{
-                     color: (theme) => theme.palette.text.primary,
-                    }}
+                     color: (theme) => theme.palette.text.primary
+                  }}
                   textAlign={"center"}>
                   {name}
                </Typography>
@@ -64,8 +65,8 @@ const CompanyCardItem = ({ data }: Props) => {
                   fontSize={14}
                   fontWeight={400}
                   sx={{
-                     color: (theme) => theme.palette.text.disabled,
-                    }}
+                     color: (theme) => theme.palette.text.disabled
+                  }}
                   textAlign={"center"}>
                   {tagline}
                </Typography>
@@ -82,9 +83,12 @@ const CompanyCardItem = ({ data }: Props) => {
                         color: (theme) => theme.palette.text.disabled
                      }}
                   />
-                  <Typography fontSize={14} fontWeight={400} sx={{
- color: (theme) => theme.palette.text.disabled,
-}}>
+                  <Typography
+                     fontSize={14}
+                     fontWeight={400}
+                     sx={{
+                        color: (theme) => theme.palette.text.disabled
+                     }}>
                      {company_size?.title} Employee
                   </Typography>
                </Stack>
@@ -99,9 +103,12 @@ const CompanyCardItem = ({ data }: Props) => {
                      }}
                   />
                   {revenue && (
-                     <Typography fontSize={14} fontWeight={400} sx={{
-                        color: (theme) => theme.palette.text.disabled,
-                       }}>
+                     <Typography
+                        fontSize={14}
+                        fontWeight={400}
+                        sx={{
+                           color: (theme) => theme.palette.text.disabled
+                        }}>
                         {revenue?.title} Revenue
                      </Typography>
                   )}
@@ -135,7 +142,7 @@ const CompanyCardItem = ({ data }: Props) => {
                   bgcolor: (theme) => theme.palette.primary.main
                }
             }}>
-            See Details
+            {button_label || "See Details"}
          </Button>
       </Stack>
    )

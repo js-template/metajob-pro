@@ -6,14 +6,15 @@ import moment from "moment"
 import { useTheme } from "next-themes"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
-import { ISingleResume } from "./types"
+import { IResumeDetailsBlock, ISingleResume } from "./types"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { createEntry, deleteEntry, find } from "../../lib/strapi"
 
-export default function ProfileSection({ data }: { data: ISingleResume }) {
+export default function ProfileSection({ data, block }: { data: ISingleResume; block: IResumeDetailsBlock }) {
    const { theme: mode } = useTheme()
+   const { open_placeholder, industry_placeholder, member_placeholder, experience_placeholder } = block || {}
    const { documentId, name, user, tagline, category, experience_time, contact, createdAt } = data || {}
    const image = user?.avatar?.url || ""
    const industry = category?.title || ""
@@ -144,7 +145,7 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                   px={1}
                   py={0.5}
                   width={"fit-content"}>
-                  Open To Work
+                  {open_placeholder || "Open To Work"}
                </Typography>
                {bookmarkLoading ? (
                   <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
@@ -276,7 +277,7 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                            sx={{
                               color: (theme) => theme.palette.text.primary
                            }}>
-                           Industry
+                           {industry_placeholder || "Industry"}
                         </Typography>
                         <Typography
                            fontWeight={400}
@@ -306,7 +307,7 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                            sx={{
                               color: (theme) => theme.palette.text.primary
                            }}>
-                           Experience
+                           {experience_placeholder || "Experience"}
                         </Typography>
                         <Typography
                            fontWeight={400}
@@ -366,7 +367,7 @@ export default function ProfileSection({ data }: { data: ISingleResume }) {
                            sx={{
                               color: (theme) => theme.palette.text.primary
                            }}>
-                           Member Since
+                           {member_placeholder || "Member Since"}
                         </Typography>
                         <Typography
                            fontWeight={400}

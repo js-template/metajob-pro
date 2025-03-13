@@ -1,5 +1,11 @@
 export type ICompanyDetailsBlock = {
    title?: string
+   info_placeholder?: string
+   industry_placeholder?: string
+   size_placeholder?: string
+   salary_placeholder?: string
+   open_jobs_title?: string
+   card_button?: string
    open_jobs?: boolean
    empty?: {
       title: string
