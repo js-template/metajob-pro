@@ -12,6 +12,14 @@
     "description": {
       "type": "text"
     },
+    "result_placeholder": {
+      "type": "string"
+    },
+    "card_button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
     "search": {
       "type": "component",
       "repeatable": false,

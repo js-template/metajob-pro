@@ -127,7 +127,7 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
                )}
                <Grid item xs={12} md={show_filter ? 9 : 12}>
                   <Stack spacing={4}>
-                     <CandidateLists loading={isLoading} error={resumeError} data={resumeData ?? []} />
+                     <CandidateLists loading={isLoading} error={resumeError} data={resumeData ?? []} block={block} />
                      {/* pagination */}
                      {!resumeError && !isLoading && totalPage > 0 && (
                         <Stack

@@ -85,7 +85,7 @@ export const BlogFilter = ({ block, language }: Props) => {
                   <Grid container spacing={2}>
                      {_.map(recentBlogs, (item) => (
                         <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
-                           <CardItem data={item} />
+                           <CardItem data={item} button_label={block?.card_button} />
                         </Grid>
                      ))}
                   </Grid>

@@ -9,6 +9,24 @@
     "title": {
       "type": "string"
     },
+    "info_placeholder": {
+      "type": "string"
+    },
+    "industry_placeholder": {
+      "type": "string"
+    },
+    "size_placeholder": {
+      "type": "string"
+    },
+    "salary_placeholder": {
+      "type": "string"
+    },
+    "open_jobs_title": {
+      "type": "string"
+    },
+    "card_button": {
+      "type": "string"
+    },
     "styles": {
       "type": "component",
       "repeatable": false,

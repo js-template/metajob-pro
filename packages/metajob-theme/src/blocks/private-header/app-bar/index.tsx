@@ -233,7 +233,7 @@ const CustomAppBar = ({
                               <CIcon
                                  icon='ri:arrow-down-s-line'
                                  sx={{
-                                    color: theme.palette.text.primary,
+                                    color: "inherit",
                                     transform: openLang ? "rotate(180deg)" : "rotate(0deg)",
                                     transition: theme.transitions.create("transform", {
                                        duration: theme.transitions.duration.shortest
@@ -398,7 +398,7 @@ const CustomAppBar = ({
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}>
                         {_.map(user_menu, (setting: any, index: number) => {
-                           return setting.label !== "Logout" ? (
+                           return setting.identifier !== "logout" ? (
                               <MenuItem
                                  key={index}
                                  onClick={handleCloseUserMenu}

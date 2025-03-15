@@ -7,7 +7,7 @@ import { Avatar, Box, Grid, Stack, Typography } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
-import { ISingleCompany, ISingleJob } from "./types"
+import { IJobDetailsBlock, ISingleCompany, ISingleJob } from "./types"
 import { createEntry, deleteEntry, find } from "../../lib/strapi"
 import { FacebookShareButton, LinkedinShareButton, TwitterShareButton } from "react-share"
 import { ShareModal } from "./share-modal"
@@ -16,11 +16,13 @@ import ApplyJobModal from "./apply-job-modal"
 type Props = {
    data: ISingleJob
    companyData: ISingleCompany
+   block: IJobDetailsBlock
 }
 
-const JobTitleCard = ({ data, companyData }: Props) => {
+const JobTitleCard = ({ data, companyData, block }: Props) => {
    const { data: session } = useSession()
 
+   const { share_placeholder, apply_placeholder } = block || {}
    const { documentId, title, company, category } = data || {}
    const userId = session?.user?.id
    const userRole = session?.user?.role?.type
@@ -307,7 +309,7 @@ const JobTitleCard = ({ data, companyData }: Props) => {
                               sx={{
                                  color: (theme) => theme.palette.text.disabled
                               }}>
-                              Share on
+                              {share_placeholder || "Share on"}
                            </Typography>
                            <Stack
                               direction={"row"}
@@ -487,7 +489,7 @@ const JobTitleCard = ({ data, companyData }: Props) => {
                            }}
                            variant='contained'
                            color='primary'>
-                           {applyLoading ? "Checking" : "Apply Now"}
+                           {applyLoading ? "Checking" : apply_placeholder || "Apply Now"}
                         </LoadingButton>
                      )}
                   </Stack>

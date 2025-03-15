@@ -46,7 +46,7 @@ const NavLink = ({
       })
    }
 
-   return item.label !== "Logout" ? (
+   return item.identifier !== "logout" ? (
       <ListItem sx={{ display: "block", py: 0, mb: 1, px: 0 }}>
          <ListItemButton
             disabled={item?.disabled}
@@ -188,7 +188,7 @@ const NavLink = ({
                   flex: "none"
                }}
             />
-            Logout
+            {item?.label}
          </LoadingButton>
       </ListItem>
    )

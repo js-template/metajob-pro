@@ -23,6 +23,9 @@ export type IPostBlock = {
       label: string
       link: string
    }
+   card_button?: {
+      label?: string
+   }
 }
 
 export type ISinglePost = {

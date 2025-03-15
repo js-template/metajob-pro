@@ -10,8 +10,9 @@ type Props = {
          title: string
       }[]
    }
+   skillTitle?: string
 }
-export default function Details({ data }: Props) {
+export default function Details({ data, skillTitle }: Props) {
    const theme = useTheme()
 
    const { skills, description } = data || {}
@@ -48,8 +49,8 @@ export default function Details({ data }: Props) {
                      fontSize={20}
                      sx={{
                         color: (theme) => theme.palette.text.secondary
-                      }}>
-                     Skills
+                     }}>
+                     {skillTitle || "Skills"}
                   </Typography>
                   <Stack direction={"row"} gap={1} flexWrap={"wrap"}>
                      {skills?.map((item: any, index) => (
@@ -67,8 +68,7 @@ export default function Details({ data }: Props) {
                            }}
                            variant={"body1"}
                            fontWeight={400}
-                           fontSize={14}
-                           >
+                           fontSize={14}>
                            {item?.title}
                         </Typography>
                      ))}

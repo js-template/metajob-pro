@@ -25,11 +25,13 @@ import _ from "lodash"
 const TableItem = ({
    job,
    blockData,
+   language,
    handleMute,
    jobAttributes,
    jobCount
 }: {
    job: IJobData
+   language?: string
    blockData: IManageJobBock
    handleMute: () => void
    noteFunctionHandler: () => void
@@ -358,6 +360,7 @@ const TableItem = ({
          {show && (
             <EditJob
                open={show}
+               language={language}
                handleClose={handleClose}
                handleMute={handleMute}
                jobAttributes={jobAttributes}

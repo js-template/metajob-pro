@@ -98,7 +98,8 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
                         }
                      ]
                   })
-               }
+               },
+               locale: language ?? ["en"]
             },
             "no-store"
          )
@@ -257,6 +258,7 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
                   {/* Table */}
                   <ManageListsTable
                      headCells={tableHeader}
+                     language={language}
                      data={jobsData}
                      blockData={block}
                      handleMute={handleMute}

@@ -100,7 +100,7 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
                {/* cards and pagination  */}
                <Grid item xs={12} md={show_filter ? 9 : 12}>
                   <Stack spacing={4}>
-                     <CompanyList companies={companyData} loading={isLoading} error={companyError} empty={empty} />
+                     <CompanyList companies={companyData} loading={isLoading} error={companyError} block={block} />
                      {/* pagination  */}
                      {!companyError && totalPage > 0 && (
                         <Stack

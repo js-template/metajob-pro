@@ -14,6 +14,27 @@
     "title": {
       "type": "string"
     },
+    "open_placeholder": {
+      "type": "string"
+    },
+    "industry_placeholder": {
+      "type": "string"
+    },
+    "member_placeholder": {
+      "type": "string"
+    },
+    "about_placeholder": {
+      "type": "string"
+    },
+    "education_placeholder": {
+      "type": "string"
+    },
+    "experience_placeholder": {
+      "type": "string"
+    },
+    "portfolio_placeholder": {
+      "type": "string"
+    },
     "styles": {
       "type": "component",
       "repeatable": false,
