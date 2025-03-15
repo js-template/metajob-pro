@@ -3,6 +3,10 @@ export type ICompanyFilterBlockData = {
    __component: string
    title: string
    description: string
+   result_placeholder?: string
+   card_button?: {
+      label?: string
+   }
    show_filter: boolean
    search: {
       title?: string

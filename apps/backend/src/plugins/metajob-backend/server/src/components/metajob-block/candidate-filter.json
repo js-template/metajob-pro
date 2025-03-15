@@ -9,6 +9,17 @@
   "uid": "metajob-block.candidate-filter",
   "pluginOptions": {},
   "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "result_placeholder": {
+      "type": "string"
+    },
+    "card_button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
     "show_filter": {
       "type": "boolean",
       "required": true,

@@ -55,7 +55,6 @@ export const findOne = async (
       const data = await response.json()
       return { data, error: null }
    } catch (error: any) {
-      console.error(`Error during API call: ${error.message}`)
       return {
          data: null,
          error: error.message || "An error occurred during data fetch"
@@ -113,8 +112,6 @@ export const find = async (
 
       return { data, error: null }
    } catch (error: any) {
-      console.error(`API Error: ${error.message} | URL: ${url}`)
-
       return {
          data: null,
          error: error.message || "An error occurred during data fetch"

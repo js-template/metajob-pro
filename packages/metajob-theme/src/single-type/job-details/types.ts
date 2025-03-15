@@ -1,5 +1,16 @@
 export type IJobDetailsBlock = {
    title?: string
+   share_placeholder?: string
+   skill_placeholder?: string
+   apply_placeholder?: string
+   overview_placeholder?: string
+   posted_placeholder?: string
+   deadline_placeholder?: string
+   type_placeholder?: string
+   salary_placeholder?: string
+   related_jobs_title?: string
+   related_jobs_subtitle?: string
+   card_button?: string
    related_lists?: boolean
    empty?: {
       title: string

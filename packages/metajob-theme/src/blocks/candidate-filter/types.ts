@@ -1,6 +1,11 @@
 export type ICandidateFilterBlock = {
    id: number
    __component: string
+   title: string
+   result_placeholder?: string
+   card_button?: {
+      label?: string
+   }
    show_filter: boolean
    search: {
       title?: string

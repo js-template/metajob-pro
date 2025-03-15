@@ -6,14 +6,18 @@ import moment from "moment"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
-import { ISingleCompany, ISingleJob } from "./types"
+import { IJobDetailsBlock, ISingleCompany, ISingleJob } from "./types"
 
 type Props = {
    data: ISingleJob
    companyData: ISingleCompany
+   block: IJobDetailsBlock
 }
 
-const Sidebar = ({ data, companyData }: Props) => {
+const Sidebar = ({ data, companyData, block }: Props) => {
+   const { overview_placeholder, posted_placeholder, deadline_placeholder, type_placeholder, salary_placeholder } =
+      block || {}
+
    const { company, publishedAt, type, endDate, price } = data || {}
    const { name: companyName, tagline, email, phone, website, slug, about } = company || {}
 
@@ -36,7 +40,7 @@ const Sidebar = ({ data, companyData }: Props) => {
                sx={{
                   color: (theme) => theme.palette.text.primary
                }}>
-               Job Overview
+               {overview_placeholder || "Job Overview"}
             </Typography>
             <Stack spacing={2} pt={2}>
                {/* Job Posted */}
@@ -59,7 +63,7 @@ const Sidebar = ({ data, companyData }: Props) => {
                            sx={{
                               color: (theme) => theme.palette.text.primary
                            }}>
-                           Job Posted
+                           {posted_placeholder || "Job Posted"}
                         </Typography>
                         <Typography
                            variant={"body1"}
@@ -93,7 +97,7 @@ const Sidebar = ({ data, companyData }: Props) => {
                            sx={{
                               color: (theme) => theme.palette.text.primary
                            }}>
-                           Deadline
+                           {deadline_placeholder || "Deadline"}
                         </Typography>
                         <Typography
                            variant={"body1"}
@@ -126,7 +130,7 @@ const Sidebar = ({ data, companyData }: Props) => {
                            sx={{
                               color: (theme) => theme.palette.text.primary
                            }}>
-                           Job Type
+                           {type_placeholder || "Job Type"}
                         </Typography>
                         <Stack direction={"row"} spacing={0.5}>
                            <Typography
@@ -161,7 +165,7 @@ const Sidebar = ({ data, companyData }: Props) => {
                            sx={{
                               color: (theme) => theme.palette.text.primary
                            }}>
-                           Salary
+                           {salary_placeholder || "Salary"}
                         </Typography>
                         <Typography
                            variant={"body1"}

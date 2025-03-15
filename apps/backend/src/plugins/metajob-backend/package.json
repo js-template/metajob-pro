@@ -1,9 +1,8 @@
 {
   "name": "@jstemplate/metajob-backend",
-  "version": "0.0.6",
-  "private": true,
+  "version": "0.0.2",
   "description": "Metajob Backend",
-  "license": "MIT",
+  "license": "EULA",
   "keywords": [],
   "homepage": "https://github.com/js-template/metajob",
   "bugs": {

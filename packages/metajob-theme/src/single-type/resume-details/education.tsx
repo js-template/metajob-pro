@@ -2,6 +2,7 @@
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Box, Chip, Grid, LinearProgress, Skeleton, Typography, useTheme } from "@mui/material"
 import { Fragment } from "react/jsx-runtime"
+import { IResumeDetailsBlock } from "./types"
 
 type Props = {
    educationData: {
@@ -13,10 +14,13 @@ type Props = {
       institution: string
    }[]
    isLoading?: boolean
+   block: IResumeDetailsBlock
 }
 
-const EducationSection = ({ educationData, isLoading }: Props) => {
+const EducationSection = ({ educationData, isLoading, block }: Props) => {
    const theme = useTheme()
+
+   const { education_placeholder, empty } = block || {}
    return isLoading ? (
       <Box>
          <Skeleton
@@ -38,7 +42,7 @@ const EducationSection = ({ educationData, isLoading }: Props) => {
                sx={{
                   color: (theme) => theme.palette.text.disabled
                }}>
-               No education data added
+               {empty?.title || "No education data added"}
             </Typography>
          )}
 
@@ -52,7 +56,7 @@ const EducationSection = ({ educationData, isLoading }: Props) => {
                      color: (theme) => theme.palette.text.primary
                   }}
                   textAlign={"left"}>
-                  Education
+                  {education_placeholder || "Education"}
                </Typography>
                {educationData?.map((item, index) => (
                   <Grid

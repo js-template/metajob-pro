@@ -32,6 +32,11 @@
       "repeatable": false,
       "component": "config.link"
     },
+    "card_button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
     "style": {
       "type": "component",
       "repeatable": false,

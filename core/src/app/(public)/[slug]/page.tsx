@@ -45,8 +45,6 @@ export default async function DynamicPages({
       console.error("Active theme could not be loaded!", error)
    }
 
-   // console.log("data", data, "error", error)
-
    const blocks = data?.data[0]?.blocks || []
 
    // *** if blocks is empty, return 404 ***

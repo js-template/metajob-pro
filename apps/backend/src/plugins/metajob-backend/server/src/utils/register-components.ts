@@ -13,7 +13,6 @@ export const registerComponents = async ({
   // Construct the path to the `components` directory
   const componentsDir = path.join(__dirname, "./src/components");
 
-  //console.log("componentsDir", __dirname);
   // Read all entries (files and directories) in the components directory
   const entries = await fs.readdir(componentsDir, { withFileTypes: true });
 
@@ -80,8 +79,6 @@ export const registerComponents = async ({
   let newComponentsDiff = newComponentsKeys.filter(
     (key) => !existingComponentsKeys.includes(key),
   );
-
-  console.log("newComponentsDiff", newComponentsDiff);
 
   // error comparisons stored
   let errorComparisons = [];

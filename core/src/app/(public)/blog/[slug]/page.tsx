@@ -38,7 +38,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
       "no-store"
    )
 
-   // console.log("blog detailsData1", detailsData)
    const pageDetailsData = detailsData?.data?.[0]
 
    // *** get  blogs-details-page data from strapi ***

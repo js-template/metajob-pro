@@ -29,14 +29,11 @@ export default async function Home() {
 
    if (activeTheme) {
       getPublicComponents = activeTheme.getPublicComponents
-      // console.log(getPublicComponents)
    } else {
       console.error("Active theme could not be loaded!")
    }
 
    const blocks = data?.data?.blocks || []
-
-   // console.log("Home Page Blocks Loaded", blocks)
 
    return (
       <Fragment>

@@ -20,7 +20,7 @@ const ResumeDetailsClient = ({ data, block }: Props) => {
          <Container maxWidth='lg' sx={{ py: 6 }}>
             <Grid container spacing={4}>
                <Grid item xs={12} md={4}>
-                  <ProfileSection data={data} />
+                  <ProfileSection data={data} block={block} />
                </Grid>
                <Grid item xs={12} md={8}>
                   <Card
@@ -28,7 +28,7 @@ const ResumeDetailsClient = ({ data, block }: Props) => {
                         p: 3,
                         borderRadius: 2
                      }}>
-                     <DetailsSection data={data} isLoading={false} />
+                     <DetailsSection data={data} isLoading={false} block={block} />
                   </Card>
                </Grid>
             </Grid>

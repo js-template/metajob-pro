@@ -1,5 +1,12 @@
 export type IResumeDetailsBlock = {
    title?: string
+   open_placeholder?: string
+   industry_placeholder?: string
+   member_placeholder?: string
+   about_placeholder?: string
+   education_placeholder?: string
+   experience_placeholder?: string
+   portfolio_placeholder?: string
    empty?: {
       title: string
       description: string

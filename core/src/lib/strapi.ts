@@ -118,7 +118,6 @@ export const findOne = async (
       const data = await response.json()
       return { data, error: null }
    } catch (error: any) {
-      console.error(`Error during API call: ${error}`)
       return {
          data: null,
          error: error || "An error occurred during data fetch"
@@ -176,9 +175,6 @@ export const find = async (
 
       return { data, error: null }
    } catch (error: any) {
-      if (process.env.DEBUG === "true") {
-         console.error(`API Error: ${error.message} | URL: ${url}`)
-      }
       return {
          data: null,
          error: error.message || "An error occurred during data fetch"
@@ -335,7 +331,6 @@ export const uploadImage = async (fileInput: FormData) => {
          throw new Error(`Failed to upload image. Status: ${response.status}`)
       }
    } catch (error: any) {
-      console.error("Error during image upload:", error)
       return {
          success: false,
          data: null,
@@ -367,7 +362,6 @@ export const verifyPhoneNumber = async (model: string, phone: string, userId: nu
 
       return true
    } catch (error: any) {
-      console.error(`Error during API call: ${error.message}`)
       return false
    }
 }
@@ -459,7 +453,6 @@ export const strapiFetch: {
       }
       return { data, error: null }
    } catch (error: any) {
-      console.error(`Error during API call: ${error.message}`)
       return {
          data: null,
          error: error.message || "An error occurred during data fetch"

@@ -25,6 +25,9 @@ export type IJobCardBlock = {
       target: string
       disabled: boolean
    }
+   card_button?: {
+      label?: string
+   }
 }
 
 export type ISingleJob = {

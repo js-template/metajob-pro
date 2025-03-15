@@ -36,12 +36,9 @@ export default async function NotFound(props: { children: React.ReactNode }) {
 
    if (activeTheme) {
       getPublicComponents = activeTheme.getPublicComponents
-      // console.log(getPublicComponents)
    } else {
       console.error("Active theme could not be loaded!")
    }
-
-   //console.log("Not Found Page Loaded")
 
    return <NotFoundBody data={data} language={language} currentThemeComponents={getPublicComponents} {...props} />
 }

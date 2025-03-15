@@ -35,13 +35,14 @@ const Transition = React.forwardRef(function Transition(
 
 type EditListProps = {
    open: boolean
+   language?: string
    handleClose: () => void
    handleMute: () => void
    jobDocID: string
    jobAttributes?: IJobAttribute
 }
 
-const EditJob = ({ open, handleClose, handleMute, jobDocID, jobAttributes }: EditListProps) => {
+const EditJob = ({ open, language, handleClose, handleMute, jobDocID, jobAttributes }: EditListProps) => {
    const theme = useTheme()
    //  destructure job Attributes data
    const { categoryData, skillsData, jobTypesData, jobExperienceData } = jobAttributes || {}
@@ -124,7 +125,6 @@ const EditJob = ({ open, handleClose, handleMute, jobDocID, jobAttributes }: Edi
          setLoading(false)
       }
    }
-
    // *** get the list data by the jobDocID
    React.useEffect(() => {
       const getList = async () => {
@@ -133,7 +133,8 @@ const EditJob = ({ open, handleClose, handleMute, jobDocID, jobAttributes }: Edi
             "api/metajob-backend/jobs",
             jobDocID,
             {
-               populate: "*"
+               populate: "*",
+               locale: language ?? "en"
             },
             "no-store"
          )

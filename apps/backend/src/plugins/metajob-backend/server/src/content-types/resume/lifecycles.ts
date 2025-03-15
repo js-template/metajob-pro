@@ -51,7 +51,7 @@ export default {
         },
       );
     } catch (err) {
-      console.log("create-resume lifecycle error:", err);
+      return true;
     }
   },
 };

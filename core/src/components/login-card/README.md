@@ -21,7 +21,6 @@ The **LoginCard** component a auth login page collect user from info and trigger
 import LoginCard from "@padma/metajob-ui"
 
 const loginHandler = (data: { username: string; password: string }) => {
-   // console.log(data)
 }
 const googleLoginHandler = () => {
    //  google login function here
