@@ -1,4 +1,4 @@
 packages:
-  - "packages/*"
-  - "apps/backend"
+  # - "packages/*"
+  # - "apps/backend"
   - "core"
