@@ -13,9 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jstemplate/metajob-theme": "0.0.1",
-    "@padmadev/padma": "0.0.4-alpha.1",
-    "next": "^14.1.0"
+    "@jstemplate/metajob-theme": "0.0.2",
+    "next": "^14.2.24"
   },
   "devDependencies": {
     "prettier": "latest",
