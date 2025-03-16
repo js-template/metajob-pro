@@ -107,7 +107,7 @@ export const ProfileInfo = ({ userData: data }: Props) => {
             ...formData
          }
 
-         const userResponse = await updateOne("users", Number(userId), userInput, "/dashboard/my-profile/", "page")
+         const userResponse = await updateOne("users", Number(userId), userInput)
          // Check if the response has any errors
          if (userResponse.error) {
             toast.error(userResponse?.error)

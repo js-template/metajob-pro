@@ -78,7 +78,8 @@ const AppliedJobsClient = ({ block, language, appliedJobsPre }: Props) => {
                   //       }
                   //    ]
                   // })
-               }
+               },
+               locale: language ?? "en"
             },
             "no-store"
          )

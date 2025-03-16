@@ -12,9 +12,10 @@ import { createEntry, deleteEntry, find } from "../../lib/strapi"
 
 type Props = {
    data: ISingleCompany
+   language?: string
 }
 
-const CompanyHeader = ({ data }: Props) => {
+const CompanyHeader = ({ data, language }: Props) => {
    const { data: session } = useSession()
    const userId = session?.user?.id
 
@@ -43,12 +44,13 @@ const CompanyHeader = ({ data }: Props) => {
                      }
                   },
                   company: {
-                     id: {
-                        $eq: data?.id || undefined
+                     documentId: {
+                        $eq: data?.documentId || undefined
                      }
                   }
                },
-               populate: "*"
+               populate: "*",
+               locale: language ?? "en"
             },
             "no-store"
          )
@@ -66,7 +68,7 @@ const CompanyHeader = ({ data }: Props) => {
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [userId, bookmarkIdentifier])
+   }, [userId, bookmarkIdentifier, language])
 
    const isBookmarked = bookmarkData?.length > 0 || bookmarkIdentifier
    // bookmark handler
@@ -82,7 +84,7 @@ const CompanyHeader = ({ data }: Props) => {
             }
             setBookmarkLoading(true)
             const bookmarkDocId = bookmarkData?.[0]?.documentId
-            const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId)
+            const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId, language)
 
             if (error) {
                return toast.error(error?.message || "Something went wrong")
@@ -106,7 +108,7 @@ const CompanyHeader = ({ data }: Props) => {
                data: bookmarkData,
                error,
                message
-            } = await createEntry("metajob-backend/bookmarks", {
+            } = await createEntry(`metajob-backend/bookmarks?locale=${language ?? "en"}`, {
                data: inputData
             })
 

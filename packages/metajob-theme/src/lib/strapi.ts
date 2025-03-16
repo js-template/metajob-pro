@@ -128,13 +128,13 @@ export const find = async (
  * const { data, error } = await deleteEntry("restaurants", "1");
  */
 
-export const deleteEntry = async (model: string, id: number | string) => {
+export const deleteEntry = async (model: string, id: number | string, language?: string) => {
    try {
       const cookieStore = await cookies()
       const jwtToken = cookieStore.get("jwt")
       const token = jwtToken ? jwtToken.value : { value: "" }
 
-      const response = await fetch(`${apiUrl}/${model}/${id}`, {
+      const response = await fetch(`${apiUrl}/${model}/${id}?locale=${language ?? "en"}`, {
          method: "DELETE",
          headers: {
             "Content-Type": "application/json",
@@ -226,6 +226,7 @@ export const updateOne = async (
    model: string,
    id: string | number,
    updatedData: any,
+   language?: string,
    revalidatePath?: string,
    revalidateType?: "page" | "layout"
 ) => {
@@ -245,7 +246,7 @@ export const updateOne = async (
    }
 
    try {
-      const response = await fetch(`${apiUrl}/api/${model}/${id}`, {
+      const response = await fetch(`${apiUrl}/api/${model}/${id}?locale=${language ?? "en"}`, {
          method: "PUT",
          body: JSON.stringify(updatedData),
          headers: {

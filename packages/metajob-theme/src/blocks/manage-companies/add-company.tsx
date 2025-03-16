@@ -29,9 +29,10 @@ type addCompanyProps = {
    userId?: number
    handleMute: () => void
    companyAttributes?: ICompanyAttribute
+   language?: string
 }
 
-const AddCompany = ({ handleClose, userId, handleMute, companyAttributes }: addCompanyProps) => {
+const AddCompany = ({ handleClose, userId, handleMute, companyAttributes, language }: addCompanyProps) => {
    const theme = useTheme()
 
    // attributes data destructuring
@@ -81,7 +82,8 @@ const AddCompany = ({ handleClose, userId, handleMute, companyAttributes }: addC
                fields: ["slug"],
                filters: {
                   slug: data.slug
-               }
+               },
+               locale: language ?? ["en"]
             },
             "no-store"
          )
@@ -149,7 +151,7 @@ const AddCompany = ({ handleClose, userId, handleMute, companyAttributes }: addC
             data: companyData,
             error: companyError,
             message
-         } = await createEntry("metajob-backend/companies", createInput)
+         } = await createEntry(`metajob-backend/companies?locale=${language ?? "en"}`, createInput)
 
          if (companyError) {
             return toast.error(message || "Something went wrong")
@@ -173,7 +175,8 @@ const AddCompany = ({ handleClose, userId, handleMute, companyAttributes }: addC
                      data: {
                         logo: uploadData[0].id
                      }
-                  }
+                  },
+                  language
                )
 
                if (updateError) {

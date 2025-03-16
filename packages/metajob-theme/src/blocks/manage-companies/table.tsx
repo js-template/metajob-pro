@@ -21,6 +21,7 @@ type Props = {
    }
    pageSize: number
    companyAttributes?: ICompanyAttribute
+   language?: string
 }
 
 const ManageCompaniesTable = ({
@@ -33,7 +34,8 @@ const ManageCompaniesTable = ({
    isLoading,
    empty,
    pageSize,
-   companyAttributes
+   companyAttributes,
+   language
 }: Props) => {
    const totalHeader = 4
    if (headCells && headCells.length > 0 && headCells.length < totalHeader) {
@@ -104,6 +106,7 @@ const ManageCompaniesTable = ({
                            <ManageCompaniesTableItem
                               key={index}
                               row={row}
+                              language={language}
                               selectAll={selectAll}
                               direction={direction}
                               handleMute={handleMute}

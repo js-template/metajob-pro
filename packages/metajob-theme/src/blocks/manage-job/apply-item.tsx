@@ -10,7 +10,15 @@ import { CoveModal } from "./cover-modal"
 import { getNameFromEmail } from "./hook"
 import { MessageModal } from "./message-modal"
 
-const ApplyItem = ({ apply, handleMute }: { apply: IJobApplyData; handleMute: () => void }) => {
+const ApplyItem = ({
+   apply,
+   handleMute,
+   language
+}: {
+   apply: IJobApplyData
+   handleMute: () => void
+   language?: string
+}) => {
    const theme = useTheme()
    const { documentId, cover_letter, apply_status, publishedAt, owner, job } = apply || {}
    const { email, first_name, last_name } = owner || {}
@@ -40,7 +48,7 @@ const ApplyItem = ({ apply, handleMute }: { apply: IJobApplyData; handleMute: ()
                apply_status: value
             }
          }
-         const applyResponse = await updateOne("metajob-backend/applied-jobs", documentId, updateInput)
+         const applyResponse = await updateOne("metajob-backend/applied-jobs", documentId, updateInput, language)
          // Check if the response has any errors
          if (applyResponse.error) {
             toast.error(applyResponse?.error || "Something went wrong")
