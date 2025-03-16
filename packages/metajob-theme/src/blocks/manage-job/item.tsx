@@ -368,6 +368,7 @@ const TableItem = ({
          )}
          {jobApplicationShow && (
             <JobApplications
+               language={language}
                open={jobApplicationShow}
                handleClose={handleApplicationClose}
                jobDocID={documentId}

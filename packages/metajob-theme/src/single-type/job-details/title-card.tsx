@@ -72,7 +72,8 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                      }
                   }
                },
-               populate: "*"
+               populate: "*",
+               locale: language ?? "en"
             },
             "no-store"
          )
@@ -98,9 +99,11 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
    const jobApplyHandler = async (letterValue?: string) => {
       try {
          if (!session) {
+            handleApplyJobModalClose()
             return toast.error("Please login to apply for this job")
          }
          if (userRole !== "candidate") {
+            handleApplyJobModalClose()
             return toast.error("Only candidate can apply for job")
          }
          setApplyLoading(true)
@@ -118,14 +121,12 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
             data: applyData,
             error,
             message
-         } = await createEntry("metajob-backend/applied-jobs", {
+         } = await createEntry(`metajob-backend/applied-jobs?locale=${language ?? "en"}`, {
             data: inputData
          })
-
          if (error) {
             return toast.error(message || "Something went wrong")
          }
-
          if (applyData) {
             setApplyIdentifier(true)
             handleApplyJobModalClose()

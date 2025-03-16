@@ -520,6 +520,11 @@ export interface PluginMetajobBackendAppliedJob
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     apply_status: Schema.Attribute.Enumeration<
       ['Shortlisted', 'Selected', 'Pending', 'Rejected']
@@ -529,12 +534,11 @@ export interface PluginMetajobBackendAppliedJob
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     job: Schema.Attribute.Relation<'manyToMany', 'plugin::metajob-backend.job'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.applied-job'
-    > &
-      Schema.Attribute.Private;
+    >;
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
