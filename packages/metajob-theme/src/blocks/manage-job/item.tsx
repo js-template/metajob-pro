@@ -76,7 +76,7 @@ const TableItem = ({
          setLoading(true)
 
          try {
-            const { data, error } = await deleteEntry(model, documentId)
+            const { data, error } = await deleteEntry(model, documentId, language)
 
             if (error) {
                throw new Error(error)
