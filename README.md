@@ -37,11 +37,12 @@ When you purchase the license, you will receive the codebase and an activation t
    - `apps/backend/.env.example` → `apps/backend/.env`
 
 ```bash
-export LICENSE_TOKEN='You will recive license on confirmation email'
+//export this env to your bash/terminal
+export LICENSE_TOKEN='You will receive license on confirmation email' 
 ```
 ```bash
  @jstemplate:registry=https://api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/
- //api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/:_authToken=$LICENSE_TOKEN
+ //api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/:_authToken=${NPM_TOKEN}
 ```
 
 ### Step 3: Install Dependencies
