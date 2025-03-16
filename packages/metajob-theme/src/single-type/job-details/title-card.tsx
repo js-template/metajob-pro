@@ -17,9 +17,10 @@ type Props = {
    data: ISingleJob
    companyData: ISingleCompany
    block: IJobDetailsBlock
+   language?: string
 }
 
-const JobTitleCard = ({ data, companyData, block }: Props) => {
+const JobTitleCard = ({ data, companyData, block, language }: Props) => {
    const { data: session } = useSession()
 
    const { share_placeholder, apply_placeholder } = block || {}
@@ -158,7 +159,8 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
                      }
                   }
                },
-               populate: "*"
+               populate: "*",
+               locale: language ?? "en"
             },
             "no-store"
          )
@@ -179,6 +181,7 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
    }, [userId, bookmarkIdentifier])
 
    const isBookmarked = bookmarkData?.length > 0 || bookmarkIdentifier
+
    // bookmark handler
    const jobBookmarkHandler = async () => {
       try {
@@ -192,7 +195,7 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
             }
             setBookmarkLoading(true)
             const bookmarkDocId = bookmarkData?.[0]?.documentId
-            const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId)
+            const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId, language)
 
             if (error) {
                return toast.error(error?.message || "Something went wrong")
@@ -211,13 +214,14 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
                },
                job: {
                   connect: [documentId]
-               }
+               },
+               locale: language ?? "en"
             }
             const {
                data: bookmarkData,
                error,
                message
-            } = await createEntry("metajob-backend/bookmarks", {
+            } = await createEntry(`metajob-backend/bookmarks?locale=${language ?? "en"}`, {
                data: inputData
             })
 
@@ -227,7 +231,6 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
 
             if (bookmarkData) {
                setBookmarkIdentifier(true)
-               // mutate(bookmarkApiUrl)
                return toast.success("Bookmarked Successfully")
             }
          }
