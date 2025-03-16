@@ -154,8 +154,8 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                      }
                   },
                   job: {
-                     id: {
-                        $eq: data?.id || undefined
+                     documentId: {
+                        $eq: data?.documentId || undefined
                      }
                   }
                },
@@ -178,7 +178,7 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [userId, bookmarkIdentifier])
+   }, [userId, bookmarkIdentifier, language])
 
    const isBookmarked = bookmarkData?.length > 0 || bookmarkIdentifier
 

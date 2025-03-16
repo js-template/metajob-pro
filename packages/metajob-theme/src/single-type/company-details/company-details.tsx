@@ -41,7 +41,7 @@ const CompanyDetailsClient = ({ data, language, block, openJobsData }: Props) =>
             <Grid container spacing={4}>
                <Grid item xs={12} md={8}>
                   <Stack spacing={4}>
-                     <CompanyHeader data={data} />
+                     <CompanyHeader data={data} language={language} />
                      <AboutSection data={data?.about} />
                      {open_jobs && <OpenJobs openJobsData={openJobsData} block={block} />}
                      {/* <CommentsSection /> */}
