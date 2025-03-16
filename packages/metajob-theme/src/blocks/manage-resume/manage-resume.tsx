@@ -145,7 +145,8 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                   "portfolio.link",
                   "user",
                   "user.avatar"
-               ]
+               ],
+               locale: language ?? ["en"]
             },
             "no-store"
          )
@@ -209,7 +210,12 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                   portfolio: removeIdFromObjects(data?.portfolio)
                }
             }
-            const resumeResponse = await updateOne("metajob-backend/resumes", resumeData?.documentId, updateInput)
+            const resumeResponse = await updateOne(
+               "metajob-backend/resumes",
+               resumeData?.documentId,
+               updateInput,
+               language
+            )
 
             // Check if the response has any errors
             if (resumeResponse.error) {
@@ -223,7 +229,7 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
          } else {
             // ?? check if slug is already exist
             const { data: slugData } = await find(
-               "api/metajob-backend/resumes",
+               `api/metajob-backend/resumes`,
                {
                   fields: ["slug"],
                   filters: {
@@ -260,12 +266,7 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                   }
                }
             }
-            const resumeResponse = await createEntry(
-               "metajob-backend/resumes",
-               createInput,
-               "/dashboard/my-resume/",
-               "page"
-            )
+            const resumeResponse = await createEntry(`metajob-backend/resumes?locale=${language ?? "en"}`, createInput)
             // Check if the response has any errors
             if (resumeResponse.error) {
                toast.error(resumeResponse?.error)

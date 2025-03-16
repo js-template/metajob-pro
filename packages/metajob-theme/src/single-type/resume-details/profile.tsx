@@ -114,13 +114,9 @@ export default function ProfileSection({
                data: bookmarkData,
                error,
                message
-            } = await createEntry(
-               "metajob-backend/bookmarks",
-               {
-                  data: inputData
-               },
-               language
-            )
+            } = await createEntry(`metajob-backend/bookmarks?locale=${language ?? "en"}`, {
+               data: inputData
+            })
 
             if (error) {
                return toast.error(message || "Something went wrong")

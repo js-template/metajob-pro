@@ -1237,6 +1237,11 @@ export interface PluginMetajobBackendResume
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     about: Schema.Attribute.RichText;
     category: Schema.Attribute.Relation<
@@ -1332,12 +1337,11 @@ export interface PluginMetajobBackendResume
         'Zulu',
       ]
     >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.resume'
-    > &
-      Schema.Attribute.Private;
+    >;
     name: Schema.Attribute.String;
     portfolio: Schema.Attribute.Component<'metajob-block.portfolio', true>;
     publishedAt: Schema.Attribute.DateTime;
