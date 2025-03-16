@@ -209,13 +209,7 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                   portfolio: removeIdFromObjects(data?.portfolio)
                }
             }
-            const resumeResponse = await updateOne(
-               "metajob-backend/resumes",
-               resumeData?.documentId,
-               updateInput,
-               "/dashboard/my-resume/",
-               "page"
-            )
+            const resumeResponse = await updateOne("metajob-backend/resumes", resumeData?.documentId, updateInput)
 
             // Check if the response has any errors
             if (resumeResponse.error) {
