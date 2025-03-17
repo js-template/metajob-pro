@@ -1,0 +1,54 @@
+{
+  "info": {
+    "displayName": "Login Details",
+    "icon": "arrowRight",
+    "description": "Login Details single type component"
+  },
+  "category": "metajob-single-type",
+  "modelName": "login-details",
+  "uid": "metajob-single-type.login-details",
+  "globalId": "ComponentsSingleTypeLoginDetails",
+  "modelType": "component",
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "email_placeholder": {
+      "type": "string"
+    },
+    "password_placeholder": {
+      "type": "string"
+    },
+    "required_placeholder": {
+      "type": "string"
+    },
+    "button_placeholder": {
+      "type": "string"
+    },
+    "or_placeholder": {
+      "type": "string"
+    },
+    "signup_helper_placeholder": {
+      "type": "string"
+    },
+    "signup_link_placeholder": {
+      "type": "string"
+    },
+    "provider_option": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "styles": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

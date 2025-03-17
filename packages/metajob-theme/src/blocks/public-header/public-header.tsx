@@ -25,7 +25,7 @@ import {
    useMediaQuery
 } from "@mui/material"
 import CIcon from "../../components/common/icon"
-import { MenuItemProps, IPublicHeaderBlock } from "./types"
+import { MenuItemProps, IPublicHeaderBlock, IListLocalesData } from "./types"
 import { useTheme as modeUseTheme } from "next-themes"
 import { getLanguageValue } from "../../utils"
 import MobileNav from "./mobile-nav"
@@ -46,9 +46,10 @@ type Props = {
          url: string
       }
    }
+   listLocalesData: IListLocalesData[]
 }
 
-export const PublicHeaderComponent = ({ block, language, userData }: Props) => {
+export const PublicHeaderComponent = ({ block, language, userData, listLocalesData }: Props) => {
    const theme = useTheme()
    const router = useRouter()
    const { data: session, status } = useSession()
@@ -199,6 +200,7 @@ export const PublicHeaderComponent = ({ block, language, userData }: Props) => {
                         open={show}
                         setOpen={setShow}
                         headerData={block}
+                        listLocalesData={listLocalesData}
                      />
                   </Box>
                   {logo && (
@@ -494,7 +496,7 @@ export const PublicHeaderComponent = ({ block, language, userData }: Props) => {
                                                 fontSize: "1.25rem"
                                              }}
                                           />
-                                          {getLanguageValue(language as any) || "English"}
+                                          {getLanguageValue(language as any, listLocalesData) || "English"}
                                           <CIcon
                                              icon='ri:arrow-down-s-line'
                                              sx={{

@@ -1,0 +1,49 @@
+{
+  "collectionName": "components_metajob_single_type_login_details",
+  "info": {
+    "displayName": "Login Details",
+    "icon": "arrowRight"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "email_placeholder": {
+      "type": "string"
+    },
+    "password_placeholder": {
+      "type": "string"
+    },
+    "required_placeholder": {
+      "type": "string"
+    },
+    "button_placeholder": {
+      "type": "string"
+    },
+    "or_placeholder": {
+      "type": "string"
+    },
+    "signup_helper_placeholder": {
+      "type": "string"
+    },
+    "signup_link_placeholder": {
+      "type": "string"
+    },
+    "provider_option": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "styles": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}
