@@ -6,6 +6,7 @@ import LoadingButton from "@mui/lab/LoadingButton"
 import { Box, Button, Divider, Grid, IconButton, Paper, TextField, Typography } from "@mui/material"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import CIcon from "../common/icon"
+import { ILoginBLock } from "./types"
 
 type Props = {
    loginHandler?: (data: { username: string; password: string }) => void
@@ -13,17 +14,7 @@ type Props = {
    facebookLoginHandler?: () => void
    linkedinLoginHandler?: () => void
    loading?: boolean
-   block: {
-      title?: string
-      email_placeholder?: string
-      password_placeholder?: string
-      required_placeholder?: string
-      button_placeholder?: string
-      or_placeholder?: string
-      signup_link_placeholder?: string
-      provider_option?: boolean
-      signup_helper_placeholder?: string
-   } | null
+   block: ILoginBLock
 }
 
 export const LoginCard = ({

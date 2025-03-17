@@ -11,7 +11,7 @@ import CIcon from "../common/icon"
 // @ts-ignore
 import TextFieldWithLabel from "../textField-with-label"
 import { find } from "@/lib/strapi"
-import { IUserRole } from "./types"
+import { IRegisterBLock, IUserRole } from "./types"
 
 type ISignUp = { username: string; email: string; password: string; confirmPassword: string }
 
@@ -21,23 +21,7 @@ type Props = {
    facebookSignUpHandler?: () => void
    linkedinSignUpHandler?: () => void
    loading?: boolean
-   block: {
-      title?: string
-      username_title?: string
-      username_placeholder?: string
-      email_title?: string
-      email_placeholder?: string
-      password_title?: string
-      password_placeholder?: string
-      confirm_password_title?: string
-      confirm_password_placeholder?: string
-      required_placeholder?: string
-      button_placeholder?: string
-      or_placeholder?: string
-      login_helper_placeholder?: string
-      login_link_placeholder?: string
-      provider_option?: boolean
-   } | null
+   block: IRegisterBLock
 }
 
 export const SignUpCard = ({
