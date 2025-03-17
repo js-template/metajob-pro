@@ -11,25 +11,25 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@padmadev/padma-backend": "^0.0.6-alpha.3",
     "@jstemplate/metajob-backend": "0.0.2",
+    "@padmadev/padma-backend": "0.0.6-alpha.3",
     "@strapi/plugin-cloud": "5.6.0",
     "@strapi/plugin-users-permissions": "5.6.0",
-    "@strapi/provider-upload-cloudinary": "^5.4.1",
+    "@strapi/provider-upload-cloudinary": "^5.11.2",
     "@strapi/strapi": "5.6.0",
     "better-sqlite3": "11.3.0",
-    "pg": "^8.13.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^6.0.0",
+    "pg": "^8.14.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.0",
     "strapi-provider-email-brevo": "^1.0.4",
-    "styled-components": "^6.0.0"
+    "styled-components": "^6.1.15"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "typescript": "^5"
+    "@types/node": "^20.17.24",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "typescript": "^5.8.2"
   },
   "engines": {
     "node": ">=18.0.0 <=22.x.x",

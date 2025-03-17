@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@jstemplate/metajob-theme": "0.0.2",
-    "next": "^14.1.0"
+    "next": "^14.2.24"
   },
   "devDependencies": {
     "prettier": "latest",
