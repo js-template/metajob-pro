@@ -25,7 +25,7 @@ const defaultLocaleData = [
       code: "ar"
    }
 ]
-export const getLanguageValue = (ln: string, localeList: IListLocalesData[] = []) => {
+export const getLanguageValue = (ln: string, localeList: IListLocalesData[] = defaultLocaleData) => {
    if (ln === "" || localeList?.length < 1) {
       return ""
    }

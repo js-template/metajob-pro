@@ -26,7 +26,7 @@ import { getLanguageValue } from "../../../utils"
 import { useTheme as modeUseTheme } from "next-themes"
 import { signOut, useSession } from "next-auth/react"
 import { useChangeDirection, useChangeLang } from "../utils"
-import { IPrivateHeaderBlock } from "../types"
+import { IListLocalesData, IPrivateHeaderBlock } from "../types"
 import { SignOut } from "../../../utils/user"
 import NotificationBar from "./notification-bar"
 
@@ -64,7 +64,8 @@ const CustomAppBar = ({
    headerData,
    userRole,
    userData,
-   emailHistoryData
+   emailHistoryData,
+   listLocalesData
 }: {
    open: boolean
    handleDrawerOpen: () => void
@@ -72,6 +73,7 @@ const CustomAppBar = ({
    handleCloseUserMenu: () => void
    anchorElUser: null | HTMLElement
    lang: string
+   listLocalesData?: IListLocalesData[]
    headerData: IPrivateHeaderBlock
    userRole?: string
    userData?: {
@@ -229,7 +231,7 @@ const CustomAppBar = ({
                                     fontSize: "1.25rem"
                                  }}
                               />
-                              {getLanguageValue(lang as any) || "English"}
+                              {getLanguageValue(lang as any, listLocalesData) || "English"}
                               <CIcon
                                  icon='ri:arrow-down-s-line'
                                  sx={{

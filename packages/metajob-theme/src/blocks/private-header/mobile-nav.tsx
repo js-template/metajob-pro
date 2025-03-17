@@ -4,7 +4,7 @@ import _ from "lodash"
 import { useState } from "react"
 import CIcon from "../../components/common/icon"
 import NavItems from "./nav-items"
-import { IPrivateHeaderBlock, MenuItemProps } from "./types"
+import { IListLocalesData, IPrivateHeaderBlock, MenuItemProps } from "./types"
 import { useTheme as modeUseTheme } from "next-themes"
 import { getLanguageValue } from "../../utils"
 import { signOut, useSession } from "next-auth/react"
@@ -15,9 +15,10 @@ type MobileNavProps = {
    setOpen: (open: boolean) => void
    headerData: IPrivateHeaderBlock
    lang: string
+   listLocalesData?: IListLocalesData[]
 }
 
-const MobileNav = ({ open, setOpen, lang, headerData }: MobileNavProps) => {
+const MobileNav = ({ open, setOpen, lang, headerData, listLocalesData }: MobileNavProps) => {
    const { data: session } = useSession()
    const userRole = session?.user?.role?.type
    const { theme: mode, setTheme } = modeUseTheme()
@@ -101,7 +102,7 @@ const MobileNav = ({ open, setOpen, lang, headerData }: MobileNavProps) => {
                               fontSize: "1.25rem"
                            }}
                         />
-                        {getLanguageValue(lang as any) || "English"}
+                        {getLanguageValue(lang as any, listLocalesData) || "English"}
                         <CIcon
                            icon='ri:arrow-down-s-line'
                            sx={{
