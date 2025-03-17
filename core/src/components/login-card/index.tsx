@@ -13,6 +13,17 @@ type Props = {
    facebookLoginHandler?: () => void
    linkedinLoginHandler?: () => void
    loading?: boolean
+   block: {
+      title?: string
+      email_placeholder?: string
+      password_placeholder?: string
+      required_placeholder?: string
+      button_placeholder?: string
+      or_placeholder?: string
+      signup_link_placeholder?: string
+      provider_option?: boolean
+      signup_helper_placeholder?: string
+   } | null
 }
 
 export const LoginCard = ({
@@ -20,8 +31,22 @@ export const LoginCard = ({
    loading,
    googleLoginHandler,
    facebookLoginHandler,
-   linkedinLoginHandler
+   linkedinLoginHandler,
+   block
 }: Props) => {
+   // destructured login block data
+   const {
+      title: loginTitle,
+      email_placeholder,
+      password_placeholder,
+      required_placeholder,
+      button_placeholder,
+      or_placeholder,
+      provider_option,
+      signup_helper_placeholder,
+      signup_link_placeholder
+   } = block || {}
+
    const {
       register,
       handleSubmit,
@@ -42,7 +67,7 @@ export const LoginCard = ({
    }
 
    //    provider present validator
-   const noProvider = !googleLoginHandler && !facebookLoginHandler && !linkedinLoginHandler
+   // const noProvider = !googleLoginHandler && !facebookLoginHandler && !linkedinLoginHandler
 
    return (
       <Grid container direction='column' justifyContent='flex-end' sx={{ minHeight: "85vh" }}>
@@ -72,7 +97,7 @@ export const LoginCard = ({
                                        fontSize={24}
                                        fontWeight={400}
                                        color={(theme) => theme.palette.text.primary}>
-                                       Sign in with Email address
+                                       {loginTitle || "Sign in with Email address"}
                                     </Typography>
                                  </Box>
 
@@ -92,12 +117,12 @@ export const LoginCard = ({
                                        hiddenLabel
                                        id='username'
                                        defaultValue=''
-                                       placeholder='Username or Email'
+                                       placeholder={email_placeholder || "Username or Email"}
                                        variant='outlined'
                                        size='medium'
                                        fullWidth
                                        {...register("username", {
-                                          required: "This field is required"
+                                          required: required_placeholder || "This field is required"
                                        })}
                                        helperText={errors.username?.message}
                                        error={!!errors.username}
@@ -105,14 +130,14 @@ export const LoginCard = ({
                                     <TextField
                                        hiddenLabel
                                        id='password'
-                                       placeholder='Password'
+                                       placeholder={password_placeholder || "Password"}
                                        defaultValue=''
                                        variant='outlined'
                                        size='medium'
                                        type='password'
                                        fullWidth
                                        {...register("password", {
-                                          required: "This field is required"
+                                          required: required_placeholder || "This field is required"
                                        })}
                                        helperText={errors.password?.message}
                                        error={!!errors.password}
@@ -125,12 +150,12 @@ export const LoginCard = ({
                                        size='large'
                                        fullWidth
                                        sx={{ mt: 2 }}>
-                                       Sign in
+                                       {button_placeholder || "Sign in"}
                                     </LoadingButton>
                                  </Box>
                               </Grid>
                               {/* providers title  */}
-                              {!noProvider && (
+                              {provider_option && (
                                  <Grid item xs={12}>
                                     <Box
                                        sx={{
@@ -164,7 +189,7 @@ export const LoginCard = ({
                                           }}
                                           disableRipple
                                           disabled>
-                                          OR
+                                          {or_placeholder || "OR"}
                                        </Button>
 
                                        <Divider
@@ -178,7 +203,7 @@ export const LoginCard = ({
                                  </Grid>
                               )}
                               {/* login providers  */}
-                              {!noProvider && (
+                              {provider_option && (
                                  <Box
                                     sx={{
                                        display: "flex",
@@ -264,7 +289,7 @@ export const LoginCard = ({
                                     mt: 2,
                                     textAlign: "center"
                                  }}>
-                                 Not a Member ?{" "}
+                                 {signup_helper_placeholder || "Not a Member ?"}{" "}
                                  <Typography
                                     component={Link}
                                     href='/register'
@@ -275,7 +300,7 @@ export const LoginCard = ({
                                        textDecoration: "none",
                                        cursor: "pointer"
                                     }}>
-                                    Create Account
+                                    {signup_link_placeholder || "Create Account"}
                                  </Typography>
                               </Typography>
                            </Grid>

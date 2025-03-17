@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
 import RegisterBody from "./body"
+import { getLanguageFromCookie } from "@/utils/language"
+import { find } from "@/lib/strapi"
 // FIXME: Replace with dynamic function
 export const metadata: Metadata = {
    title: "Register - MetaJobs",
@@ -7,6 +9,22 @@ export const metadata: Metadata = {
 }
 
 const Register = async () => {
-   return <RegisterBody />
+   // fetch the language from cookies or session
+   const language = await getLanguageFromCookie()
+
+   // fetch register data
+   const { data, error } = await find(
+      "api/metajob-backend/auth-setting",
+      {
+         populate: {
+            register: { populate: "*" }
+         },
+         locale: language ?? ["en"]
+      },
+      "no-store"
+   )
+   const block = data?.data?.register?.[0] || null
+
+   return <RegisterBody block={block} />
 }
 export default Register

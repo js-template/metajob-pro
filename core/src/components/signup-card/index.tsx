@@ -21,6 +21,23 @@ type Props = {
    facebookSignUpHandler?: () => void
    linkedinSignUpHandler?: () => void
    loading?: boolean
+   block: {
+      title?: string
+      username_title?: string
+      username_placeholder?: string
+      email_title?: string
+      email_placeholder?: string
+      password_title?: string
+      password_placeholder?: string
+      confirm_password_title?: string
+      confirm_password_placeholder?: string
+      required_placeholder?: string
+      button_placeholder?: string
+      or_placeholder?: string
+      login_helper_placeholder?: string
+      login_link_placeholder?: string
+      provider_option?: boolean
+   } | null
 }
 
 export const SignUpCard = ({
@@ -28,8 +45,28 @@ export const SignUpCard = ({
    signUpHandler,
    googleSignUpHandler,
    facebookSignUpHandler,
-   linkedinSignUpHandler
+   linkedinSignUpHandler,
+   block
 }: Props) => {
+   // destructured register block data
+   const {
+      title: registerTitle,
+      username_title,
+      username_placeholder,
+      email_title,
+      email_placeholder,
+      password_title,
+      password_placeholder,
+      confirm_password_title,
+      confirm_password_placeholder,
+      required_placeholder,
+      button_placeholder,
+      or_placeholder,
+      login_helper_placeholder,
+      login_link_placeholder,
+      provider_option
+   } = block || {}
+
    const [selectedButton, setSelectedButton] = useState(0)
    const { theme: mode } = useTheme()
 
@@ -88,9 +125,6 @@ export const SignUpCard = ({
       getRoles()
    }, [])
 
-   //    provider present validator
-   const noProvider = !googleSignUpHandler && !facebookSignUpHandler && !linkedinSignUpHandler
-
    return (
       <Container maxWidth='lg' sx={{ py: 8 }}>
          <Stack justifyContent={"center"} alignItems={"center"}>
@@ -109,7 +143,7 @@ export const SignUpCard = ({
                            fontWeight={400}
                            textAlign={"center"}
                            color={(theme) => theme.palette.text.primary}>
-                           Create an account
+                           {registerTitle || "Create an account"}
                         </Typography>
                         <Stack direction={"row"} gap={2}>
                            {!isLoading &&
@@ -179,52 +213,52 @@ export const SignUpCard = ({
                         </Stack>
                         <Stack spacing={2} component={"form"} onSubmit={handleSubmit(onSubmitHandler)}>
                            <TextFieldWithLabel
-                              label='Username'
+                              label={username_title || "Username"}
                               type='text'
-                              placeholder='Enter Username'
+                              placeholder={username_placeholder || "Enter Username"}
                               textFieldProps={{
                                  id: "username",
                                  ...register("username", {
-                                    required: "This field is required"
+                                    required: required_placeholder || "This field is required"
                                  }),
                                  error: !!errors.username
                               }}
                               helperText={errors.username?.message as string | ""}
                            />
                            <TextFieldWithLabel
-                              label='Email'
-                              placeholder='Your Email'
+                              label={email_title || "Email"}
+                              placeholder={email_placeholder || "Your Email"}
                               type='email'
                               textFieldProps={{
                                  id: "email",
                                  ...register("email", {
-                                    required: "This field is required"
+                                    required: required_placeholder || "This field is required"
                                  }),
                                  error: !!errors.email
                               }}
                               helperText={errors.email?.message as string | ""}
                            />
                            <TextFieldWithLabel
-                              label='Password'
-                              placeholder='Enter Password'
+                              label={password_title || "Password"}
+                              placeholder={password_placeholder || "Enter Password"}
                               type='password'
                               textFieldProps={{
                                  id: "password",
                                  ...register("password", {
-                                    required: "This field is required"
+                                    required: required_placeholder || "This field is required"
                                  }),
                                  error: !!errors.password
                               }}
                               helperText={errors.password?.message as string | ""}
                            />
                            <TextFieldWithLabel
-                              label='Confirm Password'
-                              placeholder='Enter Confirm Password'
+                              label={confirm_password_title || "Confirm Password"}
+                              placeholder={confirm_password_placeholder || "Enter Confirm Password"}
                               type='password'
                               textFieldProps={{
                                  id: "confirmPassword",
                                  ...register("confirmPassword", {
-                                    required: "This field is required"
+                                    required: required_placeholder || "This field is required"
                                  }),
                                  error: !!errors.confirmPassword
                               }}
@@ -239,7 +273,7 @@ export const SignUpCard = ({
                               sx={{
                                  marginTop: "30px !important"
                               }}>
-                              Register
+                              {button_placeholder || "Register"}
                            </LoadingButton>
                         </Stack>
                         <Typography
@@ -251,7 +285,7 @@ export const SignUpCard = ({
                               mt: 2,
                               textAlign: "center"
                            }}>
-                           Already have account ?{" "}
+                           {login_helper_placeholder || "Already have account ?"}{" "}
                            <Typography
                               component={Link}
                               href='/login'
@@ -262,11 +296,11 @@ export const SignUpCard = ({
                                  textDecoration: "none",
                                  cursor: "pointer"
                               }}>
-                              Login
+                              {login_link_placeholder || "Login"}
                            </Typography>
                         </Typography>
                         {/* provider title  */}
-                        {!noProvider && (
+                        {provider_option && (
                            <Box
                               sx={{
                                  alignItems: "center",
@@ -287,14 +321,14 @@ export const SignUpCard = ({
                                  }}
                                  disableRipple
                                  disabled>
-                                 OR
+                                 {or_placeholder || "OR"}
                               </Button>
 
                               <Divider sx={{ flexGrow: 1 }} orientation='horizontal' />
                            </Box>
                         )}
                         {/* signUp providers  */}
-                        {!noProvider && (
+                        {provider_option && (
                            <Box
                               sx={{
                                  display: "flex",
