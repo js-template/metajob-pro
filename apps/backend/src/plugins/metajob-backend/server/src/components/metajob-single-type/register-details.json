@@ -1,0 +1,72 @@
+{
+  "info": {
+    "displayName": "Register Details",
+    "icon": "arrowRight",
+    "description": "Register Details single type component"
+  },
+  "category": "metajob-single-type",
+  "modelName": "register-details",
+  "uid": "metajob-single-type.register-details",
+  "globalId": "ComponentsSingleTypeRegisterDetails",
+  "modelType": "component",
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "username_title": {
+      "type": "string"
+    },
+    "username_placeholder": {
+      "type": "string"
+    },
+    "email_title": {
+      "type": "string"
+    },
+    "email_placeholder": {
+      "type": "string"
+    },
+    "password_title": {
+      "type": "string"
+    },
+    "password_placeholder": {
+      "type": "string"
+    },
+    "confirm_password_title": {
+      "type": "string"
+    },
+    "confirm_password_placeholder": {
+      "type": "string"
+    },
+    "required_placeholder": {
+      "type": "string"
+    },
+    "button_placeholder": {
+      "type": "string"
+    },
+    "login_helper_placeholder": {
+      "type": "string"
+    },
+    "login_link_placeholder": {
+      "type": "string"
+    },
+    "or_placeholder": {
+      "type": "string"
+    },
+    "provider_option": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "styles": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}
