@@ -1021,6 +1021,59 @@ export interface MetajobSingleTypeJobDetails extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobSingleTypeLoginDetails extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_single_type_login_details';
+  info: {
+    displayName: 'Login Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    button_placeholder: Schema.Attribute.String;
+    email_placeholder: Schema.Attribute.String;
+    or_placeholder: Schema.Attribute.String;
+    password_placeholder: Schema.Attribute.String;
+    provider_option: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    required_placeholder: Schema.Attribute.String;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    signup_helper_placeholder: Schema.Attribute.String;
+    signup_link_placeholder: Schema.Attribute.String;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobSingleTypeRegisterDetails
+  extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_single_type_register_details';
+  info: {
+    displayName: 'Register Details';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    button_placeholder: Schema.Attribute.String;
+    confirm_password_placeholder: Schema.Attribute.String;
+    confirm_password_title: Schema.Attribute.String;
+    email_placeholder: Schema.Attribute.String;
+    email_title: Schema.Attribute.String;
+    login_helper_placeholder: Schema.Attribute.String;
+    login_link_placeholder: Schema.Attribute.String;
+    or_placeholder: Schema.Attribute.String;
+    password_placeholder: Schema.Attribute.String;
+    password_title: Schema.Attribute.String;
+    provider_option: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    required_placeholder: Schema.Attribute.String;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    styles: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+    username_placeholder: Schema.Attribute.String;
+    username_title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobSingleTypeResumeDetails extends Struct.ComponentSchema {
   collectionName: 'components_metajob_single_type_resume_details';
   info: {
@@ -1396,6 +1449,8 @@ declare module '@strapi/strapi' {
       'metajob-config.table-config': MetajobConfigTableConfig;
       'metajob-single-type.company-details': MetajobSingleTypeCompanyDetails;
       'metajob-single-type.job-details': MetajobSingleTypeJobDetails;
+      'metajob-single-type.login-details': MetajobSingleTypeLoginDetails;
+      'metajob-single-type.register-details': MetajobSingleTypeRegisterDetails;
       'metajob-single-type.resume-details': MetajobSingleTypeResumeDetails;
       'shared.empty': SharedEmpty;
       'shared.meta-social': SharedMetaSocial;

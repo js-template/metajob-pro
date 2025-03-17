@@ -22,6 +22,7 @@ import CompanySizeController from "./company-size";
 import RevenueController from "./revenue";
 import JobTypeController from "./job-type";
 import SkillController from "./skill";
+import AuthSettingController from "./auth-setting";
 
 export default {
   "job-setting": JobSettingController,
@@ -46,6 +47,7 @@ export default {
   revenue: RevenueController,
   "job-type": JobTypeController,
   skill: SkillController,
+  "auth-setting": AuthSettingController,
 
   controller,
 };

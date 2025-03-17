@@ -550,6 +550,53 @@ export interface PluginMetajobBackendAppliedJob
   };
 }
 
+export interface PluginMetajobBackendAuthSetting
+  extends Struct.SingleTypeSchema {
+  collectionName: 'auth_setting';
+  info: {
+    description: '';
+    displayName: 'Auth Setting';
+    pluralName: 'auth-settings';
+    singularName: 'auth-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::metajob-backend.auth-setting'
+    >;
+    login: Schema.Attribute.DynamicZone<['metajob-single-type.login-details']> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    register: Schema.Attribute.DynamicZone<
+      ['metajob-single-type.register-details']
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginMetajobBackendAvgSalary
   extends Struct.CollectionTypeSchema {
   collectionName: 'avg_salary';
@@ -750,6 +797,11 @@ export interface PluginMetajobBackendCompanySetting
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
       ['metajob-single-type.company-details']
@@ -757,12 +809,11 @@ export interface PluginMetajobBackendCompanySetting
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.company-setting'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1379,6 +1430,11 @@ export interface PluginMetajobBackendResumeSetting
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
       ['metajob-single-type.resume-details']
@@ -1386,12 +1442,11 @@ export interface PluginMetajobBackendResumeSetting
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.resume-setting'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -2535,6 +2590,7 @@ declare module '@strapi/strapi' {
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::metajob-backend.applied-job': PluginMetajobBackendAppliedJob;
+      'plugin::metajob-backend.auth-setting': PluginMetajobBackendAuthSetting;
       'plugin::metajob-backend.avg-salary': PluginMetajobBackendAvgSalary;
       'plugin::metajob-backend.bookmark': PluginMetajobBackendBookmark;
       'plugin::metajob-backend.chat': PluginMetajobBackendChat;
