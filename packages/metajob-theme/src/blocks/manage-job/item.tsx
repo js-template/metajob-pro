@@ -76,7 +76,7 @@ const TableItem = ({
          setLoading(true)
 
          try {
-            const { data, error } = await deleteEntry(model, documentId)
+            const { data, error } = await deleteEntry(model, documentId, language)
 
             if (error) {
                throw new Error(error)
@@ -104,7 +104,7 @@ const TableItem = ({
                job_status: value
             }
          }
-         const statusResponse = await updateOne("metajob-backend/jobs", documentId, updateInput)
+         const statusResponse = await updateOne("metajob-backend/jobs", documentId, updateInput, language)
          // Check if the response has any errors
          if (statusResponse.error) {
             toast.error(statusResponse?.error || "Something went wrong")
@@ -131,7 +131,7 @@ const TableItem = ({
                   is_featured: false
                }
             }
-            const featureResponse = await updateOne("metajob-backend/jobs", documentId, updateInput)
+            const featureResponse = await updateOne("metajob-backend/jobs", documentId, updateInput, language)
             // Check if the response has any errors
             if (featureResponse.error) {
                toast.error(featureResponse?.error || "Something went wrong")
@@ -149,14 +149,13 @@ const TableItem = ({
                   is_featured: true
                }
             }
-            const featureResponse = await updateOne("metajob-backend/jobs", documentId, updateInput)
+            const featureResponse = await updateOne("metajob-backend/jobs", documentId, updateInput, language)
             // Check if the response has any errors
             if (featureResponse.error) {
                toast.error(featureResponse?.error || "Something went wrong")
             } else {
                setFeatureValue(true)
                handleMute()
-               // mutate("api/metajob-backend/applied-jobs")
                toast.success("Job featured successfully")
             }
          }
@@ -369,6 +368,7 @@ const TableItem = ({
          )}
          {jobApplicationShow && (
             <JobApplications
+               language={language}
                open={jobApplicationShow}
                handleClose={handleApplicationClose}
                jobDocID={documentId}

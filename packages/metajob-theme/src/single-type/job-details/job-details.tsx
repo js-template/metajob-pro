@@ -43,7 +43,7 @@ const JobDetailsClient = ({ data, block, language, companyData, relatedJobsData 
                <Grid container spacing={4}>
                   <Grid item xs={12} md={8}>
                      <Stack spacing={4}>
-                        <JobTitleCard data={data} companyData={companyData} block={block} />
+                        <JobTitleCard data={data} companyData={companyData} block={block} language={language} />
                         <Details data={data} skillTitle={skill_placeholder} />
                      </Stack>
                   </Grid>

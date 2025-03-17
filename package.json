@@ -10,10 +10,11 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
-  "author": "",
-  "license": "ISC",
+  "author": "JS Template",
+  "license": "EULA",
   "dependencies": {
-    "@jstemplate/metajob-theme": "0.0.2",
+    "@changesets/cli": "^2.28.1",
+    "@jstemplate/metajob-theme": "0.0.3",
     "next": "^14.2.24"
   },
   "devDependencies": {

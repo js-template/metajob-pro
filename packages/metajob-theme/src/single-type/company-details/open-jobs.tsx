@@ -10,7 +10,6 @@ type Props = {
 
 const OpenJobs = ({ block, openJobsData }: Props) => {
    const { empty, open_jobs_title, card_button } = block || {}
-   console.log("OpenJobs block", block)
    return (
       <Stack spacing={4}>
          <Typography

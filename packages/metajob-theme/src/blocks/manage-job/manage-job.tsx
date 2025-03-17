@@ -158,6 +158,7 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
                   handleMute={handleMute}
                   jobAttributes={jobAttributes}
                   jobCount={jobCount}
+                  language={language}
                />
             ) : (
                <Box

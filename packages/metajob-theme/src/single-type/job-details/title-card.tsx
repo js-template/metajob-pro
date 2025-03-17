@@ -17,9 +17,10 @@ type Props = {
    data: ISingleJob
    companyData: ISingleCompany
    block: IJobDetailsBlock
+   language?: string
 }
 
-const JobTitleCard = ({ data, companyData, block }: Props) => {
+const JobTitleCard = ({ data, companyData, block, language }: Props) => {
    const { data: session } = useSession()
 
    const { share_placeholder, apply_placeholder } = block || {}
@@ -71,7 +72,8 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
                      }
                   }
                },
-               populate: "*"
+               populate: "*",
+               locale: language ?? "en"
             },
             "no-store"
          )
@@ -97,9 +99,11 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
    const jobApplyHandler = async (letterValue?: string) => {
       try {
          if (!session) {
+            handleApplyJobModalClose()
             return toast.error("Please login to apply for this job")
          }
          if (userRole !== "candidate") {
+            handleApplyJobModalClose()
             return toast.error("Only candidate can apply for job")
          }
          setApplyLoading(true)
@@ -117,14 +121,12 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
             data: applyData,
             error,
             message
-         } = await createEntry("metajob-backend/applied-jobs", {
+         } = await createEntry(`metajob-backend/applied-jobs?locale=${language ?? "en"}`, {
             data: inputData
          })
-
          if (error) {
             return toast.error(message || "Something went wrong")
          }
-
          if (applyData) {
             setApplyIdentifier(true)
             handleApplyJobModalClose()
@@ -153,12 +155,13 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
                      }
                   },
                   job: {
-                     id: {
-                        $eq: data?.id || undefined
+                     documentId: {
+                        $eq: data?.documentId || undefined
                      }
                   }
                },
-               populate: "*"
+               populate: "*",
+               locale: language ?? "en"
             },
             "no-store"
          )
@@ -176,9 +179,10 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [userId, bookmarkIdentifier])
+   }, [userId, bookmarkIdentifier, language])
 
    const isBookmarked = bookmarkData?.length > 0 || bookmarkIdentifier
+
    // bookmark handler
    const jobBookmarkHandler = async () => {
       try {
@@ -192,7 +196,7 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
             }
             setBookmarkLoading(true)
             const bookmarkDocId = bookmarkData?.[0]?.documentId
-            const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId)
+            const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId, language)
 
             if (error) {
                return toast.error(error?.message || "Something went wrong")
@@ -211,13 +215,14 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
                },
                job: {
                   connect: [documentId]
-               }
+               },
+               locale: language ?? "en"
             }
             const {
                data: bookmarkData,
                error,
                message
-            } = await createEntry("metajob-backend/bookmarks", {
+            } = await createEntry(`metajob-backend/bookmarks?locale=${language ?? "en"}`, {
                data: inputData
             })
 
@@ -227,7 +232,6 @@ const JobTitleCard = ({ data, companyData, block }: Props) => {
 
             if (bookmarkData) {
                setBookmarkIdentifier(true)
-               // mutate(bookmarkApiUrl)
                return toast.success("Bookmarked Successfully")
             }
          }

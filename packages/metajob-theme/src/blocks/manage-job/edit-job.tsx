@@ -108,7 +108,7 @@ const EditJob = ({ open, language, handleClose, handleMute, jobDocID, jobAttribu
             data: updateList,
             error,
             message
-         } = await updateOne("metajob-backend/jobs", jobData?.documentId, updateInput)
+         } = await updateOne(`metajob-backend/jobs`, jobData?.documentId, updateInput, language)
 
          if (error) {
             return toast.error(message || "Something went wrong")
