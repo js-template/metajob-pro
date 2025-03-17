@@ -38,6 +38,15 @@ export const PublicHeader = async ({ block, language }: Props) => {
       "no-store"
    )
 
+   // fetch locales data
+   const { data: listLocalesData } = await find(
+      "api/i18n/locales",
+      {
+         populate: "*"
+      },
+      "no-store"
+   )
+
    const combineBlockData = {
       ...block,
       ...data?.data?.header?.[0]
@@ -63,5 +72,12 @@ export const PublicHeader = async ({ block, language }: Props) => {
         )
       : {}
 
-   return <PublicHeaderComponent block={combineBlockData} language={language} userData={userData} />
+   return (
+      <PublicHeaderComponent
+         block={combineBlockData}
+         language={language}
+         userData={userData}
+         listLocalesData={listLocalesData}
+      />
+   )
 }
