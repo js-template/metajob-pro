@@ -152,8 +152,7 @@ export async function generateStaticParams() {
                   $ne: null
                }
             },
-            //   FIXME: Locally will be dynamic
-            locale: ["en"]
+            locale: "en"
          })
 
          // ?? Store all slugs in the params array
