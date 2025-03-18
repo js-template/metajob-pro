@@ -37,6 +37,15 @@ export const PrivateHeader = async ({ block, language }: Props) => {
       "no-store"
    )
 
+   // fetch locales data
+   const { data: listLocalesData } = await find(
+      "api/i18n/locales",
+      {
+         populate: "*"
+      },
+      "no-store"
+   )
+
    const combineBlockData = {
       ...block,
       ...data?.data?.header?.[0]
@@ -83,6 +92,7 @@ export const PrivateHeader = async ({ block, language }: Props) => {
          language={language}
          userData={userData}
          emailHistoryData={emailHistoryData}
+         listLocalesData={listLocalesData}
       />
    )
 }

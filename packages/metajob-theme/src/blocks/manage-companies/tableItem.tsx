@@ -19,6 +19,7 @@ type Props = {
    noteFunctionHandler: () => void
    handleMute: () => void
    companyAttributes?: ICompanyAttribute
+   language?: string
 }
 
 const ManageCompaniesTableItem = ({
@@ -27,7 +28,8 @@ const ManageCompaniesTableItem = ({
    noteFunctionHandler,
    direction,
    handleMute,
-   companyAttributes
+   companyAttributes,
+   language
 }: Props) => {
    const [show, setShow] = useState(false)
    const [loading, setLoading] = useState(false)
@@ -54,7 +56,7 @@ const ManageCompaniesTableItem = ({
       setLoading(true)
 
       try {
-         const { data, error } = await deleteEntry(model, documentId)
+         const { data, error } = await deleteEntry(model, documentId, language)
          if (error) {
             throw new Error(error)
          }
@@ -153,6 +155,7 @@ const ManageCompaniesTableItem = ({
          </TableRow>
          {/*  Edit Company */}
          <EditCompany
+            language={language}
             open={show}
             handleClose={handleClose}
             companyDocID={documentId}

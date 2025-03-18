@@ -22,6 +22,7 @@ import CIcon from "../../components/common/icon"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import { ApplyTableLoader } from "./loader"
 import ApplyItem from "./apply-item"
+import { locale } from "moment"
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
@@ -42,9 +43,18 @@ type Props = {
       title: string
       description: string
    }
+   language?: string
 }
 
-export default function JobApplications({ open, handleClose, jobDocID, handleMute, blockData, empty }: Props) {
+export default function JobApplications({
+   open,
+   handleClose,
+   jobDocID,
+   handleMute,
+   blockData,
+   empty,
+   language
+}: Props) {
    const [loading, setLoading] = React.useState(false)
    const [jobApplyData, setJobApplyData] = React.useState<any | null>(null)
 
@@ -69,7 +79,8 @@ export default function JobApplications({ open, handleClose, jobDocID, handleMut
                   job: {
                      documentId: jobDocID
                   }
-               }
+               },
+               locale: language ?? "en"
             },
             "no-store"
          )
@@ -176,7 +187,7 @@ export default function JobApplications({ open, handleClose, jobDocID, handleMut
                            ) : (
                               <TableBody>
                                  {jobApplyData?.data?.map((apply: IJobApplyData, index: number) => (
-                                    <ApplyItem key={index} apply={apply} handleMute={handleMute} />
+                                    <ApplyItem key={index} apply={apply} handleMute={handleMute} language={language} />
                                  ))}
 
                                  {/* Empty message */}

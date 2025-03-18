@@ -22,6 +22,7 @@ import CompanySizeService from "./company-size";
 import RevenueService from "./revenue";
 import JobTypeService from "./job-type";
 import SkillService from "./skill";
+import AuthSettingService from "./auth-setting";
 
 export default {
   service,
@@ -48,4 +49,5 @@ export default {
   revenue: RevenueService,
   "job-type": JobTypeService,
   skill: SkillService,
+  "auth-setting": AuthSettingService,
 };

@@ -1,0 +1,40 @@
+{
+  "kind": "singleType",
+  "collectionName": "auth_setting",
+  "info": {
+    "singularName": "auth-setting",
+    "pluralName": "auth-settings",
+    "displayName": "Auth Setting",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "login": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "dynamiczone",
+      "components": ["metajob-single-type.login-details"],
+      "required": false
+    },
+    "register": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "dynamiczone",
+      "components": ["metajob-single-type.register-details"],
+      "required": false
+    }
+  }
+}

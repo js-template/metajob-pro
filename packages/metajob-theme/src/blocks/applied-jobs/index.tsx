@@ -29,7 +29,8 @@ export const AppliedJobs = async ({ block, language }: Props) => {
                  owner: {
                     id: userId
                  }
-              }
+              },
+              locale: language ?? "en"
            },
            "no-store"
         )

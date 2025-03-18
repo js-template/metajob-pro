@@ -18,7 +18,7 @@ type Props = {
    companyAttributes?: ICompanyAttribute
 }
 
-const ManageCompaniesClient = ({ block, companyAttributes }: Props) => {
+const ManageCompaniesClient = ({ block, companyAttributes, language }: Props) => {
    const theme = useTheme()
 
    // session data destructuring
@@ -87,7 +87,8 @@ const ManageCompaniesClient = ({ block, companyAttributes }: Props) => {
                         }
                      ]
                   })
-               }
+               },
+               locale: language ?? ["en"]
             },
             "no-store"
          )
@@ -142,6 +143,7 @@ const ManageCompaniesClient = ({ block, companyAttributes }: Props) => {
                   <AddCompany
                      handleClose={() => setAddCompany(false)}
                      userId={userId}
+                     language={language}
                      handleMute={handleMute}
                      companyAttributes={companyAttributes}
                   />
@@ -238,6 +240,7 @@ const ManageCompaniesClient = ({ block, companyAttributes }: Props) => {
 
                      {/* Table */}
                      <ManageCompaniesTable
+                        language={language}
                         headCells={tableHeader}
                         selectAll={selectAll}
                         setSelectAll={setSelectAll}

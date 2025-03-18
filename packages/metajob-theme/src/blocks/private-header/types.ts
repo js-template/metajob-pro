@@ -11,6 +11,7 @@ export type IPrivateHeaderProps = {
       createdAt: string
       title: string
    }[]
+   listLocalesData?: IListLocalesData[]
 }
 
 export type IPrivateHeaderBlock = {
@@ -54,4 +55,12 @@ export type MenuItemProps = {
    icon: string
    disabled: boolean
    child: MenuItemProps[]
+}
+
+export type IListLocalesData = {
+   id: number
+   documentId: string
+   name: string
+   code: string | null
+   isDefault: boolean
 }

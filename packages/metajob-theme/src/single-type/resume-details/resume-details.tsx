@@ -12,7 +12,7 @@ type Props = {
    block: IResumeDetailsBlock
 }
 
-const ResumeDetailsClient = ({ data, block }: Props) => {
+const ResumeDetailsClient = ({ data, block, language }: Props) => {
    const { title, empty } = block
    return (
       <Stack>
@@ -20,7 +20,7 @@ const ResumeDetailsClient = ({ data, block }: Props) => {
          <Container maxWidth='lg' sx={{ py: 6 }}>
             <Grid container spacing={4}>
                <Grid item xs={12} md={4}>
-                  <ProfileSection data={data} block={block} />
+                  <ProfileSection data={data} block={block} language={language} />
                </Grid>
                <Grid item xs={12} md={8}>
                   <Card

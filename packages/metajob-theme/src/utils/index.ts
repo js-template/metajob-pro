@@ -1,8 +1,36 @@
-export const getLanguageValue = (ln: "ar" | "en" | "es" | "") => {
-   if (ln === "") {
+type IListLocalesData = {
+   name: string
+   code: string | null
+}
+
+const defaultLocaleData = [
+   {
+      name: "English (en)",
+      code: "en"
+   },
+   {
+      name: "French (fr)",
+      code: "fr"
+   },
+   {
+      name: "German (de)",
+      code: "de"
+   },
+   {
+      name: "Spanish (es)",
+      code: "es"
+   },
+   {
+      name: "Arabic (ar)",
+      code: "ar"
+   }
+]
+export const getLanguageValue = (ln: string, localeList: IListLocalesData[] = defaultLocaleData) => {
+   if (ln === "" || localeList?.length < 1) {
       return ""
    }
-   const languageList = { ar: "Arabic", en: "English", es: "Spanish", fr: "French", de: "German" }
-   const lanValue = languageList[ln]
-   return lanValue
+
+   const lanValue = localeList.find((locale) => locale?.code === ln)?.name || "English"
+
+   return lanValue.replace(/\s*\(.*?\)/, "")
 }

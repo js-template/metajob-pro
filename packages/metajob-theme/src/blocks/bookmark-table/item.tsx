@@ -12,11 +12,13 @@ import { IBookmarkItem } from "./types"
 const BookmarkTableItem = ({
    row,
    direction,
-   handleMute
+   handleMute,
+   language
 }: {
    row: IBookmarkItem
    direction: "ltr" | "rtl"
    handleMute: () => void
+   language?: string
 }) => {
    const { documentId, type } = row || {}
    const { itemTitle, itemPrice, itemUrl, itemStatus } = getItemValue(row)
@@ -30,7 +32,7 @@ const BookmarkTableItem = ({
       setLoading(true)
       try {
          const model = "api/metajob-backend/bookmarks"
-         const { success, error } = await deleteEntry(model, documentId)
+         const { success, error } = await deleteEntry(model, documentId, language)
          if (error) {
             throw new Error(error)
          }

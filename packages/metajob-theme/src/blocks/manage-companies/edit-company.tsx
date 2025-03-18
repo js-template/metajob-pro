@@ -44,10 +44,12 @@ type EditCompanyProps = {
    companyDocID: string
    handleMute: () => void
    companyAttributes?: ICompanyAttribute
+   language?: string
 }
 
 export default function EditCompany({
    open,
+   language,
    handleClose,
    companyDocID,
    handleMute,
@@ -152,7 +154,7 @@ export default function EditCompany({
             data: updateCompany,
             error,
             message
-         } = await updateOne("metajob-backend/companies", companyData?.documentId, updateInput)
+         } = await updateOne("metajob-backend/companies", companyData?.documentId, updateInput, language)
 
          if (error) {
             toast.error(message || "Something went wrong")
@@ -179,7 +181,8 @@ export default function EditCompany({
                   data: {
                      logo: uploadLogoData[0].id
                   }
-               }
+               },
+               language
             )
 
             if (updateError) {
@@ -237,7 +240,8 @@ export default function EditCompany({
             "api/metajob-backend/companies",
             companyDocID,
             {
-               populate: "*"
+               populate: "*",
+               locale: language ?? "en"
             },
             "no-store"
          )

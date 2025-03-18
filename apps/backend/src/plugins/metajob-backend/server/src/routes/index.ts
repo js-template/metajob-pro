@@ -20,6 +20,7 @@ import CompanySizeRoute from "./company-size";
 import RevenueRoute from "./revenue";
 import JobTypeRoute from "./job-type";
 import SkillRoute from "./skill";
+import AuthSettingRoute from "./auth-setting";
 
 export default {
   "job-setting": JobSettingRoute,
@@ -44,4 +45,5 @@ export default {
   revenue: RevenueRoute,
   "job-type": JobTypeRoute,
   skill: SkillRoute,
+  "auth-setting": AuthSettingRoute,
 };
