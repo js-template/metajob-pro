@@ -146,16 +146,13 @@ export async function generateStaticParams() {
       singlePages?.map(async (page: { slug: string; collectionModel: string; singelModel: string }) => {
          // ?? Get the collectionModel API data
          const { data: collectionData, error: collectionError } = await find(page.collectionModel, {
-            fields: ["slug"],
             filters: {
                slug: {
                   $ne: null
                }
             },
-            //   FIXME: Locally will be dynamic
-            locale: ["en"]
+            locale: "en"
          })
-
          // ?? Store all slugs in the params array
          const mappedSlugs = collectionData?.data?.map((single: any) => ({
             slug: page.slug,

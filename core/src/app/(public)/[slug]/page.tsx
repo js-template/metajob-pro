@@ -52,9 +52,9 @@ export default async function DynamicPages({
       return notFound()
    }
    // *** if error, return error page ***
-   if (error) {
-      throw error
-   }
+   // if (error) {
+   //    throw error
+   // }
 
    return (
       <>
