@@ -7,7 +7,22 @@ import { useRouter } from "next/navigation"
 import { PageLoader } from "@/components/loader/pageLoader"
 import { LoginCard } from "@/components/login-card"
 
-const LoginBody = ({ callbackUrl, error }: { error: string | undefined; callbackUrl: string | undefined }) => {
+type Props = {
+   error: string | undefined
+   callbackUrl: string | undefined
+   block: {
+      title?: string
+      email_placeholder?: string
+      password_placeholder?: string
+      required_placeholder?: string
+      button_placeholder?: string
+      or_placeholder?: string
+      signup_link_placeholder?: string
+      provider_option?: boolean
+      signup_helper_placeholder?: string
+   } | null
+}
+const LoginBody = ({ callbackUrl, error, block }: Props) => {
    const { status } = useSession()
    const router = useRouter()
 
@@ -125,6 +140,7 @@ const LoginBody = ({ callbackUrl, error }: { error: string | undefined; callback
          facebookLoginHandler={handleFacebookLogin}
          linkedinLoginHandler={handleLinkedinLogin}
          loading={loading}
+         block={block}
       />
    )
 }

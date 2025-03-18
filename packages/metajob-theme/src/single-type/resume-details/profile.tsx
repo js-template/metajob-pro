@@ -12,7 +12,15 @@ import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { createEntry, deleteEntry, find } from "../../lib/strapi"
 
-export default function ProfileSection({ data, block }: { data: ISingleResume; block: IResumeDetailsBlock }) {
+export default function ProfileSection({
+   data,
+   block,
+   language
+}: {
+   data: ISingleResume
+   block: IResumeDetailsBlock
+   language?: string
+}) {
    const { theme: mode } = useTheme()
    const { open_placeholder, industry_placeholder, member_placeholder, experience_placeholder } = block || {}
    const { documentId, name, user, tagline, category, experience_time, contact, createdAt } = data || {}
@@ -47,7 +55,8 @@ export default function ProfileSection({ data, block }: { data: ISingleResume; b
                      }
                   }
                },
-               populate: "*"
+               populate: "*",
+               locale: language ?? "en"
             },
             "no-store"
          )
@@ -81,7 +90,7 @@ export default function ProfileSection({ data, block }: { data: ISingleResume; b
             }
             setBookmarkLoading(true)
             const bookmarkDocId = bookmarkData?.[0]?.documentId
-            const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId)
+            const { success, error } = await deleteEntry("api/metajob-backend/bookmarks", bookmarkDocId, language)
 
             if (error) {
                return toast.error(error?.message || "Something went wrong")
@@ -105,7 +114,7 @@ export default function ProfileSection({ data, block }: { data: ISingleResume; b
                data: bookmarkData,
                error,
                message
-            } = await createEntry("metajob-backend/bookmarks", {
+            } = await createEntry(`metajob-backend/bookmarks?locale=${language ?? "en"}`, {
                data: inputData
             })
 

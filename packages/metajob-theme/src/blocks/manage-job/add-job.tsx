@@ -23,6 +23,7 @@ import CIcon from "../../components/common/icon"
 
 type addListProps = {
    handleClose: () => void
+   language?: string
    userId?: number
    handleMute: () => void
    jobAttributes?: IJobAttribute
@@ -32,7 +33,7 @@ type addListProps = {
    }
 }
 
-const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount }: addListProps) => {
+const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount, language }: addListProps) => {
    const theme = useTheme()
    //  destructure job Attributes data
    const { companyData, categoryData, skillsData, jobTypesData, jobExperienceData, userPackage } = jobAttributes || {}
@@ -82,7 +83,8 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount }: ad
                fields: ["slug"],
                filters: {
                   slug: data.slug
-               }
+               },
+               locale: language ?? ["en"]
             },
             "no-store"
          )
@@ -126,7 +128,11 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount }: ad
             }
          }
          // *** create new list entry
-         const { data: newJob, error, message } = await createEntry("metajob-backend/jobs", createInput)
+         const {
+            data: newJob,
+            error,
+            message
+         } = await createEntry(`metajob-backend/jobs?locale=${language ?? "en"}`, createInput)
 
          if (error) {
             return toast.error(message || "Failed to create list")

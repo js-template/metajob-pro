@@ -520,6 +520,11 @@ export interface PluginMetajobBackendAppliedJob
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     apply_status: Schema.Attribute.Enumeration<
       ['Shortlisted', 'Selected', 'Pending', 'Rejected']
@@ -529,17 +534,63 @@ export interface PluginMetajobBackendAppliedJob
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     job: Schema.Attribute.Relation<'manyToMany', 'plugin::metajob-backend.job'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.applied-job'
-    > &
-      Schema.Attribute.Private;
+    >;
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface PluginMetajobBackendAuthSetting
+  extends Struct.SingleTypeSchema {
+  collectionName: 'auth_setting';
+  info: {
+    description: '';
+    displayName: 'Auth Setting';
+    pluralName: 'auth-settings';
+    singularName: 'auth-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::metajob-backend.auth-setting'
+    >;
+    login: Schema.Attribute.DynamicZone<['metajob-single-type.login-details']> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    register: Schema.Attribute.DynamicZone<
+      ['metajob-single-type.register-details']
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -558,16 +609,20 @@ export interface PluginMetajobBackendAvgSalary
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.avg-salary'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -589,6 +644,11 @@ export interface PluginMetajobBackendBookmark
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     company: Schema.Attribute.Relation<
       'oneToOne',
@@ -598,12 +658,11 @@ export interface PluginMetajobBackendBookmark
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     job: Schema.Attribute.Relation<'oneToOne', 'plugin::metajob-backend.job'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.bookmark'
-    > &
-      Schema.Attribute.Private;
+    >;
     note: Schema.Attribute.Text;
     owner: Schema.Attribute.Relation<
       'oneToOne',
@@ -675,6 +734,11 @@ export interface PluginMetajobBackendCompany
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     about: Schema.Attribute.RichText;
     avg_salary: Schema.Attribute.Relation<
@@ -693,12 +757,11 @@ export interface PluginMetajobBackendCompany
       'oneToOne',
       'plugin::metajob-backend.job-category'
     >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.company'
-    > &
-      Schema.Attribute.Private;
+    >;
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     owner: Schema.Attribute.Relation<
@@ -734,6 +797,11 @@ export interface PluginMetajobBackendCompanySetting
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
       ['metajob-single-type.company-details']
@@ -741,12 +809,11 @@ export interface PluginMetajobBackendCompanySetting
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.company-setting'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -767,16 +834,20 @@ export interface PluginMetajobBackendCompanySize
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.company-size'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -834,16 +905,20 @@ export interface PluginMetajobBackendExperienceLevel
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.experience-level'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1083,20 +1158,16 @@ export interface PluginMetajobBackendMembership
   options: {
     draftAndPublish: true;
   };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.membership'
-    >;
+    > &
+      Schema.Attribute.Private;
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -1176,11 +1247,6 @@ export interface PluginMetajobBackendPackage
   options: {
     draftAndPublish: true;
   };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
   attributes: {
     ads_boost_limit: Schema.Attribute.Integer &
       Schema.Attribute.Required &
@@ -1195,11 +1261,12 @@ export interface PluginMetajobBackendPackage
     description: Schema.Attribute.Text;
     feature: Schema.Attribute.Component<'metajob-config.meta-data', true>;
     frequency: Schema.Attribute.Enumeration<['Monthly', 'Yearly', 'One Time']>;
-    locale: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.package'
-    >;
+    > &
+      Schema.Attribute.Private;
     price: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
@@ -1220,6 +1287,11 @@ export interface PluginMetajobBackendResume
   };
   options: {
     draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
   };
   attributes: {
     about: Schema.Attribute.RichText;
@@ -1316,12 +1388,11 @@ export interface PluginMetajobBackendResume
         'Zulu',
       ]
     >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.resume'
-    > &
-      Schema.Attribute.Private;
+    >;
     name: Schema.Attribute.String;
     portfolio: Schema.Attribute.Component<'metajob-block.portfolio', true>;
     publishedAt: Schema.Attribute.DateTime;
@@ -1359,6 +1430,11 @@ export interface PluginMetajobBackendResumeSetting
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
       ['metajob-single-type.resume-details']
@@ -1366,12 +1442,11 @@ export interface PluginMetajobBackendResumeSetting
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.resume-setting'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1392,16 +1467,20 @@ export interface PluginMetajobBackendRevenue
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.revenue'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1423,16 +1502,20 @@ export interface PluginMetajobBackendSalaryType
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.salary-type'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1453,16 +1536,20 @@ export interface PluginMetajobBackendSkill extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.skill'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1484,18 +1571,22 @@ export interface PluginMetajobBackendTestimonial
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     avatar: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     designation: Schema.Attribute.String;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.testimonial'
-    > &
-      Schema.Attribute.Private;
+    >;
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     review: Schema.Attribute.Text;
@@ -2499,6 +2590,7 @@ declare module '@strapi/strapi' {
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::metajob-backend.applied-job': PluginMetajobBackendAppliedJob;
+      'plugin::metajob-backend.auth-setting': PluginMetajobBackendAuthSetting;
       'plugin::metajob-backend.avg-salary': PluginMetajobBackendAvgSalary;
       'plugin::metajob-backend.bookmark': PluginMetajobBackendBookmark;
       'plugin::metajob-backend.chat': PluginMetajobBackendChat;

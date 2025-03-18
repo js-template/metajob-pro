@@ -50,3 +50,11 @@ export type ButtonItemProps = {
    icon: string
    disabled: boolean
 }
+
+export type IListLocalesData = {
+   id: number
+   documentId: string
+   name: string
+   code: string | null
+   isDefault: boolean
+}

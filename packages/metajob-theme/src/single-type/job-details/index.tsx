@@ -28,7 +28,8 @@ export const JobDetails = async ({ data, block, language }: Props) => {
             documentId: {
                $eq: company?.documentId
             }
-         }
+         },
+         locale: language ?? ["en"]
       },
       "no-store"
    )

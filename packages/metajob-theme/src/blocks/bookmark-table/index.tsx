@@ -53,7 +53,6 @@ export const BookmarkTable = ({ block, language }: Props) => {
    const [bookmarkData, setBookmarkData] = useState<IBookmarkItem[]>([])
    const [isLoading, setIsLoading] = useState(false)
    const [isMute, setIsMute] = useState(false)
-
    //  fetch bookmark from db
    useEffect(() => {
       const getBookmarkData = async () => {
@@ -283,6 +282,7 @@ export const BookmarkTable = ({ block, language }: Props) => {
                   data={bookmarkData}
                   direction={direction as "ltr" | "rtl"}
                   handleMute={handleMute}
+                  language={language}
                />
             )}
 

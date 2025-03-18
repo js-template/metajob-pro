@@ -5,7 +5,7 @@ import { useState } from "react"
 import CIcon from "../../components/common/icon"
 import { useTheme as modeUseTheme } from "next-themes"
 import { getLanguageValue } from "../../utils"
-import { IPublicHeaderBlock } from "./types"
+import { IListLocalesData, IPublicHeaderBlock } from "./types"
 import NavItems from "./nav-items"
 
 type MobileNavProps = {
@@ -15,9 +15,18 @@ type MobileNavProps = {
    changeLang: (lang: string) => void
    changeDirection: (dir: "rtl" | "ltr") => void
    lang?: string
+   listLocalesData: IListLocalesData[]
 }
 
-const MobileNav = ({ open, setOpen, changeLang, changeDirection, lang, headerData }: MobileNavProps) => {
+const MobileNav = ({
+   open,
+   setOpen,
+   changeLang,
+   changeDirection,
+   lang,
+   headerData,
+   listLocalesData
+}: MobileNavProps) => {
    const { theme: mode, setTheme } = modeUseTheme()
    const toggleTheme = () => {
       setTheme(mode === "dark" ? "light" : "dark")
@@ -80,7 +89,7 @@ const MobileNav = ({ open, setOpen, changeLang, changeDirection, lang, headerDat
                               fontSize: "1.25rem"
                            }}
                         />
-                        {getLanguageValue(lang as any) || "English"}
+                        {getLanguageValue(lang as any, listLocalesData) || "English"}
                         <CIcon
                            icon='ri:arrow-down-s-line'
                            sx={{
