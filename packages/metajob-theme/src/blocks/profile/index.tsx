@@ -26,7 +26,7 @@ export const MyProfile = async ({ block, language }: Props) => {
                  }
               },
               fields: ["id", "first_name", "last_name", "email", "phone"],
-              locale: language ?? ["en"]
+              locale: language ?? "en"
            },
            "no-store"
         )

@@ -84,7 +84,7 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount, lang
                filters: {
                   slug: data.slug
                },
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )

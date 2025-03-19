@@ -32,7 +32,7 @@ export default async function DynamicPages({ params }: Props) {
    // ?? Fetch the permalink structure from Strapi
    const { data: permalinkData } = await find("api/padma-backend/permalink", {
       populate: "*",
-      locale: language ?? ["en"]
+      locale: language ?? "en"
    })
 
    const singlePages = permalinkData?.data?.singlePage
@@ -53,7 +53,7 @@ export default async function DynamicPages({ params }: Props) {
       {
          populate: "*",
          // publicationState: "live",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -71,7 +71,7 @@ export default async function DynamicPages({ params }: Props) {
       },
       populate: "*",
       // populate: "deep",
-      locale: language ?? ["en"]
+      locale: language ?? "en"
    })
 
    if (pageDetailsError) {

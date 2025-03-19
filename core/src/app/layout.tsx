@@ -30,7 +30,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       "api/padma-backend/layout",
       {
          populate: "*",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

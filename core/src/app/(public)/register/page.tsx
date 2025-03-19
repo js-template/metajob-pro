@@ -15,7 +15,7 @@ const Register = async () => {
          populate: {
             register: { populate: "*" }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
          populate: {
             register: { populate: "*" }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

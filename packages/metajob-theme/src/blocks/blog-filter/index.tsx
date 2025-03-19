@@ -55,7 +55,7 @@ export const BlogFilter = ({ block, language }: Props) => {
                   page: page
                },
                publicationState: "live",
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )

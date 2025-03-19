@@ -19,7 +19,7 @@ const LoginPage = async ({ searchParams }: Props) => {
          populate: {
             login: { populate: "*" }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
          populate: {
             login: { populate: "*" }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

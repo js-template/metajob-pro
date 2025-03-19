@@ -33,7 +33,7 @@ export const PublicHeader = async ({ block, language }: Props) => {
                }
             }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -66,7 +66,7 @@ export const PublicHeader = async ({ block, language }: Props) => {
               },
               fields: ["id"],
               publicationState: "live",
-              locale: language ?? ["en"]
+              locale: language ?? "en"
            },
            "no-store"
         )

@@ -17,7 +17,7 @@ export default async function Home() {
                populate: "*"
             }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

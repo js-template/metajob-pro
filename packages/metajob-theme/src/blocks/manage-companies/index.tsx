@@ -14,7 +14,7 @@ export const ManageCompanies = async ({ block, language }: Props) => {
       "api/metajob-backend/job-categories",
       {
          fields: ["title"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -24,7 +24,7 @@ export const ManageCompanies = async ({ block, language }: Props) => {
       "api/metajob-backend/company-sizes",
       {
          fields: ["title"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -33,7 +33,7 @@ export const ManageCompanies = async ({ block, language }: Props) => {
       "api/metajob-backend/revenues",
       {
          fields: ["title"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -42,7 +42,7 @@ export const ManageCompanies = async ({ block, language }: Props) => {
       "api/metajob-backend/avg-salaries",
       {
          fields: ["title"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
