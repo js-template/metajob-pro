@@ -14,7 +14,7 @@ export const CompanyFilter = async ({ block, language }: Props) => {
       "api/metajob-backend/job-categories",
       {
          fields: ["title", "slug"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

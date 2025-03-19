@@ -99,7 +99,7 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
                      ]
                   })
                },
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )

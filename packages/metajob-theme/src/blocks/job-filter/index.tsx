@@ -14,7 +14,7 @@ export const JobFilter = async ({ block, language }: Props) => {
       "api/metajob-backend/job-categories",
       {
          fields: ["title", "slug"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -24,7 +24,7 @@ export const JobFilter = async ({ block, language }: Props) => {
       "api/metajob-backend/job-types",
       {
          fields: ["title", "value"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -34,7 +34,7 @@ export const JobFilter = async ({ block, language }: Props) => {
       "api/metajob-backend/experience-levels",
       {
          fields: ["title", "value"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

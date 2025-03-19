@@ -139,7 +139,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                   page: page
                },
                publicationState: "live",
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )

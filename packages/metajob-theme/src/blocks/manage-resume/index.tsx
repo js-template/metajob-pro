@@ -14,7 +14,7 @@ export const ManageResume = async ({ block, language }: Props) => {
       "api/metajob-backend/job-categories",
       {
          fields: ["title"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -23,7 +23,7 @@ export const ManageResume = async ({ block, language }: Props) => {
       "api/metajob-backend/experience-levels",
       {
          fields: ["title"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -32,7 +32,7 @@ export const ManageResume = async ({ block, language }: Props) => {
       "api/metajob-backend/avg-salaries",
       {
          fields: ["title"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -41,7 +41,7 @@ export const ManageResume = async ({ block, language }: Props) => {
       "api/metajob-backend/salary-types",
       {
          fields: ["title"],
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

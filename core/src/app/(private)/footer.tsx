@@ -11,7 +11,7 @@ export default async function PrivateLayoutFooter() {
       "api/padma-backend/private-layout",
       {
          populate: "*",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

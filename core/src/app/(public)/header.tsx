@@ -13,7 +13,7 @@ export default async function PublicLayoutHeader() {
          populate: {
             header: { populate: "*" }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

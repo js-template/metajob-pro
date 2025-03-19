@@ -42,7 +42,7 @@ export const ManagePackage = ({ block, language }: Props) => {
             {
                populate: "*",
                publicationState: "live",
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )
@@ -76,7 +76,7 @@ export const ManagePackage = ({ block, language }: Props) => {
                   }
                },
                publicationState: "live",
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )

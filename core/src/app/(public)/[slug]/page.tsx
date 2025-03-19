@@ -29,7 +29,7 @@ export default async function DynamicPages({
                populate: "*"
             }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -121,7 +121,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
                populate: "*"
             }
          }
-         //locale: language ?? ["en"]
+         //locale: language ?? "en"
       },
       "no-store"
    )

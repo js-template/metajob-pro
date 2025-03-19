@@ -28,7 +28,7 @@ export const JobCard = async ({ block, language }: Props) => {
                fields: ["title"]
             }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

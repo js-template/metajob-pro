@@ -146,7 +146,7 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                   "user",
                   "user.avatar"
                ],
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )
