@@ -54,7 +54,7 @@ export default async function DashboardPage({
                populate: "*"
             }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

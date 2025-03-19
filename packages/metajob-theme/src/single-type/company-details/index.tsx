@@ -42,7 +42,7 @@ export const CompanyDetails = async ({ data, block, language }: Props) => {
             page: 1
          },
          publicationState: "live",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

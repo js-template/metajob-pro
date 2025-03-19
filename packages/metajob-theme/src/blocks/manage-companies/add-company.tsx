@@ -83,7 +83,7 @@ const AddCompany = ({ handleClose, userId, handleMute, companyAttributes, langua
                filters: {
                   slug: data.slug
                },
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )

@@ -12,7 +12,7 @@ export default async function PublicLayoutFooter() {
          populate: {
             footer: { populate: "*" }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

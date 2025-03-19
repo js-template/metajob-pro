@@ -61,7 +61,7 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
                   page: page
                },
                publicationState: "live",
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )

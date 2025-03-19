@@ -41,7 +41,7 @@ export const ResumeDetails = async ({ data, block, language }: Props) => {
             }
          },
          publicationState: "live",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

@@ -119,9 +119,17 @@ export const JobItem = ({ data, button_label }: Props) => {
                <Typography
                   fontSize={18}
                   fontWeight={400}
-                  color={theme.palette.text.primary}
                   textAlign={"center"}
-                  pb={1}>
+                  sx={{
+                     mb: 1,
+                     color: theme.palette.text.primary,
+                     // line clamp 1
+                     display: "-webkit-box",
+                     WebkitBoxOrient: "vertical",
+                     overflow: "hidden",
+                     textOverflow: "ellipsis",
+                     WebkitLineClamp: 1
+                  }}>
                   {title}
                </Typography>
             )}

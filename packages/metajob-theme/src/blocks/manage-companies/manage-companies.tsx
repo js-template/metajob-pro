@@ -88,7 +88,7 @@ const ManageCompaniesClient = ({ block, companyAttributes, language }: Props) =>
                      ]
                   })
                },
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )

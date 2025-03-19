@@ -16,7 +16,7 @@ export const JobBanner = async ({ block, language }: Props) => {
       {
          fields: ["title"],
          publicationState: "live",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

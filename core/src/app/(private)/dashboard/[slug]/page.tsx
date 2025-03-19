@@ -29,8 +29,7 @@ export default async function DynamicPages({
             blocks: {
                populate: "*"
             }
-         },
-         locale: language ?? ["en"]
+         }
       },
       "no-store"
    )

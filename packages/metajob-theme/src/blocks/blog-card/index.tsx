@@ -25,7 +25,7 @@ export const BlogCard = async ({ block, data, language }: Props) => {
             pageSize: 4,
             page: 1
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
