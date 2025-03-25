@@ -41,7 +41,7 @@ export const BlogFilter = ({ block, language }: Props) => {
    })
    const [page, setPage] = useState<number>(1)
    const [recentBlogs, setRecentBlogs] = useState<ISinglePost[]>([])
-   const [isLoading, setIsLoading] = useState(false)
+   const [isLoading, setIsLoading] = useState(true)
    const [totalPage, setTotalPage] = useState(0)
    const [blogsError, setBlogsError] = useState(null)
 
