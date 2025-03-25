@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_metajob_block_public_packages",
+  "info": {
+    "displayName": "Public Package",
+    "icon": "arrowRight",
+    "description": "Public package block"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}
