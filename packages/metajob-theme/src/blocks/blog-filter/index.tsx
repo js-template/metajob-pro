@@ -5,11 +5,15 @@ import {
    Box,
    Button,
    Container,
+   FormControl,
    Grid,
    Icon,
+   MenuItem,
    Pagination,
    PaginationItem,
+   Select,
    Stack,
+   TextField,
    Typography,
    useTheme as muiTheme
 } from "@mui/material"
@@ -28,9 +32,13 @@ export const BlogFilter = ({ block, language }: Props) => {
    const theme = muiTheme()
 
    // destructure the block
-   const { title, description, empty, style } = block || {}
+   const { title, description, search_placeholder, empty, style } = block || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
 
+   const [searchOptions, setSearchOptions] = useState({
+      searchText: "",
+      category: ""
+   })
    const [page, setPage] = useState<number>(1)
    const [recentBlogs, setRecentBlogs] = useState<ISinglePost[]>([])
    const [isLoading, setIsLoading] = useState(false)
@@ -39,49 +47,86 @@ export const BlogFilter = ({ block, language }: Props) => {
 
    //  fetch blogs from db
    useEffect(() => {
-      const getBlogsData = async () => {
-         setIsLoading(true)
-         const { data: blogsDataAll, error: blogsDataError } = await find(
-            "api/padma-backend/posts",
-            {
-               populate: {
-                  featuredImage: {
-                     fields: ["url"]
-                  }
+      const delaySearch = setTimeout(() => {
+         const getBlogsData = async () => {
+            setIsLoading(true)
+            const { data: blogsDataAll, error: blogsDataError } = await find(
+               "api/padma-backend/posts",
+               {
+                  filters: {
+                     title: {
+                        $containsi: searchOptions.searchText || undefined
+                     }
+                  },
+                  populate: {
+                     featuredImage: {
+                        fields: ["url"]
+                     }
+                  },
+                  sort: ["createdAt:desc"], // sorting to the most recent data
+                  pagination: {
+                     pageSize: 12,
+                     page: page
+                  },
+                  publicationState: "live",
+                  locale: language ?? "en"
                },
-               sort: ["createdAt:desc"], //sorting to the most recent data
-               pagination: {
-                  pageSize: 12,
-                  page: page
-               },
-               publicationState: "live",
-               locale: language ?? "en"
-            },
-            "no-store"
-         )
-         if (!blogsDataError) {
-            setBlogsError(null)
-            setRecentBlogs(blogsDataAll?.data)
-            setTotalPage(blogsDataAll?.meta?.pagination?.pageCount || 0)
-            setIsLoading(false)
-         } else {
-            setBlogsError(blogsDataError)
-            setRecentBlogs([])
+               "no-store"
+            )
+            if (!blogsDataError) {
+               setBlogsError(null)
+               setRecentBlogs(blogsDataAll?.data)
+               setTotalPage(blogsDataAll?.meta?.pagination?.pageCount || 0)
+            } else {
+               setBlogsError(blogsDataError)
+               setRecentBlogs([])
+            }
             setIsLoading(false)
          }
-      }
-
-      getBlogsData()
-
+         getBlogsData()
+      }, 500) // Delay execution by 500ms
+      return () => clearTimeout(delaySearch) // Clear timeout on new input
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [page])
+   }, [page, searchOptions])
 
    return (
-      <Stack bgcolor={backgroundColor ? backgroundColor : theme.palette.background.paper}>
+      <Stack bgcolor={backgroundColor ? backgroundColor : theme.palette.background.paper} sx={{ minHeight: "100vh" }}>
          <Container maxWidth='lg'>
             <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+               {/* search  */}
+               {search_placeholder && (
+                  <Box
+                     sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: { xs: "center", md: "flex-end" },
+                        alignItems: "center"
+                     }}>
+                     <TextField
+                        sx={{
+                           maxWidth: 300,
+                           "& .MuiInputBase-root": {
+                              border: "none",
+                              py: "3px",
+                              backgroundColor: (theme) => theme.palette.background.default
+                           }
+                        }}
+                        placeholder={search_placeholder}
+                        fullWidth
+                        size='small'
+                        value={searchOptions.searchText}
+                        onChange={(e) =>
+                           setSearchOptions({
+                              ...searchOptions,
+                              searchText: e.target.value
+                           })
+                        }
+                     />
+                  </Box>
+               )}
+
                {/* posts section  */}
-               {recentBlogs?.length > 0 && (
+               {!isLoading && recentBlogs?.length > 0 && (
                   <Grid container spacing={2}>
                      {_.map(recentBlogs, (item) => (
                         <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
@@ -103,7 +148,7 @@ export const BlogFilter = ({ block, language }: Props) => {
                )}
                <Grid container justifyContent={"center"} spacing={2}>
                   {/* empty data */}
-                  {recentBlogs?.length == 0 && (
+                  {!isLoading && recentBlogs?.length == 0 && (
                      <Stack
                         sx={{
                            display: "flex",
