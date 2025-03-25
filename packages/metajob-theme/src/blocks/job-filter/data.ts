@@ -13,3 +13,10 @@ export const data = {
       button_placeholder: null
    }
 }
+
+export const SortData = [
+   { title: "A - Z", value: "title-asc" },
+   { title: "Z - A", value: "title-desc" },
+   { title: "$ ↑", value: "price-asc" },
+   { title: "$ ↓", value: "price-desc" }
+]
