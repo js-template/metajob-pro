@@ -18,6 +18,9 @@
     "description": {
       "type": "text"
     },
+    "search_placeholder": {
+      "type": "string"
+    },
     "card_button": {
       "type": "string"
     },
