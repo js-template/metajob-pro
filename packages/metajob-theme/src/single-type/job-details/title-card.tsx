@@ -47,7 +47,13 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
       setShareModalOpen(false)
    }
 
-   const handleApplyJobModalOpen = () => setApplyJobModalOpen(true)
+   const handleApplyJobModalOpen = () => {
+      if (!session) {
+         handleApplyJobModalClose()
+         return toast.error("Please login to apply for this job")
+      }
+      setApplyJobModalOpen(true)
+   }
    const handleApplyJobModalClose = () => {
       setApplyJobModalOpen(false)
    }
@@ -423,6 +429,7 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                      gap: 5,
                      justifyContent: "space-between"
                   }}>
+                  {/* bookmark button  */}
                   {bookmarkLoading ? (
                      <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
                         <IconButton color='primary'>
@@ -462,17 +469,22 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                         )}
                      </Stack>
                   )}
-                  <Stack display={"flex"} alignItems={"flex-end"} gap={1}>
+                  {/* apply button  */}
+                  <Stack display={"flex"} alignItems={"flex-end"}>
                      {isApplied ? (
                         <Button
                            disabled
-                           size='small'
                            sx={{
-                              py: 1,
                               width: {
-                                 sm: 150,
-                                 xs: "100%"
-                              }
+                                 xs: "100%",
+                                 sm: 150
+                              },
+                              // line clamp 1
+                              display: "-webkit-box",
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              WebkitLineClamp: 1
                            }}
                            variant='contained'
                            color='primary'>
@@ -483,13 +495,18 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                            onClick={handleApplyJobModalOpen}
                            loading={applyLoading}
                            // loadingPosition='start'
-                           size='small'
                            sx={{
-                              py: 1,
                               width: {
-                                 sm: 150,
-                                 xs: "100%"
-                              }
+                                 // sm: "100%",
+                                 xs: "100%",
+                                 sm: 150
+                              },
+                              // line clamp 1
+                              display: "-webkit-box",
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              WebkitLineClamp: 1
                            }}
                            variant='contained'
                            color='primary'>
