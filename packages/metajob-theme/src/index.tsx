@@ -40,6 +40,8 @@ import { JobFilter } from "./blocks/job-filter"
 import { CompanyFilter } from "./blocks/company-filter"
 import { CandidateFilter } from "./blocks/candidate-filter"
 import { BlogFilter } from "./blocks/blog-filter"
+import { PublicPackage } from "./blocks/public-package"
+
 // single-type import
 import { JobDetails } from "./single-type/job-details"
 import { CompanyDetails } from "./single-type/company-details"
@@ -113,6 +115,7 @@ export const getPublicComponents = {
    "metajob-block.company-filter": { component: CompanyFilter },
    "metajob-block.candidate-filter": { component: CandidateFilter },
    "block.blog-filter": { component: BlogFilter },
+   "metajob-block.public-package": { component: PublicPackage },
 
    // single-type mapping
    "metajob-single-type.job-details": { component: JobDetails },
