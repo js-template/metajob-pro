@@ -21,9 +21,43 @@ export const JobBanner = async ({ block, language }: Props) => {
       "no-store"
    )
 
+   const { data: jobData } = await find(
+      "api/metajob-backend/jobs",
+      {
+         fields: ["title"],
+         publicationState: "live",
+         count: true,
+         locale: language ?? "en"
+      },
+      "no-store"
+   )
+
+   const { data: companyData } = await find(
+      "api/metajob-backend/companies",
+      {
+         fields: ["name"],
+         publicationState: "live",
+         locale: language ?? "en"
+      },
+      "no-store"
+   )
+   const { data: resumesData } = await find(
+      "api/metajob-backend/resumes",
+      {
+         fields: ["name"],
+         publicationState: "live",
+         locale: language ?? "en"
+      },
+      "no-store"
+   )
+   const countData = {
+      job: jobData?.meta?.pagination?.total ?? 0,
+      company: companyData?.meta?.pagination?.total ?? 0,
+      resume: resumesData?.meta?.pagination?.total ?? 0
+   }
    return (
       <Suspense fallback={<JobBannerLoader />}>
-         <JobBannerClient block={block} categoryData={categoryData?.data} language={language} />
+         <JobBannerClient block={block} categoryData={categoryData?.data} language={language} countData={countData} />
       </Suspense>
    )
 }

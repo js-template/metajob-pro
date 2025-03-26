@@ -12,6 +12,10 @@ export type IBannerBlock = {
       category_placeholder: string
       button_placeholder: string
    }
+   job_count_placeholder?: string
+   company_count_placeholder?: string
+   resume_count_placeholder?: string
+   show_count: boolean
    image?: {
       url: string
    }
@@ -21,11 +25,8 @@ export type ICategory = {
    title: string
 }
 
-type UserRole = {
-   id: number
-   name: string
-   description: string
-   type: string
-   createdAt: Date
-   updatedAt: Date
+export type ICountData = {
+   job: number
+   company: number
+   resume: number
 }

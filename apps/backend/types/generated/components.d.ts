@@ -694,9 +694,15 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    company_count_placeholder: Schema.Attribute.String;
     content: Schema.Attribute.Component<'config.section-title', false>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    job_count_placeholder: Schema.Attribute.String;
+    resume_count_placeholder: Schema.Attribute.String;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    show_count: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }

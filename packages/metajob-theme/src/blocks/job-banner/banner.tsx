@@ -2,6 +2,7 @@
 import React, { useState } from "react"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
+import _ from "lodash"
 import {
    Box,
    Button,
@@ -17,15 +18,24 @@ import {
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
-import { IBannerBlock, ICategory } from "./types"
+import { IBannerBlock, ICategory, ICountData } from "./types"
 
 type Props = {
    block: IBannerBlock
    language?: string
    categoryData?: ICategory[]
+   countData?: ICountData
 }
-export const JobBannerClient = ({ block, categoryData }: Props) => {
-   const { content, search, image } = block || {}
+export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
+   const {
+      content,
+      search,
+      image,
+      job_count_placeholder,
+      company_count_placeholder,
+      resume_count_placeholder,
+      show_count
+   } = block || {}
    const { title, sub_title } = content || {}
    const { search_placeholder, location_placeholder, category_placeholder, button_placeholder } = search || {}
    const bannerBackground = image?.url || ""
@@ -219,30 +229,30 @@ export const JobBannerClient = ({ block, categoryData }: Props) => {
                      </Button>
                   </Stack>
                </Card>
-               {/* <Stack
-                  sx={{
-                     display: "grid",
-                     gridTemplateColumns: {
-                        lg: "repeat(3, 1fr)",
-                        xs: "1fr"
-                     },
-                     gap: 5
-                  }}>
-                  {_.map([1, 2, 3], (item, index) => (
+               {/* count  */}
+               {show_count && (
+                  <Stack
+                     sx={{
+                        display: "grid",
+                        gridTemplateColumns: {
+                           lg: "repeat(3, 1fr)",
+                           xs: "1fr"
+                        },
+                        gap: 5
+                     }}>
                      <Card
-                        key={index}
                         sx={{
                            borderRadius: "8px",
                            p: 5,
                            bgcolor: (theme) => hexToRGBA(theme.palette.background.default, 0.9)
                         }}>
                         <Stack alignItems={"center"} gap={2}>
-                           <Icon
+                           <CIcon
                               sx={{
                                  fontSize: "3rem",
                                  color: (theme) => theme.palette.primary.main
                               }}
-                              className={item?.icon}
+                              icon={"mdi:nfc-search-variant"}
                            />
                            <Stack spacing={1}>
                               <Typography
@@ -250,20 +260,86 @@ export const JobBannerClient = ({ block, categoryData }: Props) => {
                                  fontSize={32}
                                  fontWeight={700}
                                  color={(theme) => theme.palette.text.primary}>
-                                 {"100"} +
+                                 {countData?.job}+
                               </Typography>
                               <Typography
                                  variant={"h4"}
                                  fontSize={16}
                                  fontWeight={500}
                                  color={(theme) => theme.palette.text.disabled}>
-                                 {"Total Jobs"}
+                                 {job_count_placeholder || "Job Available"}
                               </Typography>
                            </Stack>
                         </Stack>
                      </Card>
-                  ))}
-               </Stack> */}
+                     <Card
+                        sx={{
+                           borderRadius: "8px",
+                           p: 5,
+                           bgcolor: (theme) => hexToRGBA(theme.palette.background.default, 0.9)
+                        }}>
+                        <Stack alignItems={"center"} gap={2}>
+                           <CIcon
+                              sx={{
+                                 fontSize: "3rem",
+                                 color: (theme) => theme.palette.primary.main
+                              }}
+                              icon={"heroicons:building-office-2"}
+                           />
+
+                           <Stack spacing={1}>
+                              <Typography
+                                 variant={"h1"}
+                                 fontSize={32}
+                                 fontWeight={700}
+                                 color={(theme) => theme.palette.text.primary}>
+                                 {countData?.company}+
+                              </Typography>
+                              <Typography
+                                 variant={"h4"}
+                                 fontSize={16}
+                                 fontWeight={500}
+                                 color={(theme) => theme.palette.text.disabled}>
+                                 {company_count_placeholder || "Company"}
+                              </Typography>
+                           </Stack>
+                        </Stack>
+                     </Card>
+                     <Card
+                        sx={{
+                           borderRadius: "8px",
+                           p: 5,
+                           bgcolor: (theme) => hexToRGBA(theme.palette.background.default, 0.9)
+                        }}>
+                        <Stack alignItems={"center"} gap={2}>
+                           <CIcon
+                              sx={{
+                                 fontSize: "3rem",
+                                 color: (theme) => theme.palette.primary.main
+                              }}
+                              icon={"icomoon-free:user-tie"}
+                           />
+
+                           <Stack spacing={1}>
+                              <Typography
+                                 variant={"h1"}
+                                 fontSize={32}
+                                 fontWeight={700}
+                                 color={(theme) => theme.palette.text.primary}>
+                                 {countData?.resume}+
+                              </Typography>
+                              <Typography
+                                 variant={"h4"}
+                                 fontSize={16}
+                                 fontWeight={500}
+                                 color={(theme) => theme.palette.text.disabled}>
+                                 {resume_count_placeholder || "Available Employee"}
+                              </Typography>
+                           </Stack>
+                        </Stack>
+                     </Card>
+                  </Stack>
+               )}
             </Stack>
          </Container>
       </Box>

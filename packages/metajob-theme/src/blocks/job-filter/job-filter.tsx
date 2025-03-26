@@ -27,6 +27,9 @@ import ListCardLoader from "./loader"
 import { JobItem } from "../../components/cards/job-item"
 import { IJobFilterData, IJobType, ISingleCategory, ISingleJob } from "./types"
 import { find } from "../../lib/strapi"
+import CIcon from "../../components/common/icon"
+import { SortData } from "./data"
+import { getSortParam } from "./utils"
 
 type Props = {
    block: IJobFilterData
@@ -90,6 +93,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
       })
    }
 
+   const sortParam = getSortParam(searchOptions?.sort)
    //  fetch jobs from db
    useEffect(() => {
       const getJobsData = async () => {
@@ -97,7 +101,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
          const { data: jobsDataAll, error: jobDataError } = await find(
             "api/metajob-backend/jobs",
             {
-               // sort: sortParam ? [sortParam] : [],
+               sort: sortParam ? [sortParam] : [],
                filters: {
                   title: {
                      $containsi: searchOptions.searchText || undefined
@@ -416,8 +420,9 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                   <Stack spacing={2}>
                      <Card
                         sx={{
+                           p: 1,
                            borderRadius: 2,
-                           p: 1
+                           boxShadow: 0
                         }}>
                         <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
                            {isLoading ? (
@@ -445,7 +450,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                               </Typography>
                            )}
 
-                           {/* {sort_placeholder && (
+                           {sort_placeholder && (
                               <FormControl>
                                  <Select
                                     displayEmpty
@@ -472,18 +477,21 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                     onChange={(e) => {
                                        setSearchOptions({
                                           ...searchOptions,
-                                          sort: e.target.value
+                                          sort: e?.target?.value
                                        })
                                     }}>
                                     <MenuItem value=''>{sort_placeholder}</MenuItem>
-                                    {_.map(sort_placeholder, (item) => (
-                                       <MenuItem key={item} value={item} sx={{ textTransform: "capitalize" }}>
-                                          {item}
+                                    {_.map(SortData, (item, index) => (
+                                       <MenuItem
+                                          key={index}
+                                          value={item?.value}
+                                          sx={{ textTransform: "capitalize", fontSize: "16px", display: "flex" }}>
+                                          {item?.title}
                                        </MenuItem>
                                     ))}
                                  </Select>
                               </FormControl>
-                           )} */}
+                           )}
                         </Stack>
                      </Card>
                      {jobsError && !isLoading && (
