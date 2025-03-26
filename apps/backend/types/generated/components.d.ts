@@ -867,6 +867,21 @@ export interface MetajobBlockPricing extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockPublicPackage extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_public_packages';
+  info: {
+    description: 'Public package block';
+    displayName: 'Public Package';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobConfigMessage extends Struct.ComponentSchema {
   collectionName: 'components_metajob_config_messages';
   info: {
@@ -1448,6 +1463,7 @@ declare module '@strapi/strapi' {
       'metajob-block.page-header': MetajobBlockPageHeader;
       'metajob-block.portfolio': MetajobBlockPortfolio;
       'metajob-block.pricing': MetajobBlockPricing;
+      'metajob-block.public-package': MetajobBlockPublicPackage;
       'metajob-config.message': MetajobConfigMessage;
       'metajob-config.meta-data': MetajobConfigMetaData;
       'metajob-config.relations': MetajobConfigRelations;
