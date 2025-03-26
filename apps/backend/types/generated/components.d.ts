@@ -642,6 +642,22 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockCategoryFilter extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_category_filters';
+  info: {
+    displayName: 'Category Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    card_button: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    search_placeholder: Schema.Attribute.String;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_company_filters';
   info: {
@@ -1450,6 +1466,7 @@ declare module '@strapi/strapi' {
       'metajob-block.applied-jobs': MetajobBlockAppliedJobs;
       'metajob-block.bookmark': MetajobBlockBookmark;
       'metajob-block.candidate-filter': MetajobBlockCandidateFilter;
+      'metajob-block.category-filter': MetajobBlockCategoryFilter;
       'metajob-block.company-filter': MetajobBlockCompanyFilter;
       'metajob-block.contact': MetajobBlockContact;
       'metajob-block.experience': MetajobBlockExperience;
