@@ -650,11 +650,10 @@ export interface MetajobBlockCategoryFilter extends Struct.ComponentSchema {
   };
   attributes: {
     card_button: Schema.Attribute.String;
-    description: Schema.Attribute.Text;
+    content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     search_placeholder: Schema.Attribute.String;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
   };
 }
 

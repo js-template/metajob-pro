@@ -9,11 +9,10 @@
   "uid": "metajob-block.category-filter",
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
+    "content": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.section-title"
     },
     "search_placeholder": {
       "type": "string"
