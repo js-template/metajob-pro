@@ -64,7 +64,7 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
                      <Button
                         // @ts-ignore
                         component={NextLink}
-                        href={link || "/all-category"}
+                        href={link || "/all-categories"}
                         sx={{
                            bgcolor: "secondary.dark",
                            color: "white",
