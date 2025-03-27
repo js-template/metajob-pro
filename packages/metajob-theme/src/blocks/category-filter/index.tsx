@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 import { Container, Grid, Icon, Pagination, PaginationItem, Stack, Typography, useTheme } from "@mui/material"
-import Item from "./item"
+import { CardItemWithVariation } from "./item"
 import ItemLoader from "./loader"
 import { ICategoryFilterBlock, ISingleCategory } from "./types"
 import { find } from "../../lib/strapi"
@@ -16,7 +16,8 @@ type Props = {
 export const CategoryFilter = ({ block, language }: Props) => {
    const theme = useTheme()
    // destructure the block
-   const { title, description, search_placeholder, card_button, empty, style } = block || {}
+   const { content, card_button, empty, style } = block || {}
+   const { title, sub_title, variation } = content || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
 
    const [page, setPage] = useState<number>(1)
@@ -70,7 +71,7 @@ export const CategoryFilter = ({ block, language }: Props) => {
          <Container maxWidth='lg'>
             <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* header  */}
-               {(title || description) && (
+               {(title || sub_title) && (
                   <Stack spacing={1} direction={"column"}>
                      {title && (
                         <Typography
@@ -83,14 +84,14 @@ export const CategoryFilter = ({ block, language }: Props) => {
                            {title}
                         </Typography>
                      )}
-                     {description && (
+                     {sub_title && (
                         <Typography
                            sx={{
                               color: hexToRGBA(color ?? theme.palette.text.primary, 0.5),
                               fontSize: "16px",
                               textAlign: "center"
                            }}>
-                           {description}
+                           {sub_title}
                         </Typography>
                      )}
                   </Stack>
@@ -101,7 +102,7 @@ export const CategoryFilter = ({ block, language }: Props) => {
                      {categoryData?.map((item: any, index: number) => {
                         return (
                            <Grid item xs={mobile || 12} sm={tab || 4} md={desktop || 3} key={index}>
-                              <Item data={item} button_label={card_button} />
+                              <CardItemWithVariation data={item} button_label={card_button} variation={variation} />
                            </Grid>
                         )
                      })}

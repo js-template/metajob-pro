@@ -1,8 +1,11 @@
 export type ICategoryFilterBlock = {
    id: number
    __component: string
-   description?: string
-   title?: string
+   content?: {
+      title?: string
+      sub_title?: string
+      variation: string
+   }
    search_placeholder?: string
    card_button?: string
    style?: {
