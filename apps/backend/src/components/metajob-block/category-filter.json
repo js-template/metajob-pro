@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_metajob_block_category_filters",
+  "info": {
+    "displayName": "Category Filter",
+    "icon": "collapse"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "search_placeholder": {
+      "type": "string"
+    },
+    "card_button": {
+      "type": "string"
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
+    }
+  }
+}
