@@ -19,7 +19,7 @@ export const JobCategory = async ({ block, language }: Props) => {
                fields: ["url"]
             }
          },
-         fields: ["title"],
+         fields: ["title", "description"],
          publicationState: "live",
          locale: language ?? "en"
       },

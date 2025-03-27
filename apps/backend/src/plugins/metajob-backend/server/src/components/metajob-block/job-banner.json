@@ -19,6 +19,20 @@
       "repeatable": false,
       "component": "metajob-config.search-config"
     },
+    "job_count_placeholder": {
+      "type": "string"
+    },
+    "company_count_placeholder": {
+      "type": "string"
+    },
+    "resume_count_placeholder": {
+      "type": "string"
+    },
+    "show_count": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
     "image": {
       "type": "media",
       "multiple": false,

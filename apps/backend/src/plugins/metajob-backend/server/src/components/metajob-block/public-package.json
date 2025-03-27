@@ -1,27 +1,18 @@
 {
-  "collectionName": "components_block_blog_filters",
   "info": {
-    "displayName": "Blog Filter",
-    "icon": "collapse",
-    "description": ""
+    "displayName": "Public Package",
+    "icon": "arrowRight",
+    "description": "Public package block"
   },
-  "options": {},
-  "category": "block",
-  "modelName": "blog-filter",
-  "uid": "block.blog-filter",
-  "globalId": "ComponentsBlockBlogFilter",
+  "category": "metajob-block",
+  "modelName": "public-package",
+  "uid": "metajob-block.public-package",
   "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string"
     },
     "description": {
-      "type": "text"
-    },
-    "search_placeholder": {
-      "type": "string"
-    },
-    "card_button": {
       "type": "string"
     },
     "empty": {

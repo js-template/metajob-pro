@@ -223,16 +223,23 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                   alignItems: "center"
                }}
                spacing={2}>
-               {logo && <Image src={logo} alt={companyName || "company logo"} width={150} height={150} />}
+               {logo && (
+                  <Box component={NextLink} href={`/company/${slug}`}>
+                     <Image src={logo} alt={companyName || "company logo"} width={150} height={150} />
+                  </Box>
+               )}
                <Stack spacing={1}>
                   {companyName && (
                      <Typography
+                        component={NextLink}
+                        href={`/company/${slug}`}
                         variant={"h1"}
                         fontWeight={700}
                         fontSize={20}
                         textAlign={"center"}
                         sx={{
-                           color: (theme) => theme.palette.text.primary
+                           color: (theme) => theme.palette.text.primary,
+                           textDecoration: "none"
                         }}>
                         {companyName}
                      </Typography>
@@ -253,22 +260,30 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                <Stack spacing={1}>
                   {email && (
                      <Typography
+                        component={NextLink}
+                        target={"_blank"}
+                        href={`mailto:${email}`}
                         fontWeight={400}
                         fontSize={18}
                         textAlign={"center"}
                         sx={{
-                           color: (theme) => theme.palette.text.primary
+                           color: (theme) => theme.palette.text.primary,
+                           textDecoration: "none"
                         }}>
                         {email}
                      </Typography>
                   )}
                   {phone && (
                      <Typography
+                        component={NextLink}
+                        target={"_blank"}
+                        href={`tel:${phone}`}
                         textAlign={"center"}
                         fontWeight={400}
                         fontSize={18}
                         sx={{
-                           color: (theme) => theme.palette.text.primary
+                           color: (theme) => theme.palette.text.primary,
+                           textDecoration: "none"
                         }}>
                         {phone}
                      </Typography>

@@ -1,8 +1,8 @@
 {
-  "collectionName": "components_metajob_block_job_categories",
+  "collectionName": "components_metajob_block_category_filters",
   "info": {
-    "displayName": "Job Category",
-    "icon": "arrowRight"
+    "displayName": "Category Filter",
+    "icon": "collapse"
   },
   "options": {},
   "attributes": {
@@ -11,15 +11,11 @@
       "repeatable": false,
       "component": "config.section-title"
     },
-    "card_button": {
-      "type": "component",
-      "repeatable": false,
-      "component": "config.link"
+    "search_placeholder": {
+      "type": "string"
     },
-    "button": {
-      "type": "component",
-      "repeatable": false,
-      "component": "config.link"
+    "card_button": {
+      "type": "string"
     },
     "empty": {
       "type": "component",

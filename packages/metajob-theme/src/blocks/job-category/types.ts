@@ -18,7 +18,10 @@ export type ICategoryCardBlock = {
       label: string
       link: string
    }
-   // category: ICategories
+   card_button?: {
+      label: string
+      link: string
+   }
    content?: {
       sub_title: string
       title: string

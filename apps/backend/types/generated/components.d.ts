@@ -53,6 +53,7 @@ export interface BlockBlogFilter extends Struct.ComponentSchema {
     card_button: Schema.Attribute.String;
     description: Schema.Attribute.Text;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    search_placeholder: Schema.Attribute.String;
     style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
@@ -641,6 +642,21 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockCategoryFilter extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_category_filters';
+  info: {
+    displayName: 'Category Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    card_button: Schema.Attribute.String;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    search_placeholder: Schema.Attribute.String;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
 export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_company_filters';
   info: {
@@ -694,9 +710,15 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    company_count_placeholder: Schema.Attribute.String;
     content: Schema.Attribute.Component<'config.section-title', false>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    job_count_placeholder: Schema.Attribute.String;
+    resume_count_placeholder: Schema.Attribute.String;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    show_count: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
@@ -724,6 +746,7 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'config.link', false>;
+    card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
@@ -857,6 +880,21 @@ export interface MetajobBlockPricing extends Struct.ComponentSchema {
     description: Schema.Attribute.Text;
     price: Schema.Attribute.String;
     table: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobBlockPublicPackage extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_public_packages';
+  info: {
+    description: 'Public package block';
+    displayName: 'Public Package';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -1428,6 +1466,7 @@ declare module '@strapi/strapi' {
       'metajob-block.applied-jobs': MetajobBlockAppliedJobs;
       'metajob-block.bookmark': MetajobBlockBookmark;
       'metajob-block.candidate-filter': MetajobBlockCandidateFilter;
+      'metajob-block.category-filter': MetajobBlockCategoryFilter;
       'metajob-block.company-filter': MetajobBlockCompanyFilter;
       'metajob-block.contact': MetajobBlockContact;
       'metajob-block.experience': MetajobBlockExperience;
@@ -1442,6 +1481,7 @@ declare module '@strapi/strapi' {
       'metajob-block.page-header': MetajobBlockPageHeader;
       'metajob-block.portfolio': MetajobBlockPortfolio;
       'metajob-block.pricing': MetajobBlockPricing;
+      'metajob-block.public-package': MetajobBlockPublicPackage;
       'metajob-config.message': MetajobConfigMessage;
       'metajob-config.meta-data': MetajobConfigMetaData;
       'metajob-config.relations': MetajobConfigRelations;
