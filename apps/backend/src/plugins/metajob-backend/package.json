@@ -1,9 +1,13 @@
 {
   "name": "@jstemplate/metajob-backend",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Metajob Backend",
   "license": "EULA",
-  "keywords": [],
+  "keywords": [
+    "strapi",
+    "plugin",
+    "metajob"
+  ],
   "homepage": "https://github.com/js-template/metajob",
   "bugs": {
     "url": "https://github.com/js-template/metajob/issues/"

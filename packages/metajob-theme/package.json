@@ -1,9 +1,13 @@
 {
    "name": "@jstemplate/metajob-theme",
-   "version": "0.0.5",
+   "version": "0.0.6",
    "private": true,
    "main": "dist/index.js",
-   "keywords": [],
+   "keywords": [
+      "strapi",
+      "Frontend Theme",
+      "metajob"
+   ],
    "license": "EULA",
    "scripts": {
       "build": "tsc",
