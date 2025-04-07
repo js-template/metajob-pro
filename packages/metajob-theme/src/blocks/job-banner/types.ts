@@ -19,6 +19,12 @@ export type IBannerBlock = {
    image?: {
       url: string
    }
+   button?: {
+      label: string
+      link: string
+      target: string
+      disabled: boolean
+   }
    style?: {
       color?: any
       backgroundColor?: any

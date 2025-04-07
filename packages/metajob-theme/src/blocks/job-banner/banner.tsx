@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from "react"
+import NextLink from "next/link"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import _ from "lodash"
@@ -37,9 +38,11 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
       company_count_placeholder,
       resume_count_placeholder,
       show_count,
+      button,
       style
    } = block || {}
    const { backgroundColor, color } = style || {}
+   const { label, link, target, disabled } = button || {}
    const { title, sub_title } = content || {}
    const { search_placeholder, location_placeholder, category_placeholder, button_placeholder } = search || {}
    const bannerBackground = image?.url || ""
@@ -141,115 +144,138 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                   </Typography>
                </Stack>
                {/* search  */}
-               <Card
-                  sx={{
-                     bgcolor:
-                        mode === "light"
-                           ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.5)
-                           : (theme) => hexToRGBA(backgroundColor || theme.palette.background.default, 0.5)
-                  }}>
-                  <Stack
-                     direction={{
-                        sm: "row"
-                     }}
-                     gap={1}
-                     p={{
-                        xs: 2,
-                        sm: 0
-                     }}
+               {search && (
+                  <Card
                      sx={{
-                        borderRadius: "1rem",
-                        bgcolor: (theme) => theme.palette.background.paper,
-                        overflow: "hidden",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
+                        bgcolor:
+                           mode === "light"
+                              ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.5)
+                              : (theme) => hexToRGBA(backgroundColor || theme.palette.background.default, 0.5)
                      }}>
-                     <TextField
+                     <Stack
+                        direction={{
+                           sm: "row"
+                        }}
+                        gap={1}
+                        p={{
+                           xs: 2,
+                           sm: 0
+                        }}
                         sx={{
-                           "& .MuiOutlinedInput-root": {
-                              border: "none"
-                           }
-                        }}
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                        fullWidth
-                        placeholder={search_placeholder}
-                        InputProps={{
-                           startAdornment: (
-                              <Box sx={{ pr: 1 }} component={"span"}>
-                                 <CIcon icon='iconamoon:search-light' />
-                              </Box>
-                           )
-                        }}
-                     />
-                     <Divider orientation='vertical' flexItem />
-                     <Divider orientation='horizontal' flexItem />
-                     <TextField
-                        placeholder={location_placeholder}
-                        InputProps={{
-                           startAdornment: (
-                              <Box sx={{ pr: 1 }} component={"span"}>
-                                 <CIcon icon='ph:map-pin' />
-                              </Box>
-                           )
-                        }}
-                        value={searchLocation}
-                        onChange={(e) => setSearchLocation(e.target.value)}
-                        sx={{
-                           "& .MuiOutlinedInput-root": {
-                              border: "none"
-                           }
-                        }}
-                        fullWidth
-                     />
-                     <Divider orientation='vertical' flexItem />
-                     <Divider orientation='horizontal' flexItem />
-                     {/* category options  */}
-                     <FormControl fullWidth>
-                        <Select
+                           borderRadius: "1rem",
+                           bgcolor: (theme) => theme.palette.background.paper,
+                           overflow: "hidden",
+                           display: "flex",
+                           justifyContent: "center",
+                           alignItems: "center"
+                        }}>
+                        <TextField
                            sx={{
-                              "& .MuiSelect-select": {
-                                 "&.MuiSelect-standard": {
-                                    backgroundColor: (theme) => theme.palette.background.paper + " !important"
-                                 }
-                              },
-                              px: 2,
-                              textAlign: "left",
-                              color: "text.disabled",
-                              fontWeight: 400,
-                              fontSize: 16
+                              "& .MuiOutlinedInput-root": {
+                                 border: "none"
+                              }
                            }}
-                           variant='standard'
-                           disableUnderline
-                           value={searchCategory || "Select Category"}
-                           onChange={(e) => setSearchCategory(e.target.value)}>
-                           <MenuItem value={"Select Category"}>{category_placeholder || "Select Category"}</MenuItem>
-                           {categoryData &&
-                              categoryData?.length > 0 &&
-                              categoryData?.map((item: ICategory, index: number) => (
-                                 <MenuItem key={index} value={item?.title}>
-                                    {item?.title}
-                                 </MenuItem>
-                              ))}
-                        </Select>
-                     </FormControl>
+                           value={searchText}
+                           onChange={(e) => setSearchText(e.target.value)}
+                           fullWidth
+                           placeholder={search_placeholder}
+                           InputProps={{
+                              startAdornment: (
+                                 <Box sx={{ pr: 1 }} component={"span"}>
+                                    <CIcon icon='iconamoon:search-light' />
+                                 </Box>
+                              )
+                           }}
+                        />
+                        <Divider orientation='vertical' flexItem />
+                        <Divider orientation='horizontal' flexItem />
+                        <TextField
+                           placeholder={location_placeholder}
+                           InputProps={{
+                              startAdornment: (
+                                 <Box sx={{ pr: 1 }} component={"span"}>
+                                    <CIcon icon='ph:map-pin' />
+                                 </Box>
+                              )
+                           }}
+                           value={searchLocation}
+                           onChange={(e) => setSearchLocation(e.target.value)}
+                           sx={{
+                              "& .MuiOutlinedInput-root": {
+                                 border: "none"
+                              }
+                           }}
+                           fullWidth
+                        />
+                        <Divider orientation='vertical' flexItem />
+                        <Divider orientation='horizontal' flexItem />
+                        {/* category options  */}
+                        <FormControl fullWidth>
+                           <Select
+                              sx={{
+                                 "& .MuiSelect-select": {
+                                    "&.MuiSelect-standard": {
+                                       backgroundColor: (theme) => theme.palette.background.paper + " !important"
+                                    }
+                                 },
+                                 px: 2,
+                                 textAlign: "left",
+                                 color: "text.disabled",
+                                 fontWeight: 400,
+                                 fontSize: 16
+                              }}
+                              variant='standard'
+                              disableUnderline
+                              value={searchCategory || "Select Category"}
+                              onChange={(e) => setSearchCategory(e.target.value)}>
+                              <MenuItem value={"Select Category"}>{category_placeholder || "Select Category"}</MenuItem>
+                              {categoryData &&
+                                 categoryData?.length > 0 &&
+                                 categoryData?.map((item: ICategory, index: number) => (
+                                    <MenuItem key={index} value={item?.title}>
+                                       {item?.title}
+                                    </MenuItem>
+                                 ))}
+                           </Select>
+                        </FormControl>
+                        <Button
+                           variant='contained'
+                           size='medium'
+                           sx={{
+                              background: backgroundColor || "primary.main",
+                              color: (theme) => color || theme.palette.primary.contrastText,
+                              my: 1,
+                              ml: 2,
+                              mr: 2,
+                              px: 5
+                           }}
+                           onClick={handleSearch}>
+                           {button_placeholder || "Search"}
+                        </Button>
+                     </Stack>
+                  </Card>
+               )}
+               {/* button */}
+               {button && (
+                  <Box>
                      <Button
+                        disabled={disabled}
+                        //  @ts-ignore
+                        component={NextLink}
+                        href={link || "/find-job"}
+                        target={target ?? "_self"}
                         variant='contained'
-                        size='medium'
                         sx={{
-                           background: backgroundColor || "primary.main",
                            color: (theme) => color || theme.palette.primary.contrastText,
-                           my: 1,
-                           ml: 2,
-                           mr: 2,
-                           px: 5
-                        }}
-                        onClick={handleSearch}>
-                        {button_placeholder || "Search"}
+                           bgcolor: (theme) =>
+                              mode === "dark"
+                                 ? backgroundColor || theme.palette.primary.main
+                                 : backgroundColor || theme.palette.secondary.main
+                        }}>
+                        {label || "View Details"}
                      </Button>
-                  </Stack>
-               </Card>
+                  </Box>
+               )}
                {/* count  */}
                {show_count && (
                   <Stack

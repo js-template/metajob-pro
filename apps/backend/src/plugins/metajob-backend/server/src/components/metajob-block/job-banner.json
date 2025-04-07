@@ -19,6 +19,11 @@
       "repeatable": false,
       "component": "metajob-config.search-config"
     },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
     "job_count_placeholder": {
       "type": "string"
     },
