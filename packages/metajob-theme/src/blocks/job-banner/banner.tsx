@@ -27,6 +27,8 @@ type Props = {
    countData?: ICountData
 }
 export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
+   const { theme: mode } = useTheme()
+
    const {
       content,
       search,
@@ -34,8 +36,10 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
       job_count_placeholder,
       company_count_placeholder,
       resume_count_placeholder,
-      show_count
+      show_count,
+      style
    } = block || {}
+   const { backgroundColor, color } = style || {}
    const { title, sub_title } = content || {}
    const { search_placeholder, location_placeholder, category_placeholder, button_placeholder } = search || {}
    const bannerBackground = image?.url || ""
@@ -44,15 +48,6 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
    const [searchText, setSearchText] = useState("")
    const [searchLocation, setSearchLocation] = React.useState("")
    const [searchCategory, setSearchCategory] = React.useState("")
-
-   const { theme: mode } = useTheme()
-   const getBgColorWithImage = (theme: any) => {
-      if (mode === "dark") {
-         return `linear-gradient(0deg,${hexToRGBA(theme.palette.background.default, 0.7)},${hexToRGBA(theme.palette.background.default, 0.7)}), url(${bannerBackground})`
-      } else {
-         return `linear-gradient(0deg,${hexToRGBA(theme.palette.primary.main, 0.7)},${hexToRGBA(theme.palette.primary.main, 0.7)}), url(${bannerBackground})`
-      }
-   }
 
    const handleSearch = () => {
       // route with search query : endpoint is find-jobs
@@ -81,17 +76,36 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
    return (
       <Box
          sx={{
+            position: "relative",
             // height: 'calc(100vh - 180px)',
             width: "100%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            background: (theme) => getBgColorWithImage(theme),
+            backgroundImage: bannerBackground ? `url(${bannerBackground})` : "",
+            bgcolor: backgroundColor ? backgroundColor : "primary.main",
             backgroundSize: "cover",
             backgroundPosition: "center",
             textAlign: "center",
-            padding: "5rem 2rem"
+            padding: "5rem 2rem",
+            "&::before": {
+               content: '""',
+               position: "absolute",
+               top: 0,
+               left: 0,
+               right: 0,
+               bottom: 0,
+               backgroundColor:
+                  mode === "light"
+                     ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.7)
+                     : (theme) => hexToRGBA(backgroundColor || theme.palette.background.default, 0.7),
+               zIndex: 1
+            },
+            "& > *": {
+               position: "relative",
+               zIndex: 2
+            }
          }}>
          <Container maxWidth='md'>
             <Stack spacing={5}>
@@ -111,7 +125,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      maxWidth={650}
                      textAlign={"center"}
                      sx={{
-                        color: (theme) => theme.palette.primary.contrastText
+                        color: (theme) => color || theme.palette.primary.contrastText
                      }}>
                      {title}
                   </Typography>
@@ -121,17 +135,18 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      textAlign={"center"}
                      fontWeight={400}
                      sx={{
-                        color: (theme) => theme.palette.primary.contrastText
+                        color: (theme) => color || theme.palette.primary.contrastText
                      }}>
                      {sub_title}
                   </Typography>
                </Stack>
+               {/* search  */}
                <Card
                   sx={{
                      bgcolor:
                         mode === "light"
-                           ? (theme) => hexToRGBA(theme.palette.primary.main, 0.5)
-                           : (theme) => hexToRGBA(theme.palette.background.default, 0.5)
+                           ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.5)
+                           : (theme) => hexToRGBA(backgroundColor || theme.palette.background.default, 0.5)
                   }}>
                   <Stack
                      direction={{
@@ -210,7 +225,6 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            value={searchCategory || "Select Category"}
                            onChange={(e) => setSearchCategory(e.target.value)}>
                            <MenuItem value={"Select Category"}>{category_placeholder || "Select Category"}</MenuItem>
-                           {/* {categoryIsLoading && <MenuItem value={""}>Loading..</MenuItem>} */}
                            {categoryData &&
                               categoryData?.length > 0 &&
                               categoryData?.map((item: ICategory, index: number) => (
@@ -223,7 +237,14 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      <Button
                         variant='contained'
                         size='medium'
-                        sx={{ my: 1, ml: 2, mr: 2, px: 5 }}
+                        sx={{
+                           background: backgroundColor || "primary.main",
+                           color: (theme) => color || theme.palette.primary.contrastText,
+                           my: 1,
+                           ml: 2,
+                           mr: 2,
+                           px: 5
+                        }}
                         onClick={handleSearch}>
                         {button_placeholder || "Search"}
                      </Button>
@@ -250,7 +271,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            <CIcon
                               sx={{
                                  fontSize: "3rem",
-                                 color: (theme) => theme.palette.primary.main
+                                 color: (theme) => backgroundColor || theme.palette.primary.main
                               }}
                               icon={"mdi:nfc-search-variant"}
                            />
@@ -259,7 +280,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) => theme.palette.text.primary}>
+                                 color={(theme) => color || theme.palette.text.primary}>
                                  {countData?.job}+
                               </Typography>
                               <Typography
@@ -282,7 +303,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            <CIcon
                               sx={{
                                  fontSize: "3rem",
-                                 color: (theme) => theme.palette.primary.main
+                                 color: (theme) => backgroundColor || theme.palette.primary.main
                               }}
                               icon={"heroicons:building-office-2"}
                            />
@@ -292,7 +313,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) => theme.palette.text.primary}>
+                                 color={(theme) => color || theme.palette.text.primary}>
                                  {countData?.company}+
                               </Typography>
                               <Typography
@@ -315,7 +336,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            <CIcon
                               sx={{
                                  fontSize: "3rem",
-                                 color: (theme) => theme.palette.primary.main
+                                 color: (theme) => backgroundColor || theme.palette.primary.main
                               }}
                               icon={"icomoon-free:user-tie"}
                            />
@@ -325,7 +346,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) => theme.palette.text.primary}>
+                                 color={(theme) => color || theme.palette.text.primary}>
                                  {countData?.resume}+
                               </Typography>
                               <Typography

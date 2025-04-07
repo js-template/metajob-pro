@@ -19,6 +19,13 @@ export type IBannerBlock = {
    image?: {
       url: string
    }
+   style?: {
+      color?: any
+      backgroundColor?: any
+      mobile: number
+      tab: number
+      desktop: number
+   }
 }
 
 export type ICategory = {
