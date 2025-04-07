@@ -102,7 +102,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                backgroundColor:
                   mode === "light"
                      ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.7)
-                     : (theme) => hexToRGBA(backgroundColor || theme.palette.background.default, 0.7),
+                     : (theme) => hexToRGBA(theme.palette.background.default, 0.7),
                zIndex: 1
             },
             "& > *": {
