@@ -14,6 +14,7 @@ type Props = {
 }
 export const CategoryCardTwo = ({ data, button_label, color, backgroundColor }: Props) => {
    const { theme: mode } = useTheme()
+   //destructure the data
    const { title, description, image } = data || {}
    const logo = image?.url || "https://placehold.co/60/png"
 

@@ -10,7 +10,6 @@ type Props = {
 
 export const CardItem = ({ data }: Props) => {
    const { title, image } = data || {}
-   // const logo = image?.url || "https://placehold.co/60/png"
    const logo = image?.url
 
    return (
