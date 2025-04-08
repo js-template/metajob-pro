@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from "react"
+import NextLink from "next/link"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import _ from "lodash"
@@ -27,6 +28,8 @@ type Props = {
    countData?: ICountData
 }
 export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
+   const { theme: mode } = useTheme()
+
    const {
       content,
       search,
@@ -34,8 +37,12 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
       job_count_placeholder,
       company_count_placeholder,
       resume_count_placeholder,
-      show_count
+      show_count,
+      button,
+      style
    } = block || {}
+   const { backgroundColor, color } = style || {}
+   const { label, link, target, disabled } = button || {}
    const { title, sub_title } = content || {}
    const { search_placeholder, location_placeholder, category_placeholder, button_placeholder } = search || {}
    const bannerBackground = image?.url || ""
@@ -44,15 +51,6 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
    const [searchText, setSearchText] = useState("")
    const [searchLocation, setSearchLocation] = React.useState("")
    const [searchCategory, setSearchCategory] = React.useState("")
-
-   const { theme: mode } = useTheme()
-   const getBgColorWithImage = (theme: any) => {
-      if (mode === "dark") {
-         return `linear-gradient(0deg,${hexToRGBA(theme.palette.background.default, 0.7)},${hexToRGBA(theme.palette.background.default, 0.7)}), url(${bannerBackground})`
-      } else {
-         return `linear-gradient(0deg,${hexToRGBA(theme.palette.primary.main, 0.7)},${hexToRGBA(theme.palette.primary.main, 0.7)}), url(${bannerBackground})`
-      }
-   }
 
    const handleSearch = () => {
       // route with search query : endpoint is find-jobs
@@ -81,17 +79,36 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
    return (
       <Box
          sx={{
+            position: "relative",
             // height: 'calc(100vh - 180px)',
             width: "100%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            background: (theme) => getBgColorWithImage(theme),
+            backgroundImage: bannerBackground ? `url(${bannerBackground})` : "",
+            bgcolor: backgroundColor ? backgroundColor : "primary.main",
             backgroundSize: "cover",
             backgroundPosition: "center",
             textAlign: "center",
-            padding: "5rem 2rem"
+            padding: "5rem 2rem",
+            "&::before": {
+               content: '""',
+               position: "absolute",
+               top: 0,
+               left: 0,
+               right: 0,
+               bottom: 0,
+               backgroundColor:
+                  mode === "light"
+                     ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.7)
+                     : (theme) => hexToRGBA(theme.palette.background.default, 0.7),
+               zIndex: 1
+            },
+            "& > *": {
+               position: "relative",
+               zIndex: 2
+            }
          }}>
          <Container maxWidth='md'>
             <Stack spacing={5}>
@@ -111,7 +128,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      maxWidth={650}
                      textAlign={"center"}
                      sx={{
-                        color: (theme) => theme.palette.primary.contrastText
+                        color: (theme) => color || theme.palette.primary.contrastText
                      }}>
                      {title}
                   </Typography>
@@ -121,114 +138,144 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      textAlign={"center"}
                      fontWeight={400}
                      sx={{
-                        color: (theme) => theme.palette.primary.contrastText
+                        color: (theme) => color || theme.palette.primary.contrastText
                      }}>
                      {sub_title}
                   </Typography>
                </Stack>
-               <Card
-                  sx={{
-                     bgcolor:
-                        mode === "light"
-                           ? (theme) => hexToRGBA(theme.palette.primary.main, 0.5)
-                           : (theme) => hexToRGBA(theme.palette.background.default, 0.5)
-                  }}>
-                  <Stack
-                     direction={{
-                        sm: "row"
-                     }}
-                     gap={1}
-                     p={{
-                        xs: 2,
-                        sm: 0
-                     }}
+               {/* search  */}
+               {search && (
+                  <Card
                      sx={{
-                        borderRadius: "1rem",
-                        bgcolor: (theme) => theme.palette.background.paper,
-                        overflow: "hidden",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
+                        bgcolor:
+                           mode === "light"
+                              ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.5)
+                              : (theme) => hexToRGBA(backgroundColor || theme.palette.background.default, 0.5)
                      }}>
-                     <TextField
+                     <Stack
+                        direction={{
+                           sm: "row"
+                        }}
+                        gap={1}
+                        p={{
+                           xs: 2,
+                           sm: 0
+                        }}
                         sx={{
-                           "& .MuiOutlinedInput-root": {
-                              border: "none"
-                           }
-                        }}
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                        fullWidth
-                        placeholder={search_placeholder}
-                        InputProps={{
-                           startAdornment: (
-                              <Box sx={{ pr: 1 }} component={"span"}>
-                                 <CIcon icon='iconamoon:search-light' />
-                              </Box>
-                           )
-                        }}
-                     />
-                     <Divider orientation='vertical' flexItem />
-                     <Divider orientation='horizontal' flexItem />
-                     <TextField
-                        placeholder={location_placeholder}
-                        InputProps={{
-                           startAdornment: (
-                              <Box sx={{ pr: 1 }} component={"span"}>
-                                 <CIcon icon='ph:map-pin' />
-                              </Box>
-                           )
-                        }}
-                        value={searchLocation}
-                        onChange={(e) => setSearchLocation(e.target.value)}
-                        sx={{
-                           "& .MuiOutlinedInput-root": {
-                              border: "none"
-                           }
-                        }}
-                        fullWidth
-                     />
-                     <Divider orientation='vertical' flexItem />
-                     <Divider orientation='horizontal' flexItem />
-                     {/* category options  */}
-                     <FormControl fullWidth>
-                        <Select
+                           borderRadius: "1rem",
+                           bgcolor: (theme) => theme.palette.background.paper,
+                           overflow: "hidden",
+                           display: "flex",
+                           justifyContent: "center",
+                           alignItems: "center"
+                        }}>
+                        <TextField
                            sx={{
-                              "& .MuiSelect-select": {
-                                 "&.MuiSelect-standard": {
-                                    backgroundColor: (theme) => theme.palette.background.paper + " !important"
-                                 }
-                              },
-                              px: 2,
-                              textAlign: "left",
-                              color: "text.disabled",
-                              fontWeight: 400,
-                              fontSize: 16
+                              "& .MuiOutlinedInput-root": {
+                                 border: "none"
+                              }
                            }}
-                           variant='standard'
-                           disableUnderline
-                           value={searchCategory || "Select Category"}
-                           onChange={(e) => setSearchCategory(e.target.value)}>
-                           <MenuItem value={"Select Category"}>{category_placeholder || "Select Category"}</MenuItem>
-                           {/* {categoryIsLoading && <MenuItem value={""}>Loading..</MenuItem>} */}
-                           {categoryData &&
-                              categoryData?.length > 0 &&
-                              categoryData?.map((item: ICategory, index: number) => (
-                                 <MenuItem key={index} value={item?.title}>
-                                    {item?.title}
-                                 </MenuItem>
-                              ))}
-                        </Select>
-                     </FormControl>
+                           value={searchText}
+                           onChange={(e) => setSearchText(e.target.value)}
+                           fullWidth
+                           placeholder={search_placeholder}
+                           InputProps={{
+                              startAdornment: (
+                                 <Box sx={{ pr: 1 }} component={"span"}>
+                                    <CIcon icon='iconamoon:search-light' />
+                                 </Box>
+                              )
+                           }}
+                        />
+                        <Divider orientation='vertical' flexItem />
+                        <Divider orientation='horizontal' flexItem />
+                        <TextField
+                           placeholder={location_placeholder}
+                           InputProps={{
+                              startAdornment: (
+                                 <Box sx={{ pr: 1 }} component={"span"}>
+                                    <CIcon icon='ph:map-pin' />
+                                 </Box>
+                              )
+                           }}
+                           value={searchLocation}
+                           onChange={(e) => setSearchLocation(e.target.value)}
+                           sx={{
+                              "& .MuiOutlinedInput-root": {
+                                 border: "none"
+                              }
+                           }}
+                           fullWidth
+                        />
+                        <Divider orientation='vertical' flexItem />
+                        <Divider orientation='horizontal' flexItem />
+                        {/* category options  */}
+                        <FormControl fullWidth>
+                           <Select
+                              sx={{
+                                 "& .MuiSelect-select": {
+                                    "&.MuiSelect-standard": {
+                                       backgroundColor: (theme) => theme.palette.background.paper + " !important"
+                                    }
+                                 },
+                                 px: 2,
+                                 textAlign: "left",
+                                 color: "text.disabled",
+                                 fontWeight: 400,
+                                 fontSize: 16
+                              }}
+                              variant='standard'
+                              disableUnderline
+                              value={searchCategory || "Select Category"}
+                              onChange={(e) => setSearchCategory(e.target.value)}>
+                              <MenuItem value={"Select Category"}>{category_placeholder || "Select Category"}</MenuItem>
+                              {categoryData &&
+                                 categoryData?.length > 0 &&
+                                 categoryData?.map((item: ICategory, index: number) => (
+                                    <MenuItem key={index} value={item?.title}>
+                                       {item?.title}
+                                    </MenuItem>
+                                 ))}
+                           </Select>
+                        </FormControl>
+                        <Button
+                           variant='contained'
+                           size='medium'
+                           sx={{
+                              background: backgroundColor || "primary.main",
+                              color: (theme) => color || theme.palette.primary.contrastText,
+                              my: 1,
+                              ml: 2,
+                              mr: 2,
+                              px: 5
+                           }}
+                           onClick={handleSearch}>
+                           {button_placeholder || "Search"}
+                        </Button>
+                     </Stack>
+                  </Card>
+               )}
+               {/* button */}
+               {button && (
+                  <Box>
                      <Button
+                        disabled={disabled}
+                        //  @ts-ignore
+                        component={NextLink}
+                        href={link || "/find-job"}
+                        target={target ?? "_self"}
                         variant='contained'
-                        size='medium'
-                        sx={{ my: 1, ml: 2, mr: 2, px: 5 }}
-                        onClick={handleSearch}>
-                        {button_placeholder || "Search"}
+                        sx={{
+                           color: (theme) => color || theme.palette.primary.contrastText,
+                           bgcolor: (theme) =>
+                              mode === "dark"
+                                 ? backgroundColor || theme.palette.primary.main
+                                 : backgroundColor || theme.palette.secondary.main
+                        }}>
+                        {label || "View Details"}
                      </Button>
-                  </Stack>
-               </Card>
+                  </Box>
+               )}
                {/* count  */}
                {show_count && (
                   <Stack
@@ -250,7 +297,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            <CIcon
                               sx={{
                                  fontSize: "3rem",
-                                 color: (theme) => theme.palette.primary.main
+                                 color: (theme) => backgroundColor || theme.palette.primary.main
                               }}
                               icon={"mdi:nfc-search-variant"}
                            />
@@ -259,7 +306,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) => theme.palette.text.primary}>
+                                 color={(theme) => color || theme.palette.text.primary}>
                                  {countData?.job}+
                               </Typography>
                               <Typography
@@ -282,7 +329,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            <CIcon
                               sx={{
                                  fontSize: "3rem",
-                                 color: (theme) => theme.palette.primary.main
+                                 color: (theme) => backgroundColor || theme.palette.primary.main
                               }}
                               icon={"heroicons:building-office-2"}
                            />
@@ -292,7 +339,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) => theme.palette.text.primary}>
+                                 color={(theme) => color || theme.palette.text.primary}>
                                  {countData?.company}+
                               </Typography>
                               <Typography
@@ -315,7 +362,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            <CIcon
                               sx={{
                                  fontSize: "3rem",
-                                 color: (theme) => theme.palette.primary.main
+                                 color: (theme) => backgroundColor || theme.palette.primary.main
                               }}
                               icon={"icomoon-free:user-tie"}
                            />
@@ -325,7 +372,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) => theme.palette.text.primary}>
+                                 color={(theme) => color || theme.palette.text.primary}>
                                  {countData?.resume}+
                               </Typography>
                               <Typography
