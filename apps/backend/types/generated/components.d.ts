@@ -409,7 +409,9 @@ export interface ConfigSectionTitle extends Struct.ComponentSchema {
   };
   attributes: {
     sub_title: Schema.Attribute.Text;
+    sub_title_color: Schema.Attribute.String;
     title: Schema.Attribute.String;
+    title_color: Schema.Attribute.String;
     variation: Schema.Attribute.Enumeration<['Variation One', 'Variation Two']>;
   };
 }
