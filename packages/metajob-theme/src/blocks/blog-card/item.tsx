@@ -1,12 +1,26 @@
+"use client"
 import Image from "next/image"
 import Link from "next/link"
 import moment from "moment"
+import { useTheme } from "next-themes"
 import _ from "lodash"
 import { Box, Button, Icon, Stack, Typography } from "@mui/material"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { ISinglePost } from "./types"
 
-const CardItem = ({ data, button_label }: { data: ISinglePost; button_label?: string }) => {
+const CardItem = ({
+   data,
+   button_label,
+   color,
+   description_color
+}: {
+   data: ISinglePost
+   button_label?: string
+   color?: string
+   description_color?: string
+}) => {
+   const { theme: mode } = useTheme()
+
    const { title, slug, featuredImage, short_description, publishedAt } = data || {}
    // const image = featuredImage?.url || "https://placehold.co/300x250/png"
    const image = featuredImage?.url
@@ -24,7 +38,8 @@ const CardItem = ({ data, button_label }: { data: ISinglePost; button_label?: st
             },
             "&:hover .image-scale": {
                transform: "scale(1.2)"
-            }
+            },
+            bgcolor: (theme) => theme.palette.background.paper
          }}
          spacing={2}>
          <Box
@@ -56,7 +71,8 @@ const CardItem = ({ data, button_label }: { data: ISinglePost; button_label?: st
                fontSize={14}
                fontWeight={400}
                sx={{
-                  color: (theme) => theme.palette.text.disabled
+                  color: (theme) =>
+                     mode === "light" ? description_color || theme.palette.text.disabled : theme.palette.text.disabled
                }}>
                {moment(publishedAt).format("DD MMMM YYYY")}
             </Typography>
@@ -64,7 +80,10 @@ const CardItem = ({ data, button_label }: { data: ISinglePost; button_label?: st
                fontSize={20}
                fontWeight={700}
                sx={{
-                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9),
+                  color: (theme) =>
+                     mode === "light"
+                        ? color || hexToRGBA(theme.palette.text.primary, 0.9)
+                        : hexToRGBA(theme.palette.text.primary, 0.9),
                   "&:hover": {
                      color: (theme) => theme.palette.primary.main,
                      cursor: "pointer",
@@ -81,7 +100,8 @@ const CardItem = ({ data, button_label }: { data: ISinglePost; button_label?: st
             fontSize={16}
             fontWeight={400}
             sx={{
-               color: (theme) => theme.palette.text.disabled
+               color: (theme) =>
+                  mode === "light" ? description_color || theme.palette.text.disabled : theme.palette.text.disabled
             }}>
             {short_description}
          </Typography>

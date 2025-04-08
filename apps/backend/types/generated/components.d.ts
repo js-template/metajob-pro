@@ -36,8 +36,17 @@ export interface BlockBlogCard extends Struct.ComponentSchema {
     button: Schema.Attribute.Component<'config.link', false>;
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
+    description_color: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    posts: Schema.Attribute.Relation<'oneToMany', 'plugin::padma-backend.post'>;
+    item_count: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 24;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<12>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }

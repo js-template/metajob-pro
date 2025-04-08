@@ -17,11 +17,6 @@
       "repeatable": false,
       "component": "config.section-title"
     },
-    "posts": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "plugin::padma-backend.post"
-    },
     "empty": {
       "type": "component",
       "repeatable": false,
@@ -41,6 +36,15 @@
       "type": "component",
       "repeatable": false,
       "component": "config.style-section"
+    },
+    "description_color": {
+      "type": "string"
+    },
+    "item_count": {
+      "type": "integer",
+      "default": 12,
+      "min": 1,
+      "max": 24
     }
   }
 }
