@@ -25,7 +25,11 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
    const { label: card_label } = card_button || {}
 
    return (
-      <Stack sx={{ bgcolor: backgroundColor ? backgroundColor : theme.palette.background.paper }}>
+      <Stack
+         sx={{
+            bgcolor:
+               mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
+         }}>
          <Container maxWidth='lg'>
             <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
@@ -34,7 +38,7 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
                   <Grid container spacing={2}>
                      {_.map(JobsData, (item) => (
                         <Grid key={item?.id} item xs={mobile || 12} sm={tab || 6} md={desktop || 3}>
-                           <JobItem data={item} button_label={card_label} />
+                           <JobItem data={item} button_label={card_label} color={color} />
                         </Grid>
                      ))}
                   </Grid>
