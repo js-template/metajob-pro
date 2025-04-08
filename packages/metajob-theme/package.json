@@ -63,5 +63,11 @@
       "dashify": "^2.0.0",
       "node-fetch": "^2.7.0",
       "typescript": "latest"
-   }
+   },
+   "files": [
+      "dist",
+      "README.md",
+      "LICENSE",
+      "CHANGELOG.md"
+   ]
 }
