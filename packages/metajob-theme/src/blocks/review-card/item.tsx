@@ -1,12 +1,22 @@
 "use client"
 import Image from "next/image"
-import { Stack, Typography, useTheme } from "@mui/material"
+import { useTheme } from "next-themes"
+import { Stack, Typography, useTheme as muiTheme } from "@mui/material"
 import _ from "lodash"
 import { ISingleReview } from "./types"
 // import CIcon from "../../components/common/icon"
 
-const CardItem = ({ data }: { data: ISingleReview }) => {
-   const theme = useTheme()
+const CardItem = ({
+   data,
+   color,
+   description_color
+}: {
+   data: ISingleReview
+   color?: string
+   description_color?: string
+}) => {
+   const { theme: mode } = useTheme()
+   const theme = muiTheme()
 
    const { name, designation, review, avatar } = data || {}
    // const url = avatar?.url || "https://placehold.co/64/png"
@@ -35,12 +45,26 @@ const CardItem = ({ data }: { data: ISingleReview }) => {
                )}
                <Stack>
                   {name && (
-                     <Typography color='text.primary' fontWeight={400} fontSize={20}>
+                     <Typography
+                        color='text.primary'
+                        sx={{
+                           color: mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                        }}
+                        fontWeight={400}
+                        fontSize={20}>
                         {name}
                      </Typography>
                   )}
                   {designation && (
-                     <Typography color='text.disabled' fontWeight={400} fontSize={14}>
+                     <Typography
+                        sx={{
+                           color:
+                              mode === "light"
+                                 ? description_color || theme.palette.text.disabled
+                                 : theme.palette.text.disabled
+                        }}
+                        fontWeight={400}
+                        fontSize={14}>
                         {designation}
                      </Typography>
                   )}
@@ -71,7 +95,15 @@ const CardItem = ({ data }: { data: ISingleReview }) => {
                </Stack> */}
                <Stack>
                   {review && (
-                     <Typography color='text.disabled' fontWeight={400} fontSize={16}>
+                     <Typography
+                        sx={{
+                           color:
+                              mode === "light"
+                                 ? description_color || theme.palette.text.disabled
+                                 : theme.palette.text.disabled
+                        }}
+                        fontWeight={400}
+                        fontSize={16}>
                         {review}
                      </Typography>
                   )}

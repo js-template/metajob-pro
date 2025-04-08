@@ -217,6 +217,7 @@ export interface BlockReviewBlock extends Struct.ComponentSchema {
   attributes: {
     button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
+    description_color: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     reviews: Schema.Attribute.Component<'config.review-card', true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
