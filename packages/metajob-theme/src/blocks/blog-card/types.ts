@@ -4,7 +4,9 @@ export type IPostBlock = {
    content?: {
       sub_title: string
       title: string
-      variation: string
+      title_color?: string
+      sub_title_color?: string
+      variation?: string
    }
    style?: {
       id: 25
@@ -26,6 +28,8 @@ export type IPostBlock = {
    card_button?: {
       label?: string
    }
+   description_color?: string
+   item_count?: number
 }
 
 export type ISinglePost = {

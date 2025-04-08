@@ -805,7 +805,12 @@ export interface PluginMetajobBackendCompanySetting
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
       ['metajob-single-type.company-details']
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -815,7 +820,12 @@ export interface PluginMetajobBackendCompanySetting
       'plugin::metajob-backend.company-setting'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1089,6 +1099,11 @@ export interface PluginMetajobBackendJobSetting
   attributes: {
     blocks: Schema.Attribute.DynamicZone<['metajob-single-type.job-details']> &
       Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
       Schema.Attribute.SetMinMax<
         {
           min: 1;
@@ -1104,7 +1119,12 @@ export interface PluginMetajobBackendJobSetting
       'plugin::metajob-backend.job-setting'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1438,7 +1458,12 @@ export interface PluginMetajobBackendResumeSetting
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
       ['metajob-single-type.resume-details']
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1448,7 +1473,12 @@ export interface PluginMetajobBackendResumeSetting
       'plugin::metajob-backend.resume-setting'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2177,6 +2207,8 @@ export interface PluginPadmaBackendPublicPage
         'metajob-block.company-filter',
         'metajob-block.candidate-filter',
         'metajob-block.page-header',
+        'metajob-block.public-package',
+        'metajob-block.category-filter',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

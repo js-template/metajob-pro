@@ -1,9 +1,13 @@
 {
    "name": "@jstemplate/metajob-theme",
-   "version": "0.0.4",
+   "version": "0.0.7",
    "private": true,
    "main": "dist/index.js",
-   "keywords": [],
+   "keywords": [
+      "strapi",
+      "Frontend Theme",
+      "metajob"
+   ],
    "license": "EULA",
    "scripts": {
       "build": "tsc",
@@ -59,5 +63,11 @@
       "dashify": "^2.0.0",
       "node-fetch": "^2.7.0",
       "typescript": "latest"
-   }
+   },
+   "files": [
+      "dist",
+      "README.md",
+      "LICENSE",
+      "CHANGELOG.md"
+   ]
 }

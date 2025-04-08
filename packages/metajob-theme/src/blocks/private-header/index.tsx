@@ -65,7 +65,7 @@ export const PrivateHeader = async ({ block, language }: Props) => {
               },
               fields: ["id"],
               publicationState: "live",
-              locale: language ?? ["en"]
+              locale: language ?? "en"
            },
            "no-store"
         )

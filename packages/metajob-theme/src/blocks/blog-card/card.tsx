@@ -20,13 +20,16 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
    const theme = muiTheme()
 
    // destructure the block
-   const { content, empty, style, button, card_button } = block || {}
+   const { content, empty, style, button, card_button, description_color } = block || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
    const { label, link } = button || {}
    const { label: card_label } = card_button || {}
 
    return (
-      <Stack bgcolor={backgroundColor ? backgroundColor : theme.palette.background.paper}>
+      <Stack
+         bgcolor={
+            mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
+         }>
          <Container maxWidth='lg'>
             <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
@@ -36,7 +39,12 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
                   <Grid container spacing={2}>
                      {_.map(recentBlogs, (item) => (
                         <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
-                           <CardItem data={item} button_label={card_label} />
+                           <CardItem
+                              data={item}
+                              button_label={card_label}
+                              color={color}
+                              description_color={description_color}
+                           />
                         </Grid>
                      ))}
                   </Grid>

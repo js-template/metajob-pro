@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
          },
          populate: "*",
          publicationState: "live",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       {
          populate: "*",
          publicationState: "live",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

@@ -42,7 +42,7 @@ export const ManagePackage = ({ block, language }: Props) => {
             {
                populate: "*",
                publicationState: "live",
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )
@@ -76,7 +76,7 @@ export const ManagePackage = ({ block, language }: Props) => {
                   }
                },
                publicationState: "live",
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )
@@ -97,95 +97,93 @@ export const ManagePackage = ({ block, language }: Props) => {
    }, [userId, isMute])
 
    return role === "employer" ? (
-      <Grid item xs={12}>
-         <Paper
-            elevation={0}
+      <Paper
+         elevation={0}
+         sx={{
+            width: "100%",
+            border: "1px solid",
+            borderColor: "divider",
+            borderRadius: "12px",
+            height: "100%",
+            px: 3,
+            py: 3
+         }}>
+         <Box
             sx={{
-               width: "100%",
-               border: "1px solid",
-               borderColor: "divider",
-               borderRadius: "12px",
-               height: "100%",
-               px: 3,
-               py: 3
+               display: "flex",
+               flexDirection: "column",
+               gap: {
+                  xs: 1,
+                  md: 2
+               }
             }}>
-            <Box
-               sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: {
-                     xs: 1,
-                     md: 2
-                  }
+            <Typography
+               variant='body1'
+               fontWeight={700}
+               fontSize={{
+                  xs: "1.25rem",
+                  sm: "1.5rem"
+               }}
+               lineHeight={"24px"}>
+               {title}
+            </Typography>
+            <Typography
+               variant='body2'
+               fontSize={{
+                  sm: "1rem"
                }}>
-               <Typography
-                  variant='body1'
-                  fontWeight={700}
-                  fontSize={{
-                     xs: "1.25rem",
-                     sm: "1.5rem"
-                  }}
-                  lineHeight={"24px"}>
-                  {title}
-               </Typography>
-               <Typography
-                  variant='body2'
-                  fontSize={{
-                     sm: "1rem"
-                  }}>
-                  {description}
-               </Typography>
-            </Box>
-            <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
-               {packageData && packageData?.length > 0 && (
-                  <Grid container spacing={2}>
-                     {_.map(packageData, (item, index) => (
-                        <Grid key={index} item xs={mobile || 12} sm={tab || 6} md={desktop || 3}>
-                           <PackageItem
-                              data={item}
-                              membershipData={membershipData}
-                              userId={userId}
-                              handleMute={handleMute}
-                              membershipLoading={membershipLoading}
-                           />
-                        </Grid>
-                     ))}
-                  </Grid>
-               )}
-               {/* loader */}
-               {packageIsLoading && (
-                  <Grid container spacing={2}>
-                     {_.map([1, 2, 3], (item, index) => (
-                        <Grid key={index} item xs={mobile || 12} sm={tab || 6} md={desktop || 3}>
-                           <PackageItem isLoader={true} />
-                        </Grid>
-                     ))}
-                  </Grid>
-               )}
+               {description}
+            </Typography>
+         </Box>
+         <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            {packageData && packageData?.length > 0 && (
+               <Grid container spacing={2}>
+                  {_.map(packageData, (item, index) => (
+                     <Grid key={index} item xs={mobile || 12} sm={tab || 6} lg={desktop || 3}>
+                        <PackageItem
+                           data={item}
+                           membershipData={membershipData}
+                           userId={userId}
+                           handleMute={handleMute}
+                           membershipLoading={membershipLoading}
+                        />
+                     </Grid>
+                  ))}
+               </Grid>
+            )}
+            {/* loader */}
+            {packageIsLoading && (
+               <Grid container spacing={2}>
+                  {_.map([1, 2, 3], (item, index) => (
+                     <Grid key={index} item xs={mobile || 12} sm={tab || 6} md={desktop || 3}>
+                        <PackageItem isLoader={true} />
+                     </Grid>
+                  ))}
+               </Grid>
+            )}
 
-               {/* empty data */}
-               {!packageIsLoading && packageData?.length == 0 && (
-                  <Grid container justifyContent={"center"} spacing={2}>
-                     <Stack
-                        sx={{
-                           display: "flex",
-                           flexDirection: "column",
-                           alignItems: "center",
-                           gap: 0.5,
-                           py: 4
-                        }}>
-                        <Typography variant='body1' sx={{ color: (theme) => theme.palette.text.secondary }}>
-                           {empty?.title || "No data found"}
-                        </Typography>
-                        <Typography variant='body2' sx={{ color: (theme) => theme.palette.text.secondary }}>
-                           {empty?.description || "Try to refresh the page or check back later"}
-                        </Typography>
-                     </Stack>
-                  </Grid>
-               )}
-            </Stack>
-         </Paper>
-      </Grid>
+            {/* empty data */}
+            {!packageIsLoading && packageData?.length == 0 && (
+               <Grid container justifyContent={"center"} spacing={2}>
+                  <Stack
+                     sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 0.5,
+                        py: 4
+                     }}>
+                     <Typography variant='body1' sx={{ color: (theme) => theme.palette.text.secondary }}>
+                        {empty?.title || "No data found"}
+                     </Typography>
+                     <Typography variant='body2' sx={{ color: (theme) => theme.palette.text.secondary }}>
+                        {empty?.description || "Try to refresh the page or check back later"}
+                     </Typography>
+                  </Stack>
+               </Grid>
+            )}
+         </Stack>
+      </Paper>
    ) : (
       <AccessError />
    )

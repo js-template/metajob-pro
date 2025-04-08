@@ -29,7 +29,7 @@ export const JobDetails = async ({ data, block, language }: Props) => {
                $eq: company?.documentId
             }
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -69,7 +69,7 @@ export const JobDetails = async ({ data, block, language }: Props) => {
             page: 1
          },
          publicationState: "live",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

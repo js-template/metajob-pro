@@ -1,63 +1,26 @@
 "use client"
-import Image from "next/image"
-import NextLink from "next/link"
-import { Stack, Box, Typography, Card } from "@mui/material"
 import { ISingleCategory } from "./types"
+import { CategoryCardTwo } from "../../components/cards/category-cards/category-card-two"
+import { CategoryCardOne } from "../../components/cards/category-cards/category-card-one"
 
-export const CardItem = ({ data }: { data: ISingleCategory }) => {
-   const { title, image } = data || {}
-   // const logo = image?.url || "https://placehold.co/60/png"
-   const logo = image?.url
+type Props = {
+   data: ISingleCategory
+   variation?: string
+   button_label?: string
+   style?: {
+      color?: any
+      backgroundColor?: any
+   }
+}
 
-   return (
-      //@ts-ignore
-      <Card
-         component={NextLink}
-         href={`/find-job?category=${encodeURIComponent(title)}`}
-         sx={{
-            p: 4,
-            display: "block",
-            textDecoration: "none",
-            cursor: "pointer",
-            "&:hover .iconBox": {
-               transform: "scale(1.2)"
-            }
-         }}>
-         <Stack
-            sx={{
-               justifyContent: "center",
-               alignItems: "center",
-               mb: 2
-            }}>
-            <Box
-               className='iconBox'
-               sx={{
-                  overflow: "hidden",
-                  width: "fit-content",
-                  transition: "transform 0.3s ease-in-out"
-               }}>
-               {logo && <Image src={logo || "https://placehold.co/60/png"} alt='icon' height={60} width={60} />}
-            </Box>
-         </Stack>
-         <Stack>
-            <Typography
-               sx={{
-                  color: (theme) => theme.palette.text.primary
-               }}
-               fontWeight={400}
-               fontSize={16}
-               textAlign={"center"}
-               noWrap>
-               {title}
-            </Typography>
-            {/* <Typography
-                   color={(theme) => theme.palette.text.secondary}
-                   fontWeight={400}
-                   fontSize={14}
-                   textAlign={"center"}>
-                   99 Jobs
-                </Typography> */}
-         </Stack>
-      </Card>
+export const CardItemWithVariation = ({ data, variation, button_label, style }: Props) => {
+   const variationTwo = variation === "Variation Two" ? true : false
+
+   const { backgroundColor, color } = style || {}
+
+   return variationTwo ? (
+      <CategoryCardTwo data={data} button_label={button_label} color={color} backgroundColor={backgroundColor} />
+   ) : (
+      <CategoryCardOne data={data} color={color} />
    )
 }

@@ -11,8 +11,9 @@ import CIcon from "../../../components/common/icon"
 type Props = {
    data: ISingleJob
    button_label?: string
+   color?: string
 }
-export const JobItem = ({ data, button_label }: Props) => {
+export const JobItem = ({ data, button_label, color }: Props) => {
    const { theme: mode } = useTheme()
    const theme = muiTheme()
 
@@ -119,9 +120,17 @@ export const JobItem = ({ data, button_label }: Props) => {
                <Typography
                   fontSize={18}
                   fontWeight={400}
-                  color={theme.palette.text.primary}
                   textAlign={"center"}
-                  pb={1}>
+                  sx={{
+                     mb: 1,
+                     color: mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
+                     // line clamp 1
+                     display: "-webkit-box",
+                     WebkitBoxOrient: "vertical",
+                     overflow: "hidden",
+                     textOverflow: "ellipsis",
+                     WebkitLineClamp: 1
+                  }}>
                   {title}
                </Typography>
             )}

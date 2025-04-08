@@ -18,6 +18,12 @@
       "required": false,
       "allowedTypes": ["images", "files", "videos", "audios"]
     },
+    "bg_overlay": {
+      "type": "decimal",
+      "max": 1,
+      "min": 0.1,
+      "default": 0.7
+    },
     "style": {
       "type": "component",
       "repeatable": false,

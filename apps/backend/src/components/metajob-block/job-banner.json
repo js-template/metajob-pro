@@ -16,16 +16,36 @@
       "repeatable": false,
       "component": "metajob-config.search-config"
     },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
+    "job_count_placeholder": {
+      "type": "string"
+    },
+    "company_count_placeholder": {
+      "type": "string"
+    },
+    "resume_count_placeholder": {
+      "type": "string"
+    },
+    "show_count": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
     "image": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "bg_overlay": {
+      "type": "decimal",
+      "max": 1,
+      "min": 0.1,
+      "default": 0.7
     },
     "style": {
       "type": "component",

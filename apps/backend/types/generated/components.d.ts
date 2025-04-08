@@ -36,8 +36,17 @@ export interface BlockBlogCard extends Struct.ComponentSchema {
     button: Schema.Attribute.Component<'config.link', false>;
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
+    description_color: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    posts: Schema.Attribute.Relation<'oneToMany', 'plugin::padma-backend.post'>;
+    item_count: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 24;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<12>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
@@ -53,6 +62,7 @@ export interface BlockBlogFilter extends Struct.ComponentSchema {
     card_button: Schema.Attribute.String;
     description: Schema.Attribute.Text;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    search_placeholder: Schema.Attribute.String;
     style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
@@ -207,6 +217,7 @@ export interface BlockReviewBlock extends Struct.ComponentSchema {
   attributes: {
     button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
+    description_color: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     reviews: Schema.Attribute.Component<'config.review-card', true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
@@ -408,7 +419,9 @@ export interface ConfigSectionTitle extends Struct.ComponentSchema {
   };
   attributes: {
     sub_title: Schema.Attribute.Text;
+    sub_title_color: Schema.Attribute.String;
     title: Schema.Attribute.String;
+    title_color: Schema.Attribute.String;
     variation: Schema.Attribute.Enumeration<['Variation One', 'Variation Two']>;
   };
 }
@@ -641,6 +654,21 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockCategoryFilter extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_category_filters';
+  info: {
+    displayName: 'Category Filter';
+    icon: 'collapse';
+  };
+  attributes: {
+    card_button: Schema.Attribute.String;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    search_placeholder: Schema.Attribute.String;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
 export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_company_filters';
   info: {
@@ -694,9 +722,25 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    bg_overlay: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 0.1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0.7>;
+    button: Schema.Attribute.Component<'config.link', false>;
+    company_count_placeholder: Schema.Attribute.String;
     content: Schema.Attribute.Component<'config.section-title', false>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    job_count_placeholder: Schema.Attribute.String;
+    resume_count_placeholder: Schema.Attribute.String;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
+    show_count: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
@@ -712,6 +756,15 @@ export interface MetajobBlockJobCard extends Struct.ComponentSchema {
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    item_count: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 18;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<6>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
@@ -724,8 +777,18 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'config.link', false>;
+    card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    item_count: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 24;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<12>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
@@ -823,6 +886,15 @@ export interface MetajobBlockPageHeader extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    bg_overlay: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 0.1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0.7>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
@@ -857,6 +929,21 @@ export interface MetajobBlockPricing extends Struct.ComponentSchema {
     description: Schema.Attribute.Text;
     price: Schema.Attribute.String;
     table: Schema.Attribute.Component<'metajob-config.meta-data', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MetajobBlockPublicPackage extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_public_packages';
+  info: {
+    description: 'Public package block';
+    displayName: 'Public Package';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -1426,6 +1513,7 @@ declare module '@strapi/strapi' {
       'metajob-block.applied-jobs': MetajobBlockAppliedJobs;
       'metajob-block.bookmark': MetajobBlockBookmark;
       'metajob-block.candidate-filter': MetajobBlockCandidateFilter;
+      'metajob-block.category-filter': MetajobBlockCategoryFilter;
       'metajob-block.company-filter': MetajobBlockCompanyFilter;
       'metajob-block.contact': MetajobBlockContact;
       'metajob-block.experience': MetajobBlockExperience;
@@ -1440,6 +1528,7 @@ declare module '@strapi/strapi' {
       'metajob-block.page-header': MetajobBlockPageHeader;
       'metajob-block.portfolio': MetajobBlockPortfolio;
       'metajob-block.pricing': MetajobBlockPricing;
+      'metajob-block.public-package': MetajobBlockPublicPackage;
       'metajob-config.message': MetajobConfigMessage;
       'metajob-config.meta-data': MetajobConfigMetaData;
       'metajob-config.relations': MetajobConfigRelations;

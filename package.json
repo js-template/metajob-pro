@@ -1,6 +1,6 @@
 {
   "name": "metajob-pro",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,8 +14,7 @@
   "license": "EULA",
   "dependencies": {
     "@changesets/cli": "^2.28.1",
-    "@jstemplate/metajob-theme": "0.0.4",
-    "next": "^14.2.24"
+    "@jstemplate/metajob-theme": "0.0.7"
   },
   "devDependencies": {
     "prettier": "latest",

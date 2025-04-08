@@ -4,6 +4,8 @@ export type IBannerBlock = {
    content?: {
       sub_title: string
       title: string
+      title_color?: string
+      sub_title_color: string
       variation?: string
    }
    search: {
@@ -12,8 +14,26 @@ export type IBannerBlock = {
       category_placeholder: string
       button_placeholder: string
    }
+   job_count_placeholder?: string
+   company_count_placeholder?: string
+   resume_count_placeholder?: string
+   show_count: boolean
    image?: {
       url: string
+   }
+   bg_overlay?: number
+   button?: {
+      label: string
+      link: string
+      target: string
+      disabled: boolean
+   }
+   style?: {
+      color?: any
+      backgroundColor?: any
+      mobile: number
+      tab: number
+      desktop: number
    }
 }
 
@@ -21,11 +41,8 @@ export type ICategory = {
    title: string
 }
 
-type UserRole = {
-   id: number
-   name: string
-   description: string
-   type: string
-   createdAt: Date
-   updatedAt: Date
+export type ICountData = {
+   job: number
+   company: number
+   resume: number
 }

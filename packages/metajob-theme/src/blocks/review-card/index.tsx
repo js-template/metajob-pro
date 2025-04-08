@@ -15,7 +15,7 @@ export const ReviewCard = async ({ block, language }: Props) => {
       "api/metajob-backend/testimonials",
       {
          populate: "*",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

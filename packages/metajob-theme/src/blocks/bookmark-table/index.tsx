@@ -96,7 +96,7 @@ export const BookmarkTable = ({ block, language }: Props) => {
                      populate: "*"
                   }
                },
-               locale: language ?? ["en"]
+               locale: language ?? "en"
             },
             "no-store"
          )

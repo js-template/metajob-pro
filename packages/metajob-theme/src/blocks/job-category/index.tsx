@@ -19,9 +19,13 @@ export const JobCategory = async ({ block, language }: Props) => {
                fields: ["url"]
             }
          },
-         fields: ["title"],
+         pagination: {
+            pageSize: block?.item_count || 12,
+            page: 1
+         },
+         fields: ["title", "description"],
          publicationState: "live",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

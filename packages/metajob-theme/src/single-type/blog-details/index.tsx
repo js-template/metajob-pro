@@ -25,7 +25,7 @@ export const BlogDetails = async ({ data, block, language }: Props) => {
             page: 1
          },
          publicationState: "live",
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -46,7 +46,7 @@ export const BlogDetails = async ({ data, block, language }: Props) => {
             pageSize: 10, //fetch 10 blog-categories
             page: 1
          },
-         locale: language ?? ["en"]
+         locale: language ?? "en"
       },
       "no-store"
    )

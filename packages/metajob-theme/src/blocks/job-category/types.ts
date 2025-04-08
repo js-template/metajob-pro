@@ -18,12 +18,18 @@ export type ICategoryCardBlock = {
       label: string
       link: string
    }
-   // category: ICategories
+   card_button?: {
+      label: string
+      link: string
+   }
    content?: {
       sub_title: string
       title: string
-      variation: string
+      title_color?: string
+      sub_title_color?: string
+      variation?: string
    }
+   item_count?: number
 }
 
 export type ISingleCategory = {
