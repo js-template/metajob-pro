@@ -746,6 +746,15 @@ export interface MetajobBlockJobCard extends Struct.ComponentSchema {
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    item_count: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 18;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<6>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }

@@ -28,6 +28,10 @@ export const JobCard = async ({ block, language }: Props) => {
                fields: ["title"]
             }
          },
+         pagination: {
+            pageSize: block?.item_count || 6,
+            page: 1
+         },
          locale: language ?? "en"
       },
       "no-store"

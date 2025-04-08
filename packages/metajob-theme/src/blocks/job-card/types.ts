@@ -30,6 +30,7 @@ export type IJobCardBlock = {
    card_button?: {
       label?: string
    }
+   item_count?: number
 }
 
 export type ISingleJob = {
