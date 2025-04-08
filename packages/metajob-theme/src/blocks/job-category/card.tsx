@@ -36,7 +36,7 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
                {/* category-items */}
                {categoryData && categoryData?.length > 0 && (
                   <Grid container spacing={2}>
-                     {categoryData?.slice(0, 12)?.map((ctg: ISingleCategory) => (
+                     {categoryData?.map((ctg: ISingleCategory) => (
                         <Grid item xs={mobile || 12} sm={4} md={tab || 3} lg={desktop || 2} key={ctg.id}>
                            <CardItemWithVariation
                               data={ctg}

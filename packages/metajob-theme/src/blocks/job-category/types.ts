@@ -29,6 +29,7 @@ export type ICategoryCardBlock = {
       sub_title_color?: string
       variation?: string
    }
+   item_count?: number
 }
 
 export type ISingleCategory = {
