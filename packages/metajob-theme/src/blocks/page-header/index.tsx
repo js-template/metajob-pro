@@ -11,7 +11,7 @@ type Props = {
 
 export const PageHeader = ({ block }: Props) => {
    const { theme: mode } = useTheme()
-   const { title, image, style } = block || {}
+   const { title, image, bg_overlay, style } = block || {}
    const { backgroundColor, color } = style || {}
    const bgImage = image?.url
    return (
@@ -37,8 +37,8 @@ export const PageHeader = ({ block }: Props) => {
                   bottom: 0,
                   backgroundColor:
                      mode === "light"
-                        ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.7)
-                        : (theme) => hexToRGBA(backgroundColor || theme.palette.background.default, 0.7),
+                        ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, bg_overlay || 0.7)
+                        : (theme) => hexToRGBA(theme.palette.background.default, bg_overlay || 0.7),
                   zIndex: 1
                },
                "& > *": {
@@ -51,8 +51,8 @@ export const PageHeader = ({ block }: Props) => {
                fontWeight={{ sm: 700, xs: 600 }}
                variant={"h1"}
                sx={{
-                  color: (theme) =>color ?? theme.palette.primary.contrastText,
-                }}>
+                  color: (theme) => color ?? theme.palette.primary.contrastText
+               }}>
                {title}
             </Typography>
          </Stack>

@@ -886,6 +886,15 @@ export interface MetajobBlockPageHeader extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    bg_overlay: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 0.1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0.7>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
