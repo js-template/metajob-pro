@@ -710,6 +710,15 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
+    bg_overlay: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 0.1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0.7>;
     button: Schema.Attribute.Component<'config.link', false>;
     company_count_placeholder: Schema.Attribute.String;
     content: Schema.Attribute.Component<'config.section-title', false>;

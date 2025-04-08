@@ -19,6 +19,7 @@ export type IBannerBlock = {
    image?: {
       url: string
    }
+   bg_overlay?: number
    button?: {
       label: string
       link: string

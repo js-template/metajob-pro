@@ -34,6 +34,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
       content,
       search,
       image,
+      bg_overlay,
       job_count_placeholder,
       company_count_placeholder,
       resume_count_placeholder,
@@ -101,8 +102,8 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                bottom: 0,
                backgroundColor:
                   mode === "light"
-                     ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.7)
-                     : (theme) => hexToRGBA(theme.palette.background.default, 0.7),
+                     ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, bg_overlay || 0.7)
+                     : (theme) => hexToRGBA(theme.palette.background.default, bg_overlay || 0.7),
                zIndex: 1
             },
             "& > *": {
