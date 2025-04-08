@@ -35,6 +35,12 @@
       "type": "component",
       "repeatable": false,
       "component": "config.style-section"
+    },
+    "item_count": {
+      "type": "integer",
+      "default": 12,
+      "min": 1,
+      "max": 24
     }
   }
 }

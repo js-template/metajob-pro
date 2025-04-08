@@ -22,7 +22,7 @@ export const BlogCard = async ({ block, data, language }: Props) => {
          },
          sort: ["createdAt:desc"],
          pagination: {
-            pageSize: 4,
+            pageSize: block?.item_count || 3,
             page: 1
          },
          locale: language ?? "en"

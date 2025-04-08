@@ -4,6 +4,8 @@ export type IBannerBlock = {
    content?: {
       sub_title: string
       title: string
+      title_color?: string
+      sub_title_color: string
       variation?: string
    }
    search: {
@@ -19,6 +21,7 @@ export type IBannerBlock = {
    image?: {
       url: string
    }
+   bg_overlay?: number
    button?: {
       label: string
       link: string

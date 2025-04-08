@@ -34,6 +34,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
       content,
       search,
       image,
+      bg_overlay,
       job_count_placeholder,
       company_count_placeholder,
       resume_count_placeholder,
@@ -43,7 +44,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
    } = block || {}
    const { backgroundColor, color } = style || {}
    const { label, link, target, disabled } = button || {}
-   const { title, sub_title } = content || {}
+   const { title, sub_title, title_color, sub_title_color } = content || {}
    const { search_placeholder, location_placeholder, category_placeholder, button_placeholder } = search || {}
    const bannerBackground = image?.url || ""
 
@@ -101,8 +102,8 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                bottom: 0,
                backgroundColor:
                   mode === "light"
-                     ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.7)
-                     : (theme) => hexToRGBA(theme.palette.background.default, 0.7),
+                     ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, bg_overlay || 0.7)
+                     : (theme) => hexToRGBA(theme.palette.background.default, bg_overlay || 0.7),
                zIndex: 1
             },
             "& > *": {
@@ -128,7 +129,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      maxWidth={650}
                      textAlign={"center"}
                      sx={{
-                        color: (theme) => color || theme.palette.primary.contrastText
+                        color: (theme) => title_color || theme.palette.primary.contrastText
                      }}>
                      {title}
                   </Typography>
@@ -138,7 +139,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      textAlign={"center"}
                      fontWeight={400}
                      sx={{
-                        color: (theme) => color || theme.palette.primary.contrastText
+                        color: (theme) => sub_title_color || theme.palette.primary.contrastText
                      }}>
                      {sub_title}
                   </Typography>

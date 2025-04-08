@@ -2,7 +2,8 @@
 
 import React from "react"
 import _ from "lodash"
-import { Box, Container, Icon, IconButton, Stack, Typography, useTheme } from "@mui/material"
+import { useTheme } from "next-themes"
+import { Box, Container, Icon, IconButton, Stack, Typography, useTheme as muiTheme } from "@mui/material"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick-theme.css"
 import "slick-carousel/slick/slick.css"
@@ -17,10 +18,11 @@ type Props = {
 }
 
 export const ReviewCardClient = ({ block, testimonialData }: Props) => {
-   const theme = useTheme()
+   const { theme: mode } = useTheme()
+   const theme = muiTheme()
 
    // destructure the block
-   const { content, empty, style } = block || {}
+   const { content, empty, style, description_color } = block || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
 
    const slider = React.useRef<Slider | null>(null)
@@ -70,7 +72,11 @@ export const ReviewCardClient = ({ block, testimonialData }: Props) => {
       ]
    }
    return (
-      <Stack py={8} bgcolor={backgroundColor ? backgroundColor : theme.palette.background.default}>
+      <Stack
+         py={8}
+         bgcolor={
+            mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
+         }>
          <Container maxWidth='lg' sx={{ py: 2 }}>
             <Stack spacing={8}>
                <Stack spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
@@ -81,7 +87,7 @@ export const ReviewCardClient = ({ block, testimonialData }: Props) => {
                   {testimonialData && testimonialData?.length > 1 && (
                      <Slider {...settings} ref={slider}>
                         {_.map(testimonialData, (review, index) => (
-                           <CardItem key={index} data={review} />
+                           <CardItem key={index} data={review} color={color} description_color={description_color} />
                         ))}
                      </Slider>
                   )}
@@ -89,7 +95,7 @@ export const ReviewCardClient = ({ block, testimonialData }: Props) => {
                      <Box sx={{ display: "flex", justifyContent: "flex-start", width: "100%" }}>
                         <Box sx={{ maxWidth: 600 }}>
                            {_.map(testimonialData, (review, index) => (
-                              <CardItem key={index} data={review} />
+                              <CardItem key={index} data={review} color={color} description_color={description_color} />
                            ))}
                         </Box>
                      </Box>

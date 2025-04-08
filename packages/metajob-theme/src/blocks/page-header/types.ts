@@ -3,6 +3,7 @@ export type IPageHeaderBlock = {
    image?: {
       url: string
    }
+   bg_overlay?: number
    style?: {
       color?: any
       backgroundColor?: any

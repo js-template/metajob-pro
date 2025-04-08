@@ -4,7 +4,9 @@ export type IReviewsBlock = {
    content?: {
       sub_title: string
       title: string
-      variation: string
+      title_color?: string
+      sub_title_color?: string
+      variation?: string
    }
    style?: {
       id: 25
@@ -19,6 +21,7 @@ export type IReviewsBlock = {
       title: string
       description: string
    }
+   description_color?: string
 }
 export type ISingleReview = {
    id: number

@@ -25,8 +25,11 @@ export type ICategoryCardBlock = {
    content?: {
       sub_title: string
       title: string
-      variation: string
+      title_color?: string
+      sub_title_color?: string
+      variation?: string
    }
+   item_count?: number
 }
 
 export type ISingleCategory = {
