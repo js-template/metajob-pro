@@ -1,14 +1,18 @@
 "use client"
 import Image from "next/image"
 import NextLink from "next/link"
+import { useTheme } from "next-themes"
 import { Stack, Box, Typography, Card } from "@mui/material"
 import { ISingleCategory } from "./types"
 
 type Props = {
    data: ISingleCategory
+   color?: string
 }
 
-export const CategoryCardOne = ({ data }: Props) => {
+export const CategoryCardOne = ({ data, color }: Props) => {
+   const { theme: mode } = useTheme()
+
    const { title, image } = data || {}
    const logo = image?.url || "https://placehold.co/60/png"
 
@@ -48,7 +52,8 @@ export const CategoryCardOne = ({ data }: Props) => {
          <Stack>
             <Typography
                sx={{
-                  color: (theme) => theme.palette.text.primary
+                  color: (theme) =>
+                     mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                }}
                fontWeight={400}
                fontSize={16}

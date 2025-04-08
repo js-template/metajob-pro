@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image"
 import NextLink from "next/link"
+import { useTheme } from "next-themes"
 import { Stack, Box, Typography, Card, Icon } from "@mui/material"
 import { ISingleCategory } from "./types"
 import { hexToRGBA } from "../../../../lib/hex-to-rgba"
@@ -8,8 +9,11 @@ import { hexToRGBA } from "../../../../lib/hex-to-rgba"
 type Props = {
    data: ISingleCategory
    button_label?: string
+   color?: string
+   backgroundColor?: string
 }
-export const CategoryCardTwo = ({ data, button_label }: Props) => {
+export const CategoryCardTwo = ({ data, button_label, color, backgroundColor }: Props) => {
+   const { theme: mode } = useTheme()
    const { title, description, image } = data || {}
    const logo = image?.url || "https://placehold.co/60/png"
 
@@ -40,7 +44,7 @@ export const CategoryCardTwo = ({ data, button_label }: Props) => {
                className='iconBox'
                sx={{
                   color: (theme) => theme.palette.primary.main,
-                  bgcolor: (theme) => hexToRGBA(theme.palette.primary.main, 0.1),
+                  bgcolor: (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, 0.1),
                   borderRadius: "12px",
                   width: "fit-content",
                   px: 2,
@@ -54,7 +58,8 @@ export const CategoryCardTwo = ({ data, button_label }: Props) => {
          <Stack spacing={1}>
             <Typography
                sx={{
-                  color: (theme) => theme.palette.text.primary
+                  color: (theme) =>
+                     mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                }}
                fontWeight={400}
                fontSize={16}
@@ -86,7 +91,7 @@ export const CategoryCardTwo = ({ data, button_label }: Props) => {
             <Stack
                sx={{
                   mt: 2,
-                  color: (theme) => theme.palette.primary.main,
+                  color: (theme) => backgroundColor || theme.palette.primary.main,
                   width: "100%"
                }}
                direction={"row"}
