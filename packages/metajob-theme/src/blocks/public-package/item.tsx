@@ -1,8 +1,8 @@
 "use client"
+import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 import { useSession } from "next-auth/react"
-
 import {
    Box,
    Button,
@@ -13,18 +13,20 @@ import {
    ListItemIcon,
    ListItemText,
    Typography,
-   useTheme
+   useTheme as muiTheme
 } from "@mui/material"
 import CIcon from "../../components/common/icon"
 import { IPackageData } from "./types"
 
 type Props = {
    data?: IPackageData
+   color?: string
 }
-export const PackageItem = ({ data }: Props) => {
-   const { data: session } = useSession()
-   const theme = useTheme()
+export const PackageItem = ({ data, color }: Props) => {
+   const theme = muiTheme()
+   const { theme: mode } = useTheme()
    const router = useRouter()
+   const { data: session } = useSession()
 
    const { title, description, price, frequency, feature, button } = data || {}
 
@@ -59,6 +61,8 @@ export const PackageItem = ({ data }: Props) => {
                   sx={{
                      mb: 3,
                      fontWeight: 700,
+                     color: (theme) =>
+                        mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
                      fontSize: {
                         xs: "32px",
                         sm: "48px"
@@ -75,6 +79,8 @@ export const PackageItem = ({ data }: Props) => {
                   <Typography
                      variant='body1'
                      sx={{
+                        color: (theme) =>
+                           mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
                         fontSize: {
                            xs: "20px",
                            sm: "24px"
@@ -87,7 +93,14 @@ export const PackageItem = ({ data }: Props) => {
 
                {/* Description */}
                {description && (
-                  <Typography variant='body2' sx={{ mt: 0.5, mb: 2 }}>
+                  <Typography
+                     variant='body2'
+                     sx={{
+                        mt: 0.5,
+                        mb: 2,
+                        color: (theme) =>
+                           mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                     }}>
                      {description}
                   </Typography>
                )}
@@ -95,7 +108,13 @@ export const PackageItem = ({ data }: Props) => {
                {/* Features */}
                {feature && feature?.length > 0 && (
                   <Box sx={{ mb: 3.5 }}>
-                     <Typography variant='subtitle2' sx={{ mb: 1 }}>
+                     <Typography
+                        variant='subtitle2'
+                        sx={{
+                           mb: 1,
+                           color: (theme) =>
+                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                        }}>
                         Includes:
                      </Typography>
                      {/* Features List */}
@@ -119,6 +138,10 @@ export const PackageItem = ({ data }: Props) => {
                                  primary={feature?.key}
                                  sx={{
                                     ".MuiTypography-root": {
+                                       color: (theme) =>
+                                          mode === "light"
+                                             ? color || theme.palette.text.primary
+                                             : theme.palette.text.primary,
                                        fontSize: "14px",
                                        fontWeight: 400
                                     }
@@ -130,6 +153,10 @@ export const PackageItem = ({ data }: Props) => {
                                  primary={feature?.value}
                                  sx={{
                                     ".MuiTypography-root": {
+                                       color: (theme) =>
+                                          mode === "light"
+                                             ? color || theme.palette.text.primary
+                                             : theme.palette.text.primary,
                                        textAlign: "center",
                                        fontSize: "14px",
                                        fontWeight: 400
@@ -155,7 +182,6 @@ export const PackageItem = ({ data }: Props) => {
                         borderRadius: "6px",
                         textTransform: "inherit",
                         boxShadow: "none",
-                        border: "1px solid",
                         fontSize: "16px",
                         "&:hover": {
                            backgroundColor: theme.palette.secondary.dark,

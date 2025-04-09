@@ -948,10 +948,9 @@ export interface MetajobBlockPublicPackage extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    description: Schema.Attribute.String;
+    content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
   };
 }
 

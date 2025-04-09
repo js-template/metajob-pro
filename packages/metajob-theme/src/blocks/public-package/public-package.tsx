@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import _ from "lodash"
 import { Container, Grid, Stack, Typography, useTheme as muiTheme } from "@mui/material"
 import { PackageItem } from "./item"
@@ -13,14 +14,19 @@ type Props = {
 }
 
 const PublicPackageClient = ({ block, packageData }: Props) => {
+   const { theme: mode } = useTheme()
    const theme = muiTheme()
 
    // destructure the block
-   const { title, description, empty, style } = block || {}
+   const { content, empty, style } = block || {}
+   const { title, sub_title, title_color, sub_title_color } = content || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
 
    return (
-      <Stack bgcolor={backgroundColor ? backgroundColor : theme.palette.background.paper}>
+      <Stack
+         bgcolor={
+            mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
+         }>
          <Container maxWidth='md'>
             <Stack pt={8} pb={12} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* header  */}
@@ -28,7 +34,8 @@ const PublicPackageClient = ({ block, packageData }: Props) => {
                   {title && (
                      <Typography
                         sx={{
-                           color: color ?? theme.palette.text.primary,
+                           color:
+                              mode === "light" ? title_color || theme.palette.text.primary : theme.palette.text.primary,
                            fontWeight: 700,
                            fontSize: "32px",
                            textAlign: "center"
@@ -36,14 +43,17 @@ const PublicPackageClient = ({ block, packageData }: Props) => {
                         {title}
                      </Typography>
                   )}
-                  {description && (
+                  {sub_title && (
                      <Typography
                         sx={{
-                           color: hexToRGBA(color ?? theme.palette.text.primary, 0.5),
+                           color:
+                              mode === "light"
+                                 ? sub_title_color || hexToRGBA(theme.palette.text.primary, 0.5)
+                                 : hexToRGBA(theme.palette.text.primary, 0.5),
                            fontSize: "16px",
                            textAlign: "center"
                         }}>
-                        {description}
+                        {sub_title}
                      </Typography>
                   )}
                </Stack>
@@ -52,7 +62,7 @@ const PublicPackageClient = ({ block, packageData }: Props) => {
                   <Grid container spacing={2}>
                      {_.map(packageData, (item, index) => (
                         <Grid key={index} item xs={mobile || 12} sm={tab || 6} lg={desktop || 4}>
-                           <PackageItem data={item} />
+                           <PackageItem data={item} color={color} />
                         </Grid>
                      ))}
                   </Grid>

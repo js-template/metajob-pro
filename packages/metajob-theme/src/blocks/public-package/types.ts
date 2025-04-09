@@ -1,8 +1,13 @@
 export type IPublicPackageBlock = {
    id: number
    __component: string
-   description?: string
-   title?: string
+   content?: {
+      title?: string
+      sub_title?: string
+      title_color?: string
+      sub_title_color?: string
+      variation: string
+   }
    style?: {
       id: 25
       color?: any
