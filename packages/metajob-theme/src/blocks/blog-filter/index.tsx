@@ -32,7 +32,7 @@ export const BlogFilter = ({ block, language }: Props) => {
    const theme = muiTheme()
 
    // destructure the block
-   const { title, description, search_placeholder, empty, style } = block || {}
+   const { title, description, search_placeholder, empty, style, description_color } = block || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
 
    const [searchOptions, setSearchOptions] = useState({
@@ -130,7 +130,12 @@ export const BlogFilter = ({ block, language }: Props) => {
                   <Grid container spacing={2}>
                      {_.map(recentBlogs, (item) => (
                         <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
-                           <CardItem data={item} button_label={block?.card_button} />
+                           <CardItem
+                              data={item}
+                              button_label={block?.card_button}
+                              color={color}
+                              description_color={description_color}
+                           />
                         </Grid>
                      ))}
                   </Grid>

@@ -61,6 +61,7 @@ export interface BlockBlogFilter extends Struct.ComponentSchema {
   attributes: {
     card_button: Schema.Attribute.String;
     description: Schema.Attribute.Text;
+    description_color: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     search_placeholder: Schema.Attribute.String;
     style: Schema.Attribute.Component<'config.style-section', false>;

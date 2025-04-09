@@ -5,6 +5,7 @@ export type IBogFilterBlock = {
    title?: string
    search_placeholder?: string
    card_button?: string
+   description_color?: string
    style?: {
       id: 25
       color?: any

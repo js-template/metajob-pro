@@ -33,6 +33,9 @@
       "type": "component",
       "repeatable": false,
       "component": "config.style-section"
+    },
+    "description_color": {
+      "type": "string"
     }
   }
 }
