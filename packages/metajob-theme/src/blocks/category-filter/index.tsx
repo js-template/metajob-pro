@@ -1,6 +1,16 @@
 "use client"
 import { useEffect, useState } from "react"
-import { Container, Grid, Icon, Pagination, PaginationItem, Stack, Typography, useTheme } from "@mui/material"
+import { useTheme } from "next-themes"
+import {
+   Container,
+   Grid,
+   Icon,
+   Pagination,
+   PaginationItem,
+   Stack,
+   Typography,
+   useTheme as muiTheme
+} from "@mui/material"
 import { CardItemWithVariation } from "./item"
 import ItemLoader from "./loader"
 import { ICategoryFilterBlock, ISingleCategory } from "./types"
@@ -14,10 +24,11 @@ type Props = {
 }
 
 export const CategoryFilter = ({ block, language }: Props) => {
-   const theme = useTheme()
+   const theme = muiTheme()
+   const { theme: mode } = useTheme()
    // destructure the block
    const { content, card_button, empty, style } = block || {}
-   const { title, sub_title, variation } = content || {}
+   const { title, sub_title, variation, title_color, sub_title_color } = content || {}
    const { desktop, tab, mobile, backgroundColor, color } = style || {}
 
    const [page, setPage] = useState<number>(1)
@@ -66,7 +77,9 @@ export const CategoryFilter = ({ block, language }: Props) => {
 
    return (
       <Stack
-         bgcolor={backgroundColor ? backgroundColor : theme.palette.background.default}
+         bgcolor={
+            mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
+         }
          sx={{ minHeight: "calc(100vh - 300px)" }}>
          <Container maxWidth='lg'>
             <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
@@ -76,7 +89,10 @@ export const CategoryFilter = ({ block, language }: Props) => {
                      {title && (
                         <Typography
                            sx={{
-                              color: color ?? theme.palette.text.primary,
+                              color:
+                                 mode === "light"
+                                    ? title_color || theme.palette.text.primary
+                                    : theme.palette.text.primary,
                               fontWeight: 700,
                               fontSize: "32px",
                               textAlign: "center"
@@ -87,7 +103,10 @@ export const CategoryFilter = ({ block, language }: Props) => {
                      {sub_title && (
                         <Typography
                            sx={{
-                              color: hexToRGBA(color ?? theme.palette.text.primary, 0.5),
+                              color:
+                                 mode === "light"
+                                    ? sub_title_color || hexToRGBA(theme.palette.text.primary, 0.5)
+                                    : hexToRGBA(theme.palette.text.primary, 0.5),
                               fontSize: "16px",
                               textAlign: "center"
                            }}>
@@ -102,7 +121,13 @@ export const CategoryFilter = ({ block, language }: Props) => {
                      {categoryData?.map((item: any, index: number) => {
                         return (
                            <Grid item xs={mobile || 12} sm={tab || 4} md={desktop || 3} key={index}>
-                              <CardItemWithVariation data={item} button_label={card_button} variation={variation} />
+                              <CardItemWithVariation
+                                 data={item}
+                                 button_label={card_button}
+                                 variation={variation}
+                                 color={color}
+                                 backgroundColor={backgroundColor}
+                              />
                            </Grid>
                         )
                      })}

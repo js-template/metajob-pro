@@ -4,6 +4,8 @@ export type ICategoryFilterBlock = {
    content?: {
       title?: string
       sub_title?: string
+      title_color?: string
+      sub_title_color?: string
       variation: string
    }
    search_placeholder?: string
