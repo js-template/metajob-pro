@@ -7,7 +7,6 @@ export type ICompanyFilterBlockData = {
    card_button?: {
       label?: string
    }
-   show_filter: boolean
    search: {
       title?: string
       search_placeholder?: string
@@ -18,6 +17,14 @@ export type ICompanyFilterBlockData = {
       title: string
       description: string
    }
+   style?: {
+      color?: any
+      backgroundColor?: any
+      mobile: number
+      tab: number
+      desktop: number
+   }
+   sidebar?: "Left Sidebar" | "Right Sidebar" | "No Sidebar"
 }
 
 export type ISingleCompany = {

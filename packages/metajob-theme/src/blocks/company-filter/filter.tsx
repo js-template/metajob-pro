@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import _ from "lodash"
 import { Divider, FormControl, MenuItem, Select, Stack, TextField, Typography, Button } from "@mui/material"
 import { Card } from "../../components/common/card"
@@ -15,9 +16,12 @@ type Props = {
    formData: ICompanyFilterProps
    loading: boolean
    categoryData?: ISingleCategory[]
+   color?: string
 }
 
-const CompanyFilterSection = ({ search, formData, setFormData, loading, categoryData }: Props) => {
+const CompanyFilterSection = ({ search, formData, setFormData, loading, categoryData, color }: Props) => {
+   const { theme: mode } = useTheme()
+
    const { title: searchTitle, search_placeholder, category_placeholder, button_placeholder } = search || {}
 
    return (
@@ -32,7 +36,8 @@ const CompanyFilterSection = ({ search, formData, setFormData, loading, category
                   fontSize={16}
                   fontWeight={700}
                   sx={{
-                     color: (theme) => theme.palette.text.primary
+                     color: (theme) =>
+                        mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                   }}>
                   {searchTitle}
                </Typography>

@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect, useState } from "react"
+import { useTheme } from "next-themes"
 import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
 import CompanyFilterSection from "./filter"
 import { ICompanyFilterBlockData, ICompanyFilterProps, ISingleCategory, ISingleCompany } from "./types"
@@ -13,7 +14,13 @@ type Props = {
 }
 
 const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
-   const { title, description, show_filter, search, empty } = block || {}
+   const { theme: mode } = useTheme()
+
+   const { title, description, search, empty, style, sidebar } = block || {}
+   const { backgroundColor, color } = style || {}
+   const isRightSidebar = sidebar === "Right Sidebar"
+   // const isLeftSidebar = !sidebar || sidebar === "Left Sidebar"
+   const isNoSidebar = sidebar === "No Sidebar"
 
    const [page, setPage] = React.useState<number>(1)
    const [formData, setFormData] = React.useState<ICompanyFilterProps>({
@@ -82,10 +89,14 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
    }, [page, formData])
 
    return (
-      <Stack>
+      <Stack
+         sx={{
+            bgcolor: (theme) =>
+               mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
+         }}>
          <Container maxWidth='lg' sx={{ py: 6 }}>
-            <Grid container spacing={4}>
-               {show_filter && (
+            <Grid container spacing={4} direction={isRightSidebar ? "row-reverse" : "row"}>
+               {!isNoSidebar && (
                   <Grid item xs={12} md={3}>
                      <CompanyFilterSection
                         search={search}
@@ -93,14 +104,21 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
                         setFormData={setFormData}
                         loading={isLoading}
                         categoryData={categoryData}
+                        color={color}
                      />
                   </Grid>
                )}
 
                {/* cards and pagination  */}
-               <Grid item xs={12} md={show_filter ? 9 : 12}>
+               <Grid item xs={12} md={!isNoSidebar ? 9 : 12}>
                   <Stack spacing={4}>
-                     <CompanyList companies={companyData} loading={isLoading} error={companyError} block={block} />
+                     <CompanyList
+                        companies={companyData}
+                        loading={isLoading}
+                        error={companyError}
+                        block={block}
+                        color={color}
+                     />
                      {/* pagination  */}
                      {!companyError && totalPage > 0 && (
                         <Stack

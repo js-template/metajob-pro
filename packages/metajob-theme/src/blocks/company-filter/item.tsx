@@ -7,8 +7,9 @@ import { ISingleCompany } from "./types"
 type Props = {
    data: ISingleCompany
    button_label?: string
+   color?: string
 }
-const CompanyCardItem = ({ data, button_label }: Props) => {
+const CompanyCardItem = ({ data, button_label, color }: Props) => {
    const { theme: mode } = useTheme()
 
    const { name, tagline, slug, revenue, company_size, location, logo } = data || {}
@@ -54,7 +55,8 @@ const CompanyCardItem = ({ data, button_label }: Props) => {
                   fontSize={16}
                   fontWeight={400}
                   sx={{
-                     color: (theme) => theme.palette.text.primary
+                     color: (theme) =>
+                        mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                   }}
                   textAlign={"center"}>
                   {name}
