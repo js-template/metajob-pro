@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import { Button, Divider, FormControl, MenuItem, Select, Stack, TextField, Typography } from "@mui/material"
 import _ from "lodash"
 import { Card } from "../../components/common/card"
@@ -16,6 +17,7 @@ type Props = {
    //handleSubmitForm: (e: React.FormEvent<HTMLFormElement>) => void;
    loading: boolean
    categoryData?: ISingleCategory[]
+   color?: string
 }
 
 export default function CandidateFilterSection({
@@ -23,8 +25,10 @@ export default function CandidateFilterSection({
    loading,
    filterFormData,
    setFilterFormData,
-   categoryData
+   categoryData,
+   color
 }: Props) {
+   const { theme: mode } = useTheme()
    const { title: searchTitle, search_placeholder, category_placeholder, button_placeholder } = search || {}
 
    return (
@@ -39,7 +43,8 @@ export default function CandidateFilterSection({
                   fontSize={16}
                   fontWeight={700}
                   sx={{
-                     color: (theme) => theme.palette.text.primary
+                     color: (theme) =>
+                        mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                   }}>
                   {searchTitle}
                </Typography>

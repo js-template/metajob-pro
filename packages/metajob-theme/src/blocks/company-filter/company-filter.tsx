@@ -19,7 +19,6 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
    const { title, description, search, empty, style, sidebar } = block || {}
    const { backgroundColor, color } = style || {}
    const isRightSidebar = sidebar === "Right Sidebar"
-   // const isLeftSidebar = !sidebar || sidebar === "Left Sidebar"
    const isNoSidebar = sidebar === "No Sidebar"
 
    const [page, setPage] = React.useState<number>(1)

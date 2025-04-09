@@ -5,7 +5,15 @@ import _ from "lodash"
 import { useTheme } from "next-themes"
 import { ISingleCandidate } from "./types"
 
-const CandidateCardItem = ({ data, button_label }: { data: ISingleCandidate; button_label?: string }) => {
+const CandidateCardItem = ({
+   data,
+   button_label,
+   color
+}: {
+   data: ISingleCandidate
+   button_label?: string
+   color?: string
+}) => {
    const { theme: mode } = useTheme()
 
    const { name, tagline, contact, slug, user } = data || {}
@@ -66,7 +74,8 @@ const CandidateCardItem = ({ data, button_label }: { data: ISingleCandidate; but
                   fontSize={18}
                   fontWeight={400}
                   sx={{
-                     color: (theme) => theme.palette.text.primary
+                     color: (theme) =>
+                        mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                   }}
                   textAlign={"center"}>
                   {name}
