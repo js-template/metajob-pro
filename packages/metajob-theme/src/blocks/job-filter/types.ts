@@ -18,6 +18,14 @@ export type IJobFilterData = {
       sort_placeholder: string
       button_placeholder: string
    }
+   style?: {
+      color?: any
+      backgroundColor?: any
+      mobile: number
+      tab: number
+      desktop: number
+   }
+   sidebar?: "Left Sidebar" | "Right Sidebar" | "No Sidebar"
 }
 
 export type ISingleCategory = {

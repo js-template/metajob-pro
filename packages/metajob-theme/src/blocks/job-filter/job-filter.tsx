@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { useTheme } from "next-themes"
 import _ from "lodash"
 import {
    Stack,
@@ -40,6 +41,8 @@ type Props = {
 }
 
 export const JobFilterClient = ({ block, language, categoryData, jobTypesData, jobExperienceData }: Props) => {
+   const { theme: mode } = useTheme()
+
    const searchParams = useSearchParams()
 
    // get params data
@@ -173,7 +176,8 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
 
    // destructure  search data
 
-   const { search, result_placeholder, card_button } = block || {}
+   const { search, result_placeholder, card_button, style, sidebar } = block || {}
+   const { backgroundColor, color } = style || {}
    const {
       title: searchTitle,
       search_placeholder,
@@ -185,11 +189,19 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
       button_placeholder
    } = search || {}
 
+   const isRightSidebar = sidebar === "Right Sidebar"
+   // const isLeftSidebar = !sidebar || sidebar === "Left Sidebar"
+   const isNoSidebar = sidebar === "No Sidebar"
+
    return (
-      <Stack>
+      <Stack
+         sx={{
+            bgcolor: (theme) =>
+               mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
+         }}>
          <Container maxWidth='lg' sx={{ py: 6 }}>
-            <Grid container spacing={4}>
-               {search && (
+            <Grid container spacing={4} direction={isRightSidebar ? "row-reverse" : "row"}>
+               {!isNoSidebar && search && (
                   <Grid item xs={12} md={3}>
                      <Card
                         sx={{
@@ -207,7 +219,10 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                  fontSize={16}
                                  fontWeight={700}
                                  sx={{
-                                    color: (theme) => theme.palette.text.secondary
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || theme.palette.text.secondary
+                                          : theme.palette.text.secondary
                                  }}>
                                  {searchTitle}
                               </Typography>
@@ -326,7 +341,10 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                        fontSize={16}
                                        fontWeight={700}
                                        sx={{
-                                          color: (theme) => theme.palette.text.secondary
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? color || theme.palette.text.secondary
+                                                : theme.palette.text.secondary
                                        }}>
                                        {type_placeholder || "Job Type"}
                                     </Typography>
@@ -369,7 +387,10 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                        fontSize={16}
                                        fontWeight={700}
                                        sx={{
-                                          color: (theme) => theme.palette.text.secondary
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? color || theme.palette.text.secondary
+                                                : theme.palette.text.secondary
                                        }}>
                                        {experience_placeholder || "Job Experience"}
                                     </Typography>
@@ -416,7 +437,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                   </Grid>
                )}
 
-               <Grid item xs={12} md={search ? 9 : 12}>
+               <Grid item xs={12} md={!isNoSidebar && search ? 9 : 12}>
                   <Stack spacing={2}>
                      <Card
                         sx={{
@@ -432,7 +453,10 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                  fontSize={16}
                                  fontWeight={600}
                                  sx={{
-                                    color: (theme) => theme.palette.text.primary
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || theme.palette.text.primary
+                                          : theme.palette.text.primary
                                  }}
                                  component={"span"}
                                  variant='h4'
@@ -531,7 +555,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                            <Grid container spacing={2}>
                               {_.map(jobsData, (item: any, index: number) => (
                                  <Grid item xs={12} sm={6} md={4} key={index}>
-                                    <JobItem data={item} button_label={card_button?.label} />
+                                    <JobItem data={item} button_label={card_button?.label} color={color} />
                                  </Grid>
                               ))}
                            </Grid>
