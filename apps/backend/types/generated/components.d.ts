@@ -482,6 +482,15 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<12>;
     secondary_color: Schema.Attribute.String;
+    section_padding: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<8>;
     sub_header_color: Schema.Attribute.String;
     tab: Schema.Attribute.Integer &
       Schema.Attribute.Required &
@@ -785,6 +794,7 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    icon_type: Schema.Attribute.Enumeration<['Icon Bg', 'Simple']>;
     item_count: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
@@ -794,6 +804,8 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<12>;
+    show_description: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }

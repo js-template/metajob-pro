@@ -11,11 +11,11 @@ import {
    Typography,
    useTheme as muiTheme
 } from "@mui/material"
-import { CardItemWithVariation } from "./item"
 import ItemLoader from "./loader"
 import { ICategoryFilterBlock, ISingleCategory } from "./types"
 import { find } from "../../lib/strapi"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
+import { CategoryCardItem } from "../../components/cards/category-cards/category-card"
 
 type Props = {
    block: ICategoryFilterBlock
@@ -121,12 +121,13 @@ export const CategoryFilter = ({ block, language }: Props) => {
                      {categoryData?.map((item: any, index: number) => {
                         return (
                            <Grid item xs={mobile || 12} sm={tab || 4} md={desktop || 3} key={index}>
-                              <CardItemWithVariation
+                              <CategoryCardItem
                                  data={item}
-                                 button_label={card_button}
-                                 variation={variation}
+                                 // icon_type={icon_type}
+                                 // show_description={show_description}
+                                 // button_label={card_button?.label}
                                  color={color}
-                                 backgroundColor={backgroundColor}
+                                 // secondary_color={secondary_color}
                               />
                            </Grid>
                         )
