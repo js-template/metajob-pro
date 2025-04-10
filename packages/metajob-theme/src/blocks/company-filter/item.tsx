@@ -8,8 +8,9 @@ type Props = {
    data: ISingleCompany
    button_label?: string
    color?: string
+   secondary_color?: string
 }
-const CompanyCardItem = ({ data, button_label, color }: Props) => {
+const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) => {
    const { theme: mode } = useTheme()
 
    const { name, tagline, slug, revenue, company_size, location, logo } = data || {}
@@ -67,7 +68,8 @@ const CompanyCardItem = ({ data, button_label, color }: Props) => {
                   fontSize={14}
                   fontWeight={400}
                   sx={{
-                     color: (theme) => theme.palette.text.disabled
+                     color: (theme) =>
+                        mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled
                   }}
                   textAlign={"center"}>
                   {tagline}
@@ -82,14 +84,20 @@ const CompanyCardItem = ({ data, button_label, color }: Props) => {
                      fontSize='small'
                      className='icon-users'
                      sx={{
-                        color: (theme) => theme.palette.text.disabled
+                        color: (theme) =>
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.disabled
+                              : theme.palette.text.disabled
                      }}
                   />
                   <Typography
                      fontSize={14}
                      fontWeight={400}
                      sx={{
-                        color: (theme) => theme.palette.text.disabled
+                        color: (theme) =>
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.disabled
+                              : theme.palette.text.disabled
                      }}>
                      {company_size?.title} Employee
                   </Typography>
@@ -101,7 +109,10 @@ const CompanyCardItem = ({ data, button_label, color }: Props) => {
                      fontSize='small'
                      className='icon-dollar-sign'
                      sx={{
-                        color: (theme) => theme.palette.text.disabled
+                        color: (theme) =>
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.disabled
+                              : theme.palette.text.disabled
                      }}
                   />
                   {revenue && (
@@ -109,7 +120,10 @@ const CompanyCardItem = ({ data, button_label, color }: Props) => {
                         fontSize={14}
                         fontWeight={400}
                         sx={{
-                           color: (theme) => theme.palette.text.disabled
+                           color: (theme) =>
+                              mode === "light"
+                                 ? secondary_color || theme.palette.text.disabled
+                                 : theme.palette.text.disabled
                         }}>
                         {revenue?.title} Revenue
                      </Typography>

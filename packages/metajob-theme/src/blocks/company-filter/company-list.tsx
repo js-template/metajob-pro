@@ -12,8 +12,9 @@ type Props = {
    error: string | null
    block: ICompanyFilterBlockData
    color?: string
+   secondary_color?: string
 }
-const CompanyList = ({ companies, loading, error, block, color }: Props) => {
+const CompanyList = ({ companies, loading, error, block, color, secondary_color }: Props) => {
    const { theme: mode } = useTheme()
 
    const { empty, result_placeholder, card_button } = block || {}
@@ -71,7 +72,12 @@ const CompanyList = ({ companies, loading, error, block, color }: Props) => {
                <Grid container spacing={2}>
                   {companies?.map((item: any) => (
                      <Grid item xs={12} sm={6} md={4} key={item?.id}>
-                        <CompanyCardItem data={item} button_label={card_button?.label} color={color} />
+                        <CompanyCardItem
+                           data={item}
+                           button_label={card_button?.label}
+                           color={color}
+                           secondary_color={secondary_color}
+                        />
                      </Grid>
                   ))}
                </Grid>
