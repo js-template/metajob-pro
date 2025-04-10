@@ -21,8 +21,9 @@ import { IPackageData } from "./types"
 type Props = {
    data?: IPackageData
    color?: string
+   secondary_color?: string
 }
-export const PackageItem = ({ data, color }: Props) => {
+export const PackageItem = ({ data, color, secondary_color }: Props) => {
    const theme = muiTheme()
    const { theme: mode } = useTheme()
    const router = useRouter()
@@ -99,7 +100,7 @@ export const PackageItem = ({ data, color }: Props) => {
                         mt: 0.5,
                         mb: 2,
                         color: (theme) =>
-                           mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                           mode === "light" ? secondary_color || theme.palette.text.primary : theme.palette.text.primary
                      }}>
                      {description}
                   </Typography>
@@ -113,7 +114,9 @@ export const PackageItem = ({ data, color }: Props) => {
                         sx={{
                            mb: 1,
                            color: (theme) =>
-                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                              mode === "light"
+                                 ? secondary_color || theme.palette.text.primary
+                                 : theme.palette.text.primary
                         }}>
                         Includes:
                      </Typography>
@@ -140,7 +143,7 @@ export const PackageItem = ({ data, color }: Props) => {
                                     ".MuiTypography-root": {
                                        color: (theme) =>
                                           mode === "light"
-                                             ? color || theme.palette.text.primary
+                                             ? secondary_color || theme.palette.text.primary
                                              : theme.palette.text.primary,
                                        fontSize: "14px",
                                        fontWeight: 400
@@ -155,7 +158,7 @@ export const PackageItem = ({ data, color }: Props) => {
                                     ".MuiTypography-root": {
                                        color: (theme) =>
                                           mode === "light"
-                                             ? color || theme.palette.text.primary
+                                             ? secondary_color || theme.palette.text.primary
                                              : theme.palette.text.primary,
                                        textAlign: "center",
                                        fontSize: "14px",

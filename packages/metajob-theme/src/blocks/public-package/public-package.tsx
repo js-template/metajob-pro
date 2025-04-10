@@ -19,8 +19,20 @@ const PublicPackageClient = ({ block, packageData }: Props) => {
 
    // destructure the block
    const { content, empty, style } = block || {}
-   const { title, sub_title, title_color, sub_title_color } = content || {}
-   const { desktop, tab, mobile, backgroundColor, color } = style || {}
+   const { title, sub_title } = content || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      section_padding,
+      header_width,
+      desktop,
+      tab,
+      mobile,
+      sidebar
+   } = style || {}
 
    return (
       <Stack
@@ -28,14 +40,17 @@ const PublicPackageClient = ({ block, packageData }: Props) => {
             mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
          }>
          <Container maxWidth='md'>
-            <Stack pt={8} pb={12} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* header  */}
                <Stack spacing={1} direction={"column"}>
                   {title && (
                      <Typography
+                        maxWidth={header_width === "Full" ? "100%" : 650}
                         sx={{
                            color:
-                              mode === "light" ? title_color || theme.palette.text.primary : theme.palette.text.primary,
+                              mode === "light"
+                                 ? header_color || theme.palette.text.primary
+                                 : theme.palette.text.primary,
                            fontWeight: 700,
                            fontSize: "32px",
                            textAlign: "center"
@@ -45,10 +60,11 @@ const PublicPackageClient = ({ block, packageData }: Props) => {
                   )}
                   {sub_title && (
                      <Typography
+                        maxWidth={header_width === "Full" ? "100%" : 650}
                         sx={{
                            color:
                               mode === "light"
-                                 ? sub_title_color || hexToRGBA(theme.palette.text.primary, 0.5)
+                                 ? sub_header_color || hexToRGBA(theme.palette.text.primary, 0.5)
                                  : hexToRGBA(theme.palette.text.primary, 0.5),
                            fontSize: "16px",
                            textAlign: "center"
@@ -62,7 +78,7 @@ const PublicPackageClient = ({ block, packageData }: Props) => {
                   <Grid container spacing={2}>
                      {_.map(packageData, (item, index) => (
                         <Grid key={index} item xs={mobile || 12} sm={tab || 6} lg={desktop || 4}>
-                           <PackageItem data={item} color={color} />
+                           <PackageItem data={item} color={color} secondary_color={secondary_color} />
                         </Grid>
                      ))}
                   </Grid>
