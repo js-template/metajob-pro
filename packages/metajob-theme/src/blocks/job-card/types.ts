@@ -4,8 +4,6 @@ export type IJobCardBlock = {
    content?: {
       sub_title: string
       title: string
-      title_color?: string
-      sub_title_color?: string
       variation?: string
    }
    style?: {
