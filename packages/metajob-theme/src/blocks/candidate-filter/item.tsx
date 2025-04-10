@@ -8,11 +8,13 @@ import { ISingleCandidate } from "./types"
 const CandidateCardItem = ({
    data,
    button_label,
-   color
+   color,
+   secondary_color
 }: {
    data: ISingleCandidate
    button_label?: string
    color?: string
+   secondary_color?: string
 }) => {
    const { theme: mode } = useTheme()
 
@@ -87,7 +89,10 @@ const CandidateCardItem = ({
                      fontSize={14}
                      fontWeight={400}
                      sx={{
-                        color: (theme) => theme.palette.text.secondary
+                        color: (theme) =>
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.secondary
+                              : theme.palette.text.secondary
                      }}>
                      {tagline}
                   </Typography>
@@ -100,14 +105,20 @@ const CandidateCardItem = ({
                      fontSize='small'
                      className='icon-map-pin'
                      sx={{
-                        color: (theme) => theme.palette.text.secondary
+                        color: (theme) =>
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.secondary
+                              : theme.palette.text.secondary
                      }}
                   />
                   <Typography
                      fontSize={14}
                      fontWeight={400}
                      sx={{
-                        color: (theme) => theme.palette.text.secondary
+                        color: (theme) =>
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.secondary
+                              : theme.palette.text.secondary
                      }}>
                      {location}
                   </Typography>

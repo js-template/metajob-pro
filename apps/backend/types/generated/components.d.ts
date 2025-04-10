@@ -668,9 +668,6 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
     empty: Schema.Attribute.Component<'shared.empty', false>;
     result_placeholder: Schema.Attribute.String;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
-    sidebar: Schema.Attribute.Enumeration<
-      ['Left Sidebar', 'Right Sidebar', 'No Sidebar']
-    >;
     style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };

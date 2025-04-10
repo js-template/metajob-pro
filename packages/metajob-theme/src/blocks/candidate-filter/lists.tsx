@@ -13,9 +13,17 @@ type CandidateRightSectionProps = {
    error: any
    block: ICandidateFilterBlock
    color?: string
+   secondary_color?: string
 }
 
-export default function CandidateLists({ data, loading, error, block, color }: CandidateRightSectionProps) {
+export default function CandidateLists({
+   data,
+   loading,
+   error,
+   block,
+   color,
+   secondary_color
+}: CandidateRightSectionProps) {
    const { theme: mode } = useTheme()
    const { result_placeholder, card_button } = block || {}
    return (
@@ -83,7 +91,12 @@ export default function CandidateLists({ data, loading, error, block, color }: C
             <Grid container spacing={3}>
                {_.map(data, (item) => (
                   <Grid item xs={12} sm={6} md={4} key={item?.id}>
-                     <CandidateCardItem data={item} button_label={card_button?.label} color={color} />
+                     <CandidateCardItem
+                        data={item}
+                        button_label={card_button?.label}
+                        color={color}
+                        secondary_color={secondary_color}
+                     />
                   </Grid>
                ))}
             </Grid>

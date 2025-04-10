@@ -18,6 +18,7 @@ type Props = {
    loading: boolean
    categoryData?: ISingleCategory[]
    color?: string
+   secondary_color?: string
 }
 
 export default function CandidateFilterSection({
@@ -26,7 +27,8 @@ export default function CandidateFilterSection({
    filterFormData,
    setFilterFormData,
    categoryData,
-   color
+   color,
+   secondary_color
 }: Props) {
    const { theme: mode } = useTheme()
    const { title: searchTitle, search_placeholder, category_placeholder, button_placeholder } = search || {}
@@ -146,7 +148,10 @@ export default function CandidateFilterSection({
                         fontSize: 16,
                         borderRadius: 2,
                         "& .MuiSelect-select": {
-                           color: (theme) => theme.palette.text.secondary
+                           color: (theme) =>
+                              mode === "light"
+                                 ? secondary_color || theme.palette.text.secondary
+                                 : theme.palette.text.secondary
                         },
                         "&.MuiOutlinedInput-root": {
                            border: "none",
@@ -162,11 +167,28 @@ export default function CandidateFilterSection({
                            categories: e.target.value
                         })
                      }>
-                     <MenuItem value={""} sx={{ fontSize: "16px" }}>
+                     <MenuItem
+                        value={""}
+                        sx={{
+                           fontSize: "16px",
+                           color: (theme) =>
+                              mode === "light"
+                                 ? secondary_color || theme.palette.text.disabled
+                                 : theme.palette.text.disabled
+                        }}>
                         {category_placeholder || "Select Category"}
                      </MenuItem>
                      {_.map(categoryData, (item, index) => (
-                        <MenuItem key={index} value={item?.id} sx={{ fontSize: "16px" }}>
+                        <MenuItem
+                           key={index}
+                           value={item?.id}
+                           sx={{
+                              fontSize: "16px",
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
+                           }}>
                            {item?.title}
                         </MenuItem>
                      ))}

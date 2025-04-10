@@ -16,8 +16,20 @@ type Props = {
 const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
    const { theme: mode } = useTheme()
 
-   const { search, empty, style, sidebar } = block || {}
-   const { backgroundColor, color } = style || {}
+   const { search, empty, style } = block || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      section_padding,
+      header_width,
+      desktop,
+      tab,
+      mobile,
+      sidebar
+   } = style || {}
    const isRightSidebar = sidebar === "Right Sidebar"
    const isNoSidebar = sidebar === "No Sidebar"
 
@@ -121,7 +133,7 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
             bgcolor: (theme) =>
                mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
          }}>
-         <Container maxWidth='lg' sx={{ py: 6 }}>
+         <Container maxWidth='lg' sx={{ py: section_padding || 6 }}>
             <Grid container spacing={4} direction={isRightSidebar ? "row-reverse" : "row"}>
                {!isNoSidebar && (
                   <Grid item xs={12} md={3}>
@@ -133,6 +145,7 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
                         loading={isLoading}
                         categoryData={categoryData}
                         color={color}
+                        secondary_color={secondary_color}
                      />
                   </Grid>
                )}
@@ -144,6 +157,7 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
                         data={resumeData ?? []}
                         block={block}
                         color={color}
+                        secondary_color={secondary_color}
                      />
                      {/* pagination */}
                      {!resumeError && !isLoading && totalPage > 0 && (
