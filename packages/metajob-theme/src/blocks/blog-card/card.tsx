@@ -20,7 +20,7 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
    const theme = muiTheme()
 
    // destructure the block
-   const { content, empty, style, button, card_button, description_color } = block || {}
+   const { content, empty, style, button, card_button } = block || {}
    const {
       backgroundColor,
       color,

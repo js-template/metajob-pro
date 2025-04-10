@@ -36,7 +36,6 @@ export interface BlockBlogCard extends Struct.ComponentSchema {
     button: Schema.Attribute.Component<'config.link', false>;
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
-    description_color: Schema.Attribute.String;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     item_count: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<

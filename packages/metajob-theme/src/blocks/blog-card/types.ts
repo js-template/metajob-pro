@@ -31,7 +31,6 @@ export type IPostBlock = {
    card_button?: {
       label?: string
    }
-   description_color?: string
    item_count?: number
 }
 
