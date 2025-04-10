@@ -13,6 +13,12 @@
   "options": {},
   "pluginOptions": {},
   "attributes": {
+    "header_color": {
+      "type": "string"
+    },
+    "sub_header_color": {
+      "type": "string"
+    },
     "color": {
       "type": "string"
     },
@@ -38,6 +44,12 @@
       "min": 1,
       "default": 12,
       "required": true
+    },
+    "bg_overlay": {
+      "type": "decimal",
+      "max": 1,
+      "min": 0.1,
+      "default": 0.6
     }
   }
 }

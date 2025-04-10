@@ -420,9 +420,7 @@ export interface ConfigSectionTitle extends Struct.ComponentSchema {
   };
   attributes: {
     sub_title: Schema.Attribute.Text;
-    sub_title_color: Schema.Attribute.String;
     title: Schema.Attribute.String;
-    title_color: Schema.Attribute.String;
     variation: Schema.Attribute.Enumeration<['Variation One', 'Variation Two']>;
   };
 }
@@ -451,6 +449,15 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
   };
   attributes: {
     backgroundColor: Schema.Attribute.String;
+    bg_overlay: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 0.1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0.6>;
     color: Schema.Attribute.String;
     desktop: Schema.Attribute.Integer &
       Schema.Attribute.Required &
@@ -462,6 +469,7 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<12>;
+    header_color: Schema.Attribute.String;
     mobile: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
@@ -472,6 +480,7 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<12>;
+    sub_header_color: Schema.Attribute.String;
     tab: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
@@ -725,15 +734,6 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    bg_overlay: Schema.Attribute.Decimal &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 1;
-          min: 0.1;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0.7>;
     button: Schema.Attribute.Component<'config.link', false>;
     company_count_placeholder: Schema.Attribute.String;
     content: Schema.Attribute.Component<'config.section-title', false>;
