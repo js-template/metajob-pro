@@ -62,6 +62,10 @@
       "type": "integer",
       "max": 100,
       "min": 1
+    },
+    "sidebar": {
+      "type": "enumeration",
+      "enum": ["Left Sidebar", "Right Sidebar", "No Sidebar"]
     }
   }
 }
