@@ -1,5 +1,6 @@
 "use client"
-import { Stack, Typography, useTheme } from "@mui/material"
+import { useTheme } from "next-themes"
+import { Stack, Typography, useTheme as muiTheme } from "@mui/material"
 import { Card } from "../../components/common/card"
 import CustomPreview from "../../components/markdown-preview"
 
@@ -11,9 +12,12 @@ type Props = {
       }[]
    }
    skillTitle?: string
+   color?: string
+   secondary_color?: string
 }
-export default function Details({ data, skillTitle }: Props) {
-   const theme = useTheme()
+export default function Details({ data, skillTitle, color, secondary_color }: Props) {
+   const theme = muiTheme()
+   const { theme: mode } = useTheme()
 
    const { skills, description } = data || {}
 
@@ -48,7 +52,8 @@ export default function Details({ data, skillTitle }: Props) {
                      fontWeight={700}
                      fontSize={20}
                      sx={{
-                        color: (theme) => theme.palette.text.secondary
+                        color: (theme) =>
+                           mode === "light" ? color || theme.palette.text.secondary : theme.palette.text.secondary
                      }}>
                      {skillTitle || "Skills"}
                   </Typography>
@@ -57,7 +62,10 @@ export default function Details({ data, skillTitle }: Props) {
                         <Typography
                            key={index}
                            sx={{
-                              color: (theme) => theme.palette.text.disabled,
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled,
                               bgcolor: (theme) => theme.palette.background.paper,
                               borderColor: (theme) => theme.palette.divider,
                               borderWidth: 1,

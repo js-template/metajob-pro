@@ -466,6 +466,7 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<12>;
+    header_bg_color: Schema.Attribute.String;
     header_color: Schema.Attribute.String;
     header_width: Schema.Attribute.Enumeration<['Full', 'Small']>;
     mobile: Schema.Attribute.Integer &
@@ -1114,6 +1115,7 @@ export interface MetajobSingleTypeJobDetails extends Struct.ComponentSchema {
     related_lists: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     salary_placeholder: Schema.Attribute.String;
     share_placeholder: Schema.Attribute.String;
+    show_header: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     skill_placeholder: Schema.Attribute.String;
     styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;

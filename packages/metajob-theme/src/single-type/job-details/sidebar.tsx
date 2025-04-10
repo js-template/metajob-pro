@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import NextLink from "next/link"
 import Image from "next/image"
 import { Box, Stack, Typography } from "@mui/material"
@@ -15,9 +16,17 @@ type Props = {
 }
 
 const Sidebar = ({ data, companyData, block }: Props) => {
-   const { overview_placeholder, posted_placeholder, deadline_placeholder, type_placeholder, salary_placeholder } =
-      block || {}
+   const { theme: mode } = useTheme()
+   const {
+      overview_placeholder,
+      posted_placeholder,
+      deadline_placeholder,
+      type_placeholder,
+      salary_placeholder,
+      styles
+   } = block || {}
 
+   const { color, secondary_color } = styles || {}
    const { company, publishedAt, type, endDate, price } = data || {}
    const { name: companyName, tagline, email, phone, website, slug, about } = company || {}
 
@@ -38,7 +47,8 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                fontWeight={700}
                fontSize={20}
                sx={{
-                  color: (theme) => theme.palette.text.primary
+                  color: (theme) =>
+                     mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                }}>
                {overview_placeholder || "Job Overview"}
             </Typography>
@@ -61,7 +71,8 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                            fontWeight={500}
                            fontSize={14}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}>
                            {posted_placeholder || "Job Posted"}
                         </Typography>
@@ -70,7 +81,10 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                            fontWeight={400}
                            fontSize={16}
                            sx={{
-                              color: (theme) => theme.palette.text.disabled
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
                            }}>
                            {moment(publishedAt)?.format("DD MMMM YYYY")}
                         </Typography>
@@ -95,7 +109,8 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                            fontWeight={500}
                            fontSize={14}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}>
                            {deadline_placeholder || "Deadline"}
                         </Typography>
@@ -104,7 +119,10 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                            fontWeight={400}
                            fontSize={16}
                            sx={{
-                              color: (theme) => theme.palette.text.disabled
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
                            }}>
                            {moment(endDate)?.format("DD MMMM YYYY")}
                         </Typography>
@@ -128,7 +146,8 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                            fontWeight={500}
                            fontSize={14}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}>
                            {type_placeholder || "Job Type"}
                         </Typography>
@@ -138,7 +157,10 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                               fontWeight={400}
                               fontSize={16}
                               sx={{
-                                 color: (theme) => theme.palette.text.disabled
+                                 color: (theme) =>
+                                    mode === "light"
+                                       ? secondary_color || theme.palette.text.disabled
+                                       : theme.palette.text.disabled
                               }}>
                               {type?.title}
                            </Typography>
@@ -163,7 +185,8 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                            fontWeight={500}
                            fontSize={14}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}>
                            {salary_placeholder || "Salary"}
                         </Typography>
@@ -172,7 +195,10 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                            fontWeight={400}
                            fontSize={16}
                            sx={{
-                              color: (theme) => theme.palette.text.disabled
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
                            }}>
                            {price}
                         </Typography>
@@ -238,7 +264,8 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                         fontSize={20}
                         textAlign={"center"}
                         sx={{
-                           color: (theme) => theme.palette.text.primary,
+                           color: (theme) =>
+                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
                            textDecoration: "none"
                         }}>
                         {companyName}
@@ -251,7 +278,8 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                         fontSize={16}
                         textAlign={"center"}
                         sx={{
-                           color: (theme) => theme.palette.text.primary
+                           color: (theme) =>
+                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                         }}>
                         {tagline}
                      </Typography>
@@ -267,7 +295,8 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                         fontSize={18}
                         textAlign={"center"}
                         sx={{
-                           color: (theme) => theme.palette.text.primary,
+                           color: (theme) =>
+                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
                            textDecoration: "none"
                         }}>
                         {email}
@@ -282,7 +311,8 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                         fontWeight={400}
                         fontSize={18}
                         sx={{
-                           color: (theme) => theme.palette.text.primary,
+                           color: (theme) =>
+                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
                            textDecoration: "none"
                         }}>
                         {phone}
@@ -306,7 +336,16 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                               bgcolor: (theme) => theme.palette.divider
                            }
                         }}>
-                        <CIcon icon={"ph:globe"} size={20} />
+                        <CIcon
+                           icon={"ph:globe"}
+                           size={20}
+                           sx={{
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
+                           }}
+                        />
                      </Box>
                   )}
                   {facebook && (
@@ -324,7 +363,16 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                               bgcolor: (theme) => theme.palette.divider
                            }
                         }}>
-                        <CIcon icon={"gg:facebook"} size={20} />
+                        <CIcon
+                           icon={"gg:facebook"}
+                           size={20}
+                           sx={{
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
+                           }}
+                        />
                      </Box>
                   )}
                   {twitter && (
@@ -342,7 +390,16 @@ const Sidebar = ({ data, companyData, block }: Props) => {
                               bgcolor: (theme) => theme.palette.divider
                            }
                         }}>
-                        <CIcon icon={"mdi:twitter"} size={20} />
+                        <CIcon
+                           icon={"mdi:twitter"}
+                           size={20}
+                           sx={{
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
+                           }}
+                        />
                      </Box>
                   )}
                </Stack>

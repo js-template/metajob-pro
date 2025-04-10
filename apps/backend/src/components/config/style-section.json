@@ -28,6 +28,9 @@
     "backgroundColor": {
       "type": "string"
     },
+    "header_bg_color": {
+      "type": "string"
+    },
     "mobile": {
       "type": "integer",
       "max": 12,

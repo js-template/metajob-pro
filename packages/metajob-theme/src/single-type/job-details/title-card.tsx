@@ -12,6 +12,7 @@ import { createEntry, deleteEntry, find } from "../../lib/strapi"
 import { FacebookShareButton, LinkedinShareButton, TwitterShareButton } from "react-share"
 import { ShareModal } from "./share-modal"
 import ApplyJobModal from "./apply-job-modal"
+import { useTheme } from "next-themes"
 
 type Props = {
    data: ISingleJob
@@ -21,9 +22,11 @@ type Props = {
 }
 
 const JobTitleCard = ({ data, companyData, block, language }: Props) => {
+   const { theme: mode } = useTheme()
    const { data: session } = useSession()
 
-   const { share_placeholder, apply_placeholder } = block || {}
+   const { share_placeholder, apply_placeholder, styles } = block || {}
+   const { color, secondary_color } = styles || {}
    const { documentId, title, company, category } = data || {}
    const userId = session?.user?.id
    const userRole = session?.user?.role?.type
@@ -286,7 +289,10 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                                  fontWeight={700}
                                  fontSize={24}
                                  sx={{
-                                    color: (theme) => theme.palette.text.primary
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || theme.palette.text.primary
+                                          : theme.palette.text.primary
                                  }}>
                                  {title}
                               </Typography>
@@ -297,7 +303,10 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                                  fontWeight={400}
                                  fontSize={14}
                                  sx={{
-                                    color: (theme) => theme.palette.text.disabled
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.disabled
+                                          : theme.palette.text.disabled
                                  }}>
                                  {categoryName}
                               </Typography>
@@ -317,7 +326,10 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                               fontWeight={700}
                               fontSize={14}
                               sx={{
-                                 color: (theme) => theme.palette.text.disabled
+                                 color: (theme) =>
+                                    mode === "light"
+                                       ? secondary_color || theme.palette.text.disabled
+                                       : theme.palette.text.disabled
                               }}>
                               {share_placeholder || "Share on"}
                            </Typography>
@@ -341,7 +353,16 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                                           bgcolor: (theme) => theme.palette.divider
                                        }
                                     }}>
-                                    <CIcon icon={"ri:facebook-fill"} size={20} />
+                                    <CIcon
+                                       icon={"ri:facebook-fill"}
+                                       size={20}
+                                       sx={{
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? secondary_color || theme.palette.text.disabled
+                                                : theme.palette.text.disabled
+                                       }}
+                                    />
                                  </Box>
                               </FacebookShareButton>
                               {/* twitter share link */}
@@ -359,7 +380,16 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                                           bgcolor: (theme) => theme.palette.divider
                                        }
                                     }}>
-                                    <CIcon icon={"mdi:twitter"} size={20} />
+                                    <CIcon
+                                       icon={"mdi:twitter"}
+                                       size={20}
+                                       sx={{
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? secondary_color || theme.palette.text.disabled
+                                                : theme.palette.text.disabled
+                                       }}
+                                    />
                                  </Box>
                               </TwitterShareButton>
                               {/* <Box
@@ -392,7 +422,16 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                                           bgcolor: (theme) => theme.palette.divider
                                        }
                                     }}>
-                                    <CIcon icon={"akar-icons:linkedin-fill"} size={20} />
+                                    <CIcon
+                                       icon={"akar-icons:linkedin-fill"}
+                                       size={20}
+                                       sx={{
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? secondary_color || theme.palette.text.disabled
+                                                : theme.palette.text.disabled
+                                       }}
+                                    />
                                  </Box>
                               </LinkedinShareButton>
                               {/* More Share button  */}
@@ -411,7 +450,16 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                                        bgcolor: (theme) => theme.palette.divider
                                     }
                                  }}>
-                                 <CIcon icon={"solar:share-bold"} size={20} />
+                                 <CIcon
+                                    icon={"solar:share-bold"}
+                                    size={20}
+                                    sx={{
+                                       color: (theme) =>
+                                          mode === "light"
+                                             ? secondary_color || theme.palette.text.disabled
+                                             : theme.palette.text.disabled
+                                    }}
+                                 />
                               </Box>
                            </Stack>
                         </Stack>
@@ -517,7 +565,13 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                </Grid>
             </Grid>
          </Card>
-         <ShareModal open={shareModalOpen} handleClose={handleCardModalClose} title='More Share Options' data={data} />
+         <ShareModal
+            open={shareModalOpen}
+            handleClose={handleCardModalClose}
+            title='More Share Options'
+            data={data}
+            secondary_color={secondary_color}
+         />
          <ApplyJobModal
             open={applyJobModalOpen}
             handleClose={handleApplyJobModalClose}
