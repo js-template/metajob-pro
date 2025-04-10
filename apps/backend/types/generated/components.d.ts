@@ -470,6 +470,7 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<12>;
     header_color: Schema.Attribute.String;
+    header_width: Schema.Attribute.Enumeration<['Full', 'Small']>;
     mobile: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
@@ -480,6 +481,7 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<12>;
+    secondary_color: Schema.Attribute.String;
     sub_header_color: Schema.Attribute.String;
     tab: Schema.Attribute.Integer &
       Schema.Attribute.Required &

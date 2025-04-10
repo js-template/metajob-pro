@@ -4,8 +4,6 @@ export type IBannerBlock = {
    content?: {
       sub_title: string
       title: string
-      title_color?: string
-      sub_title_color: string
       variation?: string
    }
    search: {
@@ -21,7 +19,6 @@ export type IBannerBlock = {
    image?: {
       url: string
    }
-   bg_overlay?: number
    button?: {
       label: string
       link: string
@@ -30,10 +27,15 @@ export type IBannerBlock = {
    }
    style?: {
       color?: any
+      secondary_color?: string
       backgroundColor?: any
+      header_color?: string
+      sub_header_color: string
       mobile: number
       tab: number
       desktop: number
+      bg_overlay?: number
+      header_width: "Full" | "Small"
    }
 }
 

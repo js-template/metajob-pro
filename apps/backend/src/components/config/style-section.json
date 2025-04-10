@@ -22,6 +22,9 @@
     "color": {
       "type": "string"
     },
+    "secondary_color": {
+      "type": "string"
+    },
     "backgroundColor": {
       "type": "string"
     },
@@ -50,6 +53,10 @@
       "max": 1,
       "min": 0.1,
       "default": 0.6
+    },
+    "header_width": {
+      "type": "enumeration",
+      "enum": ["Full", "Small"]
     }
   }
 }
