@@ -328,7 +328,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         sx={{
                            borderRadius: "8px",
                            p: 5,
-                           bgcolor: (theme) => hexToRGBA(theme.palette.background.default, 0.9)
+                           bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
                            <CIcon
@@ -366,7 +366,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         sx={{
                            borderRadius: "8px",
                            p: 5,
-                           bgcolor: (theme) => hexToRGBA(theme.palette.background.default, 0.9)
+                           bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
                            <CIcon
@@ -405,7 +405,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         sx={{
                            borderRadius: "8px",
                            p: 5,
-                           bgcolor: (theme) => hexToRGBA(theme.palette.background.default, 0.9)
+                           bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
                            <CIcon
