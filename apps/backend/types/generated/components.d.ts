@@ -682,7 +682,10 @@ export interface MetajobBlockCategoryFilter extends Struct.ComponentSchema {
     card_button: Schema.Attribute.String;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
+    icon_type: Schema.Attribute.Enumeration<['Icon Bg', 'Simple']>;
     search_placeholder: Schema.Attribute.String;
+    show_description: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }

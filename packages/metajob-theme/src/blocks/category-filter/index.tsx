@@ -27,9 +27,21 @@ export const CategoryFilter = ({ block, language }: Props) => {
    const theme = muiTheme()
    const { theme: mode } = useTheme()
    // destructure the block
-   const { content, card_button, empty, style } = block || {}
-   const { title, sub_title, variation, title_color, sub_title_color } = content || {}
-   const { desktop, tab, mobile, backgroundColor, color } = style || {}
+   const { content, card_button, empty, style, show_description, icon_type } = block || {}
+   const { title, sub_title, variation } = content || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      section_padding,
+      header_width,
+      desktop,
+      tab,
+      mobile,
+      sidebar
+   } = style || {}
 
    const [page, setPage] = useState<number>(1)
    const [categoryData, setCategoryData] = useState<ISingleCategory[]>([])
@@ -82,16 +94,17 @@ export const CategoryFilter = ({ block, language }: Props) => {
          }
          sx={{ minHeight: "calc(100vh - 300px)" }}>
          <Container maxWidth='lg'>
-            <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* header  */}
                {(title || sub_title) && (
                   <Stack spacing={1} direction={"column"}>
                      {title && (
                         <Typography
+                           maxWidth={header_width === "Full" ? "100%" : 650}
                            sx={{
                               color:
                                  mode === "light"
-                                    ? title_color || theme.palette.text.primary
+                                    ? header_color || theme.palette.text.primary
                                     : theme.palette.text.primary,
                               fontWeight: 700,
                               fontSize: "32px",
@@ -102,10 +115,11 @@ export const CategoryFilter = ({ block, language }: Props) => {
                      )}
                      {sub_title && (
                         <Typography
+                           maxWidth={header_width === "Full" ? "100%" : 650}
                            sx={{
                               color:
                                  mode === "light"
-                                    ? sub_title_color || hexToRGBA(theme.palette.text.primary, 0.5)
+                                    ? sub_header_color || hexToRGBA(theme.palette.text.primary, 0.5)
                                     : hexToRGBA(theme.palette.text.primary, 0.5),
                               fontSize: "16px",
                               textAlign: "center"
@@ -123,11 +137,11 @@ export const CategoryFilter = ({ block, language }: Props) => {
                            <Grid item xs={mobile || 12} sm={tab || 4} md={desktop || 3} key={index}>
                               <CategoryCardItem
                                  data={item}
-                                 // icon_type={icon_type}
-                                 // show_description={show_description}
-                                 // button_label={card_button?.label}
+                                 icon_type={icon_type}
+                                 show_description={show_description}
+                                 button_label={card_button}
                                  color={color}
-                                 // secondary_color={secondary_color}
+                                 secondary_color={secondary_color}
                               />
                            </Grid>
                         )
