@@ -36,6 +36,7 @@ export type IBannerBlock = {
       desktop: number
       bg_overlay?: number
       header_width: "Full" | "Small"
+      section_padding?: number
    }
 }
 

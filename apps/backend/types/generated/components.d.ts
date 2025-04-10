@@ -489,8 +489,7 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
           min: 1;
         },
         number
-      > &
-      Schema.Attribute.DefaultTo<8>;
+      >;
     sub_header_color: Schema.Attribute.String;
     tab: Schema.Attribute.Integer &
       Schema.Attribute.Required &

@@ -32,7 +32,6 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
 
    const {
       content,
-
       search,
       image,
       job_count_placeholder,
@@ -42,8 +41,16 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
       button,
       style
    } = block || {}
-   const { backgroundColor, color, secondary_color, header_color, sub_header_color, bg_overlay, header_width } =
-      style || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      bg_overlay,
+      header_width,
+      section_padding
+   } = style || {}
    const { label, link, target, disabled } = button || {}
    const { title, sub_title } = content || {}
    const { search_placeholder, location_placeholder, category_placeholder, button_placeholder } = search || {}
@@ -93,7 +100,9 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
             backgroundSize: "cover",
             backgroundPosition: "center",
             textAlign: "center",
-            padding: "5rem 2rem",
+            // padding: "5rem 2rem",
+            px: "2rem",
+            py: section_padding || "5rem",
             "&::before": {
                content: '""',
                position: "absolute",
