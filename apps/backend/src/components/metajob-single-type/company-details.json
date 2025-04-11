@@ -41,6 +41,10 @@
       "type": "boolean",
       "required": true,
       "default": true
+    },
+    "show_header": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

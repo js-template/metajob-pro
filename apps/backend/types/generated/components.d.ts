@@ -1091,6 +1091,7 @@ export interface MetajobSingleTypeCompanyDetails
       Schema.Attribute.DefaultTo<true>;
     open_jobs_title: Schema.Attribute.String;
     salary_placeholder: Schema.Attribute.String;
+    show_header: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     size_placeholder: Schema.Attribute.String;
     styles: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;

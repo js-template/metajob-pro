@@ -1,5 +1,6 @@
 "use client"
 import NextLink from "next/link"
+import { useTheme } from "next-themes"
 import { Avatar, Box, CircularProgress, Grid, IconButton, Stack, Typography } from "@mui/material"
 import { Card } from "../../components/common/card"
 import CIcon from "../../components/common/icon"
@@ -13,9 +14,13 @@ import { createEntry, deleteEntry, find } from "../../lib/strapi"
 type Props = {
    data: ISingleCompany
    language?: string
+   color?: string
+   secondary_color?: string
 }
 
-const CompanyHeader = ({ data, language }: Props) => {
+const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
+   const { theme: mode } = useTheme()
+
    const { data: session } = useSession()
    const userId = session?.user?.id
 
@@ -170,7 +175,8 @@ const CompanyHeader = ({ data, language }: Props) => {
                               fontWeight={700}
                               fontSize={20}
                               sx={{
-                                 color: (theme) => theme.palette.text.primary
+                                 color: (theme) =>
+                                    mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                               }}>
                               {name}
                            </Typography>
@@ -181,7 +187,10 @@ const CompanyHeader = ({ data, language }: Props) => {
                               fontWeight={400}
                               fontSize={16}
                               sx={{
-                                 color: (theme) => theme.palette.text.disabled
+                                 color: (theme) =>
+                                    mode === "light"
+                                       ? secondary_color || theme.palette.text.disabled
+                                       : theme.palette.text.disabled
                               }}>
                               {tagline}
                            </Typography>
@@ -203,7 +212,16 @@ const CompanyHeader = ({ data, language }: Props) => {
                                     bgcolor: (theme) => theme.palette.divider
                                  }
                               }}>
-                              <CIcon icon='ph:globe-bold' size={20} />
+                              <CIcon
+                                 icon='ph:globe-bold'
+                                 size={20}
+                                 sx={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.disabled
+                                          : theme.palette.text.disabled
+                                 }}
+                              />
                            </Box>
                         )}
                         {facebook && (
@@ -221,7 +239,16 @@ const CompanyHeader = ({ data, language }: Props) => {
                                     bgcolor: (theme) => theme.palette.divider
                                  }
                               }}>
-                              <CIcon icon='ri:facebook-fill' size={20} />
+                              <CIcon
+                                 icon='ri:facebook-fill'
+                                 size={20}
+                                 sx={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.disabled
+                                          : theme.palette.text.disabled
+                                 }}
+                              />
                            </Box>
                         )}
                         {twitter && (
@@ -239,7 +266,16 @@ const CompanyHeader = ({ data, language }: Props) => {
                                     bgcolor: (theme) => theme.palette.divider
                                  }
                               }}>
-                              <CIcon icon='mdi:twitter' size={20} />
+                              <CIcon
+                                 icon='mdi:twitter'
+                                 size={20}
+                                 sx={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.disabled
+                                          : theme.palette.text.disabled
+                                 }}
+                              />
                            </Box>
                         )}
                      </Stack>
@@ -297,8 +333,11 @@ const CompanyHeader = ({ data, language }: Props) => {
                            sx={{
                               fontWeight: 400,
                               fontSize: "18px",
-                              // color: (theme) => theme.palette.primary.main,
-                              color: (theme) => theme.palette.text.primary,
+                              // color: (theme) => theme.palette.text.secondary,
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.secondary
+                                    : theme.palette.text.secondary,
                               textDecoration: "none"
                            }}>
                            {email}
@@ -313,7 +352,10 @@ const CompanyHeader = ({ data, language }: Props) => {
                            sx={{
                               fontWeight: 400,
                               fontSize: "18px",
-                              color: (theme) => theme.palette.text.primary,
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.secondary
+                                    : theme.palette.text.secondary,
                               textDecoration: "none"
                            }}>
                            {phone}

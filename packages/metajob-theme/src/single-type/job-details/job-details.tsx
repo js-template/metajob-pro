@@ -23,14 +23,13 @@ const JobDetailsClient = ({ data, block, language, companyData, relatedJobsData 
    const { title, empty, related_lists, skill_placeholder, styles, show_header } = block || {}
    const { backgroundColor, color, secondary_color, header_color, header_bg_color, section_padding, sidebar } =
       styles || {}
-
    const isRightSidebar = sidebar === "Right Sidebar"
    const isNoSidebar = sidebar === "No Sidebar"
 
    if (!data) {
       return (
          <Stack bgcolor={(theme) => theme.palette.background.default}>
-            <PageHeader title={title || ""} />
+            <PageHeader title={title || ""} header_color={header_color} header_bg_color={header_bg_color} />
             <Stack
                sx={{
                   minHeight: "50vh",
