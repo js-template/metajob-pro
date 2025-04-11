@@ -12,9 +12,25 @@ export type IJobDetailsBlock = {
    related_jobs_subtitle?: string
    card_button?: string
    related_lists?: boolean
+   show_header?: boolean
    empty?: {
       title: string
       description: string
+   }
+   styles?: {
+      color?: any
+      secondary_color?: string
+      backgroundColor?: any
+      header_bg_color?: any
+      mobile: number
+      tab: number
+      desktop: number
+      bg_overlay?: number
+      header_color?: string
+      sub_header_color: string
+      header_width: "Full" | "Small"
+      section_padding?: number
+      sidebar?: "Left Sidebar" | "Right Sidebar" | "No Sidebar"
    }
 }
 

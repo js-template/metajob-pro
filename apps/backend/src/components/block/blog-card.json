@@ -37,9 +37,6 @@
       "repeatable": false,
       "component": "config.style-section"
     },
-    "description_color": {
-      "type": "string"
-    },
     "item_count": {
       "type": "integer",
       "default": 12,

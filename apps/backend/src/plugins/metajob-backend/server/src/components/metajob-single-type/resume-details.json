@@ -44,6 +44,10 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.empty"
+    },
+    "show_header": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

@@ -13,10 +13,22 @@
   "options": {},
   "pluginOptions": {},
   "attributes": {
+    "header_color": {
+      "type": "string"
+    },
+    "sub_header_color": {
+      "type": "string"
+    },
     "color": {
       "type": "string"
     },
+    "secondary_color": {
+      "type": "string"
+    },
     "backgroundColor": {
+      "type": "string"
+    },
+    "header_bg_color": {
       "type": "string"
     },
     "mobile": {
@@ -38,6 +50,25 @@
       "min": 1,
       "default": 12,
       "required": true
+    },
+    "bg_overlay": {
+      "type": "decimal",
+      "max": 1,
+      "min": 0.1,
+      "default": 0.6
+    },
+    "header_width": {
+      "type": "enumeration",
+      "enum": ["Full", "Small"]
+    },
+    "section_padding": {
+      "type": "integer",
+      "max": 100,
+      "min": 1
+    },
+    "sidebar": {
+      "type": "enumeration",
+      "enum": ["Left Sidebar", "Right Sidebar", "No Sidebar"]
     }
   }
 }

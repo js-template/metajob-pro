@@ -20,11 +20,6 @@
       "repeatable": false,
       "component": "config.link"
     },
-    "show_filter": {
-      "type": "boolean",
-      "required": true,
-      "default": true
-    },
     "search": {
       "type": "component",
       "repeatable": false,
@@ -34,6 +29,11 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.empty"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
     }
   }
 }

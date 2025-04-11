@@ -27,6 +27,11 @@
       "type": "component",
       "repeatable": false,
       "component": "metajob-config.search-config"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
     }
   }
 }

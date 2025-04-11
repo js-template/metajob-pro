@@ -12,8 +12,9 @@ type Props = {
    data: ISingleJob
    button_label?: string
    color?: string
+   secondary_color?: string
 }
-export const JobItem = ({ data, button_label, color }: Props) => {
+export const JobItem = ({ data, button_label, color, secondary_color }: Props) => {
    const { theme: mode } = useTheme()
    const theme = muiTheme()
 
@@ -140,10 +141,20 @@ export const JobItem = ({ data, button_label, color }: Props) => {
                      fontSize='small'
                      className='icon-map-pin'
                      sx={{
-                        color: theme.palette.text.secondary
+                        color:
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.secondary
+                              : theme.palette.text.secondary
                      }}
                   />
-                  <Typography fontSize={14} fontWeight={400} color={theme.palette.text.secondary}>
+                  <Typography
+                     fontSize={14}
+                     fontWeight={400}
+                     color={
+                        mode === "light"
+                           ? secondary_color || theme.palette.text.secondary
+                           : theme.palette.text.secondary
+                     }>
                      {location?.address}
                   </Typography>
                </Stack>
@@ -156,10 +167,18 @@ export const JobItem = ({ data, button_label, color }: Props) => {
                      fontSize='small'
                      className='icon-users'
                      sx={{
-                        color: theme.palette.text.disabled
+                        color:
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.disabled
+                              : theme.palette.text.disabled
                      }}
                   />
-                  <Typography fontSize={14} fontWeight={400} color={theme.palette.text.disabled}>
+                  <Typography
+                     fontSize={14}
+                     fontWeight={400}
+                     color={
+                        mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled
+                     }>
                      {vacancy}
                      {/* {vacancy} Vacancy */}
                   </Typography>
@@ -171,10 +190,18 @@ export const JobItem = ({ data, button_label, color }: Props) => {
                      fontSize='small'
                      className='icon-dollar-sign'
                      sx={{
-                        color: theme.palette.text.disabled
+                        color:
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.disabled
+                              : theme.palette.text.disabled
                      }}
                   />
-                  <Typography fontSize={14} fontWeight={400} color={theme.palette.text.disabled}>
+                  <Typography
+                     fontSize={14}
+                     fontWeight={400}
+                     color={
+                        mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled
+                     }>
                      {price}
                   </Typography>
                </Stack>
@@ -185,10 +212,18 @@ export const JobItem = ({ data, button_label, color }: Props) => {
                      fontSize='small'
                      className='icon-clock'
                      sx={{
-                        color: theme.palette.text.disabled
+                        color:
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.disabled
+                              : theme.palette.text.disabled
                      }}
                   />
-                  <Typography fontSize={14} fontWeight={400} color={theme.palette.text.disabled}>
+                  <Typography
+                     fontSize={14}
+                     fontWeight={400}
+                     color={
+                        mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled
+                     }>
                      {moment(publishedAt).fromNow()}
                   </Typography>
                </Stack>

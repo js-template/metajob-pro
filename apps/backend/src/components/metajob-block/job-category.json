@@ -11,6 +11,14 @@
       "repeatable": false,
       "component": "config.section-title"
     },
+    "icon_type": {
+      "type": "enumeration",
+      "enum": ["Icon Bg", "Simple"]
+    },
+    "show_description": {
+      "type": "boolean",
+      "default": true
+    },
     "card_button": {
       "type": "component",
       "repeatable": false,

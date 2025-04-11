@@ -1,6 +1,7 @@
 "use client"
 import React from "react"
-import { Box, IconButton, Typography, useTheme, Modal, Stack } from "@mui/material"
+import { useTheme } from "next-themes"
+import { Box, IconButton, Typography, useTheme as muiTheme, Modal, Stack } from "@mui/material"
 import CIcon from "../../components/common/icon"
 import { EmailShareButton, RedditShareButton, TelegramShareButton, WhatsappShareButton } from "react-share"
 import { ISingleJob } from "./types"
@@ -10,10 +11,12 @@ type Props = {
    handleClose: () => void
    title?: string
    data: ISingleJob
+   secondary_color?: string
 }
 
-export const ShareModal = ({ open, handleClose, title, data }: Props) => {
-   const theme = useTheme()
+export const ShareModal = ({ open, handleClose, title, data, secondary_color }: Props) => {
+   const theme = muiTheme()
+   const { theme: mode } = useTheme()
    return (
       <Modal
          open={open}
@@ -51,7 +54,16 @@ export const ShareModal = ({ open, handleClose, title, data }: Props) => {
                   borderBottom: "1px solid",
                   borderColor: title ? theme.palette.divider : "transparent"
                }}>
-               {title && <Typography variant='h6'>{title || "Cover Letter"}</Typography>}
+               {title && (
+                  <Typography
+                     variant='h6'
+                     sx={{
+                        color: (theme) =>
+                           mode === "light" ? secondary_color || theme.palette.text.primary : theme.palette.text.primary
+                     }}>
+                     {title || "Cover Letter"}
+                  </Typography>
+               )}
                <IconButton
                   color='inherit'
                   onClick={handleClose}
@@ -94,7 +106,16 @@ export const ShareModal = ({ open, handleClose, title, data }: Props) => {
                               bgcolor: (theme) => theme.palette.divider
                            }
                         }}>
-                        <CIcon icon={"formkit:whatsapp"} size={20} />
+                        <CIcon
+                           icon={"formkit:whatsapp"}
+                           size={20}
+                           sx={{
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
+                           }}
+                        />
                      </Box>
                   </WhatsappShareButton>
 
@@ -113,7 +134,16 @@ export const ShareModal = ({ open, handleClose, title, data }: Props) => {
                               bgcolor: (theme) => theme.palette.divider
                            }
                         }}>
-                        <CIcon icon={"mingcute:telegram-fill"} size={20} />
+                        <CIcon
+                           icon={"mingcute:telegram-fill"}
+                           size={20}
+                           sx={{
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
+                           }}
+                        />
                      </Box>
                   </TelegramShareButton>
 
@@ -132,7 +162,16 @@ export const ShareModal = ({ open, handleClose, title, data }: Props) => {
                               bgcolor: (theme) => theme.palette.divider
                            }
                         }}>
-                        <CIcon icon={"bi:reddit"} size={20} />
+                        <CIcon
+                           icon={"bi:reddit"}
+                           size={20}
+                           sx={{
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
+                           }}
+                        />
                      </Box>
                   </RedditShareButton>
                   {/* email share link  */}
@@ -154,7 +193,16 @@ export const ShareModal = ({ open, handleClose, title, data }: Props) => {
                               bgcolor: (theme) => theme.palette.divider
                            }
                         }}>
-                        <CIcon icon={"mdi:email"} size={20} />
+                        <CIcon
+                           icon={"mdi:email"}
+                           size={20}
+                           sx={{
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
+                           }}
+                        />
                      </Box>
                   </EmailShareButton>
                </Stack>

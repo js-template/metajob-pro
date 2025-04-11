@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import { Container, Grid, Stack } from "@mui/material"
 import ProfileSection from "./profile"
 import DetailsSection from "./details"
@@ -13,16 +14,34 @@ type Props = {
 }
 
 const ResumeDetailsClient = ({ data, block, language }: Props) => {
-   const { title, empty } = block
+   const { theme: mode } = useTheme()
+
+   const { title, empty, styles, show_header } = block
+   const { backgroundColor, color, secondary_color, header_color, header_bg_color, section_padding, sidebar } =
+      styles || {}
+   const isRightSidebar = sidebar === "Right Sidebar"
+   const isNoSidebar = sidebar === "No Sidebar"
+
    return (
-      <Stack>
-         <PageHeader title={title || "Candidate Profile"} />
+      <Stack
+         bgcolor={(theme) =>
+            mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
+         }>
+         {show_header && (
+            <PageHeader
+               title={title || "Candidate Profile"}
+               header_color={header_color}
+               header_bg_color={header_bg_color}
+            />
+         )}
          <Container maxWidth='lg' sx={{ py: 6 }}>
-            <Grid container spacing={4}>
-               <Grid item xs={12} md={4}>
-                  <ProfileSection data={data} block={block} language={language} />
-               </Grid>
-               <Grid item xs={12} md={8}>
+            <Grid container spacing={4} direction={isRightSidebar ? "row-reverse" : "row"}>
+               {!isNoSidebar && (
+                  <Grid item xs={12} md={4}>
+                     <ProfileSection data={data} block={block} language={language} />
+                  </Grid>
+               )}
+               <Grid item xs={12} md={!isNoSidebar ? 8 : 12}>
                   <Card
                      sx={{
                         p: 3,
