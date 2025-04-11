@@ -7,9 +7,25 @@ export type IResumeDetailsBlock = {
    education_placeholder?: string
    experience_placeholder?: string
    portfolio_placeholder?: string
+   show_header?: boolean
    empty?: {
       title: string
       description: string
+   }
+   styles?: {
+      color?: any
+      secondary_color?: string
+      backgroundColor?: any
+      header_bg_color?: any
+      mobile: number
+      tab: number
+      desktop: number
+      bg_overlay?: number
+      header_color?: string
+      sub_header_color: string
+      header_width: "Full" | "Small"
+      section_padding?: number
+      sidebar?: "Left Sidebar" | "Right Sidebar" | "No Sidebar"
    }
 }
 

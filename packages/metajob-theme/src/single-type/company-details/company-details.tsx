@@ -66,9 +66,11 @@ const CompanyDetailsClient = ({ data, language, block, openJobsData }: Props) =>
                      {/* <CommentsSection /> */}
                   </Stack>
                </Grid>
-               <Grid item xs={12} md={4}>
-                  <Sidebar data={data} block={block} />
-               </Grid>
+               {!isNoSidebar && (
+                  <Grid item xs={12} md={4}>
+                     <Sidebar data={data} block={block} />
+                  </Grid>
+               )}
             </Grid>
          </Container>
       </Stack>
