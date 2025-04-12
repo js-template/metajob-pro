@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import _ from "lodash"
 import { Container, Grid, Stack, Typography, useTheme as muiTheme } from "@mui/material"
 import { PackageItem } from "./item"
@@ -13,22 +14,43 @@ type Props = {
 }
 
 const PublicPackageClient = ({ block, packageData }: Props) => {
+   const { theme: mode } = useTheme()
    const theme = muiTheme()
 
    // destructure the block
-   const { title, description, empty, style } = block || {}
-   const { desktop, tab, mobile, backgroundColor, color } = style || {}
+   const { content, empty, style } = block || {}
+   const { title, sub_title } = content || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      section_padding,
+      header_width,
+      desktop,
+      tab,
+      mobile,
+      sidebar
+   } = style || {}
 
    return (
-      <Stack bgcolor={backgroundColor ? backgroundColor : theme.palette.background.paper}>
+      <Stack
+         bgcolor={
+            mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
+         }>
          <Container maxWidth='md'>
-            <Stack pt={8} pb={12} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* header  */}
                <Stack spacing={1} direction={"column"}>
                   {title && (
                      <Typography
+                        maxWidth={header_width === "Full" ? "100%" : 650}
                         sx={{
-                           color: color ?? theme.palette.text.primary,
+                           color:
+                              mode === "light"
+                                 ? header_color || theme.palette.text.primary
+                                 : theme.palette.text.primary,
                            fontWeight: 700,
                            fontSize: "32px",
                            textAlign: "center"
@@ -36,14 +58,18 @@ const PublicPackageClient = ({ block, packageData }: Props) => {
                         {title}
                      </Typography>
                   )}
-                  {description && (
+                  {sub_title && (
                      <Typography
+                        maxWidth={header_width === "Full" ? "100%" : 650}
                         sx={{
-                           color: hexToRGBA(color ?? theme.palette.text.primary, 0.5),
+                           color:
+                              mode === "light"
+                                 ? sub_header_color || hexToRGBA(theme.palette.text.primary, 0.5)
+                                 : hexToRGBA(theme.palette.text.primary, 0.5),
                            fontSize: "16px",
                            textAlign: "center"
                         }}>
-                        {description}
+                        {sub_title}
                      </Typography>
                   )}
                </Stack>
@@ -52,7 +78,7 @@ const PublicPackageClient = ({ block, packageData }: Props) => {
                   <Grid container spacing={2}>
                      {_.map(packageData, (item, index) => (
                         <Grid key={index} item xs={mobile || 12} sm={tab || 6} lg={desktop || 4}>
-                           <PackageItem data={item} />
+                           <PackageItem data={item} color={color} secondary_color={secondary_color} />
                         </Grid>
                      ))}
                   </Grid>

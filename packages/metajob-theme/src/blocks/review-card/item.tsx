@@ -9,11 +9,11 @@ import { ISingleReview } from "./types"
 const CardItem = ({
    data,
    color,
-   description_color
+   secondary_color
 }: {
    data: ISingleReview
    color?: string
-   description_color?: string
+   secondary_color?: string
 }) => {
    const { theme: mode } = useTheme()
    const theme = muiTheme()
@@ -60,7 +60,7 @@ const CardItem = ({
                         sx={{
                            color:
                               mode === "light"
-                                 ? description_color || theme.palette.text.disabled
+                                 ? secondary_color || theme.palette.text.disabled
                                  : theme.palette.text.disabled
                         }}
                         fontWeight={400}
@@ -99,7 +99,7 @@ const CardItem = ({
                         sx={{
                            color:
                               mode === "light"
-                                 ? description_color || theme.palette.text.disabled
+                                 ? secondary_color || theme.palette.text.disabled
                                  : theme.palette.text.disabled
                         }}
                         fontWeight={400}

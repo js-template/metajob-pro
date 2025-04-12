@@ -1,12 +1,11 @@
 "use client"
-
 import NextLink from "next/link"
 import _ from "lodash"
 import { useTheme } from "next-themes"
 import { Box, Container, Grid, Stack, Typography, Button, useTheme as muiTheme } from "@mui/material"
-import { CardItemWithVariation } from "./item"
 import { ICategoryCardBlock, ISingleCategory } from "./types"
 import { SectionTitle } from "../../components/section-title"
+import { CategoryCardItem } from "../../components/cards/category-cards/category-card"
 
 type Props = {
    block: ICategoryCardBlock
@@ -18,10 +17,20 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
    const { theme: mode } = useTheme()
 
    // destructure the block
-   const { content, empty, style, button, card_button } = block || {}
-   const { desktop, tab, mobile, backgroundColor } = style || {}
+   const { content, empty, style, button, card_button, icon_type, show_description } = block || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      section_padding,
+      header_width,
+      desktop,
+      tab,
+      mobile
+   } = style || {}
    const { label, link } = button || {}
-   const { variation } = content || {}
 
    return (
       <Stack
@@ -29,20 +38,24 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
             mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
          }>
          <Container maxWidth='lg'>
-            <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
-               {content && <SectionTitle data={content} />}
+               {content && (
+                  <SectionTitle data={content} color={{ header_color, sub_header_color }} width={header_width} />
+               )}
 
                {/* category-items */}
                {categoryData && categoryData?.length > 0 && (
                   <Grid container spacing={2}>
                      {categoryData?.map((ctg: ISingleCategory) => (
                         <Grid item xs={mobile || 12} sm={4} md={tab || 3} lg={desktop || 2} key={ctg.id}>
-                           <CardItemWithVariation
+                           <CategoryCardItem
                               data={ctg}
-                              variation={variation}
+                              icon_type={icon_type}
+                              show_description={show_description}
                               button_label={card_button?.label}
-                              style={style}
+                              color={color}
+                              secondary_color={secondary_color}
                            />
                         </Grid>
                      ))}

@@ -55,6 +55,10 @@
     "related_lists": {
       "type": "boolean",
       "default": true
+    },
+    "show_header": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

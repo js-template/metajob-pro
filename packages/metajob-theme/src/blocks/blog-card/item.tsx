@@ -12,12 +12,12 @@ const CardItem = ({
    data,
    button_label,
    color,
-   description_color
+   secondary_color
 }: {
    data: ISinglePost
    button_label?: string
    color?: string
-   description_color?: string
+   secondary_color?: string
 }) => {
    const { theme: mode } = useTheme()
 
@@ -72,7 +72,7 @@ const CardItem = ({
                fontWeight={400}
                sx={{
                   color: (theme) =>
-                     mode === "light" ? description_color || theme.palette.text.disabled : theme.palette.text.disabled
+                     mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled
                }}>
                {moment(publishedAt).format("DD MMMM YYYY")}
             </Typography>
@@ -101,7 +101,7 @@ const CardItem = ({
             fontWeight={400}
             sx={{
                color: (theme) =>
-                  mode === "light" ? description_color || theme.palette.text.disabled : theme.palette.text.disabled
+                  mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled
             }}>
             {short_description}
          </Typography>

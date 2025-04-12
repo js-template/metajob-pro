@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
 import { useEffect, useState } from "react"
 import CandidateFilterSection from "./filter"
@@ -13,7 +14,24 @@ type Props = {
 }
 
 const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
-   const { show_filter, search, empty } = block || {}
+   const { theme: mode } = useTheme()
+
+   const { search, empty, style } = block || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      section_padding,
+      header_width,
+      desktop,
+      tab,
+      mobile,
+      sidebar
+   } = style || {}
+   const isRightSidebar = sidebar === "Right Sidebar"
+   const isNoSidebar = sidebar === "No Sidebar"
 
    const [page, setPage] = useState<number>(1)
    const [formData, setFilterFormData] = useState<ICandidateFilterProps>({
@@ -110,10 +128,14 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
    //   };
 
    return (
-      <Stack>
-         <Container maxWidth='lg' sx={{ py: 6 }}>
-            <Grid container spacing={4}>
-               {show_filter && (
+      <Stack
+         sx={{
+            bgcolor: (theme) =>
+               mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
+         }}>
+         <Container maxWidth='lg' sx={{ py: section_padding || 6 }}>
+            <Grid container spacing={4} direction={isRightSidebar ? "row-reverse" : "row"}>
+               {!isNoSidebar && (
                   <Grid item xs={12} md={3}>
                      <CandidateFilterSection
                         search={search}
@@ -122,12 +144,21 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
                         // handleSubmitForm={handleSubmitForm}
                         loading={isLoading}
                         categoryData={categoryData}
+                        color={color}
+                        secondary_color={secondary_color}
                      />
                   </Grid>
                )}
-               <Grid item xs={12} md={show_filter ? 9 : 12}>
+               <Grid item xs={12} md={!isNoSidebar ? 9 : 12}>
                   <Stack spacing={4}>
-                     <CandidateLists loading={isLoading} error={resumeError} data={resumeData ?? []} block={block} />
+                     <CandidateLists
+                        loading={isLoading}
+                        error={resumeError}
+                        data={resumeData ?? []}
+                        block={block}
+                        color={color}
+                        secondary_color={secondary_color}
+                     />
                      {/* pagination */}
                      {!resumeError && !isLoading && totalPage > 0 && (
                         <Stack

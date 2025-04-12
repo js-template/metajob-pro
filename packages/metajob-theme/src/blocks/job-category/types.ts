@@ -2,13 +2,20 @@ export type ICategoryCardBlock = {
    id: number
    __component: string
    style?: {
-      id: 25
       color?: any
+      secondary_color?: string
       backgroundColor?: any
       mobile: number
       tab: number
       desktop: number
+      bg_overlay?: number
+      header_color?: string
+      sub_header_color: string
+      header_width: "Full" | "Small"
+      section_padding?: number
    }
+   icon_type?: "Icon Bg" | "Simple"
+   show_description?: boolean
    empty?: {
       id: number
       title: string
@@ -25,8 +32,6 @@ export type ICategoryCardBlock = {
    content?: {
       sub_title: string
       title: string
-      title_color?: string
-      sub_title_color?: string
       variation?: string
    }
    item_count?: number

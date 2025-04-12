@@ -1,6 +1,7 @@
 "use client"
+import { useTheme } from "next-themes"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
-import { Box, Chip, Grid, LinearProgress, Skeleton, Typography, useTheme } from "@mui/material"
+import { Box, Chip, Grid, LinearProgress, Skeleton, Typography, useTheme as muiTheme } from "@mui/material"
 import { Fragment } from "react/jsx-runtime"
 import { IResumeDetailsBlock } from "./types"
 
@@ -18,9 +19,12 @@ type Props = {
 }
 
 const EducationSection = ({ educationData, isLoading, block }: Props) => {
-   const theme = useTheme()
+   const theme = muiTheme()
+   const { theme: mode } = useTheme()
 
-   const { education_placeholder, empty } = block || {}
+   const { education_placeholder, empty, styles } = block || {}
+   const { color, secondary_color } = styles || {}
+
    return isLoading ? (
       <Box>
          <Skeleton
@@ -40,7 +44,8 @@ const EducationSection = ({ educationData, isLoading, block }: Props) => {
                fontSize={16}
                fontWeight={400}
                sx={{
-                  color: (theme) => theme.palette.text.disabled
+                  color: (theme) =>
+                     mode === "light" ? secondary_color || theme.palette.text.secondary : theme.palette.text.secondary
                }}>
                {empty?.title || "No education data added"}
             </Typography>
@@ -53,7 +58,8 @@ const EducationSection = ({ educationData, isLoading, block }: Props) => {
                   fontWeight={700}
                   mb={1.5}
                   sx={{
-                     color: (theme) => theme.palette.text.primary
+                     color: (theme) =>
+                        mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                   }}
                   textAlign={"left"}>
                   {education_placeholder || "Education"}
@@ -75,7 +81,8 @@ const EducationSection = ({ educationData, isLoading, block }: Props) => {
                            fontSize={20}
                            fontWeight={500}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}>
                            {educationData?.length > 1 && index + 1 + "."} {item?.title}
                         </Typography>
@@ -95,8 +102,28 @@ const EducationSection = ({ educationData, isLoading, block }: Props) => {
                      <Grid item xs={12} md={9}>
                         <Box>
                            <Box>
-                              {item?.institution && <Typography fontWeight={600}>From {item?.institution}</Typography>}
-                              <Typography fontWeight={400}>{item?.description}</Typography>
+                              {item?.institution && (
+                                 <Typography
+                                    fontWeight={600}
+                                    sx={{
+                                       color:
+                                          mode === "light"
+                                             ? color || theme.palette.text.primary
+                                             : theme.palette.text.primary
+                                    }}>
+                                    From {item?.institution}
+                                 </Typography>
+                              )}
+                              <Typography
+                                 fontWeight={400}
+                                 sx={{
+                                    color:
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.secondary
+                                          : theme.palette.text.secondary
+                                 }}>
+                                 {item?.description}
+                              </Typography>
                            </Box>
                         </Box>
                      </Grid>

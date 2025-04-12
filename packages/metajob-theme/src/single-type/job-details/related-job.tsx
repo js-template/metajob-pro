@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import { Container, Grid, Stack, Typography } from "@mui/material"
 import { IJobDetailsBlock, ISingleJob } from "./types"
 import { JobItem } from "../../components/cards/job-item"
@@ -8,10 +9,17 @@ type Props = {
    block: IJobDetailsBlock
 }
 const RelatedJob = ({ relatedJobsData, block }: Props) => {
-   const { related_jobs_title, related_jobs_subtitle, card_button, empty } = block || {}
+   const { theme: mode } = useTheme()
+   const { related_jobs_title, related_jobs_subtitle, card_button, empty, styles } = block || {}
+
+   const { backgroundColor, color, secondary_color, header_color, sub_header_color, desktop, tab, mobile } =
+      styles || {}
 
    return (
-      <Stack bgcolor={(theme) => theme.palette.background.paper}>
+      <Stack
+         bgcolor={(theme) =>
+            mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
+         }>
          <Container
             maxWidth='lg'
             sx={{
@@ -21,7 +29,10 @@ const RelatedJob = ({ relatedJobsData, block }: Props) => {
                <Stack spacing={1}>
                   <Typography
                      sx={{
-                        color: (theme) => theme.palette.primary.main
+                        color: (theme) =>
+                           mode === "light"
+                              ? sub_header_color || theme.palette.primary.main
+                              : theme.palette.primary.main
                      }}
                      fontWeight={700}
                      fontSize={16}
@@ -30,7 +41,8 @@ const RelatedJob = ({ relatedJobsData, block }: Props) => {
                   </Typography>
                   <Typography
                      sx={{
-                        color: (theme) => theme.palette.text.primary
+                        color: (theme) =>
+                           mode === "light" ? header_color || theme.palette.text.primary : theme.palette.text.primary
                      }}
                      fontWeight={700}
                      fontSize={32}
@@ -52,8 +64,13 @@ const RelatedJob = ({ relatedJobsData, block }: Props) => {
                {relatedJobsData && relatedJobsData?.length > 0 && (
                   <Grid container spacing={2}>
                      {relatedJobsData?.slice(0, 4)?.map((item: ISingleJob) => (
-                        <Grid item xs={12} sm={6} md={3} key={item?.id}>
-                           <JobItem data={item} button_label={card_button} />
+                        <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 3} key={item?.id}>
+                           <JobItem
+                              data={item}
+                              button_label={card_button}
+                              color={color}
+                              secondary_color={secondary_color}
+                           />
                         </Grid>
                      ))}
                   </Grid>

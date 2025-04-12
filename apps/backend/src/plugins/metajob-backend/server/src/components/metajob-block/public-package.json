@@ -9,11 +9,10 @@
   "uid": "metajob-block.public-package",
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "string"
+    "content": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.section-title"
     },
     "empty": {
       "type": "component",

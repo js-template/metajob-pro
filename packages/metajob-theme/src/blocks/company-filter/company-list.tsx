@@ -1,5 +1,5 @@
 "use client"
-
+import { useTheme } from "next-themes"
 import { Grid, Skeleton, Stack, Typography } from "@mui/material"
 import { Card } from "../../components/common/card"
 import CompanyCardItem from "./item"
@@ -11,8 +11,12 @@ type Props = {
    loading: boolean
    error: string | null
    block: ICompanyFilterBlockData
+   color?: string
+   secondary_color?: string
 }
-const CompanyList = ({ companies, loading, error, block }: Props) => {
+const CompanyList = ({ companies, loading, error, block, color, secondary_color }: Props) => {
+   const { theme: mode } = useTheme()
+
    const { empty, result_placeholder, card_button } = block || {}
    const { title: emptyTitle, description: emptyDescription } = empty || {}
    return (
@@ -30,7 +34,8 @@ const CompanyList = ({ companies, loading, error, block }: Props) => {
                      fontSize={16}
                      fontWeight={600}
                      sx={{
-                        color: (theme) => theme.palette.text.primary
+                        color: (theme) =>
+                           mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                      }}
                      component={"span"}
                      variant='h4'
@@ -67,7 +72,12 @@ const CompanyList = ({ companies, loading, error, block }: Props) => {
                <Grid container spacing={2}>
                   {companies?.map((item: any) => (
                      <Grid item xs={12} sm={6} md={4} key={item?.id}>
-                        <CompanyCardItem data={item} button_label={card_button?.label} />
+                        <CompanyCardItem
+                           data={item}
+                           button_label={card_button?.label}
+                           color={color}
+                           secondary_color={secondary_color}
+                        />
                      </Grid>
                   ))}
                </Grid>

@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Box, Stack, Typography } from "@mui/material"
 import { Card } from "../../components/common/card"
@@ -6,7 +7,10 @@ import CIcon from "../../components/common/icon"
 import { ICompanyDetailsBlock, ISingleCompany } from "./types"
 
 const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDetailsBlock }) => {
-   const { info_placeholder, industry_placeholder, size_placeholder, salary_placeholder } = block || {}
+   const { theme: mode } = useTheme()
+
+   const { info_placeholder, industry_placeholder, size_placeholder, salary_placeholder, styles } = block || {}
+   const { color, secondary_color } = styles || {}
 
    const { industry, company_size, avg_salary, location } = data || {}
 
@@ -22,7 +26,8 @@ const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDet
                fontWeight={700}
                fontSize={20}
                sx={{
-                  color: (theme) => theme.palette.text.primary
+                  color: (theme) =>
+                     mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                }}>
                {info_placeholder || "Company Info"}
             </Typography>
@@ -41,7 +46,8 @@ const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDet
                         fontWeight={500}
                         fontSize={14}
                         sx={{
-                           color: (theme) => theme.palette.text.primary
+                           color: (theme) =>
+                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                         }}>
                         {industry_placeholder || "Industry"}
                      </Typography>
@@ -49,7 +55,10 @@ const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDet
                         fontWeight={400}
                         fontSize={16}
                         sx={{
-                           color: (theme) => theme.palette.text.disabled
+                           color: (theme) =>
+                              mode === "light"
+                                 ? secondary_color || theme.palette.text.disabled
+                                 : theme.palette.text.disabled
                         }}>
                         {industry?.title}
                      </Typography>
@@ -71,7 +80,8 @@ const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDet
                         fontWeight={500}
                         fontSize={14}
                         sx={{
-                           color: (theme) => theme.palette.text.primary
+                           color: (theme) =>
+                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                         }}>
                         {size_placeholder || "Company Size"}
                      </Typography>
@@ -79,7 +89,10 @@ const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDet
                         fontWeight={400}
                         fontSize={16}
                         sx={{
-                           color: (theme) => theme.palette.text.disabled
+                           color: (theme) =>
+                              mode === "light"
+                                 ? secondary_color || theme.palette.text.disabled
+                                 : theme.palette.text.disabled
                         }}>
                         {company_size?.title}
                      </Typography>
@@ -101,7 +114,8 @@ const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDet
                         fontWeight={500}
                         fontSize={14}
                         sx={{
-                           color: (theme) => theme.palette.text.primary
+                           color: (theme) =>
+                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                         }}>
                         {salary_placeholder || "AVG. Salary"}
                      </Typography>
@@ -109,7 +123,10 @@ const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDet
                         fontWeight={400}
                         fontSize={16}
                         sx={{
-                           color: (theme) => theme.palette.text.disabled
+                           color: (theme) =>
+                              mode === "light"
+                                 ? secondary_color || theme.palette.text.disabled
+                                 : theme.palette.text.disabled
                         }}>
                         {avg_salary?.title}
                      </Typography>
@@ -131,7 +148,8 @@ const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDet
                         fontWeight={500}
                         fontSize={14}
                         sx={{
-                           color: (theme) => theme.palette.text.primary
+                           color: (theme) =>
+                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                         }}>
                         Location
                      </Typography>
@@ -139,7 +157,10 @@ const InfoSidebar = ({ data, block }: { data: ISingleCompany; block: ICompanyDet
                         fontWeight={400}
                         fontSize={16}
                         sx={{
-                           color: (theme) => theme.palette.text.disabled
+                           color: (theme) =>
+                              mode === "light"
+                                 ? secondary_color || theme.palette.text.disabled
+                                 : theme.palette.text.disabled
                         }}>
                         {location?.address}
                      </Typography>

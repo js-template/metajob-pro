@@ -20,6 +20,14 @@
     "card_button": {
       "type": "string"
     },
+    "icon_type": {
+      "type": "enumeration",
+      "enum": ["Icon Bg", "Simple"]
+    },
+    "show_description": {
+      "type": "boolean",
+      "default": true
+    },
     "empty": {
       "type": "component",
       "repeatable": false,
