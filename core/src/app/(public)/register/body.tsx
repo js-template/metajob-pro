@@ -24,6 +24,12 @@ type Props = {
       login_helper_placeholder?: string
       login_link_placeholder?: string
       provider_option?: boolean
+      styles?: {
+         color?: any
+         secondary_color?: string
+         backgroundColor?: any
+         section_padding?: number
+      }
    } | null
 }
 

@@ -32,6 +32,8 @@ export const SignUpCard = ({
    linkedinSignUpHandler,
    block
 }: Props) => {
+   const { theme: mode } = useTheme()
+
    // destructured register block data
    const {
       title: registerTitle,
@@ -48,11 +50,12 @@ export const SignUpCard = ({
       or_placeholder,
       login_helper_placeholder,
       login_link_placeholder,
-      provider_option
+      provider_option,
+      styles
    } = block || {}
+   const { backgroundColor, color, secondary_color, section_padding } = styles || {}
 
    const [selectedButton, setSelectedButton] = useState(0)
-   const { theme: mode } = useTheme()
 
    const {
       register,
@@ -110,55 +113,66 @@ export const SignUpCard = ({
    }, [])
 
    return (
-      <Container maxWidth='lg' sx={{ py: 8 }}>
-         <Stack justifyContent={"center"} alignItems={"center"}>
-            <Grid container spacing={2} justifyContent={"center"} alignItems={"center"}>
-               <Grid item md={5} sm={6} xs={12}>
-                  <Card
-                     sx={{
-                        p: {
-                           xs: 3,
-                           sm: 5
-                        }
-                     }}>
-                     <Stack spacing={4}>
-                        <Typography
-                           fontSize={24}
-                           fontWeight={400}
-                           textAlign={"center"}
-                           color={(theme) => theme.palette.text.primary}>
-                           {registerTitle || "Create an account"}
-                        </Typography>
-                        <Stack direction={"row"} gap={2}>
-                           {!isLoading &&
-                              allRoles?.map((roleItem: IUserRole, index: number) => (
-                                 <Button
-                                    key={index}
-                                    variant='contained'
-                                    fullWidth
-                                    onClick={() => setSelectedButton(roleItem?.id)}
-                                    sx={{
-                                       bgcolor:
-                                          selectedButton === roleItem?.id
-                                             ? (theme) => theme.palette.primary.main
-                                             : (theme) => hexToRGBA(theme.palette.text.disabled, 0.2),
-                                       color: (theme) =>
-                                          mode === "dark"
-                                             ? theme.palette.primary.contrastText
-                                             : selectedButton === roleItem?.id
-                                               ? theme.palette.primary.contrastText
-                                               : theme.palette.text.disabled,
-                                       textTransform: "capitalize"
-                                    }}>
-                                    {roleItem?.name}
-                                 </Button>
-                              ))}
-                           {isLoading &&
-                              [1, 2]?.map((_, index) => (
-                                 <Skeleton key={index} variant='rounded' width={"100%"} height={48} />
-                              ))}
+      <Stack
+         sx={{
+            bgcolor: (theme) =>
+               mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
+         }}>
+         <Container
+            maxWidth='lg'
+            sx={{
+               py: section_padding || 8
+            }}>
+            <Stack justifyContent={"center"} alignItems={"center"}>
+               <Grid container spacing={2} justifyContent={"center"} alignItems={"center"}>
+                  <Grid item md={5} sm={6} xs={12}>
+                     <Card
+                        sx={{
+                           p: {
+                              xs: 3,
+                              sm: 5
+                           }
+                        }}>
+                        <Stack spacing={4}>
+                           <Typography
+                              fontSize={24}
+                              fontWeight={400}
+                              textAlign={"center"}
+                              color={(theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                              }>
+                              {registerTitle || "Create an account"}
+                           </Typography>
+                           <Stack direction={"row"} gap={2}>
+                              {!isLoading &&
+                                 allRoles?.map((roleItem: IUserRole, index: number) => (
+                                    <Button
+                                       key={index}
+                                       variant='contained'
+                                       fullWidth
+                                       onClick={() => setSelectedButton(roleItem?.id)}
+                                       sx={{
+                                          bgcolor:
+                                             selectedButton === roleItem?.id
+                                                ? (theme) => theme.palette.primary.main
+                                                : (theme) => hexToRGBA(theme.palette.text.disabled, 0.2),
+                                          color: (theme) =>
+                                             mode === "dark"
+                                                ? theme.palette.primary.contrastText
+                                                : selectedButton === roleItem?.id
+                                                  ? theme.palette.primary.contrastText
+                                                  : theme.palette.text.disabled,
+                                          textTransform: "capitalize"
+                                       }}>
+                                       {roleItem?.name}
+                                    </Button>
+                                 ))}
+                              {isLoading &&
+                                 [1, 2]?.map((_, index) => (
+                                    <Skeleton key={index} variant='rounded' width={"100%"} height={48} />
+                                 ))}
 
-                           {/* <Button
+                              {/* <Button
                               variant='contained'
                               fullWidth
                               onClick={() => setSelectedButton("candidate")}
@@ -194,205 +208,265 @@ export const SignUpCard = ({
                               onClick={() => setSelectedButton("employer")}>
                               Employer
                            </Button> */}
-                        </Stack>
-                        <Stack spacing={2} component={"form"} onSubmit={handleSubmit(onSubmitHandler)}>
-                           <TextFieldWithLabel
-                              label={username_title || "Username"}
-                              type='text'
-                              placeholder={username_placeholder || "Enter Username"}
-                              textFieldProps={{
-                                 id: "username",
-                                 ...register("username", {
-                                    required: required_placeholder || "This field is required"
-                                 }),
-                                 error: !!errors.username
-                              }}
-                              helperText={errors.username?.message as string | ""}
-                           />
-                           <TextFieldWithLabel
-                              label={email_title || "Email"}
-                              placeholder={email_placeholder || "Your Email"}
-                              type='email'
-                              textFieldProps={{
-                                 id: "email",
-                                 ...register("email", {
-                                    required: required_placeholder || "This field is required"
-                                 }),
-                                 error: !!errors.email
-                              }}
-                              helperText={errors.email?.message as string | ""}
-                           />
-                           <TextFieldWithLabel
-                              label={password_title || "Password"}
-                              placeholder={password_placeholder || "Enter Password"}
-                              type='password'
-                              textFieldProps={{
-                                 id: "password",
-                                 ...register("password", {
-                                    required: required_placeholder || "This field is required"
-                                 }),
-                                 error: !!errors.password
-                              }}
-                              helperText={errors.password?.message as string | ""}
-                           />
-                           <TextFieldWithLabel
-                              label={confirm_password_title || "Confirm Password"}
-                              placeholder={confirm_password_placeholder || "Enter Confirm Password"}
-                              type='password'
-                              textFieldProps={{
-                                 id: "confirmPassword",
-                                 ...register("confirmPassword", {
-                                    required: required_placeholder || "This field is required"
-                                 }),
-                                 error: !!errors.confirmPassword
-                              }}
-                              helperText={errors.confirmPassword?.message as string | ""}
-                           />
-                           <LoadingButton
-                              type='submit'
-                              variant='contained'
-                              loading={loading ? loading : false}
-                              loadingPosition='start'
-                              size='large'
-                              sx={{
-                                 marginTop: "30px !important"
-                              }}>
-                              {button_placeholder || "Register"}
-                           </LoadingButton>
-                        </Stack>
-                        <Typography
-                           variant='body2'
-                           color={(theme) => theme.palette.text.secondary}
-                           fontSize={14}
-                           fontWeight={400}
-                           sx={{
-                              mt: 2,
-                              textAlign: "center"
-                           }}>
-                           {login_helper_placeholder || "Already have account ?"}{" "}
+                           </Stack>
+                           <Stack spacing={2} component={"form"} onSubmit={handleSubmit(onSubmitHandler)}>
+                              <TextFieldWithLabel
+                                 label={username_title || "Username"}
+                                 type='text'
+                                 placeholder={username_placeholder || "Enter Username"}
+                                 textFieldProps={{
+                                    id: "username",
+                                    ...register("username", {
+                                       required: required_placeholder || "This field is required"
+                                    }),
+                                    error: !!errors.username
+                                 }}
+                                 helperText={errors.username?.message as string | ""}
+                                 labelProps={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || theme.palette.text.primary
+                                          : theme.palette.text.primary
+                                 }}
+                              />
+                              <TextFieldWithLabel
+                                 label={email_title || "Email"}
+                                 placeholder={email_placeholder || "Your Email"}
+                                 type='email'
+                                 textFieldProps={{
+                                    id: "email",
+                                    ...register("email", {
+                                       required: required_placeholder || "This field is required"
+                                    }),
+                                    error: !!errors.email
+                                 }}
+                                 helperText={errors.email?.message as string | ""}
+                                 labelProps={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || theme.palette.text.primary
+                                          : theme.palette.text.primary
+                                 }}
+                              />
+                              <TextFieldWithLabel
+                                 label={password_title || "Password"}
+                                 placeholder={password_placeholder || "Enter Password"}
+                                 type='password'
+                                 textFieldProps={{
+                                    id: "password",
+                                    ...register("password", {
+                                       required: required_placeholder || "This field is required"
+                                    }),
+                                    error: !!errors.password
+                                 }}
+                                 helperText={errors.password?.message as string | ""}
+                                 labelProps={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || theme.palette.text.primary
+                                          : theme.palette.text.primary
+                                 }}
+                              />
+                              <TextFieldWithLabel
+                                 label={confirm_password_title || "Confirm Password"}
+                                 placeholder={confirm_password_placeholder || "Enter Confirm Password"}
+                                 type='password'
+                                 textFieldProps={{
+                                    id: "confirmPassword",
+                                    ...register("confirmPassword", {
+                                       required: required_placeholder || "This field is required"
+                                    }),
+                                    error: !!errors.confirmPassword
+                                 }}
+                                 helperText={errors.confirmPassword?.message as string | ""}
+                                 labelProps={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || theme.palette.text.primary
+                                          : theme.palette.text.primary
+                                 }}
+                              />
+                              <LoadingButton
+                                 type='submit'
+                                 variant='contained'
+                                 loading={loading ? loading : false}
+                                 loadingPosition='start'
+                                 size='large'
+                                 sx={{
+                                    marginTop: "30px !important"
+                                 }}>
+                                 {button_placeholder || "Register"}
+                              </LoadingButton>
+                           </Stack>
                            <Typography
-                              component={Link}
-                              href='/login'
-                              color={(theme) => theme.palette.primary.main}
+                              variant='body2'
                               fontSize={14}
                               fontWeight={400}
                               sx={{
-                                 textDecoration: "none",
-                                 cursor: "pointer"
+                                 color: (theme) =>
+                                    mode === "light"
+                                       ? secondary_color || theme.palette.text.secondary
+                                       : theme.palette.text.secondary,
+                                 mt: 2,
+                                 textAlign: "center"
                               }}>
-                              {login_link_placeholder || "Login"}
-                           </Typography>
-                        </Typography>
-                        {/* provider title  */}
-                        {provider_option && (
-                           <Box
-                              sx={{
-                                 alignItems: "center",
-                                 display: "flex",
-                                 marginTop: "20px !important"
-                              }}>
-                              <Divider sx={{ flexGrow: 1 }} orientation='horizontal' />
-
-                              <Button
-                                 variant='outlined'
+                              {login_helper_placeholder || "Already have account ?"}{" "}
+                              <Typography
+                                 component={Link}
+                                 href='/login'
+                                 color={(theme) => theme.palette.primary.main}
+                                 fontSize={14}
+                                 fontWeight={400}
                                  sx={{
-                                    cursor: "unset",
-                                    m: 2,
-                                    py: 0.5,
-                                    px: 7,
-                                    fontWeight: 500,
-                                    borderRadius: "10px"
-                                 }}
-                                 disableRipple
-                                 disabled>
-                                 {or_placeholder || "OR"}
-                              </Button>
+                                    textDecoration: "none",
+                                    cursor: "pointer"
+                                 }}>
+                                 {login_link_placeholder || "Login"}
+                              </Typography>
+                           </Typography>
+                           {/* provider title  */}
+                           {provider_option && (
+                              <Box
+                                 sx={{
+                                    alignItems: "center",
+                                    display: "flex",
+                                    marginTop: "20px !important"
+                                 }}>
+                                 <Divider
+                                    orientation='horizontal'
+                                    sx={{
+                                       flexGrow: 1,
+                                       borderColor: (theme) =>
+                                          mode === "light"
+                                             ? hexToRGBA(secondary_color || theme.palette.text.disabled, 0.4) ||
+                                               hexToRGBA(theme.palette.text.disabled, 0.4)
+                                             : hexToRGBA(theme.palette.text.disabled, 0.4)
+                                    }}
+                                 />
 
-                              <Divider sx={{ flexGrow: 1 }} orientation='horizontal' />
-                           </Box>
-                        )}
-                        {/* signUp providers  */}
-                        {provider_option && (
-                           <Box
-                              sx={{
-                                 display: "flex",
-                                 justifyContent: "center",
-                                 alignItems: "center",
-                                 gap: 2,
-                                 marginTop: "15px !important"
-                              }}>
-                              {googleSignUpHandler && (
-                                 <IconButton
-                                    size='large'
-                                    color='secondary'
+                                 <Button
+                                    variant='outlined'
                                     sx={{
-                                       p: 1,
-                                       borderRadius: 2,
-                                       border: "1px solid",
-                                       // google color
-                                       borderColor: "#DB4437"
-                                    }}
-                                    onClick={() => {
-                                       if (googleSignUpHandler) {
-                                          googleSignUpHandler()
+                                       cursor: "unset",
+                                       m: 2,
+                                       py: 0.5,
+                                       px: 7,
+                                       fontWeight: 500,
+                                       borderRadius: "10px",
+                                       "&.Mui-disabled": {
+                                          borderColor: (theme) =>
+                                             mode === "light"
+                                                ? hexToRGBA(secondary_color || theme.palette.text.disabled, 0.4) ||
+                                                  hexToRGBA(theme.palette.text.disabled, 0.4)
+                                                : hexToRGBA(theme.palette.text.disabled, 0.4),
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? hexToRGBA(secondary_color || theme.palette.text.disabled, 0.4) ||
+                                                  hexToRGBA(theme.palette.text.disabled, 0.4)
+                                                : hexToRGBA(theme.palette.text.disabled, 0.4)
                                        }
-                                    }}>
-                                    <CIcon icon='flat-color-icons:google' />
-                                 </IconButton>
-                              )}
-                              {/* Facebook */}
-                              {facebookSignUpHandler && (
-                                 <IconButton
-                                    size='large'
-                                    color='secondary'
+                                    }}
+                                    disableRipple
+                                    disabled>
+                                    {or_placeholder || "OR"}
+                                 </Button>
+
+                                 <Divider
+                                    orientation='horizontal'
                                     sx={{
-                                       p: 1,
-                                       borderRadius: 2,
-                                       border: "1px solid",
-                                       // facebook color
-                                       borderColor: "#3B5998"
+                                       flexGrow: 1,
+                                       borderColor: (theme) =>
+                                          mode === "light"
+                                             ? hexToRGBA(secondary_color || theme.palette.text.disabled, 0.4) ||
+                                               hexToRGBA(theme.palette.text.disabled, 0.4)
+                                             : hexToRGBA(theme.palette.text.disabled, 0.4)
                                     }}
-                                    onClick={() => {
-                                       if (facebookSignUpHandler) {
-                                          facebookSignUpHandler()
-                                       }
-                                    }}>
-                                    <CIcon icon='logos:facebook' />
-                                 </IconButton>
-                              )}
-                              {/* LinkedIn */}
-                              {linkedinSignUpHandler && (
-                                 <IconButton
-                                    size='large'
-                                    color='secondary'
-                                    sx={{
-                                       p: 1,
-                                       borderRadius: 2,
-                                       border: "1px solid",
-                                       // linkedin color
-                                       borderColor: "#0077B5"
-                                    }}
-                                    onClick={() => {
-                                       if (linkedinSignUpHandler) {
-                                          linkedinSignUpHandler()
-                                       }
-                                    }}>
-                                    <CIcon
-                                       icon='entypo-social:linkedin-with-circle'
+                                 />
+                              </Box>
+                           )}
+                           {/* signUp providers  */}
+                           {provider_option && (
+                              <Box
+                                 sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    gap: 2,
+                                    marginTop: "15px !important"
+                                 }}>
+                                 {googleSignUpHandler && (
+                                    <IconButton
+                                       size='large'
+                                       color='secondary'
                                        sx={{
-                                          // linkedin color
-                                          color: "#0077B5"
+                                          p: 1,
+                                          borderRadius: 2,
+                                          border: "1px solid",
+                                          // google color
+                                          borderColor: "#DB4437"
                                        }}
-                                    />
-                                 </IconButton>
-                              )}
-                           </Box>
-                        )}
-                     </Stack>
-                  </Card>
+                                       onClick={() => {
+                                          if (googleSignUpHandler) {
+                                             googleSignUpHandler()
+                                          }
+                                       }}>
+                                       <CIcon icon='flat-color-icons:google' />
+                                    </IconButton>
+                                 )}
+                                 {/* Facebook */}
+                                 {facebookSignUpHandler && (
+                                    <IconButton
+                                       size='large'
+                                       color='secondary'
+                                       sx={{
+                                          p: 1,
+                                          borderRadius: 2,
+                                          border: "1px solid",
+                                          // facebook color
+                                          borderColor: "#3B5998"
+                                       }}
+                                       onClick={() => {
+                                          if (facebookSignUpHandler) {
+                                             facebookSignUpHandler()
+                                          }
+                                       }}>
+                                       <CIcon icon='logos:facebook' />
+                                    </IconButton>
+                                 )}
+                                 {/* LinkedIn */}
+                                 {linkedinSignUpHandler && (
+                                    <IconButton
+                                       size='large'
+                                       color='secondary'
+                                       sx={{
+                                          p: 1,
+                                          borderRadius: 2,
+                                          border: "1px solid",
+                                          // linkedin color
+                                          borderColor: "#0077B5"
+                                       }}
+                                       onClick={() => {
+                                          if (linkedinSignUpHandler) {
+                                             linkedinSignUpHandler()
+                                          }
+                                       }}>
+                                       <CIcon
+                                          icon='entypo-social:linkedin-with-circle'
+                                          sx={{
+                                             // linkedin color
+                                             color: "#0077B5"
+                                          }}
+                                       />
+                                    </IconButton>
+                                 )}
+                              </Box>
+                           )}
+                        </Stack>
+                     </Card>
+                  </Grid>
                </Grid>
-            </Grid>
-         </Stack>
-      </Container>
+            </Stack>
+         </Container>
+      </Stack>
    )
 }

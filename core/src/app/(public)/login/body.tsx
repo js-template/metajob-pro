@@ -20,6 +20,12 @@ type Props = {
       signup_link_placeholder?: string
       provider_option?: boolean
       signup_helper_placeholder?: string
+      styles?: {
+         color?: any
+         secondary_color?: string
+         backgroundColor?: any
+         section_padding?: number
+      }
    } | null
 }
 const LoginBody = ({ callbackUrl, error, block }: Props) => {
