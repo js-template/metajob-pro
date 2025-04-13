@@ -807,6 +807,33 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockJobCategoryOverlay extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_categories_overlay';
+  info: {
+    displayName: 'Job Category Overlay';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'config.link', false>;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    item_count: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 24;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<12>;
+    overlay: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    show_description: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    show_icon: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
 export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_job_filters';
   info: {
@@ -1539,6 +1566,7 @@ declare module '@strapi/strapi' {
       'metajob-block.job-banner': MetajobBlockJobBanner;
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
+      'metajob-block.job-category-overlay': MetajobBlockJobCategoryOverlay;
       'metajob-block.job-filter': MetajobBlockJobFilter;
       'metajob-block.manage-company': MetajobBlockManageCompany;
       'metajob-block.manage-job': MetajobBlockManageJob;
