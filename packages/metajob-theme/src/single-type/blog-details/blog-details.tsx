@@ -1,11 +1,12 @@
 "use client"
+import { useTheme } from "next-themes"
 import { Container, Grid, Stack } from "@mui/material"
 import BlogContent from "./blog-content"
 import RecentPost from "./recent-post"
 import BlogCategory from "./blog-category"
 import BlogAds from "./blog-ads"
-import BlogHeader from "./header"
 import { IBlogCategory, IBlogDetailsBlock, ISinglePost } from "./types"
+import { PageHeader } from "../../blocks/page-header"
 
 type Props = {
    block: IBlogDetailsBlock
@@ -16,38 +17,50 @@ type Props = {
 }
 
 const BlogDetailsServer = ({ data, block, recentBlogsData, categoryData }: Props) => {
-   const { title, sidebar } = block || {}
+   const { theme: mode } = useTheme()
+   const { title, style } = block || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      header_bg_color,
+      section_padding,
+      bg_overlay,
+      sidebar
+   } = style || {}
+
    const isRightSidebar = !sidebar || sidebar === "Right Sidebar"
-   const isLeftSidebar = sidebar === "Left Sidebar"
-   const isBothSidebar = sidebar === "Both Sidebar"
    const isNoSidebar = sidebar === "No Sidebar"
 
    return (
-      <Stack>
-         <BlogHeader title={title || "Blog Details"} bg={data?.featuredImage} />
+      <Stack
+         bgcolor={(theme) =>
+            mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
+         }>
+         <PageHeader
+            block={{
+               title: title || "Blog Details",
+               image: data?.featuredImage,
+               style: {
+                  backgroundColor: header_bg_color,
+                  color: header_color,
+                  bg_overlay: bg_overlay
+               }
+            }}
+         />
          <Container maxWidth='lg' sx={{ py: 6 }}>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} direction={isRightSidebar ? "row" : "row-reverse"}>
                {/* blog-details  */}
-               <Grid
-                  item
-                  xs={12}
-                  md={isBothSidebar ? 6 : isNoSidebar ? 12 : 8}
-                  order={{ xs: 1, md: isRightSidebar ? 1 : 2 }}>
-                  <BlogContent data={data} />
+               <Grid item xs={12} md={isNoSidebar ? 12 : 8}>
+                  <BlogContent data={data} color={color} secondary_color={secondary_color} />
                </Grid>
                {!isNoSidebar && (
-                  <Grid item xs={12} md={isBothSidebar ? 3 : 4} order={{ xs: 2, md: isRightSidebar ? 2 : 1 }}>
+                  <Grid item xs={12} md={4}>
                      <Stack spacing={4}>
-                        <RecentPost recentBlogsData={recentBlogsData} />
-                        {!isBothSidebar && <BlogCategory blogCategoryData={categoryData} />}
-                        <BlogAds />
-                     </Stack>
-                  </Grid>
-               )}
-               {isBothSidebar && (
-                  <Grid item xs={12} md={isBothSidebar ? 3 : 4} order={{ xs: 3, md: isBothSidebar ? 3 : 3 }}>
-                     <Stack spacing={4}>
-                        <BlogCategory blogCategoryData={categoryData} />
+                        <RecentPost recentBlogsData={recentBlogsData} color={color} secondary_color={secondary_color} />
+                        <BlogCategory blogCategoryData={categoryData} color={color} secondary_color={secondary_color} />
+                        <BlogAds color={color} secondary_color={secondary_color} />
                      </Stack>
                   </Grid>
                )}
