@@ -1,8 +1,8 @@
 "use client"
-
 import React from "react"
+import { useTheme } from "next-themes"
 import { Fragment } from "react/jsx-runtime"
-import { Box, CardContent, Grid, Skeleton, Typography, useTheme } from "@mui/material"
+import { Box, CardContent, Grid, Skeleton, Typography, useTheme as muiTheme } from "@mui/material"
 import { IResumeDetailsBlock, ISingleResume } from "./types"
 import CustomPreview from "../../components/markdown-preview"
 import EducationSection from "./education"
@@ -16,7 +16,10 @@ type Props = {
 }
 
 const DetailsSection = ({ data, isLoading, block }: Props) => {
-   const theme = useTheme()
+   const theme = muiTheme()
+   const { theme: mode } = useTheme()
+
+   const { color, secondary_color } = block?.styles || {}
 
    return (
       <CardContent
@@ -37,7 +40,8 @@ const DetailsSection = ({ data, isLoading, block }: Props) => {
                            fontSize={20}
                            fontWeight={700}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}
                            textAlign={"center"}>
                            {block?.about_placeholder || "About Me"}

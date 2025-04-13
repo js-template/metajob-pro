@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import _ from "lodash"
 import { Divider, FormControl, MenuItem, Select, Stack, TextField, Typography, Button } from "@mui/material"
 import { Card } from "../../components/common/card"
@@ -15,9 +16,21 @@ type Props = {
    formData: ICompanyFilterProps
    loading: boolean
    categoryData?: ISingleCategory[]
+   color?: string
+   secondary_color?: string
 }
 
-const CompanyFilterSection = ({ search, formData, setFormData, loading, categoryData }: Props) => {
+const CompanyFilterSection = ({
+   search,
+   formData,
+   setFormData,
+   loading,
+   categoryData,
+   color,
+   secondary_color
+}: Props) => {
+   const { theme: mode } = useTheme()
+
    const { title: searchTitle, search_placeholder, category_placeholder, button_placeholder } = search || {}
 
    return (
@@ -32,7 +45,8 @@ const CompanyFilterSection = ({ search, formData, setFormData, loading, category
                   fontSize={16}
                   fontWeight={700}
                   sx={{
-                     color: (theme) => theme.palette.text.primary
+                     color: (theme) =>
+                        mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                   }}>
                   {searchTitle}
                </Typography>
@@ -91,12 +105,18 @@ const CompanyFilterSection = ({ search, formData, setFormData, loading, category
                         sx={{
                            backgroundColor: (theme) => theme.palette.background.default,
                            pl: 1.5,
-                           color: (theme) => theme.palette.text.secondary,
+                           color: (theme) =>
+                              mode === "light"
+                                 ? secondary_color || theme.palette.text.secondary
+                                 : theme.palette.text.secondary,
                            fontWeight: 400,
                            fontSize: 16,
                            borderRadius: 2,
                            "& .MuiSelect-select": {
-                              color: (theme) => theme.palette.text.secondary
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.secondary
+                                    : theme.palette.text.secondary
                            },
                            "&.MuiOutlinedInput-root": {
                               border: "none",
@@ -107,11 +127,28 @@ const CompanyFilterSection = ({ search, formData, setFormData, loading, category
                         size='small'
                         value={formData.selectedIndustry || ""}
                         onChange={(e) => setFormData({ ...formData, selectedIndustry: e.target.value })}>
-                        <MenuItem value='' sx={{ fontSize: "16px" }}>
+                        <MenuItem
+                           value=''
+                           sx={{
+                              fontSize: "16px",
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.secondary
+                                    : theme.palette.text.secondary
+                           }}>
                            {category_placeholder}
                         </MenuItem>
                         {_.map(categoryData, (item, index) => (
-                           <MenuItem key={index} value={item?.title} sx={{ fontSize: "16px" }}>
+                           <MenuItem
+                              key={index}
+                              value={item?.title}
+                              sx={{
+                                 fontSize: "16px",
+                                 color: (theme) =>
+                                    mode === "light"
+                                       ? secondary_color || theme.palette.text.secondary
+                                       : theme.palette.text.secondary
+                              }}>
                               {item?.title}
                            </MenuItem>
                         ))}

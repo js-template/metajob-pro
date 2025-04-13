@@ -1,9 +1,16 @@
 "use client"
 import { hexToRGBA } from "../../../lib/hex-to-rgba"
-import { Stack, Typography } from "@mui/material"
+import { Stack, Typography, useTheme as muiTheme } from "@mui/material"
 import { useTheme } from "next-themes"
 
-export default function PageHeader({ title }: { title: string }) {
+type Props = {
+   title: string
+   header_bg_color?: string
+   header_color?: string
+}
+
+export default function PageHeader({ title, header_bg_color, header_color }: Props) {
+   const theme = muiTheme()
    const { theme: mode } = useTheme()
    return (
       <Stack position={"relative"}>
@@ -14,7 +21,7 @@ export default function PageHeader({ title }: { title: string }) {
                justifyContent: "center",
                alignItems: "center",
                // backgroundImage: "url(/images/jobs/findJob.png)",
-               bgcolor: "primary.main",
+               bgcolor: mode === "light" ? header_bg_color || "primary.main" : theme.palette.background.paper,
                backgroundSize: "cover",
                backgroundPosition: "center",
                textAlign: "center",
@@ -42,10 +49,11 @@ export default function PageHeader({ title }: { title: string }) {
                fontWeight={{ sm: 700, xs: 600 }}
                variant={"h1"}
                sx={{
-                  color: (theme) => theme.palette.primary.contrastText
-                }}
-             
-               >
+                  color: (theme) =>
+                     mode === "light"
+                        ? header_color || theme.palette.primary.contrastText
+                        : theme.palette.primary.contrastText
+               }}>
                {title}
             </Typography>
          </Stack>

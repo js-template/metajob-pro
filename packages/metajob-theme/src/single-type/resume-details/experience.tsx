@@ -1,7 +1,8 @@
 "use client"
+import { useTheme } from "next-themes"
 import { Fragment } from "react/jsx-runtime"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
-import { Box, Chip, Grid, LinearProgress, Skeleton, Typography, useTheme } from "@mui/material"
+import { Box, Chip, Grid, LinearProgress, Skeleton, Typography, useTheme as muiTheme } from "@mui/material"
 import { IResumeDetailsBlock } from "./types"
 
 type Props = {
@@ -18,8 +19,12 @@ type Props = {
 }
 
 const ExperienceSection = ({ experienceData, isLoading, block }: Props) => {
-   const theme = useTheme()
-   const { experience_placeholder, empty } = block || {}
+   const theme = muiTheme()
+   const { theme: mode } = useTheme()
+
+   const { experience_placeholder, empty, styles } = block || {}
+   const { color, secondary_color } = styles || {}
+
    return isLoading ? (
       <Box>
          <Skeleton
@@ -39,7 +44,8 @@ const ExperienceSection = ({ experienceData, isLoading, block }: Props) => {
                fontSize={16}
                fontWeight={400}
                sx={{
-                  color: (theme) => theme.palette.text.disabled
+                  color: (theme) =>
+                     mode === "light" ? secondary_color || theme.palette.text.secondary : theme.palette.text.secondary
                }}>
                {empty?.title || "No experience data added"}
             </Typography>
@@ -52,7 +58,8 @@ const ExperienceSection = ({ experienceData, isLoading, block }: Props) => {
                   fontWeight={700}
                   mb={1.5}
                   sx={{
-                     color: (theme) => theme.palette.text.primary
+                     color: (theme) =>
+                        mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                   }}
                   textAlign={"left"}>
                   {experience_placeholder || "Experience"}
@@ -75,7 +82,8 @@ const ExperienceSection = ({ experienceData, isLoading, block }: Props) => {
                            fontSize={20}
                            fontWeight={500}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}>
                            {experienceData?.length > 1 && index + 1 + "."} {item?.title}
                         </Typography>
@@ -92,8 +100,23 @@ const ExperienceSection = ({ experienceData, isLoading, block }: Props) => {
                         />
                      </Grid>
                      <Grid item xs={12} md={9}>
-                        <Typography fontWeight={600}>{item?.institution}</Typography>
-                        <Typography fontWeight={400}>{item?.description}</Typography>
+                        <Typography
+                           fontWeight={600}
+                           sx={{
+                              color: mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                           }}>
+                           {item?.institution}
+                        </Typography>
+                        <Typography
+                           fontWeight={400}
+                           sx={{
+                              color:
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.secondary
+                                    : theme.palette.text.secondary
+                           }}>
+                           {item?.description}
+                        </Typography>
                      </Grid>
                   </Grid>
                ))}

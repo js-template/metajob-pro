@@ -34,7 +34,6 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
       content,
       search,
       image,
-      bg_overlay,
       job_count_placeholder,
       company_count_placeholder,
       resume_count_placeholder,
@@ -42,9 +41,18 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
       button,
       style
    } = block || {}
-   const { backgroundColor, color } = style || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      bg_overlay,
+      header_width,
+      section_padding
+   } = style || {}
    const { label, link, target, disabled } = button || {}
-   const { title, sub_title, title_color, sub_title_color } = content || {}
+   const { title, sub_title } = content || {}
    const { search_placeholder, location_placeholder, category_placeholder, button_placeholder } = search || {}
    const bannerBackground = image?.url || ""
 
@@ -92,7 +100,9 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
             backgroundSize: "cover",
             backgroundPosition: "center",
             textAlign: "center",
-            padding: "5rem 2rem",
+            // padding: "5rem 2rem",
+            px: "2rem",
+            py: section_padding || "5rem",
             "&::before": {
                content: '""',
                position: "absolute",
@@ -126,20 +136,26 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         xs: 40
                      }}
                      fontWeight={700}
-                     maxWidth={650}
+                     maxWidth={header_width === "Full" ? "100%" : 650}
                      textAlign={"center"}
                      sx={{
-                        color: (theme) => title_color || theme.palette.primary.contrastText
+                        color: (theme) =>
+                           mode === "light"
+                              ? header_color || theme.palette.primary.contrastText
+                              : theme.palette.primary.contrastText
                      }}>
                      {title}
                   </Typography>
                   <Typography
                      fontSize={24}
-                     maxWidth={650}
+                     maxWidth={header_width === "Full" ? "100%" : 650}
                      textAlign={"center"}
                      fontWeight={400}
                      sx={{
-                        color: (theme) => sub_title_color || theme.palette.primary.contrastText
+                        color: (theme) =>
+                           mode === "light"
+                              ? sub_header_color || theme.palette.primary.contrastText
+                              : theme.palette.primary.contrastText
                      }}>
                      {sub_title}
                   </Typography>
@@ -165,6 +181,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         sx={{
                            borderRadius: "1rem",
                            bgcolor: (theme) => theme.palette.background.paper,
+
                            overflow: "hidden",
                            display: "flex",
                            justifyContent: "center",
@@ -179,11 +196,19 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            value={searchText}
                            onChange={(e) => setSearchText(e.target.value)}
                            fullWidth
-                           placeholder={search_placeholder}
+                           placeholder={search_placeholder || "Search"}
                            InputProps={{
                               startAdornment: (
                                  <Box sx={{ pr: 1 }} component={"span"}>
-                                    <CIcon icon='iconamoon:search-light' />
+                                    <CIcon
+                                       icon='iconamoon:search-light'
+                                       sx={{
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? secondary_color || theme.palette.text.disabled
+                                                : theme.palette.text.disabled
+                                       }}
+                                    />
                                  </Box>
                               )
                            }}
@@ -195,7 +220,15 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            InputProps={{
                               startAdornment: (
                                  <Box sx={{ pr: 1 }} component={"span"}>
-                                    <CIcon icon='ph:map-pin' />
+                                    <CIcon
+                                       icon='ph:map-pin'
+                                       sx={{
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? secondary_color || theme.palette.text.disabled
+                                                : theme.palette.text.disabled
+                                       }}
+                                    />
                                  </Box>
                               )
                            }}
@@ -214,6 +247,10 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         <FormControl fullWidth>
                            <Select
                               sx={{
+                                 color: (theme) =>
+                                    mode === "light"
+                                       ? secondary_color || theme.palette.text.disabled
+                                       : theme.palette.text.disabled,
                                  "& .MuiSelect-select": {
                                     "&.MuiSelect-standard": {
                                        backgroundColor: (theme) => theme.palette.background.paper + " !important"
@@ -221,7 +258,6 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  },
                                  px: 2,
                                  textAlign: "left",
-                                 color: "text.disabled",
                                  fontWeight: 400,
                                  fontSize: 16
                               }}
@@ -229,11 +265,28 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                               disableUnderline
                               value={searchCategory || "Select Category"}
                               onChange={(e) => setSearchCategory(e.target.value)}>
-                              <MenuItem value={"Select Category"}>{category_placeholder || "Select Category"}</MenuItem>
+                              <MenuItem
+                                 value={"Select Category"}
+                                 sx={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.disabled
+                                          : theme.palette.text.disabled
+                                 }}>
+                                 {category_placeholder || "Select Category"}
+                              </MenuItem>
                               {categoryData &&
                                  categoryData?.length > 0 &&
                                  categoryData?.map((item: ICategory, index: number) => (
-                                    <MenuItem key={index} value={item?.title}>
+                                    <MenuItem
+                                       key={index}
+                                       value={item?.title}
+                                       sx={{
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? secondary_color || theme.palette.text.disabled
+                                                : theme.palette.text.disabled
+                                       }}>
                                        {item?.title}
                                     </MenuItem>
                                  ))}
@@ -243,8 +296,11 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            variant='contained'
                            size='medium'
                            sx={{
-                              background: backgroundColor || "primary.main",
-                              color: (theme) => color || theme.palette.primary.contrastText,
+                              background: mode === "light" ? backgroundColor || "primary.main" : "primary.main",
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? color || theme.palette.primary.contrastText
+                                    : theme.palette.primary.contrastText,
                               my: 1,
                               ml: 2,
                               mr: 2,
@@ -256,27 +312,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      </Stack>
                   </Card>
                )}
-               {/* button */}
-               {button && (
-                  <Box>
-                     <Button
-                        disabled={disabled}
-                        //  @ts-ignore
-                        component={NextLink}
-                        href={link || "/find-job"}
-                        target={target ?? "_self"}
-                        variant='contained'
-                        sx={{
-                           color: (theme) => color || theme.palette.primary.contrastText,
-                           bgcolor: (theme) =>
-                              mode === "dark"
-                                 ? backgroundColor || theme.palette.primary.main
-                                 : backgroundColor || theme.palette.secondary.main
-                        }}>
-                        {label || "View Details"}
-                     </Button>
-                  </Box>
-               )}
+
                {/* count  */}
                {show_count && (
                   <Stack
@@ -292,7 +328,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         sx={{
                            borderRadius: "8px",
                            p: 5,
-                           bgcolor: (theme) => hexToRGBA(theme.palette.background.default, 0.9)
+                           bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
                            <CIcon
@@ -307,14 +343,20 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) => color || theme.palette.text.primary}>
+                                 color={(theme) =>
+                                    mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                                 }>
                                  {countData?.job}+
                               </Typography>
                               <Typography
                                  variant={"h4"}
                                  fontSize={16}
                                  fontWeight={500}
-                                 color={(theme) => theme.palette.text.disabled}>
+                                 color={(theme) =>
+                                    mode === "light"
+                                       ? secondary_color || theme.palette.text.disabled
+                                       : theme.palette.text.disabled
+                                 }>
                                  {job_count_placeholder || "Job Available"}
                               </Typography>
                            </Stack>
@@ -324,7 +366,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         sx={{
                            borderRadius: "8px",
                            p: 5,
-                           bgcolor: (theme) => hexToRGBA(theme.palette.background.default, 0.9)
+                           bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
                            <CIcon
@@ -340,14 +382,20 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) => color || theme.palette.text.primary}>
+                                 color={(theme) =>
+                                    mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                                 }>
                                  {countData?.company}+
                               </Typography>
                               <Typography
                                  variant={"h4"}
                                  fontSize={16}
                                  fontWeight={500}
-                                 color={(theme) => theme.palette.text.disabled}>
+                                 color={(theme) =>
+                                    mode === "light"
+                                       ? secondary_color || theme.palette.text.disabled
+                                       : theme.palette.text.disabled
+                                 }>
                                  {company_count_placeholder || "Company"}
                               </Typography>
                            </Stack>
@@ -357,7 +405,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         sx={{
                            borderRadius: "8px",
                            p: 5,
-                           bgcolor: (theme) => hexToRGBA(theme.palette.background.default, 0.9)
+                           bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
                            <CIcon
@@ -373,20 +421,46 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) => color || theme.palette.text.primary}>
+                                 color={(theme) =>
+                                    mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                                 }>
                                  {countData?.resume}+
                               </Typography>
                               <Typography
                                  variant={"h4"}
                                  fontSize={16}
                                  fontWeight={500}
-                                 color={(theme) => theme.palette.text.disabled}>
+                                 color={(theme) =>
+                                    mode === "light"
+                                       ? secondary_color || theme.palette.text.disabled
+                                       : theme.palette.text.disabled
+                                 }>
                                  {resume_count_placeholder || "Available Employee"}
                               </Typography>
                            </Stack>
                         </Stack>
                      </Card>
                   </Stack>
+               )}
+
+               {/* button */}
+               {button && (
+                  <Box>
+                     <Button
+                        disabled={disabled}
+                        //  @ts-ignore
+                        component={NextLink}
+                        href={link || "/find-job"}
+                        target={target ?? "_self"}
+                        variant='contained'
+                        sx={{
+                           color: (theme) => theme.palette.primary.contrastText,
+                           bgcolor: (theme) =>
+                              mode === "light" ? theme.palette.secondary.main : theme.palette.primary.main
+                        }}>
+                        {label || "View Details"}
+                     </Button>
+                  </Box>
                )}
             </Stack>
          </Container>

@@ -20,7 +20,18 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
 
    // destructure the block
    const { content, empty, style, button, card_button } = block || {}
-   const { desktop, tab, mobile, backgroundColor, color } = style || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      section_padding,
+      header_width,
+      desktop,
+      tab,
+      mobile
+   } = style || {}
    const { label, link, target, disabled } = button || {}
    const { label: card_label } = card_button || {}
 
@@ -31,14 +42,21 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
                mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
          }}>
          <Container maxWidth='lg'>
-            <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
-               {content && <SectionTitle data={content} />}
+               {content && (
+                  <SectionTitle data={content} color={{ header_color, sub_header_color }} width={header_width} />
+               )}
                {JobsData && JobsData?.length > 0 && (
                   <Grid container spacing={2}>
                      {_.map(JobsData, (item) => (
                         <Grid key={item?.id} item xs={mobile || 12} sm={tab || 6} md={desktop || 3}>
-                           <JobItem data={item} button_label={card_label} color={color} />
+                           <JobItem
+                              data={item}
+                              button_label={card_label}
+                              color={color}
+                              secondary_color={secondary_color}
+                           />
                         </Grid>
                      ))}
                   </Grid>

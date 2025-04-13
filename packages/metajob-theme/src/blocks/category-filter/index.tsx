@@ -1,11 +1,21 @@
 "use client"
 import { useEffect, useState } from "react"
-import { Container, Grid, Icon, Pagination, PaginationItem, Stack, Typography, useTheme } from "@mui/material"
-import { CardItemWithVariation } from "./item"
+import { useTheme } from "next-themes"
+import {
+   Container,
+   Grid,
+   Icon,
+   Pagination,
+   PaginationItem,
+   Stack,
+   Typography,
+   useTheme as muiTheme
+} from "@mui/material"
 import ItemLoader from "./loader"
 import { ICategoryFilterBlock, ISingleCategory } from "./types"
 import { find } from "../../lib/strapi"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
+import { CategoryCardItem } from "../../components/cards/category-cards/category-card"
 
 type Props = {
    block: ICategoryFilterBlock
@@ -14,11 +24,24 @@ type Props = {
 }
 
 export const CategoryFilter = ({ block, language }: Props) => {
-   const theme = useTheme()
+   const theme = muiTheme()
+   const { theme: mode } = useTheme()
    // destructure the block
-   const { content, card_button, empty, style } = block || {}
+   const { content, card_button, empty, style, show_description, icon_type } = block || {}
    const { title, sub_title, variation } = content || {}
-   const { desktop, tab, mobile, backgroundColor, color } = style || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      section_padding,
+      header_width,
+      desktop,
+      tab,
+      mobile,
+      sidebar
+   } = style || {}
 
    const [page, setPage] = useState<number>(1)
    const [categoryData, setCategoryData] = useState<ISingleCategory[]>([])
@@ -66,17 +89,23 @@ export const CategoryFilter = ({ block, language }: Props) => {
 
    return (
       <Stack
-         bgcolor={backgroundColor ? backgroundColor : theme.palette.background.default}
+         bgcolor={
+            mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
+         }
          sx={{ minHeight: "calc(100vh - 300px)" }}>
          <Container maxWidth='lg'>
-            <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* header  */}
                {(title || sub_title) && (
                   <Stack spacing={1} direction={"column"}>
                      {title && (
                         <Typography
+                           maxWidth={header_width === "Full" ? "100%" : 650}
                            sx={{
-                              color: color ?? theme.palette.text.primary,
+                              color:
+                                 mode === "light"
+                                    ? header_color || theme.palette.text.primary
+                                    : theme.palette.text.primary,
                               fontWeight: 700,
                               fontSize: "32px",
                               textAlign: "center"
@@ -86,8 +115,12 @@ export const CategoryFilter = ({ block, language }: Props) => {
                      )}
                      {sub_title && (
                         <Typography
+                           maxWidth={header_width === "Full" ? "100%" : 650}
                            sx={{
-                              color: hexToRGBA(color ?? theme.palette.text.primary, 0.5),
+                              color:
+                                 mode === "light"
+                                    ? sub_header_color || hexToRGBA(theme.palette.text.primary, 0.5)
+                                    : hexToRGBA(theme.palette.text.primary, 0.5),
                               fontSize: "16px",
                               textAlign: "center"
                            }}>
@@ -102,7 +135,14 @@ export const CategoryFilter = ({ block, language }: Props) => {
                      {categoryData?.map((item: any, index: number) => {
                         return (
                            <Grid item xs={mobile || 12} sm={tab || 4} md={desktop || 3} key={index}>
-                              <CardItemWithVariation data={item} button_label={card_button} variation={variation} />
+                              <CategoryCardItem
+                                 data={item}
+                                 icon_type={icon_type}
+                                 show_description={show_description}
+                                 button_label={card_button}
+                                 color={color}
+                                 secondary_color={secondary_color}
+                              />
                            </Grid>
                         )
                      })}

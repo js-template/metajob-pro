@@ -12,12 +12,6 @@
     "sub_title": {
       "type": "text"
     },
-    "title_color": {
-      "type": "string"
-    },
-    "sub_title_color": {
-      "type": "string"
-    },
     "variation": {
       "type": "enumeration",
       "enum": ["Variation One", "Variation Two"]

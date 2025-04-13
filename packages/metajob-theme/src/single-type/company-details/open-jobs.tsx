@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import { Grid, Stack, Typography } from "@mui/material"
 import { JobItem } from "../../components/cards/job-item"
 import { ICompanyDetailsBlock, ISingleJob } from "./types"
@@ -9,7 +10,11 @@ type Props = {
 }
 
 const OpenJobs = ({ block, openJobsData }: Props) => {
-   const { empty, open_jobs_title, card_button } = block || {}
+   const { theme: mode } = useTheme()
+   const { empty, open_jobs_title, card_button, styles } = block || {}
+
+   const { backgroundColor, color, secondary_color, header_color, desktop, tab, mobile } = styles || {}
+
    return (
       <Stack spacing={4}>
          <Typography
@@ -17,7 +22,8 @@ const OpenJobs = ({ block, openJobsData }: Props) => {
             fontWeight={700}
             fontSize={24}
             sx={{
-               color: (theme) => theme.palette.text.primary
+               color: (theme) =>
+                  mode === "light" ? header_color || theme.palette.primary.main : theme.palette.primary.main
             }}>
             {open_jobs_title || "Open Job"}
          </Typography>
@@ -26,8 +32,13 @@ const OpenJobs = ({ block, openJobsData }: Props) => {
             {openJobsData && openJobsData?.length > 0 && (
                <Grid container spacing={2}>
                   {openJobsData?.slice(0, 4)?.map((item: ISingleJob) => (
-                     <Grid item xs={12} sm={6} md={4} key={item.id}>
-                        <JobItem data={item} button_label={card_button} />
+                     <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item.id}>
+                        <JobItem
+                           data={item}
+                           button_label={card_button}
+                           color={color}
+                           secondary_color={secondary_color}
+                        />
                      </Grid>
                   ))}
                </Grid>

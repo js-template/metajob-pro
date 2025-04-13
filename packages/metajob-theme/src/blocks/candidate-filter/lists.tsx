@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material"
 import _ from "lodash"
 import { Card } from "../../components/common/card"
@@ -11,9 +12,19 @@ type CandidateRightSectionProps = {
    loading: boolean
    error: any
    block: ICandidateFilterBlock
+   color?: string
+   secondary_color?: string
 }
 
-export default function CandidateLists({ data, loading, error, block }: CandidateRightSectionProps) {
+export default function CandidateLists({
+   data,
+   loading,
+   error,
+   block,
+   color,
+   secondary_color
+}: CandidateRightSectionProps) {
+   const { theme: mode } = useTheme()
    const { result_placeholder, card_button } = block || {}
    return (
       <Stack spacing={2}>
@@ -30,7 +41,8 @@ export default function CandidateLists({ data, loading, error, block }: Candidat
                      fontSize={16}
                      fontWeight={600}
                      sx={{
-                        color: (theme) => theme.palette.text.primary
+                        color: (theme) =>
+                           mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                      }}
                      component={"span"}
                      variant='h4'
@@ -79,7 +91,12 @@ export default function CandidateLists({ data, loading, error, block }: Candidat
             <Grid container spacing={3}>
                {_.map(data, (item) => (
                   <Grid item xs={12} sm={6} md={4} key={item?.id}>
-                     <CandidateCardItem data={item} button_label={card_button?.label} />
+                     <CandidateCardItem
+                        data={item}
+                        button_label={card_button?.label}
+                        color={color}
+                        secondary_color={secondary_color}
+                     />
                   </Grid>
                ))}
             </Grid>

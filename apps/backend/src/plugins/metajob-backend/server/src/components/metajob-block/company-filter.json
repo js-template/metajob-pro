@@ -28,15 +28,15 @@
       "repeatable": false,
       "component": "metajob-config.search-config"
     },
-    "show_filter": {
-      "type": "boolean",
-      "required": true,
-      "default": true
-    },
     "empty": {
       "type": "component",
       "repeatable": false,
       "component": "shared.empty"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
     }
   }
 }

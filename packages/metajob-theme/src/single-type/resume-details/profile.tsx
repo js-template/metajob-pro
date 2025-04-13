@@ -22,7 +22,9 @@ export default function ProfileSection({
    language?: string
 }) {
    const { theme: mode } = useTheme()
-   const { open_placeholder, industry_placeholder, member_placeholder, experience_placeholder } = block || {}
+   const { open_placeholder, industry_placeholder, member_placeholder, experience_placeholder, styles } = block || {}
+   const { color, secondary_color } = styles || {}
+
    const { documentId, name, user, tagline, category, experience_time, contact, createdAt } = data || {}
    const image = user?.avatar?.url || ""
    const industry = category?.title || ""
@@ -225,7 +227,8 @@ export default function ProfileSection({
                         fontWeight={700}
                         fontSize={24}
                         sx={{
-                           color: (theme) => theme.palette.text.primary
+                           color: (theme) =>
+                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                         }}
                         textAlign={"center"}>
                         {name}
@@ -236,7 +239,10 @@ export default function ProfileSection({
                         fontWeight={400}
                         fontSize={16}
                         sx={{
-                           color: (theme) => theme.palette.text.disabled
+                           color: (theme) =>
+                              mode === "light"
+                                 ? secondary_color || theme.palette.text.disabled
+                                 : theme.palette.text.disabled
                         }}
                         textAlign={"center"}>
                         {tagline}
@@ -284,7 +290,8 @@ export default function ProfileSection({
                            fontWeight={500}
                            fontSize={14}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}>
                            {industry_placeholder || "Industry"}
                         </Typography>
@@ -292,7 +299,10 @@ export default function ProfileSection({
                            fontWeight={400}
                            fontSize={16}
                            sx={{
-                              color: (theme) => theme.palette.text.disabled
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
                            }}>
                            {industry}
                         </Typography>
@@ -314,7 +324,8 @@ export default function ProfileSection({
                            fontWeight={500}
                            fontSize={14}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}>
                            {experience_placeholder || "Experience"}
                         </Typography>
@@ -322,7 +333,10 @@ export default function ProfileSection({
                            fontWeight={400}
                            fontSize={16}
                            sx={{
-                              color: (theme) => theme.palette.text.disabled
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
                            }}>
                            {experience_time?.title}
                         </Typography>
@@ -344,7 +358,8 @@ export default function ProfileSection({
                            fontWeight={500}
                            fontSize={14}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}>
                            Location
                         </Typography>
@@ -352,7 +367,10 @@ export default function ProfileSection({
                            fontWeight={400}
                            fontSize={16}
                            sx={{
-                              color: (theme) => theme.palette.text.disabled
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
                            }}>
                            {location}
                         </Typography>
@@ -374,7 +392,8 @@ export default function ProfileSection({
                            fontWeight={500}
                            fontSize={14}
                            sx={{
-                              color: (theme) => theme.palette.text.primary
+                              color: (theme) =>
+                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                            }}>
                            {member_placeholder || "Member Since"}
                         </Typography>
@@ -382,7 +401,10 @@ export default function ProfileSection({
                            fontWeight={400}
                            fontSize={16}
                            sx={{
-                              color: (theme) => theme.palette.text.disabled
+                              color: (theme) =>
+                                 mode === "light"
+                                    ? secondary_color || theme.palette.text.disabled
+                                    : theme.palette.text.disabled
                            }}>
                            {moment(createdAt).format("DD MMMM YYYY")}
                         </Typography>

@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
+import { useTheme } from "next-themes"
 import _ from "lodash"
 import {
    Box,
@@ -30,10 +31,23 @@ type Props = {
 
 export const BlogFilter = ({ block, language }: Props) => {
    const theme = muiTheme()
+   const { theme: mode } = useTheme()
 
    // destructure the block
    const { title, description, search_placeholder, empty, style } = block || {}
-   const { desktop, tab, mobile, backgroundColor, color } = style || {}
+   const {
+      backgroundColor,
+      color,
+      secondary_color,
+      header_color,
+      sub_header_color,
+      section_padding,
+      header_width,
+      desktop,
+      tab,
+      mobile,
+      sidebar
+   } = style || {}
 
    const [searchOptions, setSearchOptions] = useState({
       searchText: "",
@@ -90,9 +104,11 @@ export const BlogFilter = ({ block, language }: Props) => {
    }, [page, searchOptions])
 
    return (
-      <Stack bgcolor={backgroundColor ? backgroundColor : theme.palette.background.paper} sx={{ minHeight: "100vh" }}>
+      <Stack
+         bgcolor={mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper}
+         sx={{ minHeight: "100vh" }}>
          <Container maxWidth='lg'>
-            <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* search  */}
                {search_placeholder && (
                   <Box
@@ -130,7 +146,12 @@ export const BlogFilter = ({ block, language }: Props) => {
                   <Grid container spacing={2}>
                      {_.map(recentBlogs, (item) => (
                         <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
-                           <CardItem data={item} button_label={block?.card_button} />
+                           <CardItem
+                              data={item}
+                              button_label={block?.card_button}
+                              color={color}
+                              secondary_color={secondary_color}
+                           />
                         </Grid>
                      ))}
                   </Grid>

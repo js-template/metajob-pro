@@ -1,8 +1,9 @@
 "use client"
+import { useTheme } from "next-themes"
 import { Fragment } from "react/jsx-runtime"
 import NextLink from "next/link"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
-import { Box, Chip, Grid, LinearProgress, Paper, Skeleton, Typography, useTheme } from "@mui/material"
+import { Box, Chip, Grid, LinearProgress, Paper, Skeleton, Typography, useTheme as muiTheme } from "@mui/material"
 import { IResumeDetailsBlock } from "./types"
 
 type Props = {
@@ -24,8 +25,11 @@ type Props = {
 }
 
 const PortfolioSection = ({ portfolioData, isLoading, block }: Props) => {
-   const theme = useTheme()
-   const { portfolio_placeholder, empty } = block || {}
+   const theme = muiTheme()
+   const { theme: mode } = useTheme()
+
+   const { portfolio_placeholder, empty, styles } = block || {}
+   const { color, secondary_color } = styles || {}
    return isLoading ? (
       <Box>
          <Skeleton
@@ -45,7 +49,8 @@ const PortfolioSection = ({ portfolioData, isLoading, block }: Props) => {
                fontSize={16}
                fontWeight={400}
                sx={{
-                  color: (theme) => theme.palette.text.disabled
+                  color: (theme) =>
+                     mode === "light" ? secondary_color || theme.palette.text.secondary : theme.palette.text.secondary
                }}>
                {empty?.title || "No portfolio data added"}
             </Typography>
@@ -58,7 +63,8 @@ const PortfolioSection = ({ portfolioData, isLoading, block }: Props) => {
                   fontWeight={700}
                   mb={1.5}
                   sx={{
-                     color: (theme) => theme.palette.text.primary
+                     color: (theme) =>
+                        mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                   }}
                   textAlign={"left"}>
                   {portfolio_placeholder || "Portfolio"}
@@ -89,7 +95,8 @@ const PortfolioSection = ({ portfolioData, isLoading, block }: Props) => {
                               fontSize={20}
                               fontWeight={500}
                               sx={{
-                                 color: (theme) => theme.palette.text.primary
+                                 color: (theme) =>
+                                    mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
                               }}>
                               {portfolioData?.length > 1 && index + 1 + "."} {item?.title}
                            </Typography>
@@ -111,7 +118,12 @@ const PortfolioSection = ({ portfolioData, isLoading, block }: Props) => {
                            <Typography
                               fontSize={16}
                               fontWeight={400}
-                              color={hexToRGBA(theme.palette.text.primary, 0.7)}>
+                              sx={{
+                                 color:
+                                    mode === "light"
+                                       ? secondary_color || hexToRGBA(theme.palette.text.primary, 0.7)
+                                       : hexToRGBA(theme.palette.text.primary, 0.7)
+                              }}>
                               {item?.description}
                            </Typography>
                         </Paper>

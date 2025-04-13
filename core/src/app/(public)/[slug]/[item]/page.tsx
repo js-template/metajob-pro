@@ -51,7 +51,12 @@ export default async function DynamicPages({ params }: Props) {
    const { data: singleData, error: singleError } = await find(
       singleModel,
       {
-         populate: "*",
+         // populate: "*",
+         populate: {
+            blocks: {
+               populate: "*"
+            }
+         },
          // publicationState: "live",
          locale: language ?? "en"
       },
