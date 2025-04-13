@@ -15,10 +15,10 @@ type Props = {
    show_icon?: boolean
    overlay?: boolean
 }
-export const CategoryOverlayCard = ({ data, button_label, color, backgroundColor, show_icon, overlay }: Props) => {
+export const CategoryOverlayCardItem = ({ data, button_label, color, backgroundColor, show_icon, overlay }: Props) => {
    const { theme: mode } = useTheme()
    //destructure the data
-   const { title, description, image } = data || {}
+   const { title, description, image, icon } = data || {}
    const logo = image?.url || "https://placehold.co/60/png"
    const topValue = overlay ? "10%" : "48%"
    const spacing = overlay ? "8px 8px 2px 8px" : "10px 10px 3px 10px"

@@ -1,17 +1,19 @@
 "use server"
 import { find } from "../../lib/strapi"
-import { ICategoryCardBlock } from "./types"
-import { CategoryCard } from "./card"
+import { ICategoryOverlayCardBlock } from "./types"
 import { Suspense } from "react"
 import JobCategoryLoader from "./loader"
+import { JobCategoryOverlayCard } from "./card"
 
 type Props = {
-   block: ICategoryCardBlock
+   block: ICategoryOverlayCardBlock
    language?: string
 }
 
 export const JobCategoryOverlay = async ({ block, language }: Props) => {
-   const { data: categoryData } = await find(
+   const show_icon = true
+   const overlay = false
+   const { data: categoryOverlayData } = await find(
       "api/metajob-backend/job-categories",
       {
          populate: {
@@ -32,7 +34,7 @@ export const JobCategoryOverlay = async ({ block, language }: Props) => {
 
    return (
       <Suspense fallback={<JobCategoryLoader />}>
-         <CategoryCard block={block} categoryData={categoryData?.data} />
+         <JobCategoryOverlayCard block={block} categoryOverlayData={categoryOverlayData?.data} />
       </Suspense>
    )
 }

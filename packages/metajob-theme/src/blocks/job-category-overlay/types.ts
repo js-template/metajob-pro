@@ -1,4 +1,4 @@
-export type ICategoryCardBlock = {
+export type ICategoryOverlayCardBlock = {
    id: number
    __component: string
    style?: {
@@ -30,6 +30,8 @@ export type ICategoryCardBlock = {
       variation?: string
    }
    item_count?: number
+   show_icon: boolean
+   overlay: boolean
 }
 
 export type ISingleCategory = {
@@ -46,6 +48,10 @@ export type ISingleCategory = {
    image: {
       url: string
    }
+   icon?: {
+      url: string
+   }
+   totalCount?: number
 }
 
 export type ICategories = ISingleCategory[]

@@ -4,26 +4,25 @@ import NextLink from "next/link"
 import _ from "lodash"
 import { useTheme } from "next-themes"
 import { Box, Container, Grid, Stack, Typography, Button, useTheme as muiTheme } from "@mui/material"
-import { CardItem } from "./item"
-import { ICategoryCardBlock, ISingleCategory } from "./types"
+import { ICategoryOverlayCardBlock, ISingleCategory } from "./types"
 import { SectionTitle } from "../../components/section-title"
+import { CategoryOverlayCardItem } from "../../components/cards/category-cards/category-overlay-card"
 
 type Props = {
-   block: ICategoryCardBlock
-   categoryData: any
+   block: ICategoryOverlayCardBlock
+   categoryOverlayData: any
 }
 
-export const CategoryCard = ({ block, categoryData }: Props) => {
+export const JobCategoryOverlayCard = ({ block, categoryOverlayData }: Props) => {
    const theme = muiTheme()
    const { theme: mode } = useTheme()
 
    // destructure the block
-   const { content, empty, style, button, card_button } = block || {}
+   const { content, empty, style, button, card_button, show_icon, overlay } = block || {}
    const { desktop, tab, mobile, backgroundColor } = style || {}
    const { label, link } = button || {}
    const { variation } = content || {}
-   const show_icon = true
-   const overlay = false
+   
 
    return (
       <Stack
@@ -36,16 +35,15 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
                {content && <SectionTitle data={content} />}
 
                {/* category-items */}
-               {categoryData && categoryData?.length > 0 && (
+               {categoryOverlayData && categoryOverlayData?.length > 0 && (
                   <Grid container spacing={2}>
-                     {categoryData?.map((ctg: ISingleCategory) => (
+                     {categoryOverlayData?.map((ctg: ISingleCategory) => (
                         <Grid item xs={mobile || 12} sm={4} md={tab || 3} lg={desktop || 2} key={ctg.id}>
-                           <CardItem
+                           <CategoryOverlayCardItem
                               show_icon={show_icon}
                               overlay={overlay}
                               data={ctg}
                               button_label={card_button?.label}
-                              style={style}
                            />
                         </Grid>
                      ))}
@@ -53,7 +51,7 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
                )}
 
                {/* empty data */}
-               {categoryData && categoryData?.length == 0 && (
+               {categoryOverlayData && categoryOverlayData?.length == 0 && (
                   <Grid container justifyContent={"center"} spacing={2}>
                      <Stack
                         sx={{

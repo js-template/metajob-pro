@@ -12,4 +12,8 @@ export type ISingleCategory = {
    image: {
       url: string
    }
+   icon?: {
+      url: string
+   }
+   total_count?: number
 }
