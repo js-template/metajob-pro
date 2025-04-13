@@ -24,7 +24,7 @@ export type IRegisterBLock = {
    login_helper_placeholder?: string
    login_link_placeholder?: string
    provider_option?: boolean
-   styles?: {
+   style?: {
       color?: any
       secondary_color?: string
       backgroundColor?: any

@@ -38,10 +38,10 @@ export const LoginCard = ({
       provider_option,
       signup_helper_placeholder,
       signup_link_placeholder,
-      styles
+      style
    } = block || {}
 
-   const { backgroundColor, color, secondary_color, section_padding } = styles || {}
+   const { backgroundColor, color, secondary_color, section_padding } = style || {}
 
    const {
       register,

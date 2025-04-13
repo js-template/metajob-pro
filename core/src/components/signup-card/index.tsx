@@ -51,9 +51,9 @@ export const SignUpCard = ({
       login_helper_placeholder,
       login_link_placeholder,
       provider_option,
-      styles
+      style
    } = block || {}
-   const { backgroundColor, color, secondary_color, section_padding } = styles || {}
+   const { backgroundColor, color, secondary_color, section_padding } = style || {}
 
    const [selectedButton, setSelectedButton] = useState(0)
 
