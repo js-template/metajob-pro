@@ -203,7 +203,7 @@ const ApplyItem = ({
          <MessageModal
             open={messageModalOpen}
             handleClose={handleMessageModalClose}
-            title='Message'
+            title='Send Message'
             modalData={messageModalData}
          />
       </Fragment>

@@ -1,5 +1,6 @@
 "use client"
 import { Fragment, useEffect, useState } from "react"
+import NextLink from "next/link"
 import toast from "react-hot-toast"
 import { useSession } from "next-auth/react"
 import { Button, CircularProgress, IconButton } from "@mui/material"
@@ -299,6 +300,8 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                            )}
                            {categoryName && (
                               <Typography
+                                 component={NextLink}
+                                 href={`/find-job?category=${categoryName}`}
                                  variant={"body1"}
                                  fontWeight={400}
                                  fontSize={14}
@@ -306,7 +309,11 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                                     color: (theme) =>
                                        mode === "light"
                                           ? secondary_color || theme.palette.text.disabled
-                                          : theme.palette.text.disabled
+                                          : theme.palette.text.disabled,
+                                    textDecoration: "none",
+                                    "&:hover": {
+                                       color: (theme) => theme.palette.primary.main
+                                    }
                                  }}>
                                  {categoryName}
                               </Typography>

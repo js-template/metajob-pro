@@ -1,6 +1,7 @@
 "use client"
 import React from "react"
 import Link from "next/link"
+import { useTheme } from "next-themes"
 import { useForm } from "react-hook-form"
 import LoadingButton from "@mui/lab/LoadingButton"
 import { Box, Button, Divider, Grid, IconButton, Paper, TextField, Typography } from "@mui/material"
@@ -25,6 +26,7 @@ export const LoginCard = ({
    linkedinLoginHandler,
    block
 }: Props) => {
+   const { theme: mode } = useTheme()
    // destructured login block data
    const {
       title: loginTitle,
@@ -35,8 +37,11 @@ export const LoginCard = ({
       or_placeholder,
       provider_option,
       signup_helper_placeholder,
-      signup_link_placeholder
+      signup_link_placeholder,
+      style
    } = block || {}
+
+   const { backgroundColor, color, secondary_color, section_padding } = style || {}
 
    const {
       register,
@@ -61,8 +66,16 @@ export const LoginCard = ({
    // const noProvider = !googleLoginHandler && !facebookLoginHandler && !linkedinLoginHandler
 
    return (
-      <Grid container direction='column' justifyContent='flex-end' sx={{ minHeight: "85vh" }}>
-         <Grid item xs={12}>
+      <Grid
+         container
+         direction='column'
+         justifyContent='flex-end'
+         sx={{
+            minHeight: "85vh",
+            bgcolor: (theme) =>
+               mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
+         }}>
+         <Grid item xs={12} py={section_padding || 3}>
             <Grid container justifyContent='center' alignItems='center' sx={{ minHeight: "calc(100vh - 68px)" }}>
                <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
                   <Grid container spacing={2} alignItems='center' justifyContent='center'>
@@ -87,7 +100,11 @@ export const LoginCard = ({
                                     <Typography
                                        fontSize={24}
                                        fontWeight={400}
-                                       color={(theme) => theme.palette.text.primary}>
+                                       color={(theme) =>
+                                          mode === "light"
+                                             ? color || theme.palette.text.primary
+                                             : theme.palette.text.primary
+                                       }>
                                        {loginTitle || "Sign in with Email address"}
                                     </Typography>
                                  </Box>
@@ -156,7 +173,11 @@ export const LoginCard = ({
                                        <Divider
                                           sx={{
                                              flexGrow: 1,
-                                             borderColor: (theme) => hexToRGBA(theme.palette.text.disabled, 0.4)
+                                             borderColor: (theme) =>
+                                                mode === "light"
+                                                   ? hexToRGBA(secondary_color || theme.palette.text.disabled, 0.4) ||
+                                                     hexToRGBA(theme.palette.text.disabled, 0.4)
+                                                   : hexToRGBA(theme.palette.text.disabled, 0.4)
                                           }}
                                           orientation='horizontal'
                                        />
@@ -173,9 +194,19 @@ export const LoginCard = ({
                                              // disable color
                                              "&.Mui-disabled": {
                                                 borderColor: (theme) =>
-                                                   hexToRGBA(theme.palette.text.disabled, 0.4) + "!important",
+                                                   mode === "light"
+                                                      ? hexToRGBA(
+                                                           secondary_color || theme.palette.text.disabled,
+                                                           0.4
+                                                        ) || hexToRGBA(theme.palette.text.disabled, 0.4)
+                                                      : hexToRGBA(theme.palette.text.disabled, 0.4),
                                                 color: (theme) =>
-                                                   hexToRGBA(theme.palette.text.disabled, 0.4) + "!important"
+                                                   mode === "light"
+                                                      ? hexToRGBA(
+                                                           secondary_color || theme.palette.text.disabled,
+                                                           0.4
+                                                        ) || hexToRGBA(theme.palette.text.disabled, 0.4)
+                                                      : hexToRGBA(theme.palette.text.disabled, 0.4)
                                              }
                                           }}
                                           disableRipple
@@ -186,7 +217,11 @@ export const LoginCard = ({
                                        <Divider
                                           sx={{
                                              flexGrow: 1,
-                                             borderColor: (theme) => hexToRGBA(theme.palette.text.disabled, 0.4)
+                                             borderColor: (theme) =>
+                                                mode === "light"
+                                                   ? hexToRGBA(secondary_color || theme.palette.text.disabled, 0.4) ||
+                                                     hexToRGBA(theme.palette.text.disabled, 0.4)
+                                                   : hexToRGBA(theme.palette.text.disabled, 0.4)
                                           }}
                                           orientation='horizontal'
                                        />
@@ -273,7 +308,11 @@ export const LoginCard = ({
                               )}
                               <Typography
                                  variant='body2'
-                                 color={(theme) => theme.palette.text.secondary}
+                                 color={(theme) =>
+                                    mode === "light"
+                                       ? secondary_color || theme.palette.text.secondary
+                                       : theme.palette.text.secondary
+                                 }
                                  fontSize={14}
                                  fontWeight={400}
                                  sx={{

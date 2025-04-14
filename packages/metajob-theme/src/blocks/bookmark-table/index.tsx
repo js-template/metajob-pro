@@ -3,23 +3,12 @@ import { useEffect, useState } from "react"
 import _ from "lodash"
 import { useSession } from "next-auth/react"
 import AllBookmarkTable from "./table"
-import {
-   Box,
-   Typography,
-   FormControl,
-   TextField,
-   Select,
-   MenuItem,
-   Pagination,
-   useTheme,
-   Grid,
-   Paper,
-   Stack
-} from "@mui/material"
+import { Box, Typography, FormControl, TextField, useTheme, Grid, Paper, Stack } from "@mui/material"
 import { TableLoader } from "./loader"
 import CIcon from "../../components/common/icon"
 import { IBookmarkItem, IBookmarkTableBock } from "./types"
 import { find } from "../../lib/strapi"
+import { TableFooterPagination } from "../../components/table-footer"
 
 type Props = {
    block: IBookmarkTableBock
@@ -115,7 +104,7 @@ export const BookmarkTable = ({ block, language }: Props) => {
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [userId, pagination?.page, search, isMute])
+   }, [userId, pagination?.page, pagination?.pageSize, search, isMute])
 
    const handleMute = () => {
       setIsMute(!isMute)
@@ -304,109 +293,10 @@ export const BookmarkTable = ({ block, language }: Props) => {
                   </Typography>
                </Stack>
             )}
-            {/* Box Footer */}
-            {bookmarkData && bookmarkData?.length > 0 && (
-               <Box
-                  sx={{
-                     py: 2.5,
-                     px: 3,
-                     borderTop: "1px solid",
-                     borderColor: "divider",
-                     display: "flex",
-                     justifyContent: "space-between",
-                     alignItems: "center"
-                  }}>
-                  <Box
-                     sx={{
-                        display: "flex",
-                        gap: 1,
-                        alignItems: "center"
-                     }}>
-                     {/* <Typography variant='body1' fontWeight={500} lineHeight={"24px"}>
-                  Showing per page
-                  </Typography> */}
-                     <FormControl size='small'>
-                        <Select
-                           labelId='per_page'
-                           id='per_page'
-                           autoWidth
-                           defaultValue={default_data_count || 10}
-                           onChange={(e) => {
-                              setPagination({ ...pagination, pageSize: e.target.value as number })
-                           }}
-                           IconComponent={() => <CIcon icon='iconamoon:arrow-down-2-duotone' size={36} />}
-                           sx={{
-                              backgroundColor: (theme) => theme.palette.background.default,
-                              borderRadius: "8px",
-                              borderColor: "divider",
-                              pl: 2,
-                              pr: 1.5,
-                              "& .MuiSelect-select": {
-                                 px: 0 + "!important",
-                                 py: 1
-                              }
-                           }}>
-                           {_.map([10, 20, 30, 40, 50], (option, index) => (
-                              <MenuItem key={index} value={option}>
-                                 {option}
-                              </MenuItem>
-                           ))}
-                        </Select>
-                     </FormControl>
-                  </Box>
-                  <Box>
-                     <Pagination
-                        count={pagination?.pageCount}
-                        onChange={(event, page) => {
-                           setPagination({ ...pagination, page })
-                        }}
-                        variant='text'
-                        shape='rounded'
-                        color='primary'
-                        size='large'
-                        siblingCount={0}
-                        sx={{
-                           "& li": {
-                              borderRadius: 0,
-                              height: "40px",
-                              margin: 0
-                           },
-                           "& .MuiButtonBase-root": {
-                              margin: 0,
-                              border: "none",
-                              borderLeft: "1px solid",
-                              borderTop: "1px solid",
-                              borderBottom: "1px solid",
-                              borderColor: "divider",
-                              borderRadius: 0,
-                              "&:hover": {
-                                 backgroundColor: (theme) => theme.palette.action.hover
-                              }
-                           },
-                           "& li:last-child .MuiButtonBase-root": {
-                              borderRadius: "0px 6px 6px 0px",
-                              borderRight: "1px solid",
-                              borderColor: "divider"
-                           },
-                           "& li:first-child .MuiButtonBase-root": {
-                              borderRadius: "6px 0px 0px 6px"
-                           },
-                           "& .MuiPaginationItem-ellipsis": {
-                              borderTop: "1px solid",
-                              borderBottom: "1px solid",
-                              borderLeft: "1px solid",
-                              borderColor: "divider",
-                              height: "100%",
-                              margin: 0,
-                              borderRadius: 0,
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center"
-                           }
-                        }}
-                     />
-                  </Box>
-               </Box>
+
+            {/* Footer-pagination */}
+            {pagination.pageCount > 0 && (
+               <TableFooterPagination pagination={pagination} setPagination={setPagination} />
             )}
          </Paper>
       </Grid>

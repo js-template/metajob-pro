@@ -352,12 +352,13 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                                           color: theme.palette.text.primary
                                        }}>
                                        <CIcon
-                                          icon='tabler:language'
+                                          icon='ion:globe-outline'
                                           sx={{
                                              color: "inherit",
                                              fontSize: "1.25rem"
                                           }}
                                        />
+                                       {getLanguageValue(language as any, listLocalesData) || "English"}
                                        <CIcon
                                           icon='ri:arrow-down-s-line'
                                           sx={{
@@ -491,7 +492,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                                              color: theme.palette.text.primary
                                           }}>
                                           <CIcon
-                                             icon='tabler:language'
+                                             icon='ion:globe-outline'
                                              sx={{
                                                 fontSize: "1.25rem"
                                              }}

@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import _ from "lodash"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Stack, Typography } from "@mui/material"
@@ -7,8 +8,12 @@ import { IBlogCategory } from "./types"
 
 type Props = {
    blogCategoryData?: IBlogCategory[]
+   color?: string
+   secondary_color?: string
 }
-const BlogCategory = ({ blogCategoryData }: Props) => {
+const BlogCategory = ({ blogCategoryData, color, secondary_color }: Props) => {
+   const { theme: mode } = useTheme()
+
    return blogCategoryData && blogCategoryData?.length > 0 ? (
       <Card
          sx={{
@@ -23,7 +28,10 @@ const BlogCategory = ({ blogCategoryData }: Props) => {
                fontSize={20}
                fontWeight={700}
                sx={{
-                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+                  color: (theme) =>
+                     mode === "light"
+                        ? color || hexToRGBA(theme.palette.text.primary, 0.9)
+                        : hexToRGBA(theme.palette.text.primary, 0.9)
                }}>
                Category
             </Typography>
@@ -47,7 +55,10 @@ const BlogCategory = ({ blogCategoryData }: Props) => {
                               fontSize={16}
                               fontWeight={600}
                               sx={{
-                                 color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+                                 color: (theme) =>
+                                    mode === "light"
+                                       ? color || hexToRGBA(theme.palette.text.primary, 0.9)
+                                       : hexToRGBA(theme.palette.text.primary, 0.9)
                               }}>
                               {title}
                            </Typography>
@@ -55,7 +66,10 @@ const BlogCategory = ({ blogCategoryData }: Props) => {
                               fontSize={16}
                               fontWeight={600}
                               sx={{
-                                 color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+                                 color: (theme) =>
+                                    mode === "light"
+                                       ? color || hexToRGBA(theme.palette.text.primary, 0.9)
+                                       : hexToRGBA(theme.palette.text.primary, 0.9)
                               }}>
                               {count}
                            </Typography>

@@ -1,14 +1,16 @@
 "use client"
-
 import React, { useEffect, useState } from "react"
-import { Box, IconButton, Typography, useTheme, Modal, Stack, TextField, CircularProgress } from "@mui/material"
-import CIcon from "../../components/common/icon"
-import { useForm } from "react-hook-form"
-import { createEntry, find } from "../../lib/strapi"
-import toast from "react-hot-toast"
-import { LoadingButton } from "@mui/lab"
-import { IJobApplyData } from "./types"
 import { useSession } from "next-auth/react"
+import toast from "react-hot-toast"
+import { useTheme } from "next-themes"
+import { useForm } from "react-hook-form"
+import { Box, Typography, useTheme as muiTheme, Modal, Stack, TextField, CircularProgress, Button } from "@mui/material"
+import { LoadingButton } from "@mui/lab"
+import { createEntry, find } from "../../lib/strapi"
+import { IJobApplyData } from "./types"
+import { hexToRGBA } from "../../lib/hex-to-rgba"
+import CIcon from "../../components/common/icon"
+import { getNameFromEmail } from "./hook"
 
 type Props = {
    open: boolean
@@ -18,7 +20,8 @@ type Props = {
 }
 
 export const MessageModal = ({ open, handleClose, title, modalData }: Props) => {
-   const theme = useTheme()
+   const theme = muiTheme()
+   const { theme: mode } = useTheme()
 
    // session data destructuring
    const { data: session } = useSession()
@@ -29,7 +32,8 @@ export const MessageModal = ({ open, handleClose, title, modalData }: Props) => 
    const [messageIdentifier, setMessageIdentifier] = useState(false)
 
    const { owner, job } = modalData || {}
-   const { documentId: candidateDocId, id: candidateId } = owner || {}
+   const { documentId: candidateDocId, id: candidateId, first_name, last_name, email } = owner || {}
+   const applicantName = first_name ? `${first_name} ${last_name}` : getNameFromEmail(email)
    const { documentId: jobDocId } = job || {}
 
    const {
@@ -239,7 +243,7 @@ export const MessageModal = ({ open, handleClose, title, modalData }: Props) => 
                   borderColor: title ? theme.palette.divider : "transparent"
                }}>
                {title && <Typography variant='h6'>{title || "Cover Letter"}</Typography>}
-               <IconButton
+               {/* <IconButton
                   color='inherit'
                   onClick={handleClose}
                   edge='start'
@@ -254,82 +258,104 @@ export const MessageModal = ({ open, handleClose, title, modalData }: Props) => 
                         color: (theme) => theme.palette.error.main
                      }}
                   />
-               </IconButton>
+               </IconButton> */}
             </Box>
             {/* content  */}
             <Box sx={{ p: 2 }}>
                <Stack alignItems={"center"} gap={2} padding={2} component={"form"} onSubmit={handleSubmit(onSubmit)}>
                   {/* Message input */}
-                  <TextField
-                     fullWidth
-                     id='outlined-basic'
-                     placeholder={"Send a message"}
-                     variant='outlined'
-                     multiline
-                     maxRows={4}
-                     onKeyDown={(event) => {
-                        if (event.key === "Enter" && !event.shiftKey) {
-                           event.preventDefault()
-                           handleSubmit(onSubmit)()
-                        }
-                     }}
-                     {...register("message", {
-                        required: true
-                     })}
-                     error={errors?.message ? true : false}
-                     sx={{
-                        "& .MuiInputBase-root": {
-                           minHeight: "40px !important",
-                           p: 0,
-                           "& textarea": {
-                              ...(theme.direction === "rtl" ? { marginLeft: "50px" } : { marginRight: "50px" })
+                  <Box sx={{ width: "100%" }}>
+                     <TextField
+                        fullWidth
+                        id='outlined-basic'
+                        placeholder={"Write message"}
+                        variant='outlined'
+                        multiline
+                        onKeyDown={(event) => {
+                           if (event.key === "Enter" && !event.shiftKey) {
+                              event.preventDefault()
+                              handleSubmit(onSubmit)()
                            }
-                        }
-                     }}
-                  />
-                  <LoadingButton
-                     loading={loading}
-                     variant='contained'
-                     color='primary'
-                     type='submit'
-                     sx={{
-                        // position: "absolute",
-                        // ...(theme.direction === "rtl" ? { left: "25px" } : { right: "25px" }),
-                        boxShadow: "none",
-                        margin: 0 + " !important",
-                        width: "40px",
-                        p: 0,
-                        minWidth: "40px",
-                        height: "40px",
-                        borderRadius: "100px",
-                        "& svg": {
-                           ...(!loading && {
-                              color: (theme) => theme.palette.primary.contrastText
-                           })
-                        }
-                     }}
-                     // loading icon
-                     loadingIndicator={
-                        <CircularProgress
-                           size={20}
-                           sx={{
-                              color: (theme) => theme.palette.primary.main
-                           }}
-                        />
-                     }>
-                     {/* Send message button */}
-                     {loading ? null : (
-                        <CIcon
-                           icon={"tabler:arrow-big-up-lines-filled"}
-                           sx={{
-                              fontSize: {
-                                 xs: "1rem",
-                                 sm: "1.25rem"
+                        }}
+                        {...register("message", {
+                           required: true
+                        })}
+                        error={errors?.message ? true : false}
+                        sx={{
+                           "& .MuiInputBase-root": {
+                              minHeight: { xs: "100px", md: "200px !important" },
+                              p: 0,
+                              "& textarea": {
+                                 ...(theme.direction === "rtl" ? { marginLeft: "50px" } : { marginRight: "50px" })
                               }
+                           }
+                        }}
+                     />
+                     {/* note  */}
+                     <Stack direction={"row"} alignItems={"center"} gap={0.5} mt={1}>
+                        <CIcon
+                           icon='arcticons:note-it'
+                           sx={{
+                              fontSize: 20,
+                              color: theme.palette.text.disabled
                            }}
                         />
-                     )}
-                  </LoadingButton>
+                        <Typography
+                           sx={{
+                              color: theme.palette.text.disabled,
+                              fontSize: 12,
+                              fontWeight: 400
+                           }}>
+                           You can directly send message to the candidate <b>{applicantName}</b>
+                        </Typography>
+                     </Stack>
+                  </Box>
+                  <Stack
+                     direction={"row"}
+                     justifyContent={"space-between"}
+                     alignItems={"center"}
+                     gap={2}
+                     width={"100%"}>
+                     <Button
+                        onClick={handleClose}
+                        sx={{
+                           bgcolor:
+                              mode === "light"
+                                 ? hexToRGBA(theme.palette.text.disabled, 0.1)
+                                 : hexToRGBA(theme.palette.error.main, 0.4),
+                           color:
+                              mode === "light"
+                                 ? theme.palette.text.disabled
+                                 : hexToRGBA(theme.palette.primary.contrastText, 0.8),
+                           "&:hover": {
+                              color: theme.palette.primary.contrastText,
+                              bgcolor: theme.palette.error.main
+                           }
+                        }}>
+                        Cancel
+                     </Button>
+                     {/* Send message button */}
+                     <LoadingButton
+                        loading={loading}
+                        variant='contained'
+                        color='primary'
+                        type='submit'
+                        sx={{
+                           boxShadow: "none",
+                           px: 3
+                        }}
+                        // loading icon
+                        loadingIndicator={
+                           <CircularProgress
+                              size={20}
+                              sx={{
+                                 color: (theme) => theme.palette.primary.main
+                              }}
+                           />
+                        }>
+                        Send Message
+                     </LoadingButton>
+                  </Stack>
                </Stack>
             </Box>
          </Box>

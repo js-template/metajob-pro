@@ -1034,6 +1034,7 @@ export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
     category_placeholder: Schema.Attribute.String;
     location_placeholder: Schema.Attribute.String;
     search_placeholder: Schema.Attribute.String;
+    skill_placeholder: Schema.Attribute.String;
     sort_placeholder: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
@@ -1140,7 +1141,7 @@ export interface MetajobSingleTypeLoginDetails extends Struct.ComponentSchema {
     seo: Schema.Attribute.Component<'shared.seo', false>;
     signup_helper_placeholder: Schema.Attribute.String;
     signup_link_placeholder: Schema.Attribute.String;
-    styles: Schema.Attribute.Component<'config.style-section', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -1168,7 +1169,7 @@ export interface MetajobSingleTypeRegisterDetails
       Schema.Attribute.DefaultTo<true>;
     required_placeholder: Schema.Attribute.String;
     seo: Schema.Attribute.Component<'shared.seo', false>;
-    styles: Schema.Attribute.Component<'config.style-section', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
     username_placeholder: Schema.Attribute.String;
     username_title: Schema.Attribute.String;
@@ -1341,9 +1342,6 @@ export interface SingleTypeBlogDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    sidebar: Schema.Attribute.Enumeration<
-      ['Left Sidebar', 'Right Sidebar', 'Both Sidebar', 'No Sidebar']
-    >;
     style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
