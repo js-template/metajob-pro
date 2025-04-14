@@ -24,7 +24,6 @@ import { findOne, updateOne } from "../../lib/strapi"
 import { IEditJobData, IJobAttribute, IJobCategory } from "./types"
 import CIcon from "../../components/common/icon"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
-import { disconnect } from "process"
 import { formatDate } from "./hook"
 
 const Transition = React.forwardRef(function Transition(
