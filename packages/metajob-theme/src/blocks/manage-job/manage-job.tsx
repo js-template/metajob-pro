@@ -13,7 +13,7 @@ import { IJobAttribute, IJobData, IManageJobBock } from "./types"
 import AddJob from "./add-job"
 import { find } from "../../lib/strapi"
 import { getFeaturedCount } from "./hook"
-import { TableFooter } from "../../components/table-footer"
+import { TableFooterPagination } from "../../components/table-footer"
 
 type Props = {
    block: IManageJobBock
@@ -271,7 +271,9 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
                   />
 
                   {/* Footer-pagination */}
-                  {pagination.pageCount > 0 && <TableFooter pagination={pagination} setPagination={setPagination} />}
+                  {pagination.pageCount > 0 && (
+                     <TableFooterPagination pagination={pagination} setPagination={setPagination} />
+                  )}
                </Box>
             )}
          </Paper>

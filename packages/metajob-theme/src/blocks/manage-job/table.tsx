@@ -52,8 +52,7 @@ const ManageListsTable = ({
                maxWidth: {
                   xs: "100vh",
                   sm: "100%"
-               },
-               minHeight: { xs: "350px", sm: "450px" }
+               }
             }}>
             {
                <TableContainer component={Box}>

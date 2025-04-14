@@ -17,7 +17,7 @@ type Props = {
    setPagination: (pagination: { page: number; pageSize: number; pageCount: number; total: number }) => void
 }
 
-export const TableFooter = ({ per_page_placeholder, pagination, setPagination }: Props) => {
+export const TableFooterPagination = ({ per_page_placeholder, pagination, setPagination }: Props) => {
    const theme = useTheme()
 
    return (
