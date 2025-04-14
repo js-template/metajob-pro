@@ -14,7 +14,7 @@
   "license": "EULA",
   "dependencies": {
     "@changesets/cli": "^2.28.1",
-    "@jstemplate/metajob-theme": "0.0.8"
+    "@jstemplate/metajob-theme": "0.0.9"
   },
   "devDependencies": {
     "prettier": "latest",
