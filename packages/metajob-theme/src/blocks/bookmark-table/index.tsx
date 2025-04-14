@@ -104,7 +104,7 @@ export const BookmarkTable = ({ block, language }: Props) => {
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [userId, pagination?.page, search, isMute])
+   }, [userId, pagination?.page, pagination?.pageSize, search, isMute])
 
    const handleMute = () => {
       setIsMute(!isMute)
