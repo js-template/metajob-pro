@@ -35,7 +35,7 @@
       "required": true,
       "default": true
     },
-    "styles": {
+    "style": {
       "type": "component",
       "repeatable": false,
       "component": "config.style-section"

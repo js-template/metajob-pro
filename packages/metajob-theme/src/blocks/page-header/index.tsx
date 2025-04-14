@@ -11,8 +11,8 @@ type Props = {
 
 export const PageHeader = ({ block }: Props) => {
    const { theme: mode } = useTheme()
-   const { title, image, bg_overlay, style } = block || {}
-   const { backgroundColor, color } = style || {}
+   const { title, image, style } = block || {}
+   const { backgroundColor, color, bg_overlay } = style || {}
    const bgImage = image?.url
    return (
       <Stack position={"relative"}>

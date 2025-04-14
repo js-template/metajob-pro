@@ -1,8 +1,16 @@
+"use client"
+import { useTheme } from "next-themes"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Stack, Typography } from "@mui/material"
 import { Card } from "../../components/common/card"
 // FIXME: Should be dynamic
-const BlogAds = () => {
+
+type Props = {
+   color?: string
+   secondary_color?: string
+}
+const BlogAds = ({ color, secondary_color }: Props) => {
+   const { theme: mode } = useTheme()
    return (
       <Stack p={4}>
          <Card
@@ -17,8 +25,11 @@ const BlogAds = () => {
                fontSize={14}
                fontWeight={400}
                sx={{
-                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
-                }}
+                  color: (theme) =>
+                     mode === "light"
+                        ? color || hexToRGBA(theme.palette.text.primary, 0.9)
+                        : hexToRGBA(theme.palette.text.primary, 0.9)
+               }}
                textAlign={"center"}>
                Advertisement
             </Typography>
@@ -27,8 +38,11 @@ const BlogAds = () => {
                fontWeight={600}
                textAlign={"center"}
                sx={{
-                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
-                }}>
+                  color: (theme) =>
+                     mode === "light"
+                        ? color || hexToRGBA(theme.palette.text.primary, 0.9)
+                        : hexToRGBA(theme.palette.text.primary, 0.9)
+               }}>
                You can place ads
             </Typography>
             <Typography
@@ -36,8 +50,11 @@ const BlogAds = () => {
                fontWeight={400}
                textAlign={"center"}
                sx={{
-                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
-                }}>
+                  color: (theme) =>
+                     mode === "light"
+                        ? color || hexToRGBA(theme.palette.text.primary, 0.9)
+                        : hexToRGBA(theme.palette.text.primary, 0.9)
+               }}>
                250x360
             </Typography>
          </Card>
