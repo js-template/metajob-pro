@@ -29,7 +29,8 @@ export default async function DynamicPages({
             blocks: {
                populate: "*"
             }
-         }
+         },
+         locale: language ?? "en"
       },
       "no-store"
    )
@@ -81,13 +82,13 @@ export async function generateStaticParams() {
    }))
 }
 
-// // *** generate metadata type
+// *** generate metadata type
 type Props = {
    params: { slug: string }
    searchParams: { [key: string]: string | string[] | undefined }
 }
 
-// // *** generate metadata for the page
+// *** generate metadata for the page
 export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
    const pageSlug = params?.slug
    const language = await getLanguageFromCookie()
