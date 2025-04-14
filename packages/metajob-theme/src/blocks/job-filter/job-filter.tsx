@@ -38,9 +38,17 @@ type Props = {
    categoryData?: ISingleCategory[]
    jobTypesData?: IJobType[]
    jobExperienceData?: IJobType[]
+   jobSkillsData?: IJobType[]
 }
 
-export const JobFilterClient = ({ block, language, categoryData, jobTypesData, jobExperienceData }: Props) => {
+export const JobFilterClient = ({
+   block,
+   language,
+   categoryData,
+   jobTypesData,
+   jobExperienceData,
+   jobSkillsData
+}: Props) => {
    const { theme: mode } = useTheme()
    const searchParams = useSearchParams()
    const router = useRouter()
@@ -66,6 +74,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
       location_placeholder,
       category_placeholder,
       experience_placeholder,
+      skill_placeholder,
       type_placeholder,
       sort_placeholder,
       button_placeholder
@@ -80,7 +89,8 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
       location: urlLocation,
       category: urlCategory,
       type: urType,
-      experience: urlExperience
+      experience: urlExperience,
+      skills: urlSkill
    } = Object.fromEntries(searchParams.entries())
 
    const [searchOptions, setSearchOptions] = useState({
@@ -96,6 +106,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
    const [jobsError, setJobsError] = useState(null)
    const [selectedJobTypes, setSelectedJobTypes] = useState<string[]>([])
    const [selectedJobExperience, setSelectedJobExperience] = useState<string[]>([])
+   const [selectedJobSkills, setSelectedJobSkills] = useState<string[]>([])
    // Update state based on URL search params
    useEffect(() => {
       setSearchOptions((prevOptions) => ({
@@ -107,6 +118,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
 
       setSelectedJobTypes(urType ? urType.split(",") : [])
       setSelectedJobExperience(urlExperience ? urlExperience.split(",") : [])
+      setSelectedJobSkills(urlSkill ? urlSkill.split(",") : [])
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
@@ -166,6 +178,19 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
       router.replace(`?${params.toString()}`, { scroll: false })
    }
 
+   const handleJobSkillsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { checked, name } = event.target
+      const updatedSkills = checked ? [...selectedJobSkills, name] : selectedJobSkills.filter((type) => type !== name)
+      setSelectedJobSkills(updatedSkills)
+      const params = new URLSearchParams(searchParams)
+      if (updatedSkills.length) {
+         params.set("skills", updatedSkills.join(","))
+      } else {
+         params.delete("skills")
+      }
+      router.replace(`?${params.toString()}`, { scroll: false })
+   }
+
    const sortParam = getSortParam(searchOptions?.sort)
    //  fetch jobs from db
    useEffect(() => {
@@ -193,6 +218,11 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                   experience: {
                      value: {
                         $in: selectedJobExperience
+                     }
+                  },
+                  skills: {
+                     value: {
+                        $in: selectedJobSkills
                      }
                   }
                },
@@ -235,7 +265,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
       getJobsData()
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [page, searchOptions, selectedJobTypes, selectedJobExperience])
+   }, [page, searchOptions, selectedJobTypes, selectedJobExperience, selectedJobSkills])
 
    // Handle form submission
    const handleSubmit = (e: any) => {
@@ -289,7 +319,8 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                        searchOptions?.location ||
                                        searchOptions?.category ||
                                        selectedJobTypes?.length > 0 ||
-                                       selectedJobExperience?.length > 0
+                                       selectedJobExperience?.length > 0 ||
+                                       selectedJobSkills?.length > 0
                                           ? "block"
                                           : "none"
                                  }}
@@ -303,6 +334,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                     })
                                     setSelectedJobTypes([])
                                     setSelectedJobExperience([])
+                                    setSelectedJobSkills([])
                                  }}>
                                  Clear
                               </Typography>
@@ -502,6 +534,55 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                              />
                                           }
                                           label={expItem?.title}
+                                       />
+                                    ))}
+                                 </Stack>
+                              )}
+                              {/* job-skills check box  */}
+                              {skill_placeholder && (
+                                 <Stack spacing={2}>
+                                    <Divider />
+                                    <Typography
+                                       fontSize={16}
+                                       fontWeight={700}
+                                       sx={{
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? color || theme.palette.text.secondary
+                                                : theme.palette.text.secondary
+                                       }}>
+                                       {skill_placeholder || "Job Skills"}
+                                    </Typography>
+                                    {_.map(jobSkillsData, (skillItem: IJobType) => (
+                                       <FormControlLabel
+                                          key={skillItem?.id}
+                                          sx={{
+                                             color: (theme) =>
+                                                mode === "light"
+                                                   ? secondary_color || theme.palette.text.secondary
+                                                   : theme.palette.text.secondary
+                                          }}
+                                          control={
+                                             <MuiCheckbox
+                                                name={skillItem?.value}
+                                                checked={selectedJobSkills.includes(skillItem?.value)}
+                                                onChange={handleJobSkillsChange}
+                                                icon={
+                                                   <Box
+                                                      sx={{
+                                                         bgcolor: (theme) => theme.palette.divider,
+                                                         height: 24,
+                                                         width: 24,
+                                                         transform: "scale(0.8)",
+                                                         borderRadius: 1
+                                                      }}
+                                                   />
+                                                }
+                                                sx={{ py: 0 }}
+                                                disableRipple
+                                             />
+                                          }
+                                          label={skillItem?.title}
                                        />
                                     ))}
                                  </Stack>

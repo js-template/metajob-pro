@@ -27,6 +27,9 @@
     "sort_placeholder": {
       "type": "string"
     },
+    "skill_placeholder": {
+      "type": "string"
+    },
     "button_placeholder": {
       "type": "string"
     }

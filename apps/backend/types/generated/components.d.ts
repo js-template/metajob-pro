@@ -1035,6 +1035,7 @@ export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
     experience_placeholder: Schema.Attribute.String;
     location_placeholder: Schema.Attribute.String;
     search_placeholder: Schema.Attribute.String;
+    skill_placeholder: Schema.Attribute.String;
     sort_placeholder: Schema.Attribute.String;
     title: Schema.Attribute.String;
     type_placeholder: Schema.Attribute.String;
