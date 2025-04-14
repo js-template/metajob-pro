@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import MDEditor from "@uiw/react-md-editor"
 import {
    Box,
+   Checkbox,
    CircularProgress,
    Grid,
    IconButton,
@@ -23,6 +24,7 @@ import { findOne, updateOne } from "../../lib/strapi"
 import { IEditJobData, IJobAttribute, IJobCategory } from "./types"
 import CIcon from "../../components/common/icon"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
+import { formatDate } from "./hook"
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
@@ -50,6 +52,11 @@ const EditJob = ({ open, language, handleClose, handleMute, jobDocID, jobAttribu
    const [loading, setLoading] = React.useState(false)
    const [jobData, setJobData] = React.useState<IEditJobData | null>(null)
 
+   // get the current date and next month date
+   const today = new Date()
+   const nextMonth = new Date()
+   nextMonth.setMonth(today.getMonth() + 1)
+
    const {
       handleSubmit,
       register,
@@ -61,12 +68,12 @@ const EditJob = ({ open, language, handleClose, handleMute, jobDocID, jobAttribu
          title: "",
          slug: "",
          description: "",
-         vacancy: 0,
-         startDate: "",
-         endDate: "",
+         vacancy: 1,
+         startDate: formatDate(today),
+         endDate: formatDate(nextMonth),
          price: 0,
          type: "",
-         skills: "",
+         skills: [] as string[],
          experience: "",
          category: "",
          company: ""
@@ -92,7 +99,10 @@ const EditJob = ({ open, language, handleClose, handleMute, jobDocID, jobAttribu
                },
                //check if skills is exist then connect
                ...(data?.skills && {
-                  skills: { connect: [data?.skills] }
+                  skills: {
+                     connect: [data?.skills],
+                     disconnect: jobData?.skills?.map((skill: { documentId: string }) => skill?.documentId)
+                  }
                }),
                //check if experience is exist then connect
                ...(data?.experience && {
@@ -160,6 +170,11 @@ const EditJob = ({ open, language, handleClose, handleMute, jobDocID, jobAttribu
    // fill form data from db
    React.useEffect(() => {
       if (jobData) {
+         if (jobData?.skills?.length) {
+            const skillIds = jobData?.skills?.map((skillItem: { documentId: string }) => skillItem?.documentId)
+            setValue("skills", skillIds)
+         }
+
          setValue("title", jobData?.title || "")
          setValue("description", jobData?.description || "")
          setValue("vacancy", jobData?.vacancy || 0)
@@ -167,7 +182,7 @@ const EditJob = ({ open, language, handleClose, handleMute, jobDocID, jobAttribu
          setValue("endDate", jobData?.endDate || "")
          setValue("price", jobData?.price || 0)
          setValue("type", jobData?.type?.documentId || "")
-         setValue("skills", jobData?.skills?.[0]?.documentId || "")
+         // setValue("skills", jobData?.skills?.[0]?.documentId || "")
          setValue("experience", jobData?.experience?.documentId || "")
          setValue("category", jobData?.category?.documentId || "")
       }
@@ -654,26 +669,49 @@ const EditJob = ({ open, language, handleClose, handleMute, jobDocID, jobAttribu
                            </Typography>
                         </Box>
                         <Select
+                           multiple
                            displayEmpty
                            fullWidth
                            variant='outlined'
                            id='skills'
                            size='small'
                            {...register("skills")}
-                           defaultValue={watch("skills") || ""}
-                           value={watch("skills") || ""}
-                           error={Boolean(errors.skills)}>
+                           value={watch("skills") || []}
+                           error={Boolean(errors.skills)}
+                           // renderValue={(selected) =>
+                           //    (selected as string[]).length === 0
+                           //       ? "Select Job Skill"
+                           //       : (selected as string[]).join(", ")
+                           // }
+                           renderValue={(selected) => {
+                              if ((selected as string[]).length === 0) {
+                                 return "Select Job Skills"
+                              }
+                              const selectedTitles = skillsData
+                                 ? skillsData
+                                      ?.filter((skill) => (selected as string[]).includes(skill.documentId))
+                                      ?.map((skill) => skill.title)
+                                 : []
+                              return selectedTitles.join(", ")
+                           }}>
                            <MenuItem disabled value=''>
                               Select Job Skill
                            </MenuItem>
                            {skillsData &&
+                              skillsData?.map((revenueItem: IJobCategory, index: number) => (
+                                 <MenuItem key={index} value={revenueItem?.documentId}>
+                                    <Checkbox checked={watch("skills")?.includes(revenueItem?.documentId)} />
+                                    {revenueItem?.title}
+                                 </MenuItem>
+                              ))}
+                           {/* {skillsData &&
                               skillsData?.map((revenueItem: IJobCategory, index: number) => {
                                  return (
                                     <MenuItem key={index} value={revenueItem?.documentId}>
                                        {revenueItem?.title}
                                     </MenuItem>
                                  )
-                              })}
+                              })} */}
                         </Select>
                      </Grid>
                      {/* Experience */}

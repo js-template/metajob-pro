@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
 import _ from "lodash"
 import {
@@ -38,11 +38,20 @@ type Props = {
    categoryData?: ISingleCategory[]
    jobTypesData?: IJobType[]
    jobExperienceData?: IJobType[]
+   jobSkillsData?: IJobType[]
 }
 
-export const JobFilterClient = ({ block, language, categoryData, jobTypesData, jobExperienceData }: Props) => {
+export const JobFilterClient = ({
+   block,
+   language,
+   categoryData,
+   jobTypesData,
+   jobExperienceData,
+   jobSkillsData
+}: Props) => {
    const { theme: mode } = useTheme()
    const searchParams = useSearchParams()
+   const router = useRouter()
 
    // destructure  search data
    const { search, result_placeholder, card_button, style } = block || {}
@@ -65,21 +74,25 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
       location_placeholder,
       category_placeholder,
       experience_placeholder,
+      skill_placeholder,
       type_placeholder,
       sort_placeholder,
       button_placeholder
    } = search || {}
 
    const isRightSidebar = sidebar === "Right Sidebar"
-   // const isLeftSidebar = !sidebar || sidebar === "Left Sidebar"
    const isNoSidebar = sidebar === "No Sidebar"
 
    // get params data
    const {
       search: urlSearch,
       location: urlLocation,
-      category: urlCategory
+      category: urlCategory,
+      type: urType,
+      experience: urlExperience,
+      skills: urlSkill
    } = Object.fromEntries(searchParams.entries())
+
    const [searchOptions, setSearchOptions] = useState({
       searchText: "",
       location: "",
@@ -93,7 +106,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
    const [jobsError, setJobsError] = useState(null)
    const [selectedJobTypes, setSelectedJobTypes] = useState<string[]>([])
    const [selectedJobExperience, setSelectedJobExperience] = useState<string[]>([])
-
+   const [selectedJobSkills, setSelectedJobSkills] = useState<string[]>([])
    // Update state based on URL search params
    useEffect(() => {
       setSearchOptions((prevOptions) => ({
@@ -102,27 +115,80 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
          category: urlCategory || prevOptions.category,
          location: urlLocation || prevOptions.location
       }))
-   }, [urlSearch, urlLocation, urlCategory])
+
+      setSelectedJobTypes(urType ? urType.split(",") : [])
+      setSelectedJobExperience(urlExperience ? urlExperience.split(",") : [])
+      setSelectedJobSkills(urlSkill ? urlSkill.split(",") : [])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [])
+
+   const handleSearchTextChange = (searchTextValue: string) => {
+      const currentParams = new URLSearchParams(searchParams)
+      if (!searchTextValue) {
+         currentParams.delete("search")
+      } else {
+         currentParams.set("search", searchTextValue)
+      }
+      router.replace(`?${currentParams.toString()}`, { scroll: false })
+      setSearchOptions({
+         ...searchOptions,
+         searchText: searchTextValue
+      })
+   }
+
+   const handleJobCategoryChange = (selectValue: string) => {
+      const currentParams = new URLSearchParams(searchParams)
+      if (!selectValue) {
+         currentParams.delete("category")
+      } else {
+         currentParams.set("category", selectValue)
+      }
+      router.replace(`?${currentParams.toString()}`, { scroll: false })
+      setSearchOptions({
+         ...searchOptions,
+         category: selectValue
+      })
+   }
 
    const handleJobTypesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { checked, name } = event.target
-      setSelectedJobTypes((prev) => {
-         if (checked) {
-            return [...prev, name] // Add to array if checked
-         } else {
-            return prev.filter((type) => type !== name) // Remove if unchecked
-         }
-      })
+      const updatedTypes = checked ? [...selectedJobTypes, name] : selectedJobTypes.filter((type) => type !== name)
+      setSelectedJobTypes(updatedTypes)
+      const params = new URLSearchParams(searchParams)
+      if (updatedTypes.length) {
+         params.set("type", updatedTypes.join(","))
+      } else {
+         params.delete("type")
+      }
+      router.replace(`?${params.toString()}`, { scroll: false })
    }
+
    const handleJobExperienceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { checked, name } = event.target
-      setSelectedJobExperience((prev) => {
-         if (checked) {
-            return [...prev, name] // Add to array if checked
-         } else {
-            return prev.filter((type) => type !== name) // Remove if unchecked
-         }
-      })
+      const updatedExperience = checked
+         ? [...selectedJobExperience, name]
+         : selectedJobExperience.filter((type) => type !== name)
+      setSelectedJobExperience(updatedExperience)
+      const params = new URLSearchParams(searchParams)
+      if (updatedExperience.length) {
+         params.set("experience", updatedExperience.join(","))
+      } else {
+         params.delete("experience")
+      }
+      router.replace(`?${params.toString()}`, { scroll: false })
+   }
+
+   const handleJobSkillsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { checked, name } = event.target
+      const updatedSkills = checked ? [...selectedJobSkills, name] : selectedJobSkills.filter((type) => type !== name)
+      setSelectedJobSkills(updatedSkills)
+      const params = new URLSearchParams(searchParams)
+      if (updatedSkills.length) {
+         params.set("skills", updatedSkills.join(","))
+      } else {
+         params.delete("skills")
+      }
+      router.replace(`?${params.toString()}`, { scroll: false })
    }
 
    const sortParam = getSortParam(searchOptions?.sort)
@@ -152,6 +218,11 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                   experience: {
                      value: {
                         $in: selectedJobExperience
+                     }
+                  },
+                  skills: {
+                     value: {
+                        $in: selectedJobSkills
                      }
                   }
                },
@@ -194,7 +265,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
       getJobsData()
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [page, searchOptions, selectedJobTypes, selectedJobExperience])
+   }, [page, searchOptions, selectedJobTypes, selectedJobExperience, selectedJobSkills])
 
    // Handle form submission
    const handleSubmit = (e: any) => {
@@ -244,18 +315,26 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                     color: (theme) => theme.palette.error.main,
                                     cursor: "pointer",
                                     display:
-                                       searchOptions?.searchText || searchOptions?.location || searchOptions?.category
+                                       searchOptions?.searchText ||
+                                       searchOptions?.location ||
+                                       searchOptions?.category ||
+                                       selectedJobTypes?.length > 0 ||
+                                       selectedJobExperience?.length > 0 ||
+                                       selectedJobSkills?.length > 0
                                           ? "block"
                                           : "none"
                                  }}
                                  onClick={(e) => {
-                                    // searchParams.delete()
+                                    router.replace("?", { scroll: false })
                                     setSearchOptions({
                                        ...searchOptions,
                                        searchText: "",
                                        location: "",
                                        category: ""
                                     })
+                                    setSelectedJobTypes([])
+                                    setSelectedJobExperience([])
+                                    setSelectedJobSkills([])
                                  }}>
                                  Clear
                               </Typography>
@@ -275,12 +354,9 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                     fullWidth
                                     size='small'
                                     value={searchOptions.searchText}
-                                    onChange={(e) =>
-                                       setSearchOptions({
-                                          ...searchOptions,
-                                          searchText: e.target.value
-                                       })
-                                    }
+                                    onChange={(e) => {
+                                       handleSearchTextChange(e.target.value)
+                                    }}
                                  />
                               )}
                               {/* {location_placeholder && (
@@ -334,10 +410,7 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                        size='small'
                                        value={searchOptions?.category || ""}
                                        onChange={(e) => {
-                                          setSearchOptions({
-                                             ...searchOptions,
-                                             category: e.target.value
-                                          })
+                                          handleJobCategoryChange(e.target.value)
                                        }}>
                                        <MenuItem
                                           value={""}
@@ -461,6 +534,55 @@ export const JobFilterClient = ({ block, language, categoryData, jobTypesData, j
                                              />
                                           }
                                           label={expItem?.title}
+                                       />
+                                    ))}
+                                 </Stack>
+                              )}
+                              {/* job-skills check box  */}
+                              {skill_placeholder && (
+                                 <Stack spacing={2}>
+                                    <Divider />
+                                    <Typography
+                                       fontSize={16}
+                                       fontWeight={700}
+                                       sx={{
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? color || theme.palette.text.secondary
+                                                : theme.palette.text.secondary
+                                       }}>
+                                       {skill_placeholder || "Job Skills"}
+                                    </Typography>
+                                    {_.map(jobSkillsData, (skillItem: IJobType) => (
+                                       <FormControlLabel
+                                          key={skillItem?.id}
+                                          sx={{
+                                             color: (theme) =>
+                                                mode === "light"
+                                                   ? secondary_color || theme.palette.text.secondary
+                                                   : theme.palette.text.secondary
+                                          }}
+                                          control={
+                                             <MuiCheckbox
+                                                name={skillItem?.value}
+                                                checked={selectedJobSkills.includes(skillItem?.value)}
+                                                onChange={handleJobSkillsChange}
+                                                icon={
+                                                   <Box
+                                                      sx={{
+                                                         bgcolor: (theme) => theme.palette.divider,
+                                                         height: 24,
+                                                         width: 24,
+                                                         transform: "scale(0.8)",
+                                                         borderRadius: 1
+                                                      }}
+                                                   />
+                                                }
+                                                sx={{ py: 0 }}
+                                                disableRipple
+                                             />
+                                          }
+                                          label={skillItem?.title}
                                        />
                                     ))}
                                  </Stack>

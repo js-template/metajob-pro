@@ -16,6 +16,7 @@ export type IJobFilterData = {
       experience_placeholder: string
       type_placeholder: string
       sort_placeholder: string
+      skill_placeholder: string
       button_placeholder: string
    }
    style?: {

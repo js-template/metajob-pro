@@ -1,4 +1,5 @@
 "use client"
+import NextLink from "next/link"
 import { useTheme } from "next-themes"
 import { Stack, Typography, useTheme as muiTheme } from "@mui/material"
 import { Card } from "../../components/common/card"
@@ -61,7 +62,11 @@ export default function Details({ data, skillTitle, color, secondary_color }: Pr
                      {skills?.map((item: any, index) => (
                         <Typography
                            key={index}
+                           component={NextLink}
+                           href={`/find-job?skills=${item?.value}`}
                            sx={{
+                              fontWeight: 400,
+                              fontSize: 14,
                               color: (theme) =>
                                  mode === "light"
                                     ? secondary_color || theme.palette.text.disabled
@@ -72,11 +77,13 @@ export default function Details({ data, skillTitle, color, secondary_color }: Pr
                               borderStyle: "solid",
                               borderRadius: 1,
                               py: 0.5,
-                              px: 2
+                              px: 2,
+                              textDecoration: "none",
+                              "&:hover": {
+                                 color: (theme) => theme.palette.primary.main
+                              }
                            }}
-                           variant={"body1"}
-                           fontWeight={400}
-                           fontSize={14}>
+                           variant={"body1"}>
                            {item?.title}
                         </Typography>
                      ))}

@@ -97,7 +97,7 @@ const MobileNav = ({ open, setOpen, lang, headerData, listLocalesData }: MobileN
                            gap: 1
                         }}>
                         <CIcon
-                           icon='tabler:language'
+                           icon='ion:globe-outline'
                            sx={{
                               fontSize: "1.25rem"
                            }}
