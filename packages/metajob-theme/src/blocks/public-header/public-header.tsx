@@ -129,16 +129,6 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
    const userAvatar = userData?.avatar?.url || ""
    const userName = session?.user?.name || ""
 
-   const handleMouseLeaveMenu = (event: React.MouseEvent<HTMLElement>) => {
-      const relatedTarget = event.relatedTarget as HTMLElement
-
-      // Only close if the mouse isn't moving to the button
-      if (!relatedTarget || !relatedTarget?.closest("button")) {
-         setAnchorEl(null)
-         setActiveMenu(null)
-      }
-   }
-
    return (
       <AppBar
          position='static'
@@ -227,6 +217,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                   )}
                </Box>
                {/* desktop main-menu  */}
+               {/* menu-items  */}
                <Box
                   sx={{
                      flexGrow: 1,
@@ -236,10 +227,10 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                   <Stack direction={"row"} gap={3}>
                      {main_menu &&
                         main_menu?.map((item: MenuItemProps, index: number) => (
-                           <Box key={index} sx={{ position: "relative" }}>
+                           <Box key={index} sx={{ position: "relative" }} onMouseLeave={handleSubMenuClose}>
                               {/* Main Menu Item */}
                               <Typography
-                                 // onMouseEnter={(event) => item?.child?.length && handleSubMenuOpen(event, index)}
+                                 onMouseOver={(event: any) => item?.child?.length && handleSubMenuOpen(event, index)}
                                  onClick={(event: any) => item?.child?.length && handleSubMenuOpen(event, index)}
                                  component={item?.child && item?.child?.length > 0 ? "div" : NextLink}
                                  href={item?.child && item?.child?.length > 0 ? undefined : (item?.link ?? "/")}
@@ -274,11 +265,11 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                               {item?.child && item?.child?.length > 0 && (
                                  <Menu
                                     id='dropdown-menu'
-                                    anchorEl={anchorEl}
+                                    anchorEl={anchorElSub}
                                     open={activeMenu === index}
                                     onClose={handleSubMenuClose} // Close menu if focus lost
                                     MenuListProps={{
-                                       onMouseLeave: handleMouseLeaveMenu // Close when mouse leaves the menu
+                                       onMouseLeave: handleSubMenuClose // Close when mouse leaves the menu
                                     }}
                                     sx={{
                                        mt: "18px",
