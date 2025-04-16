@@ -215,7 +215,8 @@ const SideItems = ({ block, language, userData, listLocalesData }: Props) => {
                         <IconButton
                            sx={{
                               ml: 1,
-                              color: mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                              color:
+                                 mode === "light" ? color || theme.palette.text.secondary : theme.palette.text.secondary
                            }}
                            onClick={toggleTheme}>
                            <CIcon
@@ -223,7 +224,7 @@ const SideItems = ({ block, language, userData, listLocalesData }: Props) => {
                               sx={{
                                  color:
                                     mode === "light"
-                                       ? color || theme.palette.text.primary
+                                       ? color || theme.palette.text.secondary
                                        : theme.palette.text.secondary
                               }}
                            />
