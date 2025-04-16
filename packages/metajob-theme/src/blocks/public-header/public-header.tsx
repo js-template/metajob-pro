@@ -157,7 +157,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                {/* desktop main-menu  */}
                {show_menu && <DesktopNav main_menu={main_menu} color={color} />}
 
-               {show_search && <NavSearch />}
+               {show_search && <NavSearch language={language} />}
 
                {/* side-items (lang, theme-mode, login buttons)  */}
                <SideItems block={block} language={language} userData={userData} listLocalesData={listLocalesData} />

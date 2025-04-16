@@ -5,7 +5,11 @@ import { TextField, IconButton, Box, useTheme as muiTheme } from "@mui/material"
 import CIcon from "../../../components/common/icon"
 import SearchModal from "./search-modal"
 
-const NavSearch = () => {
+type Props = {
+   language?: string
+}
+
+const NavSearch = ({ language }: Props) => {
    const theme = muiTheme()
    const { theme: mode } = useTheme()
 
@@ -83,7 +87,7 @@ const NavSearch = () => {
          </Box>
 
          {/* Search Modal  */}
-         <SearchModal open={openSearch} handleClose={handleClosePrimary} />
+         <SearchModal open={openSearch} handleClose={handleClosePrimary} language={language} />
       </Box>
    )
 }
