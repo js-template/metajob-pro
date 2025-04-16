@@ -64,7 +64,7 @@
     "section_padding": {
       "type": "integer",
       "max": 100,
-      "min": 1
+      "min": 0
     },
     "sidebar": {
       "type": "enumeration",
