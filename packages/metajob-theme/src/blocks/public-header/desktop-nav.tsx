@@ -1,6 +1,7 @@
 "use client"
 import { useState, MouseEvent } from "react"
 import NextLink from "next/link"
+import { usePathname } from "next/navigation"
 import { useTheme as modeUseTheme } from "next-themes"
 import _ from "lodash"
 import { Menu, MenuItem, Typography, Box, Stack, useTheme, Theme } from "@mui/material"
@@ -12,6 +13,7 @@ type Props = {
    color?: string
 }
 const DesktopNav = ({ main_menu, color }: Props) => {
+   const pathname = usePathname()
    const theme = useTheme()
    const { theme: mode } = modeUseTheme()
    const [anchorElSub, setAnchorElSub] = useState<null | HTMLElement>(null)
@@ -52,7 +54,11 @@ const DesktopNav = ({ main_menu, color }: Props) => {
                            fontWeight: 500,
                            "&:hover": { color: "primary.main" },
                            color: (theme: Theme) =>
-                              mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
+                              pathname === item.link
+                                 ? theme.palette.primary.main
+                                 : mode === "light"
+                                   ? color || theme.palette.text.primary
+                                   : theme.palette.text.primary,
                            display: "flex",
                            alignItems: "center",
                            cursor: "pointer"
