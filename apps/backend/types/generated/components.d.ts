@@ -450,7 +450,7 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMax<
         {
           max: 1;
-          min: 0.1;
+          min: 0;
         },
         number
       > &

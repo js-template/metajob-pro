@@ -54,7 +54,7 @@
     "bg_overlay": {
       "type": "decimal",
       "max": 1,
-      "min": 0.1,
+      "min": 0,
       "default": 0.6
     },
     "header_width": {
