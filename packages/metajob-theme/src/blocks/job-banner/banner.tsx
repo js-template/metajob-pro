@@ -85,6 +85,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
       })
    }
 
+   const noOverLay = bg_overlay === 0
    return (
       <Box
          sx={{
@@ -112,8 +113,9 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                bottom: 0,
                backgroundColor:
                   mode === "light"
-                     ? (theme) => hexToRGBA(backgroundColor || theme.palette.primary.main, bg_overlay || 0.7)
-                     : (theme) => hexToRGBA(theme.palette.background.default, bg_overlay || 0.7),
+                     ? (theme) =>
+                          hexToRGBA(backgroundColor || theme.palette.primary.main, noOverLay ? 0 : bg_overlay || 0.7)
+                     : (theme) => hexToRGBA(theme.palette.background.default, noOverLay ? 0 : bg_overlay || 0.7),
                zIndex: 1
             },
             "& > *": {
