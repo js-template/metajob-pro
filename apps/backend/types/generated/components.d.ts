@@ -1434,9 +1434,12 @@ export interface WidgetCountCard extends Struct.ComponentSchema {
     icon: 'apps';
   };
   attributes: {
-    enableStats: Schema.Attribute.Boolean;
-    isLink: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    link: Schema.Attribute.String;
     subTitle: Schema.Attribute.String;
+    target: Schema.Attribute.Enumeration<
+      ['_self', '_blank', '_parent', '_top']
+    > &
+      Schema.Attribute.DefaultTo<'_self'>;
     title: Schema.Attribute.String;
   };
 }
