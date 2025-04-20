@@ -27,11 +27,25 @@ const MobileNav = ({
    headerData,
    listLocalesData
 }: MobileNavProps) => {
+   const theme = useTheme()
    const { theme: mode, setTheme } = modeUseTheme()
+
+   const {
+      main_menu,
+      profile_menu: user_menu,
+      language: langMenu,
+      light_logo,
+      dark_logo,
+      button: menuButton,
+      dark_mode,
+      notification,
+      style,
+      show_menu
+   } = headerData || {}
+
    const toggleTheme = () => {
       setTheme(mode === "dark" ? "light" : "dark")
    }
-   const theme = useTheme()
 
    // *** Language Menu ***
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -84,7 +98,7 @@ const MobileNav = ({
                            gap: 1
                         }}>
                         <CIcon
-                           icon='tabler:language'
+                           icon='ion:globe-outline'
                            sx={{
                               fontSize: "1.25rem"
                            }}
@@ -149,21 +163,25 @@ const MobileNav = ({
                </Box>
             )}
             {/* dark-light-theme-toggle  */}
-            <IconButton
-               size='large'
-               color='inherit'
-               onClick={toggleTheme}
-               sx={{
-                  display: {
-                     xs: "block",
-                     md: "none"
-                  }
-               }}>
-               <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
-            </IconButton>
+            {dark_mode && (
+               <IconButton
+                  size='large'
+                  color='inherit'
+                  onClick={toggleTheme}
+                  sx={{
+                     display: {
+                        xs: "block",
+                        md: "none"
+                     }
+                  }}>
+                  <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
+               </IconButton>
+            )}
          </Box>
          <Divider />
-         <List sx={{ mt: 2, p: 2 }}>{NavItems(headerData?.main_menu, open, theme.direction as any)}</List>
+         {show_menu && (
+            <List sx={{ mt: 2, p: 2 }}>{NavItems(headerData?.main_menu, open, theme.direction as any)}</List>
+         )}
       </Drawer>
    )
 }

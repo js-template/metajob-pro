@@ -7,8 +7,9 @@ import { loadActiveTheme } from "config/theme-loader"
 import { StrapiSeoFormate } from "@/lib/strapiSeo"
 import { Metadata, ResolvingMetadata } from "next/types"
 import { getLanguageFromCookie } from "@/utils/language"
+import { PrivateHomePageLoader } from "@/components/loader/private-home-loader"
 
-// // *** generate metadata type
+// *** generate metadata type
 type Props = {
    params: { slug: string }
    searchParams: { [key: string]: string | string[] | undefined }
@@ -73,7 +74,7 @@ export default async function DashboardPage({
    const getPrivateComponents = activeTheme?.getPrivateComponents || {}
 
    return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<PrivateHomePageLoader />}>
          <Body
             blocks={roleComponents} // Pass the filtered role components
             session={session}

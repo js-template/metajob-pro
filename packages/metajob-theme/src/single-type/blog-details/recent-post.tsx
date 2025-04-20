@@ -1,4 +1,5 @@
 "use client"
+import { useTheme } from "next-themes"
 import Link from "next/link"
 import Image from "next/image"
 import moment from "moment"
@@ -10,8 +11,12 @@ import { ISinglePost } from "./types"
 
 type Props = {
    recentBlogsData?: ISinglePost[]
+   color?: string
+   secondary_color?: string
 }
-const RecentPost = ({ recentBlogsData }: Props) => {
+const RecentPost = ({ recentBlogsData, color, secondary_color }: Props) => {
+   const { theme: mode } = useTheme()
+
    return recentBlogsData && recentBlogsData?.length > 0 ? (
       <Card
          sx={{
@@ -26,12 +31,15 @@ const RecentPost = ({ recentBlogsData }: Props) => {
                fontSize={20}
                fontWeight={700}
                sx={{
-                  color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9)
+                  color: (theme) =>
+                     mode === "light"
+                        ? color || hexToRGBA(theme.palette.text.primary, 0.9)
+                        : hexToRGBA(theme.palette.text.primary, 0.9)
                }}>
                Latest Post
             </Typography>
             {recentBlogsData && recentBlogsData?.length > 0 && (
-               <Stack>
+               <Stack spacing={1}>
                   {_.map(recentBlogsData, (item: ISinglePost) => {
                      return (
                         <Stack key={item?.id} gap={2} direction={"row"} alignItems='center'>
@@ -59,7 +67,10 @@ const RecentPost = ({ recentBlogsData }: Props) => {
                                  fontSize={18}
                                  fontWeight={700}
                                  sx={{
-                                    color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9),
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || hexToRGBA(theme.palette.text.primary, 0.9)
+                                          : hexToRGBA(theme.palette.text.primary, 0.9),
                                     "&:hover": {
                                        color: (theme) => theme.palette.primary.main,
                                        cursor: "pointer",
@@ -75,7 +86,10 @@ const RecentPost = ({ recentBlogsData }: Props) => {
                                  fontSize={14}
                                  fontWeight={400}
                                  sx={{
-                                    color: (theme) => theme.palette.text.disabled
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.disabled
+                                          : theme.palette.text.disabled
                                  }}>
                                  {/* {item.datePosted} */}
                                  {moment(item?.publishedAt).format("DD MMMM YYYY")}

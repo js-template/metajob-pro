@@ -44,7 +44,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
    const { data: blogPageData, error: blogPageError } = await find(
       "api/padma-backend/post-setting",
       {
-         populate: "*",
+         // populate: "*",
+         populate: {
+            blocks: {
+               populate: "*"
+            }
+         },
          publicationState: "live",
          locale: language ?? "en"
       },

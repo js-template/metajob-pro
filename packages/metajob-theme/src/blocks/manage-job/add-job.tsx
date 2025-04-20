@@ -1,14 +1,16 @@
 "use client"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import _ from "lodash"
 import toast from "react-hot-toast"
 import { useForm } from "react-hook-form"
 import MDEditor from "@uiw/react-md-editor"
 import {
    Box,
+   Checkbox,
    CircularProgress,
    Grid,
    IconButton,
+   ListItemText,
    MenuItem,
    Select,
    TextField,
@@ -20,6 +22,7 @@ import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { IJobAttribute, IJobCategory } from "./types"
 import { createEntry, find } from "../../lib/strapi"
 import CIcon from "../../components/common/icon"
+import { formatDate, getSlugFromTitle } from "./hook"
 
 type addListProps = {
    handleClose: () => void
@@ -39,6 +42,12 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount, lang
    const { companyData, categoryData, skillsData, jobTypesData, jobExperienceData, userPackage } = jobAttributes || {}
    const create_ads_limit = userPackage?.[0]?.user_plan?.create_ads_limit || 0
 
+   // get the current date and next month date
+   const today = new Date()
+   const nextMonth = new Date()
+   nextMonth.setMonth(today.getMonth() + 1)
+
+   const [isSlugEdited, setIsSlugEdited] = useState(false)
    const [loading, setLoading] = React.useState(false)
    const {
       handleSubmit,
@@ -51,12 +60,12 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount, lang
          title: "",
          slug: "",
          description: "",
-         vacancy: 0,
-         startDate: "",
-         endDate: "",
+         vacancy: 1,
+         startDate: formatDate(today),
+         endDate: formatDate(nextMonth),
          price: 0,
          type: "",
-         skills: "",
+         skills: [] as string[],
          experience: "",
          category: "",
          company: ""
@@ -64,6 +73,15 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount, lang
    })
 
    const isCompanySelected = watch("company")
+   // auto-update-slug
+   const title = watch("title")
+
+   useEffect(() => {
+      if (title && !isSlugEdited) {
+         const generatedSlug = getSlugFromTitle(title)
+         setValue("slug", generatedSlug)
+      }
+   }, [title, isSlugEdited, setValue])
 
    // *** handle form submit
    const handleFromSubmit = async (data: { [key: string]: any }) => {
@@ -411,7 +429,8 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount, lang
                            size='small'
                            placeholder='Job Slug'
                            {...register("slug", {
-                              required: "Job Slug is required"
+                              required: "Job Slug is required",
+                              onChange: () => setIsSlugEdited(true) // Set the flag to true when the slug is edited
                            })}
                            error={Boolean(errors.slug)}
                         />
@@ -641,11 +660,11 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount, lang
                            placeholder='Vacancy'
                            {...register("vacancy", {
                               valueAsNumber: true,
-                              min: 0, // Ensures values cannot be negative
-                              validate: (value) => value >= 0 || "Value must be 0 or greater"
+                              min: 1, // Ensures values cannot be negative
+                              validate: (value) => value >= 0 || "Value must be 1 or greater"
                            })}
                            error={Boolean(errors.vacancy)}
-                           helperText={errors.vacancy ? "Value must be 0 or greater" : ""}
+                           helperText={errors.vacancy ? "Value must be 1 or greater" : ""}
                         />
                      </Grid>
                      {/* Category */}
@@ -765,6 +784,7 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount, lang
                            </Typography>
                         </Box>
                         <Select
+                           multiple
                            inputProps={{ readOnly: !isCompanySelected }}
                            displayEmpty
                            fullWidth
@@ -772,19 +792,29 @@ const AddJob = ({ handleClose, userId, handleMute, jobAttributes, jobCount, lang
                            id='skills'
                            size='small'
                            {...register("skills")}
-                           value={watch("skills") || ""}
-                           error={Boolean(errors.skills)}>
+                           value={watch("skills") || []}
+                           error={Boolean(errors.skills)}
+                           renderValue={(selected) => {
+                              if ((selected as string[]).length === 0) {
+                                 return "Select Job Skills"
+                              }
+                              const selectedTitles = skillsData
+                                 ? skillsData
+                                      ?.filter((skill) => (selected as string[]).includes(skill.documentId))
+                                      ?.map((skill) => skill.title)
+                                 : []
+                              return selectedTitles.join(", ")
+                           }}>
                            <MenuItem disabled value=''>
                               Select Job Skill
                            </MenuItem>
                            {skillsData &&
-                              skillsData?.map((revenueItem: IJobCategory, index: number) => {
-                                 return (
-                                    <MenuItem key={index} value={revenueItem?.documentId}>
-                                       {revenueItem?.title}
-                                    </MenuItem>
-                                 )
-                              })}
+                              skillsData?.map((skill: IJobCategory, index: number) => (
+                                 <MenuItem key={index} value={skill?.documentId}>
+                                    <Checkbox checked={(watch("skills") || [])?.includes(skill?.documentId)} />
+                                    <ListItemText primary={skill.title} />
+                                 </MenuItem>
+                              ))}
                         </Select>
                      </Grid>
                      {/* Experience */}

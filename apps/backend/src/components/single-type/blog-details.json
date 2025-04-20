@@ -13,15 +13,6 @@
       "type": "component",
       "repeatable": false,
       "component": "config.style-section"
-    },
-    "sidebar": {
-      "type": "enumeration",
-      "enum": [
-        "Left Sidebar",
-        "Right Sidebar",
-        "Both Sidebar",
-        "No Sidebar"
-      ]
     }
   }
 }

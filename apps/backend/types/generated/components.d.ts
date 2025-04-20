@@ -450,7 +450,7 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMax<
         {
           max: 1;
-          min: 0.1;
+          min: 0;
         },
         number
       > &
@@ -484,7 +484,7 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMax<
         {
           max: 100;
-          min: 1;
+          min: 0;
         },
         number
       >;
@@ -564,6 +564,10 @@ export interface HeaderMainMenu extends Struct.ComponentSchema {
           localized: true;
         };
       }>;
+    show_menu: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    show_search: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
@@ -1062,6 +1066,7 @@ export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
     experience_placeholder: Schema.Attribute.String;
     location_placeholder: Schema.Attribute.String;
     search_placeholder: Schema.Attribute.String;
+    skill_placeholder: Schema.Attribute.String;
     sort_placeholder: Schema.Attribute.String;
     title: Schema.Attribute.String;
     type_placeholder: Schema.Attribute.String;
@@ -1169,7 +1174,7 @@ export interface MetajobSingleTypeLoginDetails extends Struct.ComponentSchema {
     seo: Schema.Attribute.Component<'shared.seo', false>;
     signup_helper_placeholder: Schema.Attribute.String;
     signup_link_placeholder: Schema.Attribute.String;
-    styles: Schema.Attribute.Component<'config.style-section', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -1197,7 +1202,7 @@ export interface MetajobSingleTypeRegisterDetails
       Schema.Attribute.DefaultTo<true>;
     required_placeholder: Schema.Attribute.String;
     seo: Schema.Attribute.Component<'shared.seo', false>;
-    styles: Schema.Attribute.Component<'config.style-section', false>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
     username_placeholder: Schema.Attribute.String;
     username_title: Schema.Attribute.String;
@@ -1370,9 +1375,6 @@ export interface SingleTypeBlogDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    sidebar: Schema.Attribute.Enumeration<
-      ['Left Sidebar', 'Right Sidebar', 'Both Sidebar', 'No Sidebar']
-    >;
     style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
   };

@@ -27,6 +27,9 @@ export const PublicHeader = async ({ block, language }: Props) => {
                         },
                         dark_logo: {
                            populate: "*"
+                        },
+                        main_menu: {
+                           populate: "*"
                         }
                      }
                   }

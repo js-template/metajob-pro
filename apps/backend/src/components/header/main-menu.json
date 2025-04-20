@@ -26,6 +26,15 @@
       "type": "boolean",
       "default": true
     },
+    "show_menu": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "show_search": {
+      "type": "boolean",
+      "default": false
+    },
     "main_menu": {
       "type": "component",
       "repeatable": true,
