@@ -1426,6 +1426,10 @@ export interface PluginMetajobBackendResume
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     show_profile: Schema.Attribute.Enumeration<['Show', 'Hide']>;
+    skills: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::metajob-backend.skill'
+    >;
     slug: Schema.Attribute.UID<'name'>;
     tagline: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
