@@ -87,6 +87,7 @@ const Body: React.FC<BodyProps> = ({ language, allRolesData }) => {
                {_.map(allRolesData, (role) => {
                   return (
                      <Button
+                        key={role.id}
                         onClick={() => {
                            setSelectedButton(role?.id)
                         }}
