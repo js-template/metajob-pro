@@ -119,6 +119,14 @@ export const config = {
                   throw new Error("Error getting user")
                }
 
+               // *** trigger is update
+               if (trigger === "update") {
+                  token = {
+                     ...token,
+                     ...session
+                  }
+               }
+
                return {
                   ...token,
                   ...user,
@@ -128,11 +136,12 @@ export const config = {
 
             return false
          }
+
          // *** trigger is update
          if (trigger === "update") {
-            return {
+            token = {
                ...token,
-               ...session.user // use the user object to populate jwt token
+               ...session
             }
          }
          return {
