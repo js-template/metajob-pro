@@ -544,6 +544,7 @@ export interface HeaderMainMenu extends Struct.ComponentSchema {
       }>;
     dark_logo: Schema.Attribute.Component<'config.logo', false>;
     dark_mode: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    hide_menu: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     language: Schema.Attribute.Component<'config.link', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -564,9 +565,6 @@ export interface HeaderMainMenu extends Struct.ComponentSchema {
           localized: true;
         };
       }>;
-    show_menu: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
     show_search: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };

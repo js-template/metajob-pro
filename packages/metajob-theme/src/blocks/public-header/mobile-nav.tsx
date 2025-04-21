@@ -40,7 +40,7 @@ const MobileNav = ({
       dark_mode,
       notification,
       style,
-      show_menu
+      hide_menu
    } = headerData || {}
 
    const toggleTheme = () => {
@@ -179,7 +179,7 @@ const MobileNav = ({
             )}
          </Box>
          <Divider />
-         {show_menu && (
+         {!hide_menu && (
             <List sx={{ mt: 2, p: 2 }}>{NavItems(headerData?.main_menu, open, theme.direction as any)}</List>
          )}
       </Drawer>

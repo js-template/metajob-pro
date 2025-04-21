@@ -3,7 +3,7 @@ export type IPublicHeaderBlock = {
    __component: string
    dark_mode: boolean
    notification: boolean
-   show_menu: boolean
+   hide_menu: boolean
    show_search: boolean
    light_logo: {
       id: number
