@@ -13,6 +13,7 @@ export type ResumeFormProps = {
    salary_type: string
    salary: string
    category: string
+   skills: string[]
    about: string
    education: {
       title: string
@@ -57,6 +58,7 @@ export type IResumeAttribute = {
    experienceData: IJobCategory[]
    avgSalaryData: IJobCategory[]
    salaryTypesData: IJobCategory[]
+   skillsData: IJobCategory[]
 }
 
 export type ISingleResume = {
@@ -79,6 +81,12 @@ export type ISingleResume = {
       description: string
       slug: string
    }
+   skills: {
+      id: number
+      documentId: string
+      title: string
+      value: string
+   }[]
    salary: {
       documentId: string
       title: string

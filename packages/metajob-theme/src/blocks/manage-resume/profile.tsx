@@ -2,7 +2,7 @@
 import { useState } from "react"
 import MDEditor from "@uiw/react-md-editor"
 import { FieldErrors, UseFormRegister, UseFormSetValue, WatchInternal } from "react-hook-form"
-import { Box, Grid, MenuItem, Select, TextField, useTheme } from "@mui/material"
+import { Box, Checkbox, Grid, ListItemText, MenuItem, Select, TextField, Typography, useTheme } from "@mui/material"
 import { IJobCategory, IResumeAttribute, ResumeFormProps } from "./types"
 
 type Props = {
@@ -25,6 +25,7 @@ export const ProfileForm = ({ register, errors, setValue, watch, resumeAttribute
    const experienceData = resumeAttributes?.experienceData
    const avgSalaryData = resumeAttributes?.avgSalaryData
    const salaryTypesData = resumeAttributes?.salaryTypesData
+   const skillsData = resumeAttributes?.skillsData
 
    return (
       <>
@@ -183,6 +184,62 @@ export const ProfileForm = ({ register, errors, setValue, watch, resumeAttribute
             </Select>
          </Grid>
 
+         {/* Skill */}
+         <Grid item xs={12} sm={6}>
+            <Box
+               component={"label"}
+               htmlFor='skills'
+               sx={{
+                  display: "block",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                  color: "text.primary",
+                  mb: 1
+               }}>
+               Job Skill
+               <Typography
+                  component='span'
+                  sx={{
+                     fontSize: 14,
+                     color: (theme) => theme.palette.text.secondary,
+                     ml: 0.5
+                  }}>
+                  (optional)
+               </Typography>
+            </Box>
+            <Select
+               multiple
+               displayEmpty
+               fullWidth
+               variant='outlined'
+               id='skills'
+               size='small'
+               {...register("skills")}
+               value={watch("skills") || []}
+               error={Boolean(errors.skills)}
+               renderValue={(selected) => {
+                  if ((selected as string[]).length === 0) {
+                     return "Select Job Skills"
+                  }
+                  const selectedTitles = skillsData
+                     ? skillsData
+                          ?.filter((skill) => (selected as string[]).includes(skill.documentId))
+                          ?.map((skill) => skill.title)
+                     : []
+                  return selectedTitles.join(", ")
+               }}>
+               <MenuItem disabled value=''>
+                  Select Job Skill
+               </MenuItem>
+               {skillsData &&
+                  skillsData?.map((skill: IJobCategory, index: number) => (
+                     <MenuItem key={index} value={skill?.documentId}>
+                        <Checkbox checked={(watch("skills") || [])?.includes(skill?.documentId)} />
+                        <ListItemText primary={skill.title} />
+                     </MenuItem>
+                  ))}
+            </Select>
+         </Grid>
          {/* Experience Time */}
          <Grid item xs={12} sm={6}>
             <Box
