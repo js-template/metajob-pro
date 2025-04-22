@@ -321,7 +321,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      sx={{
                         display: "grid",
                         gridTemplateColumns: {
-                           lg: "repeat(3, 1fr)",
+                           sm: "repeat(3, 1fr)",
                            xs: "1fr"
                         },
                         gap: 5
