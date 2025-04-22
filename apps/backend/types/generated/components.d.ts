@@ -701,6 +701,7 @@ export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
+    add_company_button: Schema.Attribute.Component<'config.link', false>;
     card_button: Schema.Attribute.Component<'config.link', false>;
     description: Schema.Attribute.Text;
     empty: Schema.Attribute.Component<'shared.empty', false>;
