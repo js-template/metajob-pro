@@ -544,6 +544,7 @@ export interface HeaderMainMenu extends Struct.ComponentSchema {
       }>;
     dark_logo: Schema.Attribute.Component<'config.logo', false>;
     dark_mode: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    hide_menu: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     language: Schema.Attribute.Component<'config.link', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -564,9 +565,6 @@ export interface HeaderMainMenu extends Struct.ComponentSchema {
           localized: true;
         };
       }>;
-    show_menu: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
     show_search: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
@@ -1434,9 +1432,12 @@ export interface WidgetCountCard extends Struct.ComponentSchema {
     icon: 'apps';
   };
   attributes: {
-    enableStats: Schema.Attribute.Boolean;
-    isLink: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    link: Schema.Attribute.String;
     subTitle: Schema.Attribute.String;
+    target: Schema.Attribute.Enumeration<
+      ['_self', '_blank', '_parent', '_top']
+    > &
+      Schema.Attribute.DefaultTo<'_self'>;
     title: Schema.Attribute.String;
   };
 }

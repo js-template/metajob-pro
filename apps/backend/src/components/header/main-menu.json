@@ -26,10 +26,9 @@
       "type": "boolean",
       "default": true
     },
-    "show_menu": {
+    "hide_menu": {
       "type": "boolean",
-      "default": true,
-      "required": true
+      "default": false
     },
     "show_search": {
       "type": "boolean",

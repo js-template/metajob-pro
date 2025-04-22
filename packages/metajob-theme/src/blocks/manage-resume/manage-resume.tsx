@@ -48,6 +48,7 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
          salary_type: "",
          salary: "",
          // category: "",
+         skills: [] as string[],
          about: "",
          education: [],
          experience: [],
@@ -138,6 +139,7 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                   "education",
                   "contact",
                   "category",
+                  "skills",
                   "salary",
                   "salary_type",
                   "experience_time",
@@ -195,21 +197,29 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                   category: {
                      connect: [data?.category]
                   },
+
                   salary: {
                      connect: [data?.salary]
                   },
                   salary_type: {
                      connect: [data?.salary_type]
                   },
-
                   experience_time: {
                      connect: [data?.experience_time]
                   },
+                  //check if skills is exist then connect
+                  ...(data?.skills && {
+                     skills: {
+                        connect: [data?.skills],
+                        disconnect: resumeData?.skills?.map((skill: { documentId: string }) => skill?.documentId)
+                     }
+                  }),
                   education: removeIdFromObjects(data?.education),
                   experience: removeIdFromObjects(data?.experience),
                   portfolio: removeIdFromObjects(data?.portfolio)
                }
             }
+
             const resumeResponse = await updateOne(
                "metajob-backend/resumes",
                resumeData?.documentId,
@@ -260,10 +270,13 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                   salary_type: {
                      connect: [data?.salary_type]
                   },
-
                   experience_time: {
                      connect: [data?.experience_time]
-                  }
+                  },
+                  //check if skills is exist then connect
+                  ...(data?.skills && {
+                     skills: { connect: [data?.skills] }
+                  })
                }
             }
             const resumeResponse = await createEntry(`metajob-backend/resumes?locale=${language ?? "en"}`, createInput)
@@ -289,7 +302,10 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
    useEffect(() => {
       if (resumeData) {
          const resumeDataValue = resumeData
-
+         if (resumeData?.skills?.length) {
+            const skillIds = resumeData?.skills?.map((skillItem: { documentId: string }) => skillItem?.documentId)
+            setValue("skills", skillIds)
+         }
          setValue("name", resumeDataValue?.name || "")
          setValue("slug", resumeDataValue?.slug || "")
          setValue("tagline", resumeDataValue?.tagline || "")

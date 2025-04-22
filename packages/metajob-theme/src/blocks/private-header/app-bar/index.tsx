@@ -89,6 +89,7 @@ const CustomAppBar = ({
 }) => {
    const theme = useTheme()
    const { data, status } = useSession()
+   const unAssignRoleType = userRole === "authenticated" || userRole === "public" || !userRole
 
    const userAvatar = userData?.avatar?.url || ""
    const userName = data?.user?.name || ""
@@ -120,8 +121,14 @@ const CustomAppBar = ({
    // filter user-menu based on role
    const candidateProfileMenu = profile_menu?.filter((menu) => menu?.identifier !== "employer")
    const employerProfileMenu = profile_menu?.filter((menu) => menu?.identifier !== "candidate")
-   const user_menu =
-      userRole === "candidate" ? candidateProfileMenu : userRole === "employer" ? employerProfileMenu : profile_menu
+   const logoutProfileMenu = profile_menu?.filter((menu) => menu?.identifier === "logout")
+   const user_menu = unAssignRoleType
+      ? logoutProfileMenu
+      : userRole === "candidate"
+        ? candidateProfileMenu
+        : userRole === "employer"
+          ? employerProfileMenu
+          : profile_menu
 
    // *** Language Menu ***
    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)

@@ -59,6 +59,11 @@
       "relation": "oneToOne",
       "target": "plugin::metajob-backend.job-category"
     },
+    "skills": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::metajob-backend.skill"
+    },
     "salary": {
       "type": "relation",
       "relation": "oneToOne",

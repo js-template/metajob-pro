@@ -144,7 +144,7 @@ const LoginBody = ({ callbackUrl, error, block }: Props) => {
          loginHandler={loginHandler}
          googleLoginHandler={handleGoogleLogin}
          facebookLoginHandler={handleFacebookLogin}
-         linkedinLoginHandler={handleLinkedinLogin}
+         // linkedinLoginHandler={handleLinkedinLogin}
          loading={loading}
          block={block}
       />

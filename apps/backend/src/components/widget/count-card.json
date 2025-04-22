@@ -13,12 +13,13 @@
     "subTitle": {
       "type": "string"
     },
-    "enableStats": {
-      "type": "boolean"
+    "link": {
+      "type": "string"
     },
-    "isLink": {
-      "type": "boolean",
-      "default": false
+    "target": {
+      "type": "enumeration",
+      "enum": ["_self", "_blank", "_parent", "_top"],
+      "default": "_self"
     }
   }
 }

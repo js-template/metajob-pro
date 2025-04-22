@@ -110,7 +110,7 @@ const RegisterBody = ({ block }: Props) => {
          signUpHandler={handleSignUp}
          googleSignUpHandler={handleGoogleSignUp}
          facebookSignUpHandler={handleFacebookSignUp}
-         linkedinSignUpHandler={handleLinkedinSignUp}
+         // linkedinSignUpHandler={handleLinkedinSignUp}
       />
    )
 }

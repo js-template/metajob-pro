@@ -21,6 +21,7 @@ type MobileNavProps = {
 const MobileNav = ({ open, setOpen, lang, headerData, listLocalesData }: MobileNavProps) => {
    const { data: session } = useSession()
    const userRole = session?.user?.role?.type
+   const unAssignRoleType = userRole === "authenticated" || userRole === "public" || !userRole
    const { theme: mode, setTheme } = modeUseTheme()
    const toggleTheme = () => {
       setTheme(mode === "dark" ? "light" : "dark")
@@ -54,7 +55,14 @@ const MobileNav = ({ open, setOpen, lang, headerData, listLocalesData }: MobileN
    // filter sidebar-menu based on role
    const candidateMenu = side_menu?.filter((menu) => menu?.identifier !== "employer")
    const employerMenu = side_menu?.filter((menu) => menu?.identifier !== "candidate")
-   const sidebarMenu = userRole === "candidate" ? candidateMenu : userRole === "employer" ? employerMenu : side_menu
+   const logoutProfileMenu = side_menu?.filter((menu) => menu?.identifier === "logout")
+   const sidebarMenu = unAssignRoleType
+      ? logoutProfileMenu
+      : userRole === "candidate"
+        ? candidateMenu
+        : userRole === "employer"
+          ? employerMenu
+          : side_menu
 
    return (
       <Drawer

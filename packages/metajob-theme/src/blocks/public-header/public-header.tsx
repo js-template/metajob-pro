@@ -52,7 +52,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
    const { changeLang } = useChangeLang()
    const { changeDirection } = useChangeDirection()
 
-   const { main_menu, light_logo, dark_logo, style, show_menu, show_search } = block || {}
+   const { main_menu, light_logo, dark_logo, style, hide_menu, show_search } = block || {}
    const { backgroundColor, color, section_padding } = style || {}
 
    const logoData = mode === "light" ? light_logo : dark_logo || {}
@@ -155,7 +155,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                   )}
                </Box>
                {/* desktop main-menu  */}
-               {show_menu && <DesktopNav main_menu={main_menu} color={color} />}
+               {!hide_menu && <DesktopNav main_menu={main_menu} color={color} />}
 
                {show_search && <NavSearch language={language} />}
 

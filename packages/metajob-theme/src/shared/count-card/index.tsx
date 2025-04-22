@@ -5,10 +5,13 @@ import NextLink from "next/link"
 import { countCardProps } from "./type"
 
 export const CountCard = ({ item, count }: { item: countCardProps; count: number }) => {
-   const { title, subTitle, isLink, link, target } = item
+   const { title, subTitle, link, target } = item
 
    return (
       <Box
+         component={link ? NextLink : "div"}
+         {...(link && { href: link ?? "" })}
+         {...((link && { target: target ?? "_self" }) || {})}
          sx={{
             position: "relative",
             p: 3,
@@ -22,6 +25,15 @@ export const CountCard = ({ item, count }: { item: countCardProps; count: number
             gap: 4,
             height: "100%",
             transition: "all 0.3s ease",
+            cursor: link ? "pointer" : "default",
+            textDecoration: "none",
+            color: (theme) => theme.palette.text.primary,
+            "&:hover": {
+               backgroundColor: (theme) => theme.palette.background.paper,
+               borderColor: (theme) => theme.palette.primary.main,
+               boxShadow: (theme) => `0 15px 40px 0 ${theme.palette.primary.main + "10"}`
+            },
+
             ":hover": {
                borderColor: (theme) => theme.palette.primary.main,
                boxShadow: (theme) => `0 15px 40px 0 ${theme.palette.primary.main + "10"}`,
@@ -70,9 +82,8 @@ export const CountCard = ({ item, count }: { item: countCardProps; count: number
             </Typography>
          </Box>
 
-         {isLink && (
+         {/* {isLink && (
             <Box
-               // @ts-ignore
                component={NextLink}
                href={link ?? ""}
                target={target ?? "_self"}
@@ -98,7 +109,7 @@ export const CountCard = ({ item, count }: { item: countCardProps; count: number
                }}>
                <CIcon icon={"tabler:external-link"} />
             </Box>
-         )}
+         )} */}
       </Box>
    )
 }
