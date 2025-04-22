@@ -16,6 +16,11 @@ export async function middleware(req: NextRequest, res: NextResponse) {
    const isChooseRolePage = nextUrl.pathname.startsWith("/dashboard/choose-role")
    const isDashboardPage = nextUrl.pathname.startsWith("/dashboard")
 
+   // Not authenticated, redirect to login
+   if (isDashboardPage && !session) {
+      return NextResponse.redirect(new URL("/login", req.url))
+   }
+
    //    move to choose-role page if user is authenticated and has not on chosen a role
    if (isLoggedIn && (authenticatedType || !userRoleType) && !isChooseRolePage) {
       return Response.redirect(new URL(`${requestUrl}/dashboard/choose-role${queryString}`, nextUrl))
@@ -25,6 +30,9 @@ export async function middleware(req: NextRequest, res: NextResponse) {
    if (isChooseRolePage && !authenticatedType) {
       return Response.redirect(new URL(`${requestUrl}/dashboard`, nextUrl))
    }
+
+   // Authenticated, allow the request
+   return NextResponse.next()
 }
 
 export const config = { matcher: ["/dashboard/:path*"] }
