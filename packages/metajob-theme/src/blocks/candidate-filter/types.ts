@@ -105,14 +105,15 @@ export type ISingleCandidate = {
 }
 
 export type ICandidateFilterProps = {
-   search: string
-   skills: string
-   categories: string
-   rate: string
+   search?: string
+   skills: string[]
+   categories?: string
+   rate?: string
 }
 
 export type ISingleCategory = {
    id: number
    documentId: string
    title: string
+   value: string
 }
