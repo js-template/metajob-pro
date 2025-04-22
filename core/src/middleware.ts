@@ -7,7 +7,6 @@ export async function middleware(req: NextRequest, res: NextResponse) {
    const proto = await req.headers.get("x-forwarded-proto")
    const host = await req.headers.get("host")
    const requestUrl = await `${proto}://${host}`
-
    const session = await auth()
    const isLoggedIn = !!session?.user
    const userRoleType = session?.user?.role?.type
@@ -16,8 +15,8 @@ export async function middleware(req: NextRequest, res: NextResponse) {
    const isChooseRolePage = nextUrl.pathname.startsWith("/dashboard/choose-role")
    const isDashboardPage = nextUrl.pathname.startsWith("/dashboard")
 
-   // Not authenticated, redirect to login
-   if (isDashboardPage && !session) {
+   //**Not authenticated, redirect to login **/
+   if (!session && isDashboardPage) {
       return NextResponse.redirect(new URL("/login", req.url))
    }
 
