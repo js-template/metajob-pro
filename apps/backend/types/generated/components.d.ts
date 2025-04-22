@@ -672,6 +672,7 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
+    upload_resume_button: Schema.Attribute.Component<'config.link', false>;
   };
 }
 

@@ -1,4 +1,5 @@
 "use client"
+import NextLink from "next/link"
 import { useTheme } from "next-themes"
 import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material"
 import _ from "lodash"
@@ -25,7 +26,7 @@ export default function CandidateLists({
    secondary_color
 }: CandidateRightSectionProps) {
    const { theme: mode } = useTheme()
-   const { result_placeholder, card_button } = block || {}
+   const { result_placeholder, card_button, upload_resume_button } = block || {}
    return (
       <Stack spacing={2}>
          <Card
@@ -59,9 +60,17 @@ export default function CandidateLists({
                      </Typography>{" "}
                   </Typography>
                )}
-               {/* <Button sx={{ fontSize: 14, fontWeight: 400 }} variant='contained' color='primary'>
-                  Upload Your Resume
-               </Button> */}
+               {upload_resume_button && (
+                  <Button
+                     component={NextLink}
+                     href={upload_resume_button?.link || "/dashboard/manage-resume"}
+                     target={upload_resume_button?.target ?? "_self"}
+                     sx={{ fontSize: 14, fontWeight: 400 }}
+                     variant='contained'
+                     color='primary'>
+                     {upload_resume_button?.label || "Upload Your Resume"}
+                  </Button>
+               )}
             </Stack>
          </Card>
          <Stack>

@@ -30,6 +30,11 @@ export type ICandidateFilterBlock = {
       section_padding?: number
       sidebar?: "Left Sidebar" | "Right Sidebar" | "No Sidebar"
    }
+   upload_resume_button?: {
+      label?: string
+      link?: string
+      target?: string
+   }
 }
 
 export type ISingleCandidate = {
