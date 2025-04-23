@@ -45,12 +45,21 @@ export const ManageResume = async ({ block, language }: Props) => {
       },
       "no-store"
    )
-
+   // fetch job-skills data
+   const { data: skillsDataAll } = await find(
+      "api/metajob-backend/skills",
+      {
+         fields: ["title"],
+         locale: language ?? "en"
+      },
+      "no-store"
+   )
    const resumeAttributes = {
       categoryData: jobCategoryAll?.data,
       experienceData: experienceDataAll?.data,
       avgSalaryData: avgSalaryDataAll?.data,
-      salaryTypesData: salaryTypesDataAll?.data
+      salaryTypesData: salaryTypesDataAll?.data,
+      skillsData: skillsDataAll?.data
    }
 
    return <ManageResumeClient block={block} language={language} resumeAttributes={resumeAttributes} />
