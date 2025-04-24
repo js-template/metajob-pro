@@ -39,7 +39,8 @@ const CandidateCardItem = ({
                borderColor: (theme) => theme.palette.primary.main,
                transition: "all 0.3s ease-in-out"
             },
-            bgcolor: (theme) => theme.palette.background.paper
+            bgcolor: (theme) => theme.palette.background.paper,
+            height: "390px"
          }}
          spacing={2}>
          <Stack

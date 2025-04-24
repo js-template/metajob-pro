@@ -22,7 +22,6 @@ export const JobCategoryOverlayCard = ({ block, categoryOverlayData }: Props) =>
    const { desktop, tab, mobile, backgroundColor } = style || {}
    const { label, link } = button || {}
    const { variation } = content || {}
-   
 
    return (
       <Stack
@@ -82,7 +81,8 @@ export const JobCategoryOverlayCard = ({ block, categoryOverlayData }: Props) =>
                            color: "white",
                            "&:hover": {
                               bgcolor: "primary.main"
-                           }
+                           },
+                           borderRadius: "4px"
                         }}>
                         {label || "Browse All Category"}
                      </Button>

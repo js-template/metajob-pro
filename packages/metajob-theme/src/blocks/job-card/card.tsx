@@ -98,7 +98,8 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
                         color: "white",
                         "&:hover": {
                            bgcolor: "primary.main"
-                        }
+                        },
+                        borderRadius: "4px"
                      }}>
                      {label || "View All Jobs"}
                   </Button>

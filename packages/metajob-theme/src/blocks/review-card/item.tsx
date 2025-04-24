@@ -26,12 +26,13 @@ const CardItem = ({
       <Stack
          sx={{
             bgcolor: "background.paper",
-            p: 2,
+            padding: "30px 40px",
             borderRadius: 1.5,
-            mx: 1.5
+            mx: 1.5,
+            height: "270px"
          }}>
          <Stack gap={2}>
-            <Stack direction={"row"} spacing={2} alignItems={"center"}>
+            <Stack direction={"row"} spacing={"20px"} alignItems={"center"}>
                {url && (
                   <Image
                      height={64}
@@ -97,6 +98,10 @@ const CardItem = ({
                   {review && (
                      <Typography
                         sx={{
+                           display: "-webkit-box",
+                           overflow: "hidden",
+                           WebkitBoxOrient: "vertical",
+                           WebkitLineClamp: 5,
                            color:
                               mode === "light"
                                  ? secondary_color || theme.palette.text.disabled
