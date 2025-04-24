@@ -66,7 +66,6 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
    const { ref: materialRef } = usePlacesWidget({
       apiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACE_API_KEY,
       onPlaceSelected: (place) => {
-         console.log(place?.formatted_address)
          setSearchLocation(place?.formatted_address as string)
       }
    })
