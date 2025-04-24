@@ -22,13 +22,15 @@ const CandidateCardItem = ({
    const { location } = contact || {}
    const image = user?.avatar?.url || ""
 
+   const skills = { data: ["HTML", "CSS", "Javascript", "Marketing"] }
+
    return (
       <Stack
          sx={{
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: (theme) => theme.palette.background.paper,
-            p: 4,
+            padding: "35px 30px 30px 30px",
             borderRadius: 2,
             "&:hover": {
                borderColor: (theme) => theme.palette.primary.main,
@@ -39,10 +41,13 @@ const CandidateCardItem = ({
                borderColor: (theme) => theme.palette.primary.main,
                transition: "all 0.3s ease-in-out"
             },
+            "&:hover .candidate-button": {
+               color: (theme) => theme.palette.primary.contrastText,
+               bgcolor: (theme) => theme.palette.primary.main
+            },
             bgcolor: (theme) => theme.palette.background.paper,
             height: "390px"
-         }}
-         spacing={2}>
+         }}>
          <Stack
             sx={{
                justifyContent: "center",
@@ -57,7 +62,8 @@ const CandidateCardItem = ({
                   borderStyle: "solid",
                   borderRadius: "50%",
                   p: 1,
-                  fontWeight: 700
+                  fontWeight: 700,
+                  mb: "15px"
                }}>
                <Avatar
                   src={image}
@@ -70,7 +76,7 @@ const CandidateCardItem = ({
                </Avatar>
             </Box>
          </Stack>
-         <Stack spacing={1}>
+         <Stack spacing={1} sx={{ mb: "20px" }}>
             {/* name - tagline  */}
             <Stack spacing={0.5}>
                <Typography
@@ -126,42 +132,61 @@ const CandidateCardItem = ({
                </Stack>
             )}
          </Stack>
-         {/* {skills && (
-            <Stack direction={"row"} gap={1} flexWrap={"wrap"} justifyContent={"center"}>
-               {_.map(skills?.data, (item, index) => (
-                  <Typography
-                     key={index}
-                     sx={{
-                        bgcolor: (theme) => theme.palette.background.paper,
-                        borderColor: (theme) => theme.palette.divider,
-                        borderWidth: 1,
-                        borderStyle: "solid",
-                        borderRadius: 1,
-                        py: 0.5,
-                        px: 2
-                     }}
-                     variant={"body1"}
-                     fontWeight={400}
-                     fontSize={14}
-                     color={(theme) => theme.palette.text.disabled}>
-                     {item?.attributes?.title}
-                  </Typography>
-               ))}
-            </Stack>
-         )} */}
-         <Button
-            component={NextLink}
-            href={`/resume/${slug}`}
-            sx={{
-               bgcolor: (theme) => theme.palette.background.default,
-               color: (theme) => (mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled),
-               "&:hover": {
-                  color: (theme) => theme.palette.primary.contrastText,
-                  bgcolor: (theme) => theme.palette.primary.main
-               }
-            }}>
-            {button_label || "View Candidate"}
-         </Button>
+         <Stack direction={"column"} justifyContent={"space-between"} height={"100%"}>
+            {skills && skills?.data.length ? (
+               <Stack sx={{ mb: "20px" }} direction={"row"} gap={1} flexWrap={"wrap"} justifyContent={"center"}>
+                  {_.map(skills?.data, (item, index) => (
+                     <Typography
+                        key={index}
+                        sx={{
+                           bgcolor: (theme) => theme.palette.background.paper,
+                           borderColor: (theme) => theme.palette.divider,
+                           borderWidth: 1,
+                           borderStyle: "solid",
+                           borderRadius: 1,
+                           py: 0.5,
+                           px: 2
+                        }}
+                        variant={"body1"}
+                        fontWeight={400}
+                        fontSize={14}
+                        color={(theme) => theme.palette.text.disabled}>
+                        {/* {item?.attributes?.title} */}
+                        {item}
+                     </Typography>
+                  ))}
+               </Stack>
+            ) : (
+               <Typography
+                  sx={{
+                     bgcolor: (theme) => theme.palette.background.paper,
+                     // borderColor: (theme) => theme.palette.divider,
+                     borderWidth: 0,
+                     borderStyle: "solid",
+                     borderRadius: 1,
+                     py: 1,
+                     px: 2,
+                     mb: "20px",
+                     textAlign: "center"
+                  }}
+                  variant={"body1"}
+                  fontWeight={400}
+                  fontSize={14}
+                  color={(theme) => theme.palette.text.disabled}>
+                  Skills not Available
+               </Typography>
+            )}
+            <Button
+               className='candidate-button'
+               component={NextLink}
+               href={`/resume/${slug}`}
+               sx={{
+                  bgcolor: (theme) => theme.palette.background.default,
+                  color: (theme) => (mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled)
+               }}>
+               {button_label || "View Candidate"}
+            </Button>
+         </Stack>
       </Stack>
    )
 }
