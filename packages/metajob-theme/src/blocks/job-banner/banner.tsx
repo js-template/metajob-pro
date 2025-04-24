@@ -331,15 +331,15 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      sx={{
                         display: "grid",
                         gridTemplateColumns: {
-                           lg: "repeat(3, 1fr)",
+                           sm: "repeat(3, 1fr)",
                            xs: "1fr"
                         },
-                        gap: 5
+                        gap: { xs: 2, sm: 3, md: 4, lg: 5 }
                      }}>
                      <Card
                         sx={{
                            borderRadius: "8px",
-                           p: 5,
+                           p: { xs: 5, sm: 3, md: 4, lg: 5 },
                            bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
@@ -377,7 +377,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      <Card
                         sx={{
                            borderRadius: "8px",
-                           p: 5,
+                           p: { xs: 5, sm: 3, md: 4, lg: 5 },
                            bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
@@ -416,7 +416,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      <Card
                         sx={{
                            borderRadius: "8px",
-                           p: 5,
+                           p: { xs: 5, sm: 3, md: 4, lg: 5 },
                            bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
