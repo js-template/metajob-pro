@@ -20,6 +20,11 @@
       "repeatable": false,
       "component": "config.link"
     },
+    "upload_resume_button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
     "search": {
       "type": "component",
       "repeatable": false,

@@ -151,7 +151,7 @@ export const PrivateHeaderComponent = ({
             />
          )}
          {/* Desktop side nav */}
-         {!isTablet && (
+         {!isTablet && !unAssignRoleType && (
             <Drawer anchor={theme.direction === "rtl" ? "right" : "left"} variant='permanent' open={open}>
                <List sx={{ py: 2, px: 1.5 }}>{NavItems(sidebarMenu || [], open, theme.direction as any, signOut)}</List>
             </Drawer>
