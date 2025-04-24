@@ -11,9 +11,10 @@ type Props = {
    block: ICandidateFilterBlock
    language?: string
    categoryData?: ISingleCategory[]
+   skillsData?: ISingleCategory[]
 }
 
-const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
+const CandidateFilterClient = ({ block, language, categoryData, skillsData }: Props) => {
    const { theme: mode } = useTheme()
 
    const { search, empty, style } = block || {}
@@ -36,7 +37,7 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
    const [page, setPage] = useState<number>(1)
    const [formData, setFilterFormData] = useState<ICandidateFilterProps>({
       search: "",
-      skills: "",
+      skills: [],
       categories: "",
       rate: ""
    })
@@ -58,13 +59,15 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
                      $containsi: formData?.search || undefined // Apply filter dynamically
                   },
                   category: {
-                     id: {
+                     title: {
                         $eq: formData?.categories || undefined
                      }
+                  },
+                  skills: {
+                     value: {
+                        $in: formData?.skills || [] // Apply filter dynamically
+                     }
                   }
-                  //   skills: {
-                  //     $containsi: formData.skills || undefined, // Apply filter dynamically
-                  //   },
                   //   company_size: {
                   //     $containsi: formData.categories || undefined, // Apply filter dynamically
                   //   },
@@ -144,6 +147,7 @@ const CandidateFilterClient = ({ block, language, categoryData }: Props) => {
                         // handleSubmitForm={handleSubmitForm}
                         loading={isLoading}
                         categoryData={categoryData}
+                        skillsData={skillsData}
                         color={color}
                         secondary_color={secondary_color}
                      />

@@ -1,6 +1,7 @@
 "use client"
+import NextLink from "next/link"
 import { useTheme } from "next-themes"
-import { Grid, Skeleton, Stack, Typography } from "@mui/material"
+import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material"
 import { Card } from "../../components/common/card"
 import CompanyCardItem from "./item"
 import CompanyCardLoader from "./loader"
@@ -17,7 +18,7 @@ type Props = {
 const CompanyList = ({ companies, loading, error, block, color, secondary_color }: Props) => {
    const { theme: mode } = useTheme()
 
-   const { empty, result_placeholder, card_button } = block || {}
+   const { empty, result_placeholder, card_button, add_company_button } = block || {}
    const { title: emptyTitle, description: emptyDescription } = empty || {}
    return (
       <Stack spacing={2}>
@@ -52,10 +53,17 @@ const CompanyList = ({ companies, loading, error, block, color, secondary_color 
                      </Typography>
                   </Typography>
                )}
-
-               {/* <Button sx={{ fontSize: 14, fontWeight: 400 }} variant='contained' color='primary'>
-                  Add Your Company
-               </Button> */}
+               {add_company_button && (
+                  <Button
+                     component={NextLink}
+                     href={add_company_button?.link || "/dashboard/manage-jobs"}
+                     target={add_company_button?.target ?? "_self"}
+                     sx={{ fontSize: 14, fontWeight: 400 }}
+                     variant='contained'
+                     color='primary'>
+                     {add_company_button?.label || "Add Your Company"}
+                  </Button>
+               )}
             </Stack>
          </Card>
          <Stack>

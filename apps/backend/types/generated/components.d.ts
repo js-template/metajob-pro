@@ -672,6 +672,7 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     title: Schema.Attribute.String;
+    upload_resume_button: Schema.Attribute.Component<'config.link', false>;
   };
 }
 
@@ -700,6 +701,7 @@ export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
+    add_company_button: Schema.Attribute.Component<'config.link', false>;
     card_button: Schema.Attribute.Component<'config.link', false>;
     description: Schema.Attribute.Text;
     empty: Schema.Attribute.Component<'shared.empty', false>;

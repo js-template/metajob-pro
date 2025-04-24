@@ -23,6 +23,11 @@
       "repeatable": false,
       "component": "config.link"
     },
+    "add_company_button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.link"
+    },
     "search": {
       "type": "component",
       "repeatable": false,
