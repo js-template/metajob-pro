@@ -1,37 +1,110 @@
 "use client"
-
-import { startTransition } from "react"
+import { startTransition, useEffect, useState } from "react"
+import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
-import { Button, Container, Stack, Typography } from "@mui/material"
+import { getCookie } from "cookies-next"
+import { Button, Container, Skeleton, Stack, Typography } from "@mui/material"
+import { find } from "@/lib/strapi"
+import { IErrorBlock } from "@/types/error"
 
 const Error = ({ error, reset }: { error: Error; reset: () => void }) => {
+   const { theme: mode } = useTheme()
+   const language = getCookie("lang")
    const router = useRouter()
-   const reload = () => {
+
+   const [isLoading, setIsLoading] = useState(false)
+   const [errorData, setErrorData] = useState<IErrorBlock | null>(null)
+
+   //  fetch public error-data from db
+   useEffect(() => {
+      const getErrorData = async () => {
+         setIsLoading(true)
+         const { data: errorDataAll, error: errorDataError } = await find(
+            "api/metajob-backend/error-setting",
+            {
+               populate: {
+                  public: { populate: "*" }
+               },
+               locale: language ?? "en"
+            },
+            "no-store"
+         )
+         if (!errorDataError) {
+            setErrorData(errorDataAll?.data?.public?.[0])
+            setIsLoading(false)
+         } else {
+            setErrorData(null)
+            setIsLoading(false)
+         }
+      }
+
+      getErrorData()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [])
+
+   const { content, style, button_placeholder } = errorData || {}
+   const { title, sub_title } = content || {}
+   const { header_color, sub_header_color, backgroundColor, section_padding } = style || {}
+
+   //handle load function
+   const reloadHandler = () => {
       startTransition(() => {
          router.refresh()
          reset()
       })
    }
+
    return (
       <Stack
          sx={{
-            bgcolor: (theme) => theme.palette.background.default,
+            bgcolor: (theme) =>
+               mode === "light"
+                  ? backgroundColor || theme.palette.background.default
+                  : theme.palette.background.default,
             minHeight: "85vh"
          }}>
          <Container maxWidth='lg'>
-            <Stack py={10} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
-               <Typography
-                  variant='h3'
-                  component='h3'
-                  sx={{
-                     fontWeight: 700,
-                     mb: 2
-                  }}>
-                  Something Went Wrong in Public Page
-               </Typography>
-               <Button onClick={reload} variant='contained' color='primary'>
-                  Try again
-               </Button>
+            <Stack py={section_padding || 12} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+               <Stack spacing={2} sx={{ justifyContent: "center", alignItems: "center", textAlign: "center" }}>
+                  {/* title  */}
+                  {isLoading ? (
+                     <Skeleton variant='rounded' width={350} height={35} />
+                  ) : (
+                     <Typography
+                        variant='h3'
+                        component='h3'
+                        sx={{
+                           fontWeight: 700,
+                           color: (theme) => (mode === "light" ? header_color : theme.palette.text.primary)
+                        }}>
+                        {title || "Something Went Wrong in Public Page"}
+                     </Typography>
+                  )}
+
+                  {/* sub-title  */}
+                  {isLoading ? (
+                     <Skeleton variant='rounded' width={350} height={35} />
+                  ) : sub_title ? (
+                     <Typography
+                        variant='body1'
+                        component='h5'
+                        sx={{
+                           color: (theme) => (mode === "light" ? sub_header_color : theme.palette.text.primary)
+                        }}>
+                        {sub_title || "Please try again later"}
+                     </Typography>
+                  ) : (
+                     <></>
+                  )}
+               </Stack>
+               {/* button  */}
+               {isLoading ? (
+                  <Skeleton variant='rounded' width={122} height={42} />
+               ) : (
+                  <Button onClick={reloadHandler} variant='contained' color='primary'>
+                     {button_placeholder || "Try again"}
+                  </Button>
+               )}
             </Stack>
          </Container>
       </Stack>
