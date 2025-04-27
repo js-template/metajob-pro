@@ -75,25 +75,28 @@ export default async function DynamicPages({
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-   // const cookieStore = await cookies()
-   // const language = cookieStore.get("lang")
-
-   const { data, error } = await find(
-      "api/padma-backend/public-pages",
-      {
-         fields: ["slug"],
-         filters: {
-            slug: {
-               $ne: null
+   try {
+      // const cookieStore = await cookies()
+      // const language = cookieStore.get("lang")
+      const { data } = await find(
+         "api/padma-backend/public-pages",
+         {
+            fields: ["slug"],
+            filters: {
+               slug: {
+                  $ne: null
+               }
             }
-         }
-      },
-      "no-store"
-   )
+         },
+         "no-store"
+      )
 
-   return data?.data?.map((post: any) => ({
-      slug: post?.slug || ""
-   }))
+      return data?.data?.map((post: any) => ({
+         slug: post?.slug || ""
+      }))
+   } catch (error) {
+      return []
+   }
 }
 
 // *** generate metadata type
