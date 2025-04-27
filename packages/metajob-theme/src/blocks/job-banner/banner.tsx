@@ -4,6 +4,7 @@ import NextLink from "next/link"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import _ from "lodash"
+import { usePlacesWidget } from "react-google-autocomplete"
 import {
    Box,
    Button,
@@ -27,6 +28,7 @@ type Props = {
    categoryData?: ICategory[]
    countData?: ICountData
 }
+
 export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
    const { theme: mode } = useTheme()
 
@@ -60,6 +62,13 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
    const [searchText, setSearchText] = useState("")
    const [searchLocation, setSearchLocation] = React.useState("")
    const [searchCategory, setSearchCategory] = React.useState("")
+
+   const { ref: materialRef } = usePlacesWidget({
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACE_API_KEY,
+      onPlaceSelected: (place) => {
+         setSearchLocation(place?.formatted_address as string)
+      }
+   })
 
    const handleSearch = () => {
       // route with search query : endpoint is find-jobs
@@ -217,8 +226,10 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         />
                         <Divider orientation='vertical' flexItem />
                         <Divider orientation='horizontal' flexItem />
+                        {/* location  */}
                         <TextField
                            placeholder={location_placeholder}
+                           inputRef={materialRef}
                            InputProps={{
                               startAdornment: (
                                  <Box sx={{ pr: 1 }} component={"span"}>
@@ -234,8 +245,6 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  </Box>
                               )
                            }}
-                           value={searchLocation}
-                           onChange={(e) => setSearchLocation(e.target.value)}
                            sx={{
                               "& .MuiOutlinedInput-root": {
                                  border: "none"
@@ -243,6 +252,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            }}
                            fullWidth
                         />
+
                         <Divider orientation='vertical' flexItem />
                         <Divider orientation='horizontal' flexItem />
                         {/* category options  */}
@@ -324,12 +334,12 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            sm: "repeat(3, 1fr)",
                            xs: "1fr"
                         },
-                        gap: 5
+                        gap: { xs: 2, sm: 3, md: 4, lg: 5 }
                      }}>
                      <Card
                         sx={{
                            borderRadius: "8px",
-                           p: 5,
+                           p: { xs: 5, sm: 3, md: 4, lg: 5 },
                            bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
@@ -367,7 +377,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      <Card
                         sx={{
                            borderRadius: "8px",
-                           p: 5,
+                           p: { xs: 5, sm: 3, md: 4, lg: 5 },
                            bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
@@ -406,7 +416,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                      <Card
                         sx={{
                            borderRadius: "8px",
-                           p: 5,
+                           p: { xs: 5, sm: 3, md: 4, lg: 5 },
                            bgcolor: (theme) => theme.palette.background.default
                         }}>
                         <Stack alignItems={"center"} gap={2}>
