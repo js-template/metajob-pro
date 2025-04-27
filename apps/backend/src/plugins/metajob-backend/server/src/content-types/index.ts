@@ -21,6 +21,7 @@ import JobType from "./job-type/schema.json";
 import SalaryType from "./salary-type/schema.json";
 import ExperienceLevel from "./experience-level/schema.json";
 import AuthSetting from "./auth-setting/schema.json";
+import ErrorSetting from "./error-setting/schema.json";
 
 export default {
   "job-setting": {
@@ -91,5 +92,8 @@ export default {
   },
   "auth-setting": {
     schema: AuthSetting,
+  },
+  "error-setting": {
+    schema: ErrorSetting,
   },
 };
