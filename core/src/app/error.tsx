@@ -6,14 +6,15 @@ import ErrorSection from "@/components/errors/error-section"
 const Error = ({ error, reset }: { error: Error; reset: () => void }) => {
    const router = useRouter()
 
-   //handle reload function
+   //handle load function
    const reloadHandler = () => {
       startTransition(() => {
          router.refresh()
          reset()
       })
    }
-   return <ErrorSection reloadHandler={reloadHandler} sectionType='private' />
+
+   return <ErrorSection reloadHandler={reloadHandler} sectionType='root' />
 }
 
 export default Error
