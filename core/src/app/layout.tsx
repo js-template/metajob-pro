@@ -15,6 +15,7 @@ import { cookies } from "next/headers"
 import { find } from "@/lib/strapi"
 import { StyledEngineProvider } from "@mui/material/styles"
 import { getLanguageFromCookie } from "@/utils/language"
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
    const session = await auth()
@@ -38,6 +39,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
    return (
       <html lang={language} dir={direction} suppressHydrationWarning={true}>
          <body dir={direction}>
+            <GoogleAnalytics gaId='G-G5RJ9XN6JQ' />
+
             <StyledEngineProvider injectFirst>
                <GlobalProvider layout={data?.data || null}>
                   <NextAuthSessionProvider session={session}>
