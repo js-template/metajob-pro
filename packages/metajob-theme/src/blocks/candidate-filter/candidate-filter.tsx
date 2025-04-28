@@ -162,6 +162,7 @@ const CandidateFilterClient = ({ block, language, categoryData, skillsData }: Pr
                         block={block}
                         color={color}
                         secondary_color={secondary_color}
+                        skillsData={skillsData}
                      />
                      {/* pagination */}
                      {!resumeError && !isLoading && totalPage > 0 && (

@@ -43,13 +43,16 @@ export const LatestNotifications = async ({
                border: "1px solid",
                borderColor: "divider",
                borderRadius: "12px",
-               p: 0
+               py: 2,
+               px: 3
+               // p: 0
             }}>
             {title && (
                <Box
                   sx={{
                      py: 2,
                      px: 3,
+                     mb: 2,
                      borderBottom: "1px solid",
                      borderColor: "divider"
                   }}>

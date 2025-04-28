@@ -6,6 +6,7 @@ import { Box, Container, Grid, Stack, Typography, Button, useTheme as muiTheme }
 import { ICategoryCardBlock, ISingleCategory } from "./types"
 import { SectionTitle } from "../../components/section-title"
 import { CategoryCardItem } from "../../components/cards/category-cards/category-card"
+import { hexToRGBA } from "../../lib/hex-to-rgba"
 
 type Props = {
    block: ICategoryCardBlock
@@ -90,11 +91,15 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
                         component={NextLink}
                         href={link || "/all-categories"}
                         sx={{
-                           bgcolor: "secondary.dark",
+                           bgcolor: (theme) =>
+                              mode === "dark"
+                                 ? theme.palette.background.paper
+                                 : hexToRGBA(theme.palette.secondary.main, 0.7),
                            color: "white",
                            "&:hover": {
                               bgcolor: "primary.main"
-                           }
+                           },
+                           borderRadius: "4px"
                         }}>
                         {label || "Browse All Category"}
                      </Button>

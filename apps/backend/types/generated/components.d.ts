@@ -724,6 +724,20 @@ export interface MetajobBlockContact extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockErrorSection extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_error_sections';
+  info: {
+    description: 'Error section block';
+    displayName: 'Error Section';
+    icon: 'collapse';
+  };
+  attributes: {
+    button_placeholder: Schema.Attribute.String;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    style: Schema.Attribute.Component<'metajob-config.error-style', false>;
+  };
+}
+
 export interface MetajobBlockExperience extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_experiences';
   info: {
@@ -770,6 +784,7 @@ export interface MetajobBlockJobCard extends Struct.ComponentSchema {
     button: Schema.Attribute.Component<'config.link', false>;
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
+    currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'USD'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     item_count: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
@@ -781,6 +796,8 @@ export interface MetajobBlockJobCard extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<6>;
     style: Schema.Attribute.Component<'config.style-section', false>;
+    vacancy_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Vacancy'>;
   };
 }
 
@@ -807,6 +824,33 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<12>;
     show_description: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<true>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface MetajobBlockJobCategoryOverlay extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_categories_overlay';
+  info: {
+    displayName: 'Job Category Overlay';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'config.link', false>;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    item_count: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 24;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<12>;
+    overlay: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    show_description: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    show_icon: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
@@ -963,6 +1007,28 @@ export interface MetajobBlockPublicPackage extends Struct.ComponentSchema {
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface MetajobConfigErrorStyle extends Struct.ComponentSchema {
+  collectionName: 'components_component_error_style';
+  info: {
+    description: '';
+    displayName: 'Error Style';
+    icon: 'arrowUp';
+  };
+  attributes: {
+    backgroundColor: Schema.Attribute.String;
+    header_color: Schema.Attribute.String;
+    section_padding: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 0;
+        },
+        number
+      >;
+    sub_header_color: Schema.Attribute.String;
   };
 }
 
@@ -1540,10 +1606,12 @@ declare module '@strapi/strapi' {
       'metajob-block.category-filter': MetajobBlockCategoryFilter;
       'metajob-block.company-filter': MetajobBlockCompanyFilter;
       'metajob-block.contact': MetajobBlockContact;
+      'metajob-block.error-section': MetajobBlockErrorSection;
       'metajob-block.experience': MetajobBlockExperience;
       'metajob-block.job-banner': MetajobBlockJobBanner;
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
+      'metajob-block.job-category-overlay': MetajobBlockJobCategoryOverlay;
       'metajob-block.job-filter': MetajobBlockJobFilter;
       'metajob-block.manage-company': MetajobBlockManageCompany;
       'metajob-block.manage-job': MetajobBlockManageJob;
@@ -1553,6 +1621,7 @@ declare module '@strapi/strapi' {
       'metajob-block.portfolio': MetajobBlockPortfolio;
       'metajob-block.pricing': MetajobBlockPricing;
       'metajob-block.public-package': MetajobBlockPublicPackage;
+      'metajob-config.error-style': MetajobConfigErrorStyle;
       'metajob-config.message': MetajobConfigMessage;
       'metajob-config.meta-data': MetajobConfigMetaData;
       'metajob-config.relations': MetajobConfigRelations;

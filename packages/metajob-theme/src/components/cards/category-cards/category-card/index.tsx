@@ -37,8 +37,10 @@ export const CategoryCardItem = ({
          sx={{
             p: 4,
             display: "block",
+            height: "180px",
             textDecoration: "none",
             cursor: "pointer",
+            boxShadow: " 0 4px 20px rgba(0, 0, 0, 0.05)",
             "&:hover .iconBox": {
                transform: "scale(1.2)"
             },
@@ -79,17 +81,22 @@ export const CategoryCardItem = ({
                      bgcolor: (theme) => hexToRGBA(theme.palette.primary.main, 0.1),
                      borderRadius: "12px",
                      width: "fit-content",
-                     px: 2,
-                     py: 1.5,
+                     padding: "15px 15px 7px 15px",
                      transition: "transform 0.3s ease-in-out"
                   }}>
-                  <Image src={logo || "https://placehold.co/60/png"} alt={title} width={40} height={40} />
+                  <Image
+                     src={logo || "https://placehold.co/60/png"}
+                     alt={title}
+                     width={30}
+                     height={30}
+                     style={{ marginBottom: 0, paddingBottom: 0 }}
+                  />
                </Box>
             </Stack>
          )}
 
          {/*title */}
-         <Stack spacing={1}>
+         <Stack>
             <Typography
                className='category-card-title'
                sx={{
@@ -143,12 +150,12 @@ export const CategoryCardItem = ({
                </Box>
             )}
             {/* <Typography
-                   color={(theme) => theme.palette.text.secondary}
-                   fontWeight={400}
-                   fontSize={14}
-                   textAlign={"center"}>
-                   99 Jobs
-                </Typography> */}
+               color={(theme) => theme.palette.text.secondary}
+               fontWeight={400}
+               fontSize={14}
+               textAlign={"center"}>
+               99 Jobs
+            </Typography> */}
          </Stack>
       </Card>
    )

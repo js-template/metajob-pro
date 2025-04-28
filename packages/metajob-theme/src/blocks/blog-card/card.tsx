@@ -70,8 +70,7 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
                            display: "flex",
                            flexDirection: "column",
                            alignItems: "center",
-                           gap: 0.5,
-                           py: 4
+                           gap: 0.5
                         }}>
                         <Typography variant='body1' sx={{ color: theme.palette.text.secondary }}>
                            {empty?.title || "No data found"}
@@ -83,26 +82,26 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
                   )}
                </Grid>
 
-               <Box>
-                  {button && (
-                     <Button
-                        sx={{
-                           bgcolor: (theme) =>
-                              mode === "dark"
-                                 ? theme.palette.background.paper
-                                 : hexToRGBA(theme.palette.secondary.main, 0.7),
-                           color: "white",
-                           "&:hover": {
-                              bgcolor: "primary.main"
-                           }
-                        }}
-                        // @ts-ignore
-                        LinkComponent={Link}
-                        href={link || "/career-advice"}>
-                        {label || "See All Blogs"}
-                     </Button>
-                  )}
-               </Box>
+               {button && (
+                  <Button
+                     sx={{
+                        bgcolor: (theme) =>
+                           mode === "dark"
+                              ? theme.palette.background.paper
+                              : hexToRGBA(theme.palette.secondary.main, 0.7),
+                        color: "white",
+                        "&:hover": {
+                           bgcolor: "primary.main"
+                        },
+                        borderRadius: "4px",
+                        marginTop: "0 !important"
+                     }}
+                     // @ts-ignore
+                     LinkComponent={Link}
+                     href={link || "/career-advice"}>
+                     {label || "See All Blogs"}
+                  </Button>
+               )}
             </Stack>
          </Container>
       </Stack>

@@ -22,15 +22,19 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: (theme) => theme.palette.background.paper,
-            p: 4,
+            padding: "40px 30px 30px 30px",
             borderRadius: 2,
             "&:hover": {
                borderColor: (theme) => theme.palette.primary.main,
                transition: "all 0.3s ease-in-out"
             },
-            bgcolor: (theme) => theme.palette.background.paper
-         }}
-         spacing={2}>
+            "&:hover .company-button": {
+               color: (theme) => theme.palette.primary.contrastText,
+               bgcolor: (theme) => theme.palette.primary.main
+            },
+            bgcolor: (theme) => theme.palette.background.paper,
+            height: "430px"
+         }}>
          {/* logo  */}
          <Stack
             sx={{
@@ -44,13 +48,15 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                   width: 100,
                   height: 100,
                   fontWeight: 700,
-                  fontSize: "30px"
+                  fontSize: "30px",
+                  borderRadius: "12px",
+                  mb: 3
                }}>
                {name?.charAt(0) || ""}
             </Avatar>
          </Stack>
          {/* name, tags  */}
-         <Box>
+         <Box sx={{ pb: "30px" }}>
             {name && (
                <Typography
                   fontSize={16}
@@ -77,7 +83,7 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
             )}
          </Box>
          {/* details  */}
-         <Stack spacing={2}>
+         <Stack sx={{ mb: 3 }} spacing={"12px"}>
             {company_size && (
                <Stack direction={"row"} gap={2} alignItems={"center"}>
                   <Icon
@@ -130,7 +136,10 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                   )}
                </Stack>
             )}
-            {/* {location && (
+
+            {/* location */}
+
+            {/* {location ? (
                <Stack direction={"row"} gap={2} alignItems={"center"}>
                   <Icon
                      fontSize='small'
@@ -143,20 +152,31 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                      {location?.address}
                   </Typography>
                </Stack>
+            ) : (
+               <Stack direction={"row"} gap={2} alignItems={"center"}>
+                  <Icon
+                     fontSize='small'
+                     className='icon-map-pin'
+                     sx={{
+                        color: (theme) => theme.palette.text.disabled
+                     }}
+                  />
+                  <Typography fontSize={14} fontWeight={400} color={(theme) => theme.palette.text.disabled}>
+                     Location not Available
+                  </Typography>
+               </Stack>
             )} */}
          </Stack>
          {/* button  */}
          <Button
+            className='company-button'
             fullWidth
             component={NextLink}
             href={`/company/${slug}`}
             sx={{
                bgcolor: (theme) => theme.palette.background.default,
                color: (theme) => (mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled),
-               "&:hover": {
-                  color: (theme) => theme.palette.primary.contrastText,
-                  bgcolor: (theme) => theme.palette.primary.main
-               }
+               mt: 2
             }}>
             {button_label || "See Details"}
          </Button>

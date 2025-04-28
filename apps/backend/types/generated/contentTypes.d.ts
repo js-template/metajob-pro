@@ -903,6 +903,63 @@ export interface PluginMetajobBackendEmailHistory
   };
 }
 
+export interface PluginMetajobBackendErrorSetting
+  extends Struct.SingleTypeSchema {
+  collectionName: 'error_setting';
+  info: {
+    description: '';
+    displayName: 'Error Setting';
+    pluralName: 'error-settings';
+    singularName: 'error-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    global: Schema.Attribute.DynamicZone<['metajob-block.error-section']> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::metajob-backend.error-setting'
+    >;
+    private: Schema.Attribute.DynamicZone<['metajob-block.error-section']> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    public: Schema.Attribute.DynamicZone<['metajob-block.error-section']> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    root: Schema.Attribute.DynamicZone<['metajob-block.error-section']> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginMetajobBackendExperienceLevel
   extends Struct.CollectionTypeSchema {
   collectionName: 'experience_level';
@@ -2138,6 +2195,7 @@ export interface PluginPadmaBackendPublicFrontpage
         'metajob-block.job-banner',
         'metajob-block.job-category',
         'metajob-block.job-card',
+        'metajob-block.job-category-overlay',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -2634,6 +2692,7 @@ declare module '@strapi/strapi' {
       'plugin::metajob-backend.company-setting': PluginMetajobBackendCompanySetting;
       'plugin::metajob-backend.company-size': PluginMetajobBackendCompanySize;
       'plugin::metajob-backend.email-history': PluginMetajobBackendEmailHistory;
+      'plugin::metajob-backend.error-setting': PluginMetajobBackendErrorSetting;
       'plugin::metajob-backend.experience-level': PluginMetajobBackendExperienceLevel;
       'plugin::metajob-backend.job': PluginMetajobBackendJob;
       'plugin::metajob-backend.job-category': PluginMetajobBackendJobCategory;
