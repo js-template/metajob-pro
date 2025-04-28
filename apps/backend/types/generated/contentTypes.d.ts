@@ -2195,6 +2195,7 @@ export interface PluginPadmaBackendPublicFrontpage
         'metajob-block.job-banner',
         'metajob-block.job-category',
         'metajob-block.job-card',
+        'metajob-block.job-category-overlay',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

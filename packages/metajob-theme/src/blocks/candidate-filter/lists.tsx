@@ -6,7 +6,7 @@ import _ from "lodash"
 import { Card } from "../../components/common/card"
 import CandidateCardItem from "./item"
 import CandidateCardLoader from "./loader"
-import { ICandidateFilterBlock, ISingleCandidate } from "./types"
+import { ICandidateFilterBlock, ISingleCandidate, ISingleCategory } from "./types"
 
 type CandidateRightSectionProps = {
    data: ISingleCandidate[]
@@ -15,6 +15,7 @@ type CandidateRightSectionProps = {
    block: ICandidateFilterBlock
    color?: string
    secondary_color?: string
+   skillsData?: ISingleCategory[]
 }
 
 export default function CandidateLists({
@@ -23,10 +24,12 @@ export default function CandidateLists({
    error,
    block,
    color,
-   secondary_color
+   secondary_color,
+   skillsData
 }: CandidateRightSectionProps) {
    const { theme: mode } = useTheme()
    const { result_placeholder, card_button, upload_resume_button } = block || {}
+
    return (
       <Stack spacing={2}>
          <Card
@@ -105,6 +108,7 @@ export default function CandidateLists({
                         button_label={card_button?.label}
                         color={color}
                         secondary_color={secondary_color}
+                        skillsData={skillsData}
                      />
                   </Grid>
                ))}

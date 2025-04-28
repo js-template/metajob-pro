@@ -784,6 +784,7 @@ export interface MetajobBlockJobCard extends Struct.ComponentSchema {
     button: Schema.Attribute.Component<'config.link', false>;
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
+    currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'USD'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     item_count: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
@@ -795,6 +796,8 @@ export interface MetajobBlockJobCard extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<6>;
     style: Schema.Attribute.Component<'config.style-section', false>;
+    vacancy_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Vacancy'>;
   };
 }
 
@@ -821,6 +824,33 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<12>;
     show_description: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<true>;
+    style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface MetajobBlockJobCategoryOverlay extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_job_categories_overlay';
+  info: {
+    displayName: 'Job Category Overlay';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'config.link', false>;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    item_count: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 24;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<12>;
+    overlay: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    show_description: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    show_icon: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
@@ -1581,6 +1611,7 @@ declare module '@strapi/strapi' {
       'metajob-block.job-banner': MetajobBlockJobBanner;
       'metajob-block.job-card': MetajobBlockJobCard;
       'metajob-block.job-category': MetajobBlockJobCategory;
+      'metajob-block.job-category-overlay': MetajobBlockJobCategoryOverlay;
       'metajob-block.job-filter': MetajobBlockJobFilter;
       'metajob-block.manage-company': MetajobBlockManageCompany;
       'metajob-block.manage-job': MetajobBlockManageJob;

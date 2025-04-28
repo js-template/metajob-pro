@@ -1,8 +1,8 @@
 {
-  "collectionName": "components_metajob_block_job_cards",
+  "collectionName": "components_metajob_block_job_categories_overlay",
   "info": {
-    "displayName": "Job Card",
-    "icon": "collapse"
+    "displayName": "Job Category Overlay",
+    "icon": "arrowRight"
   },
   "options": {},
   "attributes": {
@@ -11,12 +11,19 @@
       "repeatable": false,
       "component": "config.section-title"
     },
-    "button": {
-      "type": "component",
-      "repeatable": false,
-      "component": "config.link"
+    "show_description": {
+      "type": "boolean",
+      "default": true
     },
-    "card_button": {
+    "show_icon": {
+      "type": "boolean",
+      "default": true
+    },
+    "overlay": {
+      "type": "boolean",
+      "default": true
+    },
+    "button": {
       "type": "component",
       "repeatable": false,
       "component": "config.link"
@@ -33,17 +40,9 @@
     },
     "item_count": {
       "type": "integer",
-      "default": 6,
+      "default": 12,
       "min": 1,
-      "max": 18
-    },
-    "currency": {
-      "type": "string",
-      "default": "USD"
-    },
-    "vacancy_placeholder": {
-      "type": "string",
-      "default": "Vacancy"
+      "max": 24
     }
   }
 }

@@ -1,37 +1,27 @@
 "use client"
+
 import NextLink from "next/link"
 import _ from "lodash"
 import { useTheme } from "next-themes"
 import { Box, Container, Grid, Stack, Typography, Button, useTheme as muiTheme } from "@mui/material"
-import { ICategoryCardBlock, ISingleCategory } from "./types"
+import { ICategoryOverlayCardBlock, ISingleCategory } from "./types"
 import { SectionTitle } from "../../components/section-title"
-import { CategoryCardItem } from "../../components/cards/category-cards/category-card"
-import { hexToRGBA } from "../../lib/hex-to-rgba"
+import { CategoryOverlayCardItem } from "../../components/cards/category-cards/category-overlay-card"
 
 type Props = {
-   block: ICategoryCardBlock
-   categoryData: any
+   block: ICategoryOverlayCardBlock
+   categoryOverlayData: any
 }
 
-export const CategoryCard = ({ block, categoryData }: Props) => {
+export const JobCategoryOverlayCard = ({ block, categoryOverlayData }: Props) => {
    const theme = muiTheme()
    const { theme: mode } = useTheme()
 
    // destructure the block
-   const { content, empty, style, button, card_button, icon_type, show_description } = block || {}
-   const {
-      backgroundColor,
-      color,
-      secondary_color,
-      header_color,
-      sub_header_color,
-      section_padding,
-      header_width,
-      desktop,
-      tab,
-      mobile
-   } = style || {}
+   const { content, empty, style, button, card_button, show_icon, overlay } = block || {}
+   const { desktop, tab, mobile, backgroundColor } = style || {}
    const { label, link } = button || {}
+   const { variation } = content || {}
 
    return (
       <Stack
@@ -39,24 +29,20 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
             mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
          }>
          <Container maxWidth='lg'>
-            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
-               {content && (
-                  <SectionTitle data={content} color={{ header_color, sub_header_color }} width={header_width} />
-               )}
+               {content && <SectionTitle data={content} />}
 
                {/* category-items */}
-               {categoryData && categoryData?.length > 0 && (
+               {categoryOverlayData && categoryOverlayData?.length > 0 && (
                   <Grid container spacing={2}>
-                     {categoryData?.map((ctg: ISingleCategory) => (
+                     {categoryOverlayData?.map((ctg: ISingleCategory) => (
                         <Grid item xs={mobile || 12} sm={4} md={tab || 3} lg={desktop || 2} key={ctg.id}>
-                           <CategoryCardItem
+                           <CategoryOverlayCardItem
+                              show_icon={show_icon}
+                              overlay={overlay}
                               data={ctg}
-                              icon_type={icon_type}
-                              show_description={show_description}
                               button_label={card_button?.label}
-                              color={color}
-                              secondary_color={secondary_color}
                            />
                         </Grid>
                      ))}
@@ -64,7 +50,7 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
                )}
 
                {/* empty data */}
-               {categoryData && categoryData?.length == 0 && (
+               {categoryOverlayData && categoryOverlayData?.length == 0 && (
                   <Grid container justifyContent={"center"} spacing={2}>
                      <Stack
                         sx={{
@@ -91,10 +77,7 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
                         component={NextLink}
                         href={link || "/all-categories"}
                         sx={{
-                           bgcolor: (theme) =>
-                              mode === "dark"
-                                 ? theme.palette.background.paper
-                                 : hexToRGBA(theme.palette.secondary.main, 0.7),
+                           bgcolor: "secondary.dark",
                            color: "white",
                            "&:hover": {
                               bgcolor: "primary.main"
