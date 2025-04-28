@@ -16,6 +16,26 @@
     }
   },
   "attributes": {
+    "global": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "dynamiczone",
+      "components": ["metajob-block.error-section"],
+      "required": false
+    },
+    "root": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "dynamiczone",
+      "components": ["metajob-block.error-section"],
+      "required": false
+    },
     "public": {
       "pluginOptions": {
         "i18n": {

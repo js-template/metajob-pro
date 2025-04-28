@@ -924,6 +924,12 @@ export interface PluginMetajobBackendErrorSetting
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    global: Schema.Attribute.DynamicZone<['metajob-block.error-section']> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -942,6 +948,12 @@ export interface PluginMetajobBackendErrorSetting
         };
       }>;
     publishedAt: Schema.Attribute.DateTime;
+    root: Schema.Attribute.DynamicZone<['metajob-block.error-section']> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
