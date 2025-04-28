@@ -103,15 +103,12 @@ const SendMessage = ({
             color='primary'
             type='submit'
             sx={{
-               position: "absolute",
-               ...(theme.direction === "rtl" ? { left: "25px" } : { right: "25px" }),
                boxShadow: "none",
-               margin: 0 + " !important",
-               width: "40px",
+               width: "72px",
                p: 0,
                minWidth: "40px",
-               height: "40px",
-               borderRadius: "100px",
+               height: "48px",
+               borderRadius: "12px",
                "& svg": {
                   ...(!loading && {
                      color: (theme) => theme.palette.primary.contrastText
@@ -130,7 +127,7 @@ const SendMessage = ({
             {/* Send message button */}
             {loading ? null : (
                <CIcon
-                  icon={"tabler:arrow-big-up-lines-filled"}
+                  icon='teenyicons:send-outline'
                   sx={{
                      fontSize: {
                         xs: "1rem",

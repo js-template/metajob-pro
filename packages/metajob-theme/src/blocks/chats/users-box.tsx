@@ -261,11 +261,9 @@ const UsersBox = ({
                        sm: 400
                     },
                position: hidden ? "static" : "absolute",
-               borderTopLeftRadius: (theme) => theme.shape.borderRadius,
-               ...(theme.direction === "rtl"
-                  ? { borderLeft: "1px solid", borderColor: "divider", borderRight: 0 }
-                  : { borderRight: "1px solid", borderColor: "divider" }),
-               borderBottomLeftRadius: (theme) => theme.shape.borderRadius
+               border: "1px solid",
+               borderColor: "divider",
+               borderRadius: "12px"
             },
             "& > .MuiBackdrop-root": {
                borderRadius: 1,
