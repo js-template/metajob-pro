@@ -23,7 +23,7 @@ const CandidateCardItem = ({
    const { name, tagline, contact, slug, user } = data || {}
    const { location } = contact || {}
    const image = user?.avatar?.url || ""
-   console.log(data)
+
    return (
       <Stack
          sx={{
