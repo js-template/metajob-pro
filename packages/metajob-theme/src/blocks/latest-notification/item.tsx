@@ -16,8 +16,6 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
          <TableRow
             sx={{
                "& td, th": {
-                  borderBottom: "1px solid",
-                  borderColor: "divider",
                   color: (theme) => theme.palette.text.secondary
                },
                "& td": {
@@ -62,19 +60,19 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
                                  sm: "48px"
                               },
                               borderRadius: "50%",
-                              backgroundColor: (theme) => theme.palette.text.primary + "10",
+                              backgroundColor: (theme) => theme.palette.primary.main + "10",
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center"
                            }}>
                            <CIcon
-                              icon='tabler:bell-filled'
+                              icon='material-symbols-light:notification-add-sharp'
                               sx={{
                                  fontSize: {
                                     xs: "1.5rem",
                                     sm: "1.75rem"
                                  },
-                                 color: theme.palette.text.primary + "80"
+                                 color: theme.palette.primary.main
                               }}
                            />
                         </Box>
