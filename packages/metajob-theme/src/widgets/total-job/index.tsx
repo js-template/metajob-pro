@@ -11,9 +11,11 @@ export const TotalJobs = async ({ block, session }: { block: any; session?: IUse
    const { id: userId, role: userRole } = user || {}
    const role = userRole?.type || ""
 
-   const styleData = block?.style || {}
-
    const componentData = block?.details || null
+
+   const { style } = block || {}
+   const { mobile, tab, desktop, backgroundColor, color } = style || {}
+   const bgColor = backgroundColor || "#FB8B2F"
 
    const { data: JobData, error: JobError } = await find(
       "api/metajob-backend/jobs",
@@ -33,7 +35,7 @@ export const TotalJobs = async ({ block, session }: { block: any; session?: IUse
    // If the user is not an employer, return an error message early
    if (role !== "employer") {
       return (
-         <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
+         <Grid item xs={mobile} sm={tab} md={desktop}>
             <TotalError />
          </Grid>
       )
@@ -42,7 +44,7 @@ export const TotalJobs = async ({ block, session }: { block: any; session?: IUse
    // If data is not available yet, return a loading state
    if (!block) {
       return (
-         <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
+         <Grid item xs={mobile} sm={tab} md={desktop}>
             <CountCardLoader />
          </Grid>
       )
@@ -50,8 +52,8 @@ export const TotalJobs = async ({ block, session }: { block: any; session?: IUse
 
    // Return the actual component once data is available
    return (
-      <Grid item xs={styleData?.mobile} sm={styleData?.tab} md={styleData?.desktop}>
-         <CountCard item={componentData} count={totalJob} />
+      <Grid item xs={mobile} sm={tab} md={desktop}>
+         <CountCard item={componentData} count={totalJob} bgColor={bgColor} textColor={color} />
       </Grid>
    )
 }
