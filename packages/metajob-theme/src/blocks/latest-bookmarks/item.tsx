@@ -20,8 +20,6 @@ const TableItem = ({
          <TableRow
             sx={{
                "& td, th": {
-                  borderBottom: "1px solid",
-                  borderColor: "divider",
                   color: (theme) => theme.palette.text.secondary
                },
                "& td": {
