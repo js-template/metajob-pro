@@ -136,7 +136,10 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                   )}
                </Stack>
             )}
-            {location ? (
+
+            {/* location */}
+
+            {/* {location ? (
                <Stack direction={"row"} gap={2} alignItems={"center"}>
                   <Icon
                      fontSize='small'
@@ -162,7 +165,7 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                      Location not Available
                   </Typography>
                </Stack>
-            )}
+            )} */}
          </Stack>
          {/* button  */}
          <Button
@@ -172,7 +175,8 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
             href={`/company/${slug}`}
             sx={{
                bgcolor: (theme) => theme.palette.background.default,
-               color: (theme) => (mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled)
+               color: (theme) => (mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled),
+               mt: 2
             }}>
             {button_label || "See Details"}
          </Button>

@@ -13,8 +13,10 @@ type Props = {
    button_label?: string
    color?: string
    secondary_color?: string
+   vacancy_placeholder?: string
+   currency?: string
 }
-export const JobItem = ({ data, button_label, color, secondary_color }: Props) => {
+export const JobItem = ({ data, button_label, color, secondary_color, vacancy_placeholder, currency }: Props) => {
    const { theme: mode } = useTheme()
    const theme = muiTheme()
 
@@ -151,7 +153,9 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
                   {title}
                </Typography>
             )}
-            {location ? (
+
+            {/* location */}
+            {/* {location ? (
                <Stack sx={{ mb: 3 }} direction={"row"} gap={1} alignItems={"center"} justifyContent={"center"}>
                   <Icon
                      fontSize='small'
@@ -197,9 +201,9 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
                      Location not available
                   </Typography>
                </Stack>
-            )}
+            )} */}
          </Box>
-         <Stack sx={{ mb: 3 }} spacing={"10px"}>
+         <Stack sx={{ mb: 3, mt: 4 }} spacing={"10px"}>
             {vacancy && (
                <Stack direction={"row"} gap={2} alignItems={"center"}>
                   <Icon
@@ -219,7 +223,7 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
                         mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled
                      }>
                      {/* {vacancy} */}
-                     {vacancy} Vacancy
+                     {vacancy} {vacancy_placeholder}
                   </Typography>
                </Stack>
             )}
@@ -241,7 +245,7 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
                      color={
                         mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled
                      }>
-                     {price} Taka
+                     {price} {currency}
                   </Typography>
                </Stack>
             )}

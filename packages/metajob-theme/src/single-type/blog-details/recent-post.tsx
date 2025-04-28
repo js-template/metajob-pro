@@ -20,7 +20,7 @@ const RecentPost = ({ recentBlogsData, color, secondary_color }: Props) => {
    return recentBlogsData && recentBlogsData?.length > 0 ? (
       <Card
          sx={{
-            p: 2,
+            p: "30px",
             borderRadius: 3,
             borderWidth: 1,
             borderStyle: "solid",
@@ -42,7 +42,7 @@ const RecentPost = ({ recentBlogsData, color, secondary_color }: Props) => {
                <Stack spacing={1}>
                   {_.map(recentBlogsData, (item: ISinglePost) => {
                      return (
-                        <Stack key={item?.id} gap={2} direction={"row"} alignItems='center'>
+                        <Stack key={item?.id} gap={2} direction={{ sm: "row", xs: "column" }} alignItems='center'>
                            <Box
                               sx={{
                                  display: "flex",
@@ -51,8 +51,8 @@ const RecentPost = ({ recentBlogsData, color, secondary_color }: Props) => {
                                  overflow: "hidden",
                                  borderRadius: 1.5,
                                  position: "relative", // Make sure the container is positioned
-                                 width: 200, // Define width and height for the container
-                                 height: 100
+                                 height: { sm: 100, xs: 150 },
+                                 minWidth: { sm: "150px", xs: "100%" }
                               }}
                               component={Link}
                               href={`/blog/${item?.slug}`}>
@@ -76,7 +76,12 @@ const RecentPost = ({ recentBlogsData, color, secondary_color }: Props) => {
                                        cursor: "pointer",
                                        transition: "all .3s ease-in-out"
                                     },
-                                    textDecoration: "none"
+                                    textDecoration: "none",
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis"
                                  }}
                                  component={Link}
                                  href={`/blog/${item?.slug}`}>

@@ -19,7 +19,7 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
    const theme = muiTheme()
 
    // destructure the block
-   const { content, empty, style, button, card_button } = block || {}
+   const { content, empty, style, button, card_button, currency, vacancy_placeholder } = block || {}
    const {
       backgroundColor,
       color,
@@ -56,6 +56,8 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
                               button_label={card_label}
                               color={color}
                               secondary_color={secondary_color}
+                              currency={currency}
+                              vacancy_placeholder={vacancy_placeholder}
                            />
                         </Grid>
                      ))}

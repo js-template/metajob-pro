@@ -36,6 +36,14 @@
       "default": 6,
       "min": 1,
       "max": 18
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "vacancy_placeholder": {
+      "type": "string",
+      "default": "Vacancy"
     }
   }
 }

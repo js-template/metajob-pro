@@ -34,6 +34,8 @@ export type IJobCardBlock = {
       label?: string
    }
    item_count?: number
+   currency?: string
+   vacancy_placeholder?: string
 }
 
 export type ISingleJob = {

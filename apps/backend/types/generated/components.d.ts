@@ -770,6 +770,7 @@ export interface MetajobBlockJobCard extends Struct.ComponentSchema {
     button: Schema.Attribute.Component<'config.link', false>;
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
+    currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'USD'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     item_count: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
@@ -781,6 +782,8 @@ export interface MetajobBlockJobCard extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<6>;
     style: Schema.Attribute.Component<'config.style-section', false>;
+    vacancy_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Vacancy'>;
   };
 }
 
