@@ -50,16 +50,21 @@ export const PublicHeader = async ({ block, language }: Props) => {
    // get user data
    const userId = session?.user?.id
    const { data: userData } = userId
-      ? await findOne("api/users", userId, {
-           populate: {
-              avatar: {
-                 fields: ["url"]
-              }
+      ? await findOne(
+           "api/users",
+           userId,
+           {
+              populate: {
+                 avatar: {
+                    fields: ["url"]
+                 }
+              },
+              fields: ["id"],
+              publicationState: "live",
+              locale: language ?? "en"
            },
-           fields: ["id"],
-           publicationState: "live",
-           locale: language ?? "en"
-        })
+           "no-store"
+        )
       : {}
 
    return (
