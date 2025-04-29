@@ -13,16 +13,12 @@ const LoginPage = async ({ searchParams }: Props) => {
    const language = await getLanguageFromCookie()
 
    // fetch login data
-   const { data, error } = await find(
-      "api/metajob-backend/auth-setting",
-      {
-         populate: {
-            login: { populate: "*" }
-         },
-         locale: language ?? "en"
+   const { data, error } = await find("api/metajob-backend/auth-setting", {
+      populate: {
+         login: { populate: "*" }
       },
-      "no-store"
-   )
+      locale: language ?? "en"
+   })
    const block = data?.data?.login?.[0] || null
 
    return <LoginBody error={searchParams?.error} callbackUrl={searchParams?.callbackUrl} block={block} />
@@ -36,16 +32,12 @@ export async function generateMetadata(): Promise<Metadata> {
    const language = await getLanguageFromCookie()
 
    // fetch login data
-   const { data } = await find(
-      "api/metajob-backend/auth-setting",
-      {
-         populate: {
-            login: { populate: "*" }
-         },
-         locale: language ?? "en"
+   const { data } = await find("api/metajob-backend/auth-setting", {
+      populate: {
+         login: { populate: "*" }
       },
-      "no-store"
-   )
+      locale: language ?? "en"
+   })
    const seoData = data?.data?.login?.[0]?.seo
 
    const seoDataPre = {

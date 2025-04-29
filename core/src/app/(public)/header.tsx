@@ -14,8 +14,7 @@ export default async function PublicLayoutHeader() {
             header: { populate: "*" }
          },
          locale: language ?? "en"
-      },
-      "no-store"
+      }
    )
 
    const activeTheme = await loadActiveTheme()
