@@ -156,7 +156,6 @@ export const CategoryOverlayCardItem = ({ data, button_label, color, backgroundC
                </Typography>
                {description && (
                   <Typography
-                     color={(theme) => theme.palette.text.secondary}
                      fontWeight={400}
                      fontSize={16}
                      sx={{
@@ -165,7 +164,8 @@ export const CategoryOverlayCardItem = ({ data, button_label, color, backgroundC
                         WebkitBoxOrient: "vertical",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
-                        WebkitLineClamp: 2
+                        WebkitLineClamp: 2,
+                        color: (theme) => theme.palette.text.secondary
                      }}>
                      {description}
                   </Typography>

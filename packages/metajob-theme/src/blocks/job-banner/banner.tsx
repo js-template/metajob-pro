@@ -355,20 +355,24 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) =>
-                                    mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
-                                 }>
+                                 sx={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || theme.palette.text.primary
+                                          : theme.palette.text.primary
+                                 }}>
                                  {countData?.job}+
                               </Typography>
                               <Typography
                                  variant={"h4"}
                                  fontSize={16}
                                  fontWeight={500}
-                                 color={(theme) =>
-                                    mode === "light"
-                                       ? secondary_color || theme.palette.text.disabled
-                                       : theme.palette.text.disabled
-                                 }>
+                                 sx={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.disabled
+                                          : theme.palette.text.disabled
+                                 }}>
                                  {job_count_placeholder || "Job Available"}
                               </Typography>
                            </Stack>
@@ -394,20 +398,24 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) =>
-                                    mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
-                                 }>
+                                 sx={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || theme.palette.text.primary
+                                          : theme.palette.text.primary
+                                 }}>
                                  {countData?.company}+
                               </Typography>
                               <Typography
                                  variant={"h4"}
                                  fontSize={16}
                                  fontWeight={500}
-                                 color={(theme) =>
-                                    mode === "light"
-                                       ? secondary_color || theme.palette.text.disabled
-                                       : theme.palette.text.disabled
-                                 }>
+                                 sx={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.disabled
+                                          : theme.palette.text.disabled
+                                 }}>
                                  {company_count_placeholder || "Company"}
                               </Typography>
                            </Stack>
@@ -433,20 +441,24 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  variant={"h1"}
                                  fontSize={32}
                                  fontWeight={700}
-                                 color={(theme) =>
-                                    mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
-                                 }>
+                                 sx={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? color || theme.palette.text.primary
+                                          : theme.palette.text.primary
+                                 }}>
                                  {countData?.resume}+
                               </Typography>
                               <Typography
                                  variant={"h4"}
                                  fontSize={16}
                                  fontWeight={500}
-                                 color={(theme) =>
-                                    mode === "light"
-                                       ? secondary_color || theme.palette.text.disabled
-                                       : theme.palette.text.disabled
-                                 }>
+                                 sx={{
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.disabled
+                                          : theme.palette.text.disabled
+                                 }}>
                                  {resume_count_placeholder || "Available Employee"}
                               </Typography>
                            </Stack>
