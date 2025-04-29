@@ -75,8 +75,8 @@ export const findOne = async (
 export const find = async (
    model: string,
    query: any = {},
-   cache: "force-cache" | "no-cache" | "no-store" = "force-cache",
-   revalidate?: number
+   cacheOverride: "force-cache" | "no-cache" | "no-store" = "force-cache",
+   revalidateOverride?: number
 ) => {
    const queryString = qs.stringify(query, {
       arrayFormat: "indices",
@@ -86,22 +86,22 @@ export const find = async (
    const url = `${apiUrl}/${model}/?${queryString}`
 
    try {
+      const defaultCache =
+         (process.env.NEXT_PUBLIC_DEFAULT_CACHE_BEHAVIOR as "force-cache" | "no-store" | "no-cache") || "force-cache"
+      const defaultRevalidate = process.env.NEXT_PUBLIC_DEFAULT_REVALIDATE_SECONDS
+         ? parseInt(process.env.NEXT_PUBLIC_DEFAULT_REVALIDATE_SECONDS)
+         : undefined
+
+      const cache = cacheOverride || defaultCache
+      const revalidate = revalidateOverride ?? defaultRevalidate
+
       const response = await fetch(`${apiUrl}/${model}/?${queryString}`, {
          method: "GET",
          headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.STRAPI_AUTH_TOKEN}`
          },
-         ...{
-            ...(revalidate ? {} : { cache }),
-            ...(revalidate
-               ? {
-                    next: {
-                       revalidate: revalidate
-                    }
-                 }
-               : {})
-         }
+         ...(revalidate !== undefined ? { next: { revalidate } } : { cache })
       })
 
       if (!response.ok) {

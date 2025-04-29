@@ -12,15 +12,11 @@ type Props = {
 }
 
 export const PublicPackage = async ({ block, data, language }: Props) => {
-   const { data: packageDataAll } = await find(
-      "api/metajob-backend/packages",
-      {
-         populate: "*",
-         publicationState: "live",
-         locale: language ?? "en"
-      },
-      "no-store"
-   )
+   const { data: packageDataAll } = await find("api/metajob-backend/packages", {
+      populate: "*",
+      publicationState: "live",
+      locale: language ?? "en"
+   })
 
    return (
       <Suspense fallback={<PublicPackageLoader />}>
