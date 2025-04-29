@@ -3,9 +3,7 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, 
 import _ from "lodash"
 import toast from "react-hot-toast"
 import TableItem from "./item"
-
 import { bookmarksListsItemProps, bookmarksListsProps } from "./type"
-
 import { IUserSession } from "../../types/user"
 
 export const BookmarksBody = ({
@@ -39,7 +37,7 @@ export const BookmarksBody = ({
             }}>
             <TableContainer component={Box}>
                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                  <TableHead
+                  {/* <TableHead
                      sx={{
                         "& th": {
                            borderBottom: "1px solid",
@@ -94,7 +92,7 @@ export const BookmarksBody = ({
                            </Typography>
                         </TableCell>
                      </TableRow>
-                  </TableHead>
+                  </TableHead> */}
                   {isLoading ? (
                      <TableBody>
                         {_.times(5, (index) => (

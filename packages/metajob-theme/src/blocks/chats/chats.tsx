@@ -34,8 +34,7 @@ const ChatSection = ({ blockData, role, userId, userEmail }: Props) => {
             sx={{
                px: 3,
                py: 2,
-               borderBottom: "1px solid",
-               borderColor: "divider",
+               bgcolor: "background.default",
                display: "flex",
                justifyContent: "space-between",
                alignItems: "center",
@@ -83,8 +82,16 @@ const ChatSection = ({ blockData, role, userId, userEmail }: Props) => {
          <Box
             sx={{
                display: "flex",
-               height: "calc(-190px + 100vh)"
+               height: "calc(-195px + 100vh)",
+               gap: 5
             }}>
+            <MessageBox
+               blockData={blockData}
+               noMessage={chatId === null ? true : false}
+               chatId={chatId}
+               role={role}
+               userId={userId}
+            />
             <UsersBox
                chatSidebar={chatSidebar}
                setChatSidebar={setChatSidebar}
@@ -95,13 +102,6 @@ const ChatSection = ({ blockData, role, userId, userEmail }: Props) => {
                userEmail={userEmail}
                setChatId={setChatId}
                blockData={blockData}
-            />
-            <MessageBox
-               blockData={blockData}
-               noMessage={chatId === null ? true : false}
-               chatId={chatId}
-               role={role}
-               userId={userId}
             />
          </Box>
       </Fragment>

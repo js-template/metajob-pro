@@ -724,6 +724,20 @@ export interface MetajobBlockContact extends Struct.ComponentSchema {
   };
 }
 
+export interface MetajobBlockErrorSection extends Struct.ComponentSchema {
+  collectionName: 'components_metajob_block_error_sections';
+  info: {
+    description: 'Error section block';
+    displayName: 'Error Section';
+    icon: 'collapse';
+  };
+  attributes: {
+    button_placeholder: Schema.Attribute.String;
+    content: Schema.Attribute.Component<'config.section-title', false>;
+    style: Schema.Attribute.Component<'metajob-config.error-style', false>;
+  };
+}
+
 export interface MetajobBlockExperience extends Struct.ComponentSchema {
   collectionName: 'components_metajob_block_experiences';
   info: {
@@ -993,6 +1007,28 @@ export interface MetajobBlockPublicPackage extends Struct.ComponentSchema {
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
+  };
+}
+
+export interface MetajobConfigErrorStyle extends Struct.ComponentSchema {
+  collectionName: 'components_component_error_style';
+  info: {
+    description: '';
+    displayName: 'Error Style';
+    icon: 'arrowUp';
+  };
+  attributes: {
+    backgroundColor: Schema.Attribute.String;
+    header_color: Schema.Attribute.String;
+    section_padding: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 0;
+        },
+        number
+      >;
+    sub_header_color: Schema.Attribute.String;
   };
 }
 
@@ -1570,6 +1606,7 @@ declare module '@strapi/strapi' {
       'metajob-block.category-filter': MetajobBlockCategoryFilter;
       'metajob-block.company-filter': MetajobBlockCompanyFilter;
       'metajob-block.contact': MetajobBlockContact;
+      'metajob-block.error-section': MetajobBlockErrorSection;
       'metajob-block.experience': MetajobBlockExperience;
       'metajob-block.job-banner': MetajobBlockJobBanner;
       'metajob-block.job-card': MetajobBlockJobCard;
@@ -1584,6 +1621,7 @@ declare module '@strapi/strapi' {
       'metajob-block.portfolio': MetajobBlockPortfolio;
       'metajob-block.pricing': MetajobBlockPricing;
       'metajob-block.public-package': MetajobBlockPublicPackage;
+      'metajob-config.error-style': MetajobConfigErrorStyle;
       'metajob-config.message': MetajobConfigMessage;
       'metajob-config.meta-data': MetajobConfigMetaData;
       'metajob-config.relations': MetajobConfigRelations;

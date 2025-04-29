@@ -361,7 +361,11 @@ const MessageBox = ({
             width: "100%",
             display: "flex",
             flexDirection: "column",
-            height: "100%"
+            height: "100%",
+            bgcolor: "background.paper",
+            border: "1px solid",
+            borderColor: "divider",
+            borderRadius: "12px"
          }}>
          {/* Loader */}
          {isLoading && (

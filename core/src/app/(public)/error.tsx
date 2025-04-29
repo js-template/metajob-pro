@@ -1,41 +1,20 @@
 "use client"
-
 import { startTransition } from "react"
 import { useRouter } from "next/navigation"
-import { Button, Container, Stack, Typography } from "@mui/material"
+import ErrorSection from "@/components/errors/error-section"
 
 const Error = ({ error, reset }: { error: Error; reset: () => void }) => {
    const router = useRouter()
-   const reload = () => {
+
+   //handle load function
+   const reloadHandler = () => {
       startTransition(() => {
          router.refresh()
          reset()
       })
    }
-   return (
-      <Stack
-         sx={{
-            bgcolor: (theme) => theme.palette.background.default,
-            minHeight: "85vh"
-         }}>
-         <Container maxWidth='lg'>
-            <Stack py={10} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
-               <Typography
-                  variant='h3'
-                  component='h3'
-                  sx={{
-                     fontWeight: 700,
-                     mb: 2
-                  }}>
-                  Something Went Wrong in Public Page
-               </Typography>
-               <Button onClick={reload} variant='contained' color='primary'>
-                  Try again
-               </Button>
-            </Stack>
-         </Container>
-      </Stack>
-   )
+
+   return <ErrorSection reloadHandler={reloadHandler} sectionType='public' />
 }
 
 export default Error
