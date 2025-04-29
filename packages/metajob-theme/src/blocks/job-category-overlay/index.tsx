@@ -13,24 +13,20 @@ type Props = {
 export const JobCategoryOverlay = async ({ block, language }: Props) => {
    const show_icon = true
    const overlay = false
-   const { data: categoryOverlayData } = await find(
-      "api/metajob-backend/job-categories",
-      {
-         populate: {
-            image: {
-               fields: ["url"]
-            }
-         },
-         pagination: {
-            pageSize: block?.item_count || 12,
-            page: 1
-         },
-         fields: ["title", "description"],
-         publicationState: "live",
-         locale: language ?? "en"
+   const { data: categoryOverlayData } = await find("api/metajob-backend/job-categories", {
+      populate: {
+         image: {
+            fields: ["url"]
+         }
       },
-      "no-store"
-   )
+      pagination: {
+         pageSize: block?.item_count || 12,
+         page: 1
+      },
+      fields: ["title", "description"],
+      publicationState: "live",
+      locale: language ?? "en"
+   })
 
    return (
       <Suspense fallback={<JobCategoryLoader />}>

@@ -9,16 +9,12 @@ const Register = async () => {
    const language = await getLanguageFromCookie()
 
    // fetch register data
-   const { data, error } = await find(
-      "api/metajob-backend/auth-setting",
-      {
-         populate: {
-            register: { populate: "*" }
-         },
-         locale: language ?? "en"
+   const { data, error } = await find("api/metajob-backend/auth-setting", {
+      populate: {
+         register: { populate: "*" }
       },
-      "no-store"
-   )
+      locale: language ?? "en"
+   })
    const block = data?.data?.register?.[0] || null
 
    return <RegisterBody block={block} />
@@ -31,16 +27,12 @@ export async function generateMetadata(): Promise<Metadata> {
    const language = await getLanguageFromCookie()
 
    // fetch register data
-   const { data } = await find(
-      "api/metajob-backend/auth-setting",
-      {
-         populate: {
-            register: { populate: "*" }
-         },
-         locale: language ?? "en"
+   const { data } = await find("api/metajob-backend/auth-setting", {
+      populate: {
+         register: { populate: "*" }
       },
-      "no-store"
-   )
+      locale: language ?? "en"
+   })
    const seoData = data?.data?.register?.[0]?.seo
 
    const seoDataPre = {

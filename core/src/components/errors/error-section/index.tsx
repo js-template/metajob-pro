@@ -25,16 +25,12 @@ const ErrorSection = ({ reloadHandler, sectionType }: Props) => {
             sectionType = "public"
          }
          setIsLoading(true)
-         const { data: errorDataAll, error: errorDataError } = await find(
-            "api/metajob-backend/error-setting",
-            {
-               populate: {
-                  [sectionType]: { populate: "*" }
-               },
-               locale: language ?? "en"
+         const { data: errorDataAll, error: errorDataError } = await find("api/metajob-backend/error-setting", {
+            populate: {
+               [sectionType]: { populate: "*" }
             },
-            "no-store"
-         )
+            locale: language ?? "en"
+         })
          if (!errorDataError) {
             setErrorData(errorDataAll?.data?.[sectionType]?.[0])
          } else {

@@ -6,16 +6,12 @@ import { loadActiveTheme } from "config/theme-loader"
 export default async function PublicLayoutFooter() {
    const language = await getLanguageFromCookie()
 
-   const { data, error } = await find(
-      "api/padma-backend/layout",
-      {
-         populate: {
-            footer: { populate: "*" }
-         },
-         locale: language ?? "en"
+   const { data, error } = await find("api/padma-backend/layout", {
+      populate: {
+         footer: { populate: "*" }
       },
-      "no-store"
-   )
+      locale: language ?? "en"
+   })
 
    const activeTheme = await loadActiveTheme()
 
