@@ -16,23 +16,19 @@ export default async function DynamicPages({
    const pageSlug = params?.slug
    const language = await getLanguageFromCookie()
 
-   const { data, error } = await find(
-      "api/padma-backend/public-pages",
-      {
-         filters: {
-            slug: {
-               $eq: pageSlug
-            }
-         },
-         populate: {
-            blocks: {
-               populate: "*"
-            }
-         },
-         locale: language ?? "en"
+   const { data, error } = await find("api/padma-backend/public-pages", {
+      filters: {
+         slug: {
+            $eq: pageSlug
+         }
       },
-      "no-store"
-   )
+      populate: {
+         blocks: {
+            populate: "*"
+         }
+      },
+      locale: language ?? "en"
+   })
 
    const activeTheme = await loadActiveTheme()
 
@@ -78,18 +74,14 @@ export async function generateStaticParams() {
    try {
       // const cookieStore = await cookies()
       // const language = cookieStore.get("lang")
-      const { data } = await find(
-         "api/padma-backend/public-pages",
-         {
-            fields: ["slug"],
-            filters: {
-               slug: {
-                  $ne: null
-               }
+      const { data } = await find("api/padma-backend/public-pages", {
+         fields: ["slug"],
+         filters: {
+            slug: {
+               $ne: null
             }
-         },
-         "no-store"
-      )
+         }
+      })
 
       return data?.data?.map((post: any) => ({
          slug: post?.slug || ""
@@ -111,23 +103,19 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
    //const language = await getLanguageFromCookie()
 
    // ***fetch seo data
-   const product = await find(
-      "api/padma-backend/public-pages",
-      {
-         filters: {
-            slug: {
-               $eq: pageSlug
-            }
-         },
-         populate: {
-            seo: {
-               populate: "*"
-            }
+   const product = await find("api/padma-backend/public-pages", {
+      filters: {
+         slug: {
+            $eq: pageSlug
          }
-         //locale: language ?? "en"
       },
-      "no-store"
-   )
+      populate: {
+         seo: {
+            populate: "*"
+         }
+      }
+      //locale: language ?? "en"
+   })
 
    return StrapiSeoFormate(product?.data?.data?.[0]?.seo, `/${pageSlug}`)
 }
