@@ -1,6 +1,6 @@
 {
   "name": "@jstemplate/metajob-backend",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Metajob Backend",
   "license": "EULA",
   "keywords": [
@@ -36,7 +36,9 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "package.json",
+    "README.md"
   ],
   "scripts": {
     "build": "strapi-plugin build",
