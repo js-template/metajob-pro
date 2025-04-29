@@ -134,7 +134,8 @@ const SideItems = ({ block, language, userData, listLocalesData }: Props) => {
                                     // mode === "light"
                                     //    ? color || theme.palette.text.primary
                                     //    : theme.palette.text.primary,
-                                    fontSize: "1.25rem"
+                                    fontSize: "1.25rem",
+                                    px: 0.75
                                  }}
                               />
                               {getLanguageValue(language as any, listLocalesData) || "English"}
@@ -142,6 +143,7 @@ const SideItems = ({ block, language, userData, listLocalesData }: Props) => {
                                  icon='ri:arrow-down-s-line'
                                  sx={{
                                     color: "inherit",
+                                    px: 0.25,
                                     // mode === "light"
                                     //    ? color || theme.palette.text.primary
                                     //    : theme.palette.text.primary,
@@ -215,8 +217,21 @@ const SideItems = ({ block, language, userData, listLocalesData }: Props) => {
                         <IconButton
                            sx={{
                               ml: 1,
+                              width: 40,
+                              height: 40,
+                              padding: 1,
+                              borderRadius: "50%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
                               color:
-                                 mode === "light" ? color || theme.palette.text.secondary : theme.palette.text.secondary
+                                 mode === "light"
+                                    ? color || theme.palette.text.secondary
+                                    : theme.palette.text.secondary,
+                              backgroundColor: "transparent",
+                              "&:hover": {
+                                 backgroundColor: theme.palette.action.hover
+                              }
                            }}
                            onClick={toggleTheme}>
                            <CIcon

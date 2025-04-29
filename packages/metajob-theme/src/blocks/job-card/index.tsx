@@ -12,30 +12,26 @@ type Props = {
 }
 
 export const JobCard = async ({ block, language }: Props) => {
-   const { data: JobsData } = await find(
-      "api/metajob-backend/jobs",
-      {
-         populate: {
-            company: {
-               fields: ["name"],
-               populate: {
-                  logo: {
-                     fields: ["url"]
-                  }
+   const { data: JobsData } = await find("api/metajob-backend/jobs", {
+      populate: {
+         company: {
+            fields: ["name"],
+            populate: {
+               logo: {
+                  fields: ["url"]
                }
-            },
-            type: {
-               fields: ["title"]
             }
          },
-         pagination: {
-            pageSize: block?.item_count || 6,
-            page: 1
-         },
-         locale: language ?? "en"
+         type: {
+            fields: ["title"]
+         }
       },
-      "no-store"
-   )
+      pagination: {
+         pageSize: block?.item_count || 6,
+         page: 1
+      },
+      locale: language ?? "en"
+   })
 
    return (
       <Suspense fallback={<JobCardLoader />}>
