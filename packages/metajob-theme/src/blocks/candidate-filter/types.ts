@@ -11,6 +11,7 @@ export type ICandidateFilterBlock = {
       search_placeholder?: string
       category_placeholder?: string
       button_placeholder?: string
+      mobile_filter_placeholder?: string
    }
    empty?: {
       title: string

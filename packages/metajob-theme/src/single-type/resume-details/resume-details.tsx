@@ -34,7 +34,7 @@ const ResumeDetailsClient = ({ data, block, language }: Props) => {
                header_bg_color={header_bg_color}
             />
          )}
-         <Container maxWidth='lg' sx={{ py: 6 }}>
+         <Container maxWidth='lg' sx={{ py: { xs: 4, md: 6 } }}>
             <Grid container spacing={4} direction={isRightSidebar ? "row-reverse" : "row"}>
                {!isNoSidebar && (
                   <Grid item xs={12} md={4}>
@@ -44,7 +44,7 @@ const ResumeDetailsClient = ({ data, block, language }: Props) => {
                <Grid item xs={12} md={!isNoSidebar ? 8 : 12}>
                   <Card
                      sx={{
-                        p: 3,
+                        p: { xs: 1, md: 3 },
                         borderRadius: 2
                      }}>
                      <DetailsSection data={data} isLoading={false} block={block} />
