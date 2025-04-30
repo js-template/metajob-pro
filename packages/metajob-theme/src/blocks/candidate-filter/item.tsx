@@ -145,12 +145,12 @@ const CandidateCardItem = ({
                            borderStyle: "solid",
                            borderRadius: 1,
                            py: 0.5,
-                           px: 2
+                           px: 2,
+                           color: (theme) => theme.palette.text.disabled
                         }}
                         variant={"body1"}
                         fontWeight={400}
-                        fontSize={14}
-                        color={(theme) => theme.palette.text.disabled}>
+                        fontSize={14}>
                         {item?.title}
                         {/* {item} */}
                      </Typography>
@@ -167,12 +167,12 @@ const CandidateCardItem = ({
                      py: 1,
                      px: 2,
                      mb: "20px",
-                     textAlign: "center"
+                     textAlign: "center",
+                     color: (theme) => theme.palette.text.disabled
                   }}
                   variant={"body1"}
                   fontWeight={400}
-                  fontSize={14}
-                  color={(theme) => theme.palette.text.disabled}>
+                  fontSize={14}>
                   Skills not Available
                </Typography>
             )}

@@ -111,9 +111,6 @@ export const CategoryCardItem = ({
             </Typography>
             {show_description && (
                <Typography
-                  color={(theme) =>
-                     mode === "light" ? secondary_color || theme.palette.text.secondary : theme.palette.text.secondary
-                  }
                   fontWeight={400}
                   fontSize={14}
                   textAlign={"center"}
@@ -123,7 +120,11 @@ export const CategoryCardItem = ({
                      WebkitBoxOrient: "vertical",
                      overflow: "hidden",
                      textOverflow: "ellipsis",
-                     WebkitLineClamp: 2
+                     WebkitLineClamp: 2,
+                     color: (theme) =>
+                        mode === "light"
+                           ? secondary_color || theme.palette.text.secondary
+                           : theme.palette.text.secondary
                   }}>
                   {description}
                </Typography>
