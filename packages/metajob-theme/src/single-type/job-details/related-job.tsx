@@ -45,7 +45,7 @@ const RelatedJob = ({ relatedJobsData, block }: Props) => {
                            mode === "light" ? header_color || theme.palette.text.primary : theme.palette.text.primary
                      }}
                      fontWeight={700}
-                     fontSize={32}
+                     fontSize={{ xs: 24, sm: 32 }}
                      textAlign={"center"}>
                      {related_jobs_title || "Latest Related Jobs For You"}
                   </Typography>

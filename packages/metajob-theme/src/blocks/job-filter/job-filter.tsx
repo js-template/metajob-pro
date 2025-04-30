@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
 import _ from "lodash"
 import {
@@ -10,8 +9,6 @@ import {
    Grid,
    Card,
    Typography,
-   Divider,
-   TextField,
    FormControl,
    Select,
    MenuItem,
@@ -20,17 +17,20 @@ import {
    Pagination,
    PaginationItem,
    Icon,
-   FormControlLabel,
-   Checkbox as MuiCheckbox,
-   Box
+   Box,
+   Drawer,
+   IconButton,
+   useMediaQuery,
+   useTheme as MuiTheme
 } from "@mui/material"
 import ListCardLoader from "./loader"
 import { JobItem } from "../../components/cards/job-item"
-import { IJobFilterData, IJobType, ISingleCategory, ISingleJob } from "./types"
+import { IFilterAttributes, IJobFilterData, IJobType, ISingleCategory, ISingleJob } from "./types"
 import { find } from "../../lib/strapi"
 import CIcon from "../../components/common/icon"
 import { SortData } from "./data"
 import { getSortParam } from "./utils"
+import JobFilterSection from "./filter"
 
 type Props = {
    block: IJobFilterData
@@ -39,19 +39,13 @@ type Props = {
    jobTypesData?: IJobType[]
    jobExperienceData?: IJobType[]
    jobSkillsData?: IJobType[]
+   jobFilterAttributes?: IFilterAttributes
 }
 
-export const JobFilterClient = ({
-   block,
-   language,
-   categoryData,
-   jobTypesData,
-   jobExperienceData,
-   jobSkillsData
-}: Props) => {
+export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props) => {
    const { theme: mode } = useTheme()
-   const searchParams = useSearchParams()
-   const router = useRouter()
+   const theme = MuiTheme()
+   const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
    // destructure  search data
    const { search, result_placeholder, card_button, style } = block || {}
@@ -77,21 +71,12 @@ export const JobFilterClient = ({
       skill_placeholder,
       type_placeholder,
       sort_placeholder,
-      button_placeholder
+      button_placeholder,
+      mobile_filter_placeholder
    } = search || {}
 
    const isRightSidebar = sidebar === "Right Sidebar"
    const isNoSidebar = sidebar === "No Sidebar"
-
-   // get params data
-   const {
-      search: urlSearch,
-      location: urlLocation,
-      category: urlCategory,
-      type: urType,
-      experience: urlExperience,
-      skills: urlSkill
-   } = Object.fromEntries(searchParams.entries())
 
    const [searchOptions, setSearchOptions] = useState({
       searchText: "",
@@ -107,89 +92,7 @@ export const JobFilterClient = ({
    const [selectedJobTypes, setSelectedJobTypes] = useState<string[]>([])
    const [selectedJobExperience, setSelectedJobExperience] = useState<string[]>([])
    const [selectedJobSkills, setSelectedJobSkills] = useState<string[]>([])
-   // Update state based on URL search params
-   useEffect(() => {
-      setSearchOptions((prevOptions) => ({
-         ...prevOptions,
-         searchText: urlSearch || prevOptions.searchText,
-         category: urlCategory || prevOptions.category,
-         location: urlLocation || prevOptions.location
-      }))
-
-      setSelectedJobTypes(urType ? urType.split(",") : [])
-      setSelectedJobExperience(urlExperience ? urlExperience.split(",") : [])
-      setSelectedJobSkills(urlSkill ? urlSkill.split(",") : [])
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [])
-
-   const handleSearchTextChange = (searchTextValue: string) => {
-      const currentParams = new URLSearchParams(searchParams)
-      if (!searchTextValue) {
-         currentParams.delete("search")
-      } else {
-         currentParams.set("search", searchTextValue)
-      }
-      router.replace(`?${currentParams.toString()}`, { scroll: false })
-      setSearchOptions({
-         ...searchOptions,
-         searchText: searchTextValue
-      })
-   }
-
-   const handleJobCategoryChange = (selectValue: string) => {
-      const currentParams = new URLSearchParams(searchParams)
-      if (!selectValue) {
-         currentParams.delete("category")
-      } else {
-         currentParams.set("category", selectValue)
-      }
-      router.replace(`?${currentParams.toString()}`, { scroll: false })
-      setSearchOptions({
-         ...searchOptions,
-         category: selectValue
-      })
-   }
-
-   const handleJobTypesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { checked, name } = event.target
-      const updatedTypes = checked ? [...selectedJobTypes, name] : selectedJobTypes.filter((type) => type !== name)
-      setSelectedJobTypes(updatedTypes)
-      const params = new URLSearchParams(searchParams)
-      if (updatedTypes.length) {
-         params.set("type", updatedTypes.join(","))
-      } else {
-         params.delete("type")
-      }
-      router.replace(`?${params.toString()}`, { scroll: false })
-   }
-
-   const handleJobExperienceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { checked, name } = event.target
-      const updatedExperience = checked
-         ? [...selectedJobExperience, name]
-         : selectedJobExperience.filter((type) => type !== name)
-      setSelectedJobExperience(updatedExperience)
-      const params = new URLSearchParams(searchParams)
-      if (updatedExperience.length) {
-         params.set("experience", updatedExperience.join(","))
-      } else {
-         params.delete("experience")
-      }
-      router.replace(`?${params.toString()}`, { scroll: false })
-   }
-
-   const handleJobSkillsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { checked, name } = event.target
-      const updatedSkills = checked ? [...selectedJobSkills, name] : selectedJobSkills.filter((type) => type !== name)
-      setSelectedJobSkills(updatedSkills)
-      const params = new URLSearchParams(searchParams)
-      if (updatedSkills.length) {
-         params.set("skills", updatedSkills.join(","))
-      } else {
-         params.delete("skills")
-      }
-      router.replace(`?${params.toString()}`, { scroll: false })
-   }
+   const [openFilter, setOpenFilter] = useState(false)
 
    const sortParam = getSortParam(searchOptions?.sort)
    //  fetch jobs from db
@@ -267,11 +170,8 @@ export const JobFilterClient = ({
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [page, searchOptions, selectedJobTypes, selectedJobExperience, selectedJobSkills])
 
-   // Handle form submission
-   const handleSubmit = (e: any) => {
-      e.preventDefault()
-      // At this point, the filters are already stored in `searchFilters` through handleChange
-      // You can trigger any additional logic here, but the form data (filters) is ready
+   const toggleDrawer = (newOpen: boolean) => () => {
+      setOpenFilter(newOpen)
    }
 
    return (
@@ -280,322 +180,25 @@ export const JobFilterClient = ({
             bgcolor: (theme) =>
                mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
          }}>
-         <Container maxWidth='lg' sx={{ py: section_padding || 6 }}>
+         <Container maxWidth='lg' sx={{ py: { xs: section_padding || 3, sm: section_padding || 6 } }}>
             <Grid container spacing={4} direction={isRightSidebar ? "row-reverse" : "row"}>
                {/* search-filter  */}
-               {!isNoSidebar && search && (
+               {!isTablet && !isNoSidebar && search && (
                   <Grid item xs={12} md={3}>
-                     <Card
-                        sx={{
-                           borderRadius: 2,
-                           p: 0
-                        }}>
-                        <Stack spacing={2} pb={3}>
-                           <Stack
-                              px={3}
-                              pt={2}
-                              direction={"row"}
-                              justifyItems={"center"}
-                              justifyContent={"space-between"}>
-                              <Typography
-                                 fontSize={16}
-                                 fontWeight={700}
-                                 sx={{
-                                    color: (theme) =>
-                                       mode === "light"
-                                          ? color || theme.palette.text.secondary
-                                          : theme.palette.text.secondary
-                                 }}>
-                                 {searchTitle}
-                              </Typography>
-                              <Typography
-                                 fontSize={16}
-                                 fontWeight={700}
-                                 sx={{
-                                    color: (theme) => theme.palette.error.main,
-                                    cursor: "pointer",
-                                    display:
-                                       searchOptions?.searchText ||
-                                       searchOptions?.location ||
-                                       searchOptions?.category ||
-                                       selectedJobTypes?.length > 0 ||
-                                       selectedJobExperience?.length > 0 ||
-                                       selectedJobSkills?.length > 0
-                                          ? "block"
-                                          : "none"
-                                 }}
-                                 onClick={(e) => {
-                                    router.replace("?", { scroll: false })
-                                    setSearchOptions({
-                                       ...searchOptions,
-                                       searchText: "",
-                                       location: "",
-                                       category: ""
-                                    })
-                                    setSelectedJobTypes([])
-                                    setSelectedJobExperience([])
-                                    setSelectedJobSkills([])
-                                 }}>
-                                 Clear
-                              </Typography>
-                           </Stack>
-                           <Divider />
-                           <Stack px={3} spacing={2} component={"form"} onSubmit={handleSubmit}>
-                              {search_placeholder && (
-                                 <TextField
-                                    sx={{
-                                       "& .MuiInputBase-root": {
-                                          border: "none",
-                                          py: "3px",
-                                          backgroundColor: (theme) => theme.palette.background.default
-                                       }
-                                    }}
-                                    placeholder={search_placeholder}
-                                    fullWidth
-                                    size='small'
-                                    value={searchOptions.searchText}
-                                    onChange={(e) => {
-                                       handleSearchTextChange(e.target.value)
-                                    }}
-                                 />
-                              )}
-                              {/* {location_placeholder && (
-                                 <TextField
-                                    sx={{
-                                       "& .MuiInputBase-root": {
-                                          border: "none",
-                                          py: "3px",
-                                          backgroundColor: (theme) => theme.palette.background.default
-                                       }
-                                    }}
-                                    placeholder={location_placeholder}
-                                    fullWidth
-                                    size='small'
-                                    value={searchOptions?.location}
-                                    onChange={(e) =>
-                                       setSearchOptions({
-                                          ...searchOptions,
-                                          location: e.target.value
-                                       })
-                                    }
-                                 />
-                              )} */}
-                              {/* category select  */}
-                              {category_placeholder && (
-                                 <FormControl fullWidth>
-                                    <Select
-                                       displayEmpty
-                                       sx={{
-                                          pl: 1.5,
-                                          //  textAlign: 'center',
-                                          color: (theme) =>
-                                             mode === "light"
-                                                ? secondary_color || theme.palette.text.secondary
-                                                : theme.palette.text.secondary,
-                                          fontWeight: 400,
-                                          fontSize: 16,
-                                          borderRadius: 2,
-                                          "& .MuiSelect-select": {
-                                             color: (theme) =>
-                                                mode === "light"
-                                                   ? secondary_color || theme.palette.text.secondary
-                                                   : theme.palette.text.secondary
-                                          },
-                                          "&.MuiOutlinedInput-root": {
-                                             border: "none",
-                                             backgroundColor: (theme) => theme.palette.background.default
-                                          }
-                                       }}
-                                       variant='outlined'
-                                       size='small'
-                                       value={searchOptions?.category || ""}
-                                       onChange={(e) => {
-                                          handleJobCategoryChange(e.target.value)
-                                       }}>
-                                       <MenuItem
-                                          value={""}
-                                          sx={{
-                                             fontSize: "16px",
-                                             color: (theme) =>
-                                                mode === "light"
-                                                   ? secondary_color || theme.palette.text.secondary
-                                                   : theme.palette.text.secondary
-                                          }}>
-                                          {category_placeholder}
-                                       </MenuItem>
-                                       {_.map(categoryData, (item) => (
-                                          <MenuItem
-                                             key={item?.id}
-                                             value={item?.title}
-                                             sx={{
-                                                fontSize: "16px",
-                                                color: (theme) =>
-                                                   mode === "light"
-                                                      ? secondary_color || theme.palette.text.secondary
-                                                      : theme.palette.text.secondary
-                                             }}>
-                                             {item?.title}
-                                          </MenuItem>
-                                       ))}
-                                    </Select>
-                                 </FormControl>
-                              )}
-                              {/* job-type check box  */}
-                              {type_placeholder && (
-                                 <Stack spacing={2}>
-                                    <Divider />
-                                    <Typography
-                                       fontSize={16}
-                                       fontWeight={700}
-                                       sx={{
-                                          color: (theme) =>
-                                             mode === "light"
-                                                ? color || theme.palette.text.secondary
-                                                : theme.palette.text.secondary
-                                       }}>
-                                       {type_placeholder || "Job Type"}
-                                    </Typography>
-                                    {_.map(jobTypesData, (typeItem: IJobType) => (
-                                       <FormControlLabel
-                                          key={typeItem?.id}
-                                          sx={{
-                                             color: (theme) =>
-                                                mode === "light"
-                                                   ? secondary_color || theme.palette.text.secondary
-                                                   : theme.palette.text.secondary
-                                          }}
-                                          control={
-                                             <MuiCheckbox
-                                                name={typeItem?.value}
-                                                checked={selectedJobTypes.includes(typeItem?.value)}
-                                                onChange={handleJobTypesChange}
-                                                icon={
-                                                   <Box
-                                                      sx={{
-                                                         bgcolor: (theme) => theme.palette.divider,
-                                                         height: 24,
-                                                         width: 24,
-                                                         transform: "scale(0.8)",
-                                                         borderRadius: 1
-                                                      }}
-                                                   />
-                                                }
-                                                sx={{ py: 0 }}
-                                                disableRipple
-                                             />
-                                          }
-                                          label={typeItem?.title}
-                                       />
-                                    ))}
-                                 </Stack>
-                              )}
-                              {/* job-experience check box  */}
-                              {experience_placeholder && (
-                                 <Stack spacing={2}>
-                                    <Divider />
-                                    <Typography
-                                       fontSize={16}
-                                       fontWeight={700}
-                                       sx={{
-                                          color: (theme) =>
-                                             mode === "light"
-                                                ? color || theme.palette.text.secondary
-                                                : theme.palette.text.secondary
-                                       }}>
-                                       {experience_placeholder || "Job Experience"}
-                                    </Typography>
-                                    {_.map(jobExperienceData, (expItem: IJobType) => (
-                                       <FormControlLabel
-                                          key={expItem?.id}
-                                          sx={{
-                                             color: (theme) =>
-                                                mode === "light"
-                                                   ? secondary_color || theme.palette.text.secondary
-                                                   : theme.palette.text.secondary
-                                          }}
-                                          control={
-                                             <MuiCheckbox
-                                                name={expItem?.value}
-                                                checked={selectedJobExperience.includes(expItem?.value)}
-                                                onChange={handleJobExperienceChange}
-                                                icon={
-                                                   <Box
-                                                      sx={{
-                                                         bgcolor: (theme) => theme.palette.divider,
-                                                         height: 24,
-                                                         width: 24,
-                                                         transform: "scale(0.8)",
-                                                         borderRadius: 1
-                                                      }}
-                                                   />
-                                                }
-                                                sx={{ py: 0 }}
-                                                disableRipple
-                                             />
-                                          }
-                                          label={expItem?.title}
-                                       />
-                                    ))}
-                                 </Stack>
-                              )}
-                              {/* job-skills check box  */}
-                              {skill_placeholder && (
-                                 <Stack spacing={2}>
-                                    <Divider />
-                                    <Typography
-                                       fontSize={16}
-                                       fontWeight={700}
-                                       sx={{
-                                          color: (theme) =>
-                                             mode === "light"
-                                                ? color || theme.palette.text.secondary
-                                                : theme.palette.text.secondary
-                                       }}>
-                                       {skill_placeholder || "Job Skills"}
-                                    </Typography>
-                                    {_.map(jobSkillsData, (skillItem: IJobType) => (
-                                       <FormControlLabel
-                                          key={skillItem?.id}
-                                          sx={{
-                                             color: (theme) =>
-                                                mode === "light"
-                                                   ? secondary_color || theme.palette.text.secondary
-                                                   : theme.palette.text.secondary
-                                          }}
-                                          control={
-                                             <MuiCheckbox
-                                                name={skillItem?.value}
-                                                checked={selectedJobSkills.includes(skillItem?.value)}
-                                                onChange={handleJobSkillsChange}
-                                                icon={
-                                                   <Box
-                                                      sx={{
-                                                         bgcolor: (theme) => theme.palette.divider,
-                                                         height: 24,
-                                                         width: 24,
-                                                         transform: "scale(0.8)",
-                                                         borderRadius: 1
-                                                      }}
-                                                   />
-                                                }
-                                                sx={{ py: 0 }}
-                                                disableRipple
-                                             />
-                                          }
-                                          label={skillItem?.title}
-                                       />
-                                    ))}
-                                 </Stack>
-                              )}
-                              {button_placeholder && <Divider />}
-                              {button_placeholder && (
-                                 <Button disabled={isLoading} variant='contained' type='submit'>
-                                    {button_placeholder}
-                                 </Button>
-                              )}
-                           </Stack>
-                        </Stack>
-                     </Card>
+                     <JobFilterSection
+                        search={search}
+                        searchOptions={searchOptions}
+                        color={color}
+                        secondary_color={secondary_color}
+                        selectedJobTypes={selectedJobTypes}
+                        selectedJobExperience={selectedJobExperience}
+                        selectedJobSkills={selectedJobSkills}
+                        setSearchOptions={setSearchOptions}
+                        setSelectedJobTypes={setSelectedJobTypes}
+                        setSelectedJobExperience={setSelectedJobExperience}
+                        setSelectedJobSkills={setSelectedJobSkills}
+                        jobFilterAttributes={jobFilterAttributes}
+                     />
                   </Grid>
                )}
                {/* product-section  */}
@@ -612,31 +215,31 @@ export const JobFilterClient = ({
                               <Skeleton component={"span"} variant='text' width={"40%"} />
                            ) : (
                               <Typography
-                                 fontSize={16}
                                  fontWeight={600}
                                  sx={{
                                     color: (theme) =>
                                        mode === "light"
                                           ? color || theme.palette.text.primary
-                                          : theme.palette.text.primary
+                                          : theme.palette.text.primary,
+                                    fontSize: { xs: 14, sm: 16 }
                                  }}
                                  component={"span"}
                                  variant='h4'
                                  pl={2}>
                                  {result_placeholder || "Total jobs found"}{" "}
                                  <Typography
-                                    fontSize={16}
                                     fontWeight={600}
                                     component={"span"}
                                     sx={{
-                                       color: (theme) => theme.palette.primary.main
+                                       color: (theme) => theme.palette.primary.main,
+                                       fontSize: { xs: 14, sm: 16 }
                                     }}>
                                     {jobsData?.length}
                                  </Typography>{" "}
                               </Typography>
                            )}
 
-                           {sort_placeholder && (
+                           {!isTablet && sort_placeholder && (
                               <FormControl>
                                  <Select
                                     displayEmpty
@@ -658,7 +261,7 @@ export const JobFilterClient = ({
                                        fontWeight: 400,
                                        fontSize: 16,
                                        borderRadius: 2,
-                                       width: 200,
+                                       width: { xs: 100, sm: 200 },
                                        textTransform: "capitalize"
                                     }}
                                     variant='standard'
@@ -698,6 +301,85 @@ export const JobFilterClient = ({
                                     ))}
                                  </Select>
                               </FormControl>
+                           )}
+                           {/* mobile-filter  */}
+                           {isTablet && (
+                              <Box>
+                                 <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+                                    <Button
+                                       variant='outlined'
+                                       onClick={toggleDrawer(true)}
+                                       sx={{
+                                          px: 3,
+                                          height: 40,
+                                          borderRadius: "999px",
+                                          textTransform: "none",
+                                          border: "1px solid",
+                                          borderColor: (theme) => theme.palette.text.secondary,
+                                          color: (theme) => theme.palette.text.secondary
+                                       }}
+                                       endIcon={
+                                          <CIcon
+                                             icon='rivet-icons:filter'
+                                             size={20}
+                                             sx={{
+                                                color: (theme) => theme.palette.text.secondary,
+                                                cursor: "pointer"
+                                             }}
+                                          />
+                                       }>
+                                       {mobile_filter_placeholder || "Filter"}
+                                    </Button>
+                                 </Box>
+                                 <Drawer
+                                    anchor='right'
+                                    open={openFilter}
+                                    onClose={toggleDrawer(false)}
+                                    slotProps={{
+                                       paper: {
+                                          sx: {
+                                             width: "100%",
+                                             backgroundColor: (theme) => theme.palette.background.default
+                                          }
+                                       }
+                                    }}>
+                                    <Box
+                                       sx={{
+                                          p: 2,
+                                          display: "flex",
+                                          justifyContent: "flex-end",
+                                          alignItems: "center"
+                                       }}>
+                                       <IconButton onClick={toggleDrawer(false)}>
+                                          <CIcon
+                                             icon='tabler:x'
+                                             size={24}
+                                             sx={{
+                                                color: theme.palette.error.main,
+                                                cursor: "pointer"
+                                             }}
+                                          />
+                                       </IconButton>
+                                    </Box>
+                                    <Box sx={{ px: 2 }}>
+                                       {/* Your sorting/filtering content here */}
+                                       <JobFilterSection
+                                          search={search}
+                                          searchOptions={searchOptions}
+                                          color={color}
+                                          secondary_color={secondary_color}
+                                          selectedJobTypes={selectedJobTypes}
+                                          selectedJobExperience={selectedJobExperience}
+                                          selectedJobSkills={selectedJobSkills}
+                                          setSearchOptions={setSearchOptions}
+                                          setSelectedJobTypes={setSelectedJobTypes}
+                                          setSelectedJobExperience={setSelectedJobExperience}
+                                          setSelectedJobSkills={setSelectedJobSkills}
+                                          jobFilterAttributes={jobFilterAttributes}
+                                       />
+                                    </Box>
+                                 </Drawer>
+                              </Box>
                            )}
                         </Stack>
                      </Card>

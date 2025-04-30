@@ -24,7 +24,7 @@ const DetailsSection = ({ data, isLoading, block }: Props) => {
    return (
       <CardContent
          sx={{
-            p: 4,
+            p: { xs: 2, md: 3 },
             display: "flex",
             flexDirection: "column",
             gap: 4

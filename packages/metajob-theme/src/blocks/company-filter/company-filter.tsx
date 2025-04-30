@@ -1,11 +1,29 @@
 "use client"
 import React, { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
-import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
+import NextLink from "next/link"
+import {
+   Container,
+   Grid,
+   Icon,
+   Pagination,
+   PaginationItem,
+   Stack,
+   useMediaQuery,
+   useTheme as MuiTheme,
+   Card,
+   Skeleton,
+   Typography,
+   Button,
+   Box,
+   Drawer,
+   IconButton
+} from "@mui/material"
 import CompanyFilterSection from "./filter"
 import { ICompanyFilterBlockData, ICompanyFilterProps, ISingleCategory, ISingleCompany } from "./types"
 import CompanyList from "./company-list"
 import { find } from "../../lib/strapi"
+import CIcon from "../../components/common/icon"
 
 type Props = {
    block: ICompanyFilterBlockData
@@ -15,8 +33,10 @@ type Props = {
 
 const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
    const { theme: mode } = useTheme()
+   const theme = MuiTheme()
+   const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
-   const { title, description, search, empty, style } = block || {}
+   const { title, result_placeholder, add_company_button, description, search, empty, style } = block || {}
    const {
       backgroundColor,
       color,
@@ -45,6 +65,11 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
    const [isLoading, setIsLoading] = useState(false)
    const [totalPage, setTotalPage] = useState(0)
    const [companyError, setCompanyError] = useState(null)
+   const [openFilter, setOpenFilter] = useState(false)
+   // filter toggle handler
+   const toggleFilter = (newOpen: boolean) => () => {
+      setOpenFilter(newOpen)
+   }
 
    //  fetch company from db
    useEffect(() => {
@@ -105,9 +130,9 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
             bgcolor: (theme) =>
                mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
          }}>
-         <Container maxWidth='lg' sx={{ py: section_padding || 6 }}>
+         <Container maxWidth='lg' sx={{ py: { xs: section_padding || 3, sm: section_padding || 6 } }}>
             <Grid container spacing={4} direction={isRightSidebar ? "row-reverse" : "row"}>
-               {!isNoSidebar && (
+               {!isTablet && !isNoSidebar && (
                   <Grid item xs={12} md={3}>
                      <CompanyFilterSection
                         search={search}
@@ -120,18 +145,141 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
                      />
                   </Grid>
                )}
-
                {/* cards and pagination  */}
                <Grid item xs={12} md={!isNoSidebar ? 9 : 12}>
                   <Stack spacing={4}>
-                     <CompanyList
-                        companies={companyData}
-                        loading={isLoading}
-                        error={companyError}
-                        block={block}
-                        color={color}
-                        secondary_color={secondary_color}
-                     />
+                     <Stack spacing={2}>
+                        <Card
+                           sx={{
+                              borderRadius: 2,
+                              p: 1,
+                              boxShadow: 0
+                           }}>
+                           <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                              {isLoading ? (
+                                 <Skeleton variant='text' width={"40%"} />
+                              ) : (
+                                 <Typography
+                                    fontWeight={600}
+                                    sx={{
+                                       color: (theme) =>
+                                          mode === "light"
+                                             ? color || theme.palette.text.primary
+                                             : theme.palette.text.primary,
+                                       fontSize: { xs: 14, sm: 16 }
+                                    }}
+                                    component={"span"}
+                                    variant='h4'
+                                    pl={2}>
+                                    {result_placeholder || "Total company found"}{" "}
+                                    <Typography
+                                       fontWeight={600}
+                                       component={"span"}
+                                       sx={{
+                                          color: (theme) => theme.palette.primary.main,
+                                          fontSize: { xs: 14, sm: 16 }
+                                       }}>
+                                       {companyData?.length}
+                                    </Typography>
+                                 </Typography>
+                              )}
+                              {/* mobile-filter  */}
+                              {isTablet && (
+                                 <Box>
+                                    <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+                                       <Button
+                                          variant='outlined'
+                                          onClick={toggleFilter(true)}
+                                          sx={{
+                                             px: 3,
+                                             height: 40,
+                                             borderRadius: "999px",
+                                             textTransform: "none",
+                                             border: "1px solid",
+                                             borderColor: (theme) => theme.palette.text.secondary,
+                                             color: (theme) => theme.palette.text.secondary
+                                          }}
+                                          endIcon={
+                                             <CIcon
+                                                icon='rivet-icons:filter'
+                                                size={20}
+                                                sx={{
+                                                   color: (theme) => theme.palette.text.secondary,
+                                                   cursor: "pointer"
+                                                }}
+                                             />
+                                          }>
+                                          {search?.mobile_filter_placeholder || "Filter"}
+                                       </Button>
+                                    </Box>
+                                    <Drawer
+                                       anchor='right'
+                                       open={openFilter}
+                                       onClose={toggleFilter(false)}
+                                       slotProps={{
+                                          paper: {
+                                             sx: {
+                                                width: "100%",
+                                                backgroundColor: (theme) => theme.palette.background.default
+                                             }
+                                          }
+                                       }}>
+                                       <Box
+                                          sx={{
+                                             p: 2,
+                                             display: "flex",
+                                             justifyContent: "flex-end",
+                                             alignItems: "center"
+                                          }}>
+                                          <IconButton onClick={toggleFilter(false)}>
+                                             <CIcon
+                                                icon='tabler:x'
+                                                size={24}
+                                                sx={{
+                                                   color: theme.palette.error.main,
+                                                   cursor: "pointer"
+                                                }}
+                                             />
+                                          </IconButton>
+                                       </Box>
+                                       <Box sx={{ px: 2 }}>
+                                          {/* Your sorting/filtering content here */}
+                                          <CompanyFilterSection
+                                             search={search}
+                                             formData={formData}
+                                             setFormData={setFormData}
+                                             loading={isLoading}
+                                             categoryData={categoryData}
+                                             color={color}
+                                             secondary_color={secondary_color}
+                                          />
+                                       </Box>
+                                    </Drawer>
+                                 </Box>
+                              )}
+
+                              {!isTablet && add_company_button && (
+                                 <Button
+                                    component={NextLink}
+                                    href={add_company_button?.link || "/dashboard/manage-jobs"}
+                                    target={add_company_button?.target ?? "_self"}
+                                    sx={{ fontSize: 14, fontWeight: 400 }}
+                                    variant='contained'
+                                    color='primary'>
+                                    {add_company_button?.label || "Add Your Company"}
+                                 </Button>
+                              )}
+                           </Stack>
+                        </Card>
+                        <CompanyList
+                           companies={companyData}
+                           loading={isLoading}
+                           error={companyError}
+                           block={block}
+                           color={color}
+                           secondary_color={secondary_color}
+                        />
+                     </Stack>
                      {/* pagination  */}
                      {!companyError && totalPage > 0 && (
                         <Stack

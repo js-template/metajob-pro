@@ -23,7 +23,8 @@ const OpenJobs = ({ block, openJobsData }: Props) => {
             fontSize={24}
             sx={{
                color: (theme) =>
-                  mode === "light" ? header_color || theme.palette.primary.main : theme.palette.primary.main
+                  mode === "light" ? header_color || theme.palette.primary.main : theme.palette.primary.main,
+               textAlign: { xs: "center", sm: "left" }
             }}>
             {open_jobs_title || "Open Job"}
          </Typography>

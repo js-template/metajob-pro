@@ -37,6 +37,9 @@
     },
     "button_placeholder": {
       "type": "string"
+    },
+    "mobile_filter_placeholder": {
+      "type": "string"
     }
   }
 }
