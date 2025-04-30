@@ -11,8 +11,6 @@ type Props = {
 }
 
 export const JobCategoryOverlay = async ({ block, language }: Props) => {
-   const show_icon = true
-   const overlay = false
    const { data: categoryOverlayData } = await find("api/metajob-backend/job-categories", {
       populate: {
          image: {

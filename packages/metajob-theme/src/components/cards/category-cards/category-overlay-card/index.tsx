@@ -78,7 +78,7 @@ export const CategoryOverlayCardItem = ({ data, button_label, color, backgroundC
                      transition: "0.6s"
                   }}>
                   <Box sx={{ height: "100%", width: "100%" }}>
-                     <Image style={{ width: "100%" }} src={logo} alt='' height={220} width={500} />
+                     <Image style={{ width: "100%" }} src={logo} alt='image' height={220} width={500} />
                   </Box>
                </Box>
             </Box>

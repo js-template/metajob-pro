@@ -2271,6 +2271,12 @@ export interface PluginPadmaBackendPublicPage
         'metajob-block.page-header',
         'metajob-block.public-package',
         'metajob-block.category-filter',
+        'metajob-block.pricing',
+        'metajob-block.portfolio',
+        'metajob-block.job-category-overlay',
+        'metajob-block.job-category',
+        'metajob-block.job-card',
+        'metajob-block.job-banner',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
