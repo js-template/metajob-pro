@@ -137,6 +137,7 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
    return (
       <Card
          sx={{
+            position: "relative",
             borderRadius: 2,
             p: 3
          }}>
@@ -283,47 +284,55 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
                </Stack>
             </Grid>
             <Grid item xs={12} sm={4}>
-               <Stack display={"flex"} alignItems={"flex-end"} gap={1.5}>
-                  {bookmarkLoading ? (
-                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
-                        <IconButton color='primary'>
-                           <CircularProgress
-                              size={20}
-                              sx={{
-                                 color: (theme) => theme.palette.primary.main
-                              }}
-                           />
-                        </IconButton>
-                     </Stack>
-                  ) : (
-                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
-                        {isBookmarked ? (
-                           <IconButton onClick={companyBookmarkHandler} color='primary'>
-                              <CIcon
-                                 icon='mdi:heart'
-                                 size={24}
+               <Stack display={"flex"} alignItems={{ xs: "center", md: "flex-end" }} gap={1.5}>
+                  {/* bookmark button  */}
+                  <Box
+                     sx={{
+                        position: "absolute",
+                        top: 5,
+                        right: 3
+                     }}>
+                     {bookmarkLoading ? (
+                        <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                           <IconButton color='primary'>
+                              <CircularProgress
+                                 size={20}
                                  sx={{
-                                    cursor: "pointer",
-                                    color: "primary.main"
+                                    color: (theme) => theme.palette.primary.main
                                  }}
                               />
                            </IconButton>
-                        ) : (
-                           <IconButton onClick={companyBookmarkHandler} color='primary'>
-                              <CIcon
-                                 icon='mdi:heart-outline'
-                                 size={24}
-                                 color='text.primary'
-                                 sx={{
-                                    color: "primary.main",
-                                    cursor: "pointer"
-                                 }}
-                              />
-                           </IconButton>
-                        )}
-                     </Stack>
-                  )}
-                  <Stack display={"flex"} alignItems={"flex-end"}>
+                        </Stack>
+                     ) : (
+                        <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                           {isBookmarked ? (
+                              <IconButton onClick={companyBookmarkHandler} color='primary'>
+                                 <CIcon
+                                    icon='mdi:heart'
+                                    size={24}
+                                    sx={{
+                                       cursor: "pointer",
+                                       color: "primary.main"
+                                    }}
+                                 />
+                              </IconButton>
+                           ) : (
+                              <IconButton onClick={companyBookmarkHandler} color='primary'>
+                                 <CIcon
+                                    icon='mdi:heart-outline'
+                                    size={24}
+                                    color='text.primary'
+                                    sx={{
+                                       color: "primary.main",
+                                       cursor: "pointer"
+                                    }}
+                                 />
+                              </IconButton>
+                           )}
+                        </Stack>
+                     )}
+                  </Box>
+                  <Stack display={"flex"} alignItems={{ xs: "center", md: "flex-end" }}>
                      {email && (
                         <Typography
                            component={NextLink}
