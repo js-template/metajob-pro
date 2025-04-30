@@ -1,11 +1,29 @@
 "use client"
 import { useTheme } from "next-themes"
-import { Container, Grid, Icon, Pagination, PaginationItem, Stack } from "@mui/material"
+import NextLink from "next/link"
+import {
+   Container,
+   Grid,
+   Icon,
+   Pagination,
+   PaginationItem,
+   Stack,
+   useMediaQuery,
+   useTheme as MuiTheme,
+   Card,
+   Skeleton,
+   Typography,
+   Button,
+   Box,
+   Drawer,
+   IconButton
+} from "@mui/material"
 import { useEffect, useState } from "react"
 import CandidateFilterSection from "./filter"
 import { ICandidateFilterBlock, ICandidateFilterProps, ISingleCandidate, ISingleCategory } from "./types"
 import CandidateLists from "./lists"
 import { find } from "../../lib/strapi"
+import CIcon from "../../components/common/icon"
 
 type Props = {
    block: ICandidateFilterBlock
@@ -16,8 +34,10 @@ type Props = {
 
 const CandidateFilterClient = ({ block, language, categoryData, skillsData }: Props) => {
    const { theme: mode } = useTheme()
+   const theme = MuiTheme()
+   const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
-   const { search, empty, style } = block || {}
+   const { search, empty, style, result_placeholder, upload_resume_button } = block || {}
    const {
       backgroundColor,
       color,
@@ -45,6 +65,11 @@ const CandidateFilterClient = ({ block, language, categoryData, skillsData }: Pr
    const [isLoading, setIsLoading] = useState(false)
    const [totalPage, setTotalPage] = useState(0)
    const [resumeError, setResumeError] = useState(null)
+   const [openFilter, setOpenFilter] = useState(false)
+   // filter toggle handler
+   const toggleFilter = (newOpen: boolean) => () => {
+      setOpenFilter(newOpen)
+   }
 
    //  fetch resume from db
    useEffect(() => {
@@ -136,9 +161,9 @@ const CandidateFilterClient = ({ block, language, categoryData, skillsData }: Pr
             bgcolor: (theme) =>
                mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
          }}>
-         <Container maxWidth='lg' sx={{ py: section_padding || 6 }}>
+         <Container maxWidth='lg' sx={{ py: { xs: section_padding || 3, sm: section_padding || 6 } }}>
             <Grid container spacing={4} direction={isRightSidebar ? "row-reverse" : "row"}>
-               {!isNoSidebar && (
+               {!isTablet && !isNoSidebar && (
                   <Grid item xs={12} md={3}>
                      <CandidateFilterSection
                         search={search}
@@ -155,15 +180,140 @@ const CandidateFilterClient = ({ block, language, categoryData, skillsData }: Pr
                )}
                <Grid item xs={12} md={!isNoSidebar ? 9 : 12}>
                   <Stack spacing={4}>
-                     <CandidateLists
-                        loading={isLoading}
-                        error={resumeError}
-                        data={resumeData ?? []}
-                        block={block}
-                        color={color}
-                        secondary_color={secondary_color}
-                        skillsData={skillsData}
-                     />
+                     <Stack spacing={2}>
+                        <Card
+                           sx={{
+                              borderRadius: 2,
+                              p: 1,
+                              boxShadow: 0
+                           }}>
+                           <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                              {isLoading ? (
+                                 <Skeleton variant='text' width={"40%"} />
+                              ) : (
+                                 <Typography
+                                    fontWeight={600}
+                                    sx={{
+                                       color: (theme) =>
+                                          mode === "light"
+                                             ? color || theme.palette.text.primary
+                                             : theme.palette.text.primary,
+                                       fontSize: { xs: 14, sm: 16 }
+                                    }}
+                                    component={"span"}
+                                    variant='h4'
+                                    pl={2}>
+                                    {result_placeholder || "Total candidate found"}{" "}
+                                    <Typography
+                                       fontWeight={600}
+                                       component={"span"}
+                                       sx={{
+                                          color: (theme) => theme.palette.primary.main,
+                                          fontSize: { xs: 14, sm: 16 }
+                                       }}>
+                                       {resumeData?.length}
+                                    </Typography>{" "}
+                                 </Typography>
+                              )}
+                              {isTablet && (
+                                 <Box>
+                                    <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+                                       <Button
+                                          variant='outlined'
+                                          onClick={toggleFilter(true)}
+                                          sx={{
+                                             px: 3,
+                                             height: 40,
+                                             borderRadius: "999px",
+                                             textTransform: "none",
+                                             border: "1px solid",
+                                             borderColor: (theme) => theme.palette.text.secondary,
+                                             color: (theme) => theme.palette.text.secondary
+                                          }}
+                                          endIcon={
+                                             <CIcon
+                                                icon='rivet-icons:filter'
+                                                size={20}
+                                                sx={{
+                                                   color: (theme) => theme.palette.text.secondary,
+                                                   cursor: "pointer"
+                                                }}
+                                             />
+                                          }>
+                                          Filter
+                                       </Button>
+                                    </Box>
+                                    <Drawer
+                                       anchor='right'
+                                       open={openFilter}
+                                       onClose={toggleFilter(false)}
+                                       slotProps={{
+                                          paper: {
+                                             sx: {
+                                                width: "100%",
+                                                backgroundColor: (theme) => theme.palette.background.default
+                                             }
+                                          }
+                                       }}>
+                                       <Box
+                                          sx={{
+                                             p: 2,
+                                             display: "flex",
+                                             justifyContent: "flex-end",
+                                             alignItems: "center"
+                                          }}>
+                                          <IconButton onClick={toggleFilter(false)}>
+                                             <CIcon
+                                                icon='tabler:x'
+                                                size={24}
+                                                sx={{
+                                                   color: theme.palette.error.main,
+                                                   cursor: "pointer"
+                                                }}
+                                             />
+                                          </IconButton>
+                                       </Box>
+                                       <Box sx={{ px: 2 }}>
+                                          {/* Your sorting/filtering content here */}
+                                          <CandidateFilterSection
+                                             search={search}
+                                             filterFormData={formData}
+                                             setFilterFormData={setFilterFormData}
+                                             // handleSubmitForm={handleSubmitForm}
+                                             loading={isLoading}
+                                             categoryData={categoryData}
+                                             skillsData={skillsData}
+                                             color={color}
+                                             secondary_color={secondary_color}
+                                          />
+                                       </Box>
+                                    </Drawer>
+                                 </Box>
+                              )}
+
+                              {!isTablet && upload_resume_button && (
+                                 <Button
+                                    component={NextLink}
+                                    href={upload_resume_button?.link || "/dashboard/manage-resume"}
+                                    target={upload_resume_button?.target ?? "_self"}
+                                    sx={{ fontSize: 14, fontWeight: 400 }}
+                                    variant='contained'
+                                    color='primary'>
+                                    {upload_resume_button?.label || "Upload Your Resume"}
+                                 </Button>
+                              )}
+                           </Stack>
+                        </Card>
+                        <CandidateLists
+                           loading={isLoading}
+                           error={resumeError}
+                           data={resumeData ?? []}
+                           block={block}
+                           color={color}
+                           secondary_color={secondary_color}
+                           skillsData={skillsData}
+                        />
+                     </Stack>
                      {/* pagination */}
                      {!resumeError && !isLoading && totalPage > 0 && (
                         <Stack

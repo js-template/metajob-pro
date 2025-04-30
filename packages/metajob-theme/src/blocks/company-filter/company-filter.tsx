@@ -258,17 +258,6 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
                                  </Box>
                               )}
 
-                              {/* {isTablet && (
-                                 <CompanyFilterSection
-                                    search={search}
-                                    formData={formData}
-                                    setFormData={setFormData}
-                                    loading={isLoading}
-                                    categoryData={categoryData}
-                                    color={color}
-                                    secondary_color={secondary_color}
-                                 />
-                              )} */}
                               {!isTablet && add_company_button && (
                                  <Button
                                     component={NextLink}
