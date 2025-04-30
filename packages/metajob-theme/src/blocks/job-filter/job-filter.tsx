@@ -71,7 +71,8 @@ export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props)
       skill_placeholder,
       type_placeholder,
       sort_placeholder,
-      button_placeholder
+      button_placeholder,
+      mobile_filter_placeholder
    } = search || {}
 
    const isRightSidebar = sidebar === "Right Sidebar"
@@ -301,6 +302,7 @@ export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props)
                                  </Select>
                               </FormControl>
                            )}
+                           {/* mobile-filter  */}
                            {isTablet && (
                               <Box>
                                  <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
@@ -326,7 +328,7 @@ export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props)
                                              }}
                                           />
                                        }>
-                                       Filter
+                                       {mobile_filter_placeholder || "Filter"}
                                     </Button>
                                  </Box>
                                  <Drawer

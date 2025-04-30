@@ -215,6 +215,7 @@ const CandidateFilterClient = ({ block, language, categoryData, skillsData }: Pr
                                     </Typography>{" "}
                                  </Typography>
                               )}
+                              {/* mobile-filter  */}
                               {isTablet && (
                                  <Box>
                                     <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
@@ -240,7 +241,7 @@ const CandidateFilterClient = ({ block, language, categoryData, skillsData }: Pr
                                                 }}
                                              />
                                           }>
-                                          Filter
+                                          {search?.mobile_filter_placeholder || "Filter"}
                                        </Button>
                                     </Box>
                                     <Drawer

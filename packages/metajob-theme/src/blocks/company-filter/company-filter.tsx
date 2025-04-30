@@ -183,7 +183,7 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
                                     </Typography>
                                  </Typography>
                               )}
-
+                              {/* mobile-filter  */}
                               {isTablet && (
                                  <Box>
                                     <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
@@ -209,7 +209,7 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
                                                 }}
                                              />
                                           }>
-                                          Filter
+                                          {search?.mobile_filter_placeholder || "Filter"}
                                        </Button>
                                     </Box>
                                     <Drawer
