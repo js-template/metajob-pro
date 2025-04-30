@@ -7,6 +7,7 @@ import { Avatar, Box, Divider, Stack, Typography } from "@mui/material"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 import { Card } from "../../components/common/card"
 import { ISinglePost } from "./types"
+import { getNameFromEmail } from "./hook"
 
 type Props = {
    data: ISinglePost
@@ -18,7 +19,7 @@ const BlogContent = ({ data, color, secondary_color }: Props) => {
    const { theme: mode } = useTheme()
 
    const { title, publishedAt, featuredImage, description, user, post_categories } = data || {}
-   const username = user?.username || ""
+   const username = user?.first_name || getNameFromEmail(user?.email) || ""
    const avatar = user?.avatar?.url || ""
    const image = featuredImage?.url || ""
    const { title: categoryTitle } = post_categories?.[0] || ""
@@ -60,10 +61,10 @@ const BlogContent = ({ data, color, secondary_color }: Props) => {
                {username && (
                   <Typography
                      fontWeight={400}
-                     fontSize={16}
                      sx={{
                         color: (theme) =>
-                           mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                           mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
+                        fontSize: { xs: 14, md: 16 }
                      }}>
                      {username}
                   </Typography>
@@ -71,10 +72,10 @@ const BlogContent = ({ data, color, secondary_color }: Props) => {
                {publishedAt && (
                   <Typography
                      fontWeight={400}
-                     fontSize={16}
                      sx={{
                         color: (theme) =>
-                           mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                           mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
+                        fontSize: { xs: 14, md: 16 }
                      }}>
                      {moment(publishedAt).format("DD MMMM YYYY")}
                   </Typography>
