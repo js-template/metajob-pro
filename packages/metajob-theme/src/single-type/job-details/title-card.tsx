@@ -283,7 +283,7 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                         </Avatar>
                      )}
 
-                     <Stack spacing={2}>
+                     <Stack spacing={3}>
                         <Stack spacing={1} sx={{ textAlign: { xs: "center", sm: "left" } }}>
                            {title && (
                               <Typography
@@ -326,7 +326,7 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                               xs: "column",
                               sm: "row"
                            }}
-                           gap={4}
+                           gap={{ xs: 2, sm: 4 }}
                            display={"flex"}
                            alignItems={"center"}>
                            <Typography

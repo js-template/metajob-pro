@@ -146,9 +146,10 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
                <Stack
                   direction={{
                      sm: "row",
-                     xs: "column"
+                     xs: "row"
                   }}
                   alignItems={"center"}
+                  justifyContent={{ xs: "center", sm: "flex-start" }}
                   gap={4}>
                   {/* logo  */}
                   <Stack
