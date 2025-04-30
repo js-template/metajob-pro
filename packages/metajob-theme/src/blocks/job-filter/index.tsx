@@ -33,6 +33,13 @@ export const JobFilter = async ({ block, language }: Props) => {
       locale: language ?? "en"
    })
 
+   const jobFilterAttributes = {
+      categoryData: categoryDataAll?.data,
+      jobTypesData: jobTypesDataAll?.data,
+      jobExperienceData: experienceDataAll?.data,
+      jobSkillsData: skillsDataAll?.data
+   }
+
    return (
       <JobFilterClient
          block={block}
@@ -41,6 +48,7 @@ export const JobFilter = async ({ block, language }: Props) => {
          jobExperienceData={experienceDataAll?.data}
          jobSkillsData={skillsDataAll?.data}
          language={language}
+         jobFilterAttributes={jobFilterAttributes}
       />
    )
 }

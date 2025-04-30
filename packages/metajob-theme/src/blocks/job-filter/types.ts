@@ -67,3 +67,10 @@ export type ISingleJob = {
       }
    }
 }
+
+export type IFilterAttributes = {
+   categoryData?: ISingleCategory[]
+   jobTypesData?: IJobType[]
+   jobExperienceData?: IJobType[]
+   jobSkillsData?: IJobType[]
+}
