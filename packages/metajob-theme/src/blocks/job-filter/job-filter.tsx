@@ -45,6 +45,7 @@ type Props = {
 export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props) => {
    const { theme: mode } = useTheme()
    const theme = MuiTheme()
+   const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
    // destructure  search data
    const { search, result_placeholder, card_button, style } = block || {}
@@ -90,6 +91,7 @@ export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props)
    const [selectedJobTypes, setSelectedJobTypes] = useState<string[]>([])
    const [selectedJobExperience, setSelectedJobExperience] = useState<string[]>([])
    const [selectedJobSkills, setSelectedJobSkills] = useState<string[]>([])
+   const [openFilter, setOpenFilter] = useState(false)
 
    const sortParam = getSortParam(searchOptions?.sort)
    //  fetch jobs from db
@@ -167,12 +169,9 @@ export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props)
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [page, searchOptions, selectedJobTypes, selectedJobExperience, selectedJobSkills])
 
-   const [openFilter, setOpenFilter] = useState(false)
    const toggleDrawer = (newOpen: boolean) => () => {
       setOpenFilter(newOpen)
    }
-
-   const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
    return (
       <Stack
@@ -337,7 +336,8 @@ export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props)
                                     slotProps={{
                                        paper: {
                                           sx: {
-                                             width: "100%"
+                                             width: "100%",
+                                             backgroundColor: (theme) => theme.palette.background.default
                                           }
                                        }
                                     }}>

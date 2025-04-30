@@ -1,6 +1,5 @@
 "use client"
-
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
 import _ from "lodash"
@@ -188,7 +187,9 @@ const JobFilterSection = ({
       <Card
          sx={{
             borderRadius: 2,
-            p: 0
+            p: 0,
+            backgroundColor: "background.paper",
+            boxShadow: 0
          }}>
          <Stack spacing={2} pb={3}>
             <Stack px={3} pt={2} direction={"row"} justifyItems={"center"} justifyContent={"space-between"}>
