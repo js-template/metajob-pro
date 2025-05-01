@@ -69,7 +69,8 @@ export const JobItem = ({ data, button_label, color, secondary_color, vacancy_pl
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: theme.palette.divider,
-            p: "20px 30px 30px 30px ",
+            px: { xs: 1.5, sm: 3, md: 4 },
+            py: 2.5,
             borderRadius: 2,
             "&:hover": {
                borderColor: theme.palette.primary.main,
@@ -83,7 +84,7 @@ export const JobItem = ({ data, button_label, color, secondary_color, vacancy_pl
                transform: "scale(1.1)"
             },
             bgcolor: theme.palette.background.paper,
-            height: "430px",
+            height: "100%",
             position: "relative"
          }}>
          {is_featured && (
@@ -93,7 +94,8 @@ export const JobItem = ({ data, button_label, color, secondary_color, vacancy_pl
                sx={{
                   color: theme.palette.primary.main,
                   position: "absolute",
-                  right: "20px"
+                  right: "20px",
+                  top: { xs: 16, md: 20 }
                }}
             />
          )}
@@ -106,9 +108,10 @@ export const JobItem = ({ data, button_label, color, secondary_color, vacancy_pl
                   borderRadius: 1,
                   width: "fit-content",
                   position: "absolute",
-                  left: "20px"
+                  left: { xs: 16, md: 20 },
+                  top: { xs: 16, md: 20 }
                }}>
-               <Typography fontSize={14} fontWeight={400} color={getTagsLabelColor(type?.title, theme)}>
+               <Typography fontSize={{ xs: 12, md: 14 }} fontWeight={400} color={getTagsLabelColor(type?.title, theme)}>
                   {type?.title}
                </Typography>
             </Card>
@@ -120,16 +123,16 @@ export const JobItem = ({ data, button_label, color, secondary_color, vacancy_pl
                justifyContent: "center",
                alignItems: "center",
                transition: "0.6s",
-               pt: "30px",
-               pb: "20px"
+               pt: { xs: 3.5, md: 4 },
+               pb: { xs: 1.5, sm: 2, md: 2.5 }
             }}>
             <Avatar
                src={image}
                alt='avatar'
                sx={{
-                  width: "100px",
-                  height: "100px",
-                  borderRadius: "12px"
+                  width: { xs: "60px", sm: "80px", md: "100px" },
+                  height: { xs: "60px", sm: "80px", md: "100px" },
+                  borderRadius: { xs: "8px", md: "12px" }
                }}>
                {companyName?.charAt(0) || ""}
             </Avatar>
@@ -137,11 +140,11 @@ export const JobItem = ({ data, button_label, color, secondary_color, vacancy_pl
          <Box>
             {title && (
                <Typography
-                  fontSize={18}
                   fontWeight={400}
                   textAlign={"center"}
                   sx={{
                      mb: "4px",
+                     fontSize: { xs: 16, md: 18 },
                      color: mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
                      // line clamp 1
                      display: "-webkit-box",
@@ -203,7 +206,7 @@ export const JobItem = ({ data, button_label, color, secondary_color, vacancy_pl
                </Stack>
             )} */}
          </Box>
-         <Stack sx={{ mb: 3, mt: 4 }} spacing={"10px"}>
+         <Stack sx={{ mb: { xs: 2, md: 3 }, mt: { xs: 2, md: 4 } }} gap={{ xs: 1, md: 1.5 }}>
             {vacancy && (
                <Stack direction={"row"} gap={2} alignItems={"center"}>
                   <Icon
@@ -278,7 +281,7 @@ export const JobItem = ({ data, button_label, color, secondary_color, vacancy_pl
             component={NextLink}
             href={`/job/${slug}`}
             sx={{
-               fontSize: "16px",
+               fontSize: { xs: 14, md: 16 },
                bgcolor: theme.palette.background.default,
                color: mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled,
                "&:hover": {

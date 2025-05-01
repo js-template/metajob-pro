@@ -9,7 +9,7 @@ const JobCategoryLoader = () => {
    return (
       <Stack bgcolor={theme.palette.background.default}>
          <Container maxWidth='lg'>
-            <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={8} gap={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
                <Stack spacing={1} direction={"column"}>
                   <Skeleton variant='rectangular' width={330} height={24} />

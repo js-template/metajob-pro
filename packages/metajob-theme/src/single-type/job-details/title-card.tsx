@@ -259,38 +259,39 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
             sx={{
                position: "relative",
                borderRadius: 2,
-               p: 2
+               px: { xs: 1.5, md: 2 },
+               py: { xs: 3, md: 2 }
             }}>
-            <Grid container spacing={4} alignItems={"center"}>
+            <Grid container spacing={{ xs: 2.5, md: 4 }} alignItems={"center"}>
                <Grid item xs={12} sm={8}>
                   <Stack
                      direction={{
                         sm: "row",
-                        xs: "column"
+                        xs: "row"
                      }}
-                     alignItems={"center"}
-                     gap={4}>
+                     alignItems={{ xs: "flex-start", sm: "center" }}
+                     gap={{ xs: 1, sm: 4 }}>
                      {logo && (
                         <Avatar
                            src={logo}
                            alt={companyName || "company-logo"}
                            sx={{
-                              width: 100,
-                              height: 100,
+                              width: { xs: 70, sm: 80, md: 100 },
+                              height: { xs: 70, sm: 80, md: 100 },
                               fontWeight: 700
                            }}>
                            {companyName?.charAt(0) || ""}
                         </Avatar>
                      )}
 
-                     <Stack spacing={3}>
+                     <Stack spacing={{ xs: 2, md: 3 }}>
                         <Stack spacing={1} sx={{ textAlign: { xs: "center", sm: "left" } }}>
                            {title && (
                               <Typography
                                  variant={"h4"}
                                  fontWeight={700}
-                                 fontSize={24}
                                  sx={{
+                                    fontSize: { xs: 20, md: 24 },
                                     color: (theme) =>
                                        mode === "light"
                                           ? color || theme.palette.text.primary
@@ -326,7 +327,7 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                               xs: "column",
                               sm: "row"
                            }}
-                           gap={{ xs: 2, sm: 4 }}
+                           gap={{ xs: 1, sm: 4 }}
                            display={"flex"}
                            alignItems={"center"}>
                            <Typography
