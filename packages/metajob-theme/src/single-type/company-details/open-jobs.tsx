@@ -31,7 +31,7 @@ const OpenJobs = ({ block, openJobsData }: Props) => {
          <Stack>
             {/* {openJobsData && openJobsData?.data?.length > 0 && ( */}
             {openJobsData && openJobsData?.length > 0 && (
-               <Grid container spacing={2}>
+               <Grid container gap={{ xs: 1, md: 2 }}>
                   {openJobsData?.slice(0, 4)?.map((item: ISingleJob) => (
                      <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item.id}>
                         <JobItem

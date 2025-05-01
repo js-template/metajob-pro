@@ -139,18 +139,18 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
          sx={{
             position: "relative",
             borderRadius: 2,
-            p: 3
+            px: { xs: 1.5, md: 2 },
+            py: { xs: 3, md: 2 }
          }}>
-         <Grid container spacing={4} alignItems={"center"}>
+         <Grid container spacing={{ xs: 2.5, md: 4 }} alignItems={"center"}>
             <Grid item xs={12} sm={8}>
                <Stack
                   direction={{
                      sm: "row",
                      xs: "row"
                   }}
-                  alignItems={"center"}
-                  justifyContent={{ xs: "center", sm: "flex-start" }}
-                  gap={4}>
+                  alignItems={{ xs: "flex-start", sm: "center" }}
+                  gap={{ xs: 2, sm: 4 }}>
                   {/* logo  */}
                   <Stack
                      sx={{
@@ -161,8 +161,8 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
                         src={companyLogo}
                         alt={name || "companyLogo"}
                         sx={{
-                           width: 100,
-                           height: 100,
+                           width: { xs: 70, sm: 80, md: 100 },
+                           height: { xs: 70, sm: 80, md: 100 },
                            fontWeight: 700,
                            fontSize: "30px"
                         }}>
@@ -170,10 +170,10 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
                      </Avatar>
                   </Stack>
                   <Stack spacing={1.5}>
-                     <Stack>
+                     <Stack spacing={{ xs: 0.5, md: 1 }}>
                         {name && (
                            <Typography
-                              variant={"h1"}
+                              variant={"h4"}
                               fontWeight={700}
                               fontSize={20}
                               sx={{
