@@ -363,19 +363,19 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                            />
                            <Stack spacing={1}>
                               <Typography
-                                 variant={"h1"}
-                                 fontWeight={700}
+                                 variant={"h4"}
                                  sx={{
                                     color: (theme) =>
                                        mode === "light"
                                           ? color || theme.palette.text.primary
                                           : theme.palette.text.primary,
-                                    fontSize: { xs: 20, sm: 28, md: 32 }
+                                    fontSize: { xs: 20, sm: 28, md: 32 },
+                                    fontWeight: { xs: 500, sm: 700 }
                                  }}>
                                  {countData?.job}+
                               </Typography>
                               <Typography
-                                 variant={"h4"}
+                                 variant={"h6"}
                                  fontSize={16}
                                  fontWeight={500}
                                  sx={{
@@ -414,19 +414,19 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
 
                            <Stack spacing={1}>
                               <Typography
-                                 variant={"h1"}
-                                 fontWeight={700}
+                                 variant={"h4"}
                                  sx={{
                                     color: (theme) =>
                                        mode === "light"
                                           ? color || theme.palette.text.primary
                                           : theme.palette.text.primary,
-                                    fontSize: { xs: 20, sm: 28, md: 32 }
+                                    fontSize: { xs: 20, sm: 28, md: 32 },
+                                    fontWeight: { xs: 500, sm: 700 }
                                  }}>
                                  {countData?.company}+
                               </Typography>
                               <Typography
-                                 variant={"h4"}
+                                 variant={"h6"}
                                  fontWeight={500}
                                  sx={{
                                     color: (theme) =>
@@ -464,19 +464,19 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
 
                            <Stack spacing={1}>
                               <Typography
-                                 variant={"h1"}
-                                 fontWeight={700}
+                                 variant={"h4"}
                                  sx={{
                                     color: (theme) =>
                                        mode === "light"
                                           ? color || theme.palette.text.primary
                                           : theme.palette.text.primary,
-                                    fontSize: { xs: 20, sm: 28, md: 32 }
+                                    fontSize: { xs: 20, sm: 28, md: 32 },
+                                    fontWeight: { xs: 500, sm: 700 }
                                  }}>
                                  {countData?.resume}+
                               </Typography>
                               <Typography
-                                 variant={"h4"}
+                                 variant={"h6"}
                                  fontWeight={500}
                                  sx={{
                                     color: (theme) =>
