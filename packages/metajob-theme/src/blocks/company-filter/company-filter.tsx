@@ -271,14 +271,7 @@ const CompanyFilterClient = ({ block, language, categoryData }: Props) => {
                               )}
                            </Stack>
                         </Card>
-                        <CompanyList
-                           companies={companyData}
-                           loading={isLoading}
-                           error={companyError}
-                           block={block}
-                           color={color}
-                           secondary_color={secondary_color}
-                        />
+                        <CompanyList companies={companyData} loading={isLoading} error={companyError} block={block} />
                      </Stack>
                      {/* pagination  */}
                      {!companyError && totalPage > 0 && (

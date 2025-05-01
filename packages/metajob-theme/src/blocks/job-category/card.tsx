@@ -39,7 +39,7 @@ export const CategoryCard = ({ block, categoryData }: Props) => {
             mode === "light" ? backgroundColor || theme.palette.background.default : theme.palette.background.default
          }>
          <Container maxWidth='lg'>
-            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} gap={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
                {content && (
                   <SectionTitle data={content} color={{ header_color, sub_header_color }} width={header_width} />

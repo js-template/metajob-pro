@@ -300,22 +300,13 @@ const CustomAppBar = ({
                            </Menu>
                         </Box>
                      )}
-                     {/* dark-light-theme-toggle  */}
-                     {dark_mode && (
-                        <IconButton
-                           size='large'
-                           color='inherit'
-                           sx={{
-                              display: {
-                                 xs: "none",
-                                 sm: "flex"
-                              }
-                           }}
-                           onClick={toggleTheme}>
-                           <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
-                        </IconButton>
-                     )}
                   </>
+               )}
+               {/* dark-light-theme-toggle  */}
+               {dark_mode && (
+                  <IconButton size='large' color='inherit' onClick={toggleTheme}>
+                     <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
+                  </IconButton>
                )}
                {/* notification-button  */}
                {notification && <NotificationBar emailHistoryData={emailHistoryData} />}

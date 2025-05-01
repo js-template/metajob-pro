@@ -212,40 +212,35 @@ const SideItems = ({ block, language, userData, listLocalesData }: Props) => {
                            </Menu>
                         </Box>
                      )}
-                     {/* theme-button  */}
-                     {dark_mode && (
-                        <IconButton
-                           sx={{
-                              ml: 1,
-                              width: 40,
-                              height: 40,
-                              padding: 1,
-                              borderRadius: "50%",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              color:
-                                 mode === "light"
-                                    ? color || theme.palette.text.secondary
-                                    : theme.palette.text.secondary,
-                              backgroundColor: "transparent",
-                              "&:hover": {
-                                 backgroundColor: theme.palette.action.hover
-                              }
-                           }}
-                           onClick={toggleTheme}>
-                           <CIcon
-                              icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"}
-                              sx={{
-                                 color:
-                                    mode === "light"
-                                       ? color || theme.palette.text.secondary
-                                       : theme.palette.text.secondary
-                              }}
-                           />
-                        </IconButton>
-                     )}
                   </>
+               )}
+               {/* theme-button  */}
+               {dark_mode && (
+                  <IconButton
+                     sx={{
+                        ml: 1,
+                        width: 40,
+                        height: 40,
+                        padding: 1,
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: mode === "light" ? color || theme.palette.text.secondary : theme.palette.text.secondary,
+                        backgroundColor: "transparent",
+                        "&:hover": {
+                           backgroundColor: theme.palette.action.hover
+                        }
+                     }}
+                     onClick={toggleTheme}>
+                     <CIcon
+                        icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"}
+                        sx={{
+                           color:
+                              mode === "light" ? color || theme.palette.text.secondary : theme.palette.text.secondary
+                        }}
+                     />
+                  </IconButton>
                )}
                {/* button (Ex: login/register) */}
                {!isTablet &&
@@ -271,7 +266,9 @@ const SideItems = ({ block, language, userData, listLocalesData }: Props) => {
                         key={index}
                         size='small'
                         sx={{
-                           py: 1
+                           py: 0.5,
+                           px: 1.5,
+                           fontSize: 15
                         }}
                         variant='contained'
                         component={NextLink}
@@ -376,15 +373,12 @@ const SideItems = ({ block, language, userData, listLocalesData }: Props) => {
                               </Menu>
                            </Box>
                         )}
-
-                        {dark_mode && (
-                           <IconButton
-                              sx={{ ml: 1, color: (theme) => theme.palette.text.primary }}
-                              onClick={toggleTheme}>
-                              <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
-                           </IconButton>
-                        )}
                      </>
+                  )}
+                  {dark_mode && (
+                     <IconButton sx={{ ml: 1, color: (theme) => theme.palette.text.primary }} onClick={toggleTheme}>
+                        <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
+                     </IconButton>
                   )}
                   {/* notification-button  */}
                   {/* {notification && (

@@ -9,27 +9,26 @@ type Props = {
    loading: boolean
    error: string | null
    block: ICompanyFilterBlockData
-   color?: string
-   secondary_color?: string
 }
-const CompanyList = ({ companies, loading, error, block, color, secondary_color }: Props) => {
-   const { empty, card_button } = block || {}
+const CompanyList = ({ companies, loading, error, block }: Props) => {
+   const { empty, card_button, style } = block || {}
    const { title: emptyTitle, description: emptyDescription } = empty || {}
+   const { color, secondary_color, desktop, tab, mobile } = style || {}
    return (
       <Stack>
          {loading && (
             <Grid container spacing={2}>
                {[...Array(6)].map((_, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={index}>
+                  <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={index}>
                      <CompanyCardLoader />
                   </Grid>
                ))}
             </Grid>
          )}
          {companies && companies?.length > 0 && (
-            <Grid container spacing={2}>
+            <Grid container spacing={{ xs: 1, md: 2 }}>
                {companies?.map((item: any) => (
-                  <Grid item xs={12} sm={6} md={4} key={item?.id}>
+                  <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
                      <CompanyCardItem
                         data={item}
                         button_label={card_button?.label}

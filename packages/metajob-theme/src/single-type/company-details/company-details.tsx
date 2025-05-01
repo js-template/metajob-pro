@@ -59,7 +59,7 @@ const CompanyDetailsClient = ({ data, language, block, openJobsData }: Props) =>
          <Container maxWidth='lg' sx={{ py: section_padding || 6 }}>
             <Grid container spacing={4} direction={isRightSidebar ? "row" : "row-reverse"}>
                <Grid item xs={12} md={!isNoSidebar ? 8 : 12}>
-                  <Stack spacing={4}>
+                  <Stack spacing={{ xs: 3, md: 4 }}>
                      <CompanyHeader data={data} language={language} color={color} secondary_color={secondary_color} />
                      <AboutSection data={data?.about} />
                      {open_jobs && <OpenJobs openJobsData={openJobsData} block={block} />}
