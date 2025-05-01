@@ -199,7 +199,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  border: "none"
                               },
                               "& .MuiInputBase-input": {
-                                 py: { xs: 1, md: 2 }
+                                 py: { xs: 1, sm: 1.5, md: 2 }
                               }
                            }}
                            value={searchText}
@@ -231,7 +231,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                  border: "none"
                               },
                               "& .MuiInputBase-input": {
-                                 py: { xs: 1, md: 2 }
+                                 py: { xs: 1, sm: 1.5, md: 2 }
                               }
                            }}
                            placeholder={location_placeholder}
@@ -310,7 +310,9 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              pt: { xs: 1, sm: 0 }
+                              pt: { xs: 2, sm: 0 },
+                              pb: { xs: 0.5, sm: 0 },
+                              px: 1.5
                            }}>
                            <Button
                               variant='contained'
@@ -321,10 +323,9 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                                     mode === "light"
                                        ? color || theme.palette.primary.contrastText
                                        : theme.palette.primary.contrastText,
-                                 my: 1,
-                                 ml: 2,
-                                 mr: 2,
-                                 px: 5
+                                 px: 2,
+                                 py: { xs: 0.5, md: 1 },
+                                 fontSize: { xs: 15, sm: 16 }
                               }}
                               onClick={handleSearch}>
                               {button_placeholder || "Search"}
@@ -341,10 +342,9 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                         display: "grid",
                         gridTemplateColumns: {
                            sm: "repeat(3, 1fr)",
-                           // xs: "1fr"
                            xs: "repeat(3, 1fr)"
                         },
-                        gap: { xs: 1.5, sm: 3, md: 4, lg: 5 }
+                        gap: { xs: 1, sm: 3, md: 4, lg: 5 }
                      }}>
                      <Card
                         sx={{
@@ -361,7 +361,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                               }}
                               icon={"mdi:nfc-search-variant"}
                            />
-                           <Stack spacing={1}>
+                           <Stack spacing={{ xs: 0.5, sm: 1 }}>
                               <Typography
                                  variant={"h4"}
                                  sx={{
@@ -411,8 +411,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                               }}
                               icon={"heroicons:building-office-2"}
                            />
-
-                           <Stack spacing={1}>
+                           <Stack spacing={{ xs: 0.5, sm: 1 }}>
                               <Typography
                                  variant={"h4"}
                                  sx={{
@@ -462,7 +461,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
                               icon={"icomoon-free:user-tie"}
                            />
 
-                           <Stack spacing={1}>
+                           <Stack spacing={{ xs: 0.5, sm: 1 }}>
                               <Typography
                                  variant={"h4"}
                                  sx={{
