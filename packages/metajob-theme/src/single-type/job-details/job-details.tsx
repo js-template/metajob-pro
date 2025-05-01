@@ -58,7 +58,7 @@ const JobDetailsClient = ({ data, block, language, companyData, relatedJobsData 
             <Container maxWidth='lg' sx={{ py: section_padding || 6 }}>
                <Grid container spacing={4} direction={isRightSidebar ? "row" : "row-reverse"}>
                   <Grid item xs={12} md={!isNoSidebar ? 8 : 12}>
-                     <Stack spacing={4}>
+                     <Stack spacing={{ xs: 3, md: 4 }}>
                         <JobTitleCard data={data} companyData={companyData} block={block} language={language} />
                         <Details
                            data={data}

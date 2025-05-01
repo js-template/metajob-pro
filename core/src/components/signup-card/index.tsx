@@ -4,7 +4,18 @@ import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { useTheme } from "next-themes"
 import { LoadingButton } from "@mui/lab"
-import { Button, Box, Container, Divider, Grid, IconButton, Stack, Typography, Skeleton } from "@mui/material"
+import {
+   Button,
+   Box,
+   Container,
+   Divider,
+   Grid,
+   IconButton,
+   Stack,
+   Typography,
+   Skeleton,
+   useTheme as MuiTheme
+} from "@mui/material"
 import { hexToRGBA } from "../../lib/hex-to-rgba"
 import { Card } from "../common/card"
 import CIcon from "../common/icon"
@@ -32,6 +43,7 @@ export const SignUpCard = ({
    linkedinSignUpHandler,
    block
 }: Props) => {
+   const theme = MuiTheme()
    const { theme: mode } = useTheme()
 
    // destructured register block data
@@ -138,9 +150,10 @@ export const SignUpCard = ({
                               fontSize={24}
                               fontWeight={400}
                               textAlign={"center"}
-                              color={(theme) =>
-                                 mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
-                              }>
+                              sx={{
+                                 color: (theme) =>
+                                    mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary
+                              }}>
                               {registerTitle || "Create an account"}
                            </Typography>
                            <Stack direction={"row"} gap={2}>
@@ -223,7 +236,7 @@ export const SignUpCard = ({
                                  }}
                                  helperText={errors.username?.message as string | ""}
                                  labelProps={{
-                                    color: (theme) =>
+                                    color:
                                        mode === "light"
                                           ? color || theme.palette.text.primary
                                           : theme.palette.text.primary
@@ -242,7 +255,7 @@ export const SignUpCard = ({
                                  }}
                                  helperText={errors.email?.message as string | ""}
                                  labelProps={{
-                                    color: (theme) =>
+                                    color:
                                        mode === "light"
                                           ? color || theme.palette.text.primary
                                           : theme.palette.text.primary
@@ -261,7 +274,7 @@ export const SignUpCard = ({
                                  }}
                                  helperText={errors.password?.message as string | ""}
                                  labelProps={{
-                                    color: (theme) =>
+                                    color:
                                        mode === "light"
                                           ? color || theme.palette.text.primary
                                           : theme.palette.text.primary
@@ -280,7 +293,7 @@ export const SignUpCard = ({
                                  }}
                                  helperText={errors.confirmPassword?.message as string | ""}
                                  labelProps={{
-                                    color: (theme) =>
+                                    color:
                                        mode === "light"
                                           ? color || theme.palette.text.primary
                                           : theme.palette.text.primary
@@ -314,12 +327,12 @@ export const SignUpCard = ({
                               <Typography
                                  component={Link}
                                  href='/login'
-                                 color={(theme) => theme.palette.primary.main}
                                  fontSize={14}
                                  fontWeight={400}
                                  sx={{
                                     textDecoration: "none",
-                                    cursor: "pointer"
+                                    cursor: "pointer",
+                                    color: (theme) => theme.palette.primary.main
                                  }}>
                                  {login_link_placeholder || "Login"}
                               </Typography>

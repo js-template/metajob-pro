@@ -18,11 +18,13 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
 
    return (
       <Stack
+         justifyContent={"space-between"}
          sx={{
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: (theme) => theme.palette.background.paper,
-            padding: "40px 30px 30px 30px",
+            px: { xs: 1.5, sm: 3, md: 4 },
+            py: { xs: 2, md: 4 },
             borderRadius: 2,
             "&:hover": {
                borderColor: (theme) => theme.palette.primary.main,
@@ -33,30 +35,30 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                bgcolor: (theme) => theme.palette.primary.main
             },
             bgcolor: (theme) => theme.palette.background.paper,
-            height: "430px"
+            height: "100%"
          }}>
          {/* logo  */}
          <Stack
             sx={{
                justifyContent: "center",
-               alignItems: "center"
+               alignItems: "center",
+               mb: { xs: 2, md: 3 }
             }}>
             <Avatar
                src={companyLogo}
                alt={name || "companyLogo"}
                sx={{
-                  width: 100,
-                  height: 100,
+                  width: { xs: "60px", sm: "80px", md: "100px" },
+                  height: { xs: "60px", sm: "80px", md: "100px" },
                   fontWeight: 700,
                   fontSize: "30px",
-                  borderRadius: "12px",
-                  mb: 3
+                  borderRadius: "12px"
                }}>
                {name?.charAt(0) || ""}
             </Avatar>
          </Stack>
          {/* name, tags  */}
-         <Box sx={{ pb: "30px" }}>
+         <Box sx={{ pb: { xs: 2, md: "30px" } }}>
             {name && (
                <Typography
                   fontSize={16}
@@ -83,7 +85,7 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
             )}
          </Box>
          {/* details  */}
-         <Stack sx={{ mb: 3 }} spacing={"12px"}>
+         <Stack sx={{ mb: { xs: 2, md: 4 } }} spacing={"12px"}>
             {company_size && (
                <Stack direction={"row"} gap={2} alignItems={"center"}>
                   <Icon
@@ -174,9 +176,9 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
             component={NextLink}
             href={`/company/${slug}`}
             sx={{
+               fontSize: { xs: 14, md: 16 },
                bgcolor: (theme) => theme.palette.background.default,
-               color: (theme) => (mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled),
-               mt: 2
+               color: (theme) => (mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled)
             }}>
             {button_label || "See Details"}
          </Button>

@@ -44,6 +44,7 @@ export type ISinglePost = {
       documentId: string
       email: string
       username: string
+      first_name: string
       avatar: {
          url: string
       }

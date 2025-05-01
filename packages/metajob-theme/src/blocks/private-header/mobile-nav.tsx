@@ -168,12 +168,6 @@ const MobileNav = ({ open, setOpen, lang, headerData, listLocalesData }: MobileN
                      </Menu>
                   </Box>
                )}
-               {/* dark-light-theme-toggle  */}
-               {dark_mode && (
-                  <IconButton size='large' color='inherit' onClick={toggleTheme}>
-                     <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
-                  </IconButton>
-               )}
             </Box>
          )}
          <Divider />

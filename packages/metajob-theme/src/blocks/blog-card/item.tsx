@@ -30,7 +30,8 @@ const CardItem = ({
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: (theme) => theme.palette.divider,
-            p: "30px",
+            px: { xs: 1.5, sm: 2, md: 4 },
+            py: 2.5,
             borderRadius: 1,
             "&:hover": {
                borderColor: (theme) => theme.palette.primary.main,
@@ -50,7 +51,7 @@ const CardItem = ({
                transition: "all .3s ease-in-out"
             },
             transition: "0.4s",
-            height: image ? "630px" : "330px"
+            height: "100%"
          }}>
          <Box
             sx={{
@@ -61,7 +62,7 @@ const CardItem = ({
                borderRadius: 1,
                position: "relative", // Make sure the container is positioned
                width: "100%", // Define width and height for the container
-               minHeight: image ? "250px" : "0",
+               minHeight: image ? { xs: "200px", sm: "250px", md: "250px" } : "0",
                mb: "20px"
             }}
             component={Link}
@@ -71,7 +72,8 @@ const CardItem = ({
                src={image || "https://placehold.co/300x250/png"}
                alt={title}
                style={{
-                  transition: "transform 0.4s ease-in-out"
+                  transition: "transform 0.4s ease-in-out",
+                  objectFit: "cover"
                }}
                className='image-scale'
                fill={true}
@@ -109,7 +111,7 @@ const CardItem = ({
                {title}
             </Typography>
          </Stack>
-         <Stack sx={{ height: "240px" }} direction={"column"} justifyContent={"space-between"}>
+         <Stack direction={"column"} justifyContent={"space-between"}>
             <Typography
                fontSize={16}
                fontWeight={400}
@@ -119,7 +121,7 @@ const CardItem = ({
                   mb: 3,
                   mt: 2,
                   display: "-webkit-box",
-                  WebkitLineClamp: 5,
+                  WebkitLineClamp: { xs: 3, md: 5 },
                   WebkitBoxOrient: "vertical",
                   overflow: "hidden"
                }}>
@@ -129,15 +131,15 @@ const CardItem = ({
                variant='contained'
                className='blog-button'
                sx={{
+                  px: { xs: 2, sm: "auto" },
                   bgcolor: (theme) => theme.palette.background.default,
                   color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9),
-                  fontSize: 18,
+                  fontSize: { xs: 14, sm: 14, md: 18 },
                   fontWeight: 500,
                   transition: "transform 0.4s ease-in-out",
-                  width: "auto",
+                  width: { xs: "100%", sm: "auto" },
                   alignSelf: "flex-start",
-                  justifyContent: "flex-start",
-                  gap: "20px"
+                  justifyContent: { xs: "space-between", sm: "flex-start" }
                }}
                LinkComponent={Link}
                href={`blog/${slug}`}

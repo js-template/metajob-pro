@@ -257,39 +257,41 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
       <Fragment>
          <Card
             sx={{
+               position: "relative",
                borderRadius: 2,
-               p: 2
+               px: { xs: 1.5, md: 2 },
+               py: { xs: 3, md: 2 }
             }}>
-            <Grid container spacing={4} alignItems={"center"}>
+            <Grid container spacing={{ xs: 2.5, md: 4 }} alignItems={"center"}>
                <Grid item xs={12} sm={8}>
                   <Stack
                      direction={{
                         sm: "row",
-                        xs: "column"
+                        xs: "row"
                      }}
-                     alignItems={"center"}
-                     gap={4}>
+                     alignItems={{ xs: "flex-start", sm: "center" }}
+                     gap={{ xs: 1, sm: 4 }}>
                      {logo && (
                         <Avatar
                            src={logo}
                            alt={companyName || "company-logo"}
                            sx={{
-                              width: 100,
-                              height: 100,
+                              width: { xs: 70, sm: 80, md: 100 },
+                              height: { xs: 70, sm: 80, md: 100 },
                               fontWeight: 700
                            }}>
                            {companyName?.charAt(0) || ""}
                         </Avatar>
                      )}
 
-                     <Stack spacing={2}>
-                        <Stack spacing={1}>
+                     <Stack spacing={{ xs: 2, md: 3 }}>
+                        <Stack spacing={1} sx={{ textAlign: { xs: "center", sm: "left" } }}>
                            {title && (
                               <Typography
                                  variant={"h4"}
                                  fontWeight={700}
-                                 fontSize={24}
                                  sx={{
+                                    fontSize: { xs: 20, md: 24 },
                                     color: (theme) =>
                                        mode === "light"
                                           ? color || theme.palette.text.primary
@@ -323,9 +325,9 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                         <Stack
                            direction={{
                               xs: "column",
-                              md: "row"
+                              sm: "row"
                            }}
-                           gap={4}
+                           gap={{ xs: 1, sm: 4 }}
                            display={"flex"}
                            alignItems={"center"}>
                            <Typography
@@ -481,51 +483,62 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                   sx={{
                      display: "flex",
                      flexDirection: "column",
-                     gap: 5,
-                     justifyContent: "space-between"
+                     justifyContent: "flex-end",
+                     height: "100%"
                   }}>
                   {/* bookmark button  */}
-                  {bookmarkLoading ? (
-                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
-                        <IconButton color='primary'>
-                           <CircularProgress
-                              size={20}
-                              sx={{
-                                 color: (theme) => theme.palette.primary.main
-                              }}
-                           />
-                        </IconButton>
-                     </Stack>
-                  ) : (
-                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
-                        {isBookmarked ? (
-                           <IconButton onClick={jobBookmarkHandler} color='primary'>
-                              <CIcon
-                                 icon='mdi:heart'
-                                 size={24}
+                  <Box
+                     sx={{
+                        position: "absolute",
+                        top: 5,
+                        right: 2
+                     }}>
+                     {bookmarkLoading ? (
+                        <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                           <IconButton color='primary'>
+                              <CircularProgress
+                                 size={20}
                                  sx={{
-                                    cursor: "pointer",
-                                    color: "primary.main"
+                                    color: (theme) => theme.palette.primary.main
                                  }}
                               />
                            </IconButton>
-                        ) : (
-                           <IconButton onClick={jobBookmarkHandler} color='primary'>
-                              <CIcon
-                                 icon='mdi:heart-outline'
-                                 size={24}
-                                 color='text.primary'
-                                 sx={{
-                                    color: "primary.main",
-                                    cursor: "pointer"
-                                 }}
-                              />
-                           </IconButton>
-                        )}
-                     </Stack>
-                  )}
+                        </Stack>
+                     ) : (
+                        <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                           {isBookmarked ? (
+                              <IconButton onClick={jobBookmarkHandler} color='primary'>
+                                 <CIcon
+                                    icon='mdi:heart'
+                                    size={24}
+                                    sx={{
+                                       cursor: "pointer",
+                                       color: "primary.main"
+                                    }}
+                                 />
+                              </IconButton>
+                           ) : (
+                              <IconButton onClick={jobBookmarkHandler} color='primary'>
+                                 <CIcon
+                                    icon='mdi:heart-outline'
+                                    size={24}
+                                    color='text.primary'
+                                    sx={{
+                                       color: "primary.main",
+                                       cursor: "pointer"
+                                    }}
+                                 />
+                              </IconButton>
+                           )}
+                        </Stack>
+                     )}
+                  </Box>
                   {/* apply button  */}
-                  <Stack display={"flex"} alignItems={"flex-end"}>
+                  <Stack
+                     display={"flex"}
+                     alignItems={"flex-end"}
+                     justifyContent={"flex-end"}
+                     sx={{ pt: { xs: 0, sm: 6 } }}>
                      {isApplied ? (
                         <Button
                            disabled
