@@ -110,7 +110,7 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
             backgroundSize: "cover",
             backgroundPosition: "center",
             textAlign: "center",
-            px: { xs: 2, md: 4 },
+            px: { xs: 0.5, md: 4 },
             py: { xs: 4, sm: 8, md: section_padding || 10 },
             "&::before": {
                content: '""',
