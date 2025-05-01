@@ -145,9 +145,9 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                            alt='logo'
                            sx={{
                               width: {
-                                 xs: light_logo?.xs_width ?? "auto",
-                                 sm: light_logo?.sm_width ?? "auto",
-                                 md: light_logo?.md_width ?? "auto"
+                                 xs: logoData?.xs_width ?? "auto",
+                                 sm: logoData?.sm_width ?? "auto",
+                                 md: logoData?.md_width ?? "auto"
                               }
                            }}
                         />
