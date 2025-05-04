@@ -7,6 +7,7 @@ import { Box, Button, Container, Grid, Stack, Typography, useTheme as muiTheme }
 import CardItem from "./item"
 import { SectionTitle } from "../../components/section-title"
 import { IPostBlock, ISinglePost } from "./types"
+import { Height } from "@mui/icons-material"
 
 type Props = {
    block: IPostBlock
@@ -20,7 +21,8 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
    const theme = muiTheme()
 
    // destructure the block
-   const { content, empty, style, button, card_button } = block || {}
+   const { content, empty, style, button, card_button, show_image } = block || {}
+
    const {
       backgroundColor,
       color,
@@ -31,15 +33,19 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
       header_width,
       desktop,
       tab,
-      mobile
+      mobile,
+      bg_overlay
    } = style || {}
    const { label, link } = button || {}
    const { label: card_label } = card_button || {}
+ 
 
    return (
       <Stack
          bgcolor={
-            mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
+            mode === "light"
+               ? (theme) => hexToRGBA(backgroundColor || theme.palette.background.paper, bg_overlay || 0.9)
+               : (theme) => hexToRGBA(backgroundColor || theme.palette.background.paper, bg_overlay || 0.9)
          }>
          <Container maxWidth='lg'>
             <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
@@ -52,12 +58,15 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
                   <Grid container spacing={2}>
                      {_.map(recentBlogs, (item) => (
                         <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
-                           <CardItem
-                              data={item}
-                              button_label={card_label}
-                              color={color}
-                              secondary_color={secondary_color}
-                           />
+                           <Box sx={{ height: "100%" }}>
+                              <CardItem
+                                 data={item}
+                                 button_label={card_label}
+                                 color={color}
+                                 secondary_color={secondary_color}
+                                 show_image={show_image}
+                              />
+                           </Box>
                         </Grid>
                      ))}
                   </Grid>

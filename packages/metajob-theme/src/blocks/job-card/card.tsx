@@ -30,7 +30,8 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
       header_width,
       desktop,
       tab,
-      mobile
+      mobile,
+      bg_overlay
    } = style || {}
    const { label, link, target, disabled } = button || {}
    const { label: card_label } = card_button || {}
@@ -39,7 +40,9 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
       <Stack
          sx={{
             bgcolor:
-               mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
+               mode === "light"
+                  ? (theme) => hexToRGBA(backgroundColor || theme.palette.background.paper, bg_overlay || 0.9)
+                  : (theme) => hexToRGBA(backgroundColor || theme.palette.background.paper, bg_overlay || 0.9)
          }}>
          <Container maxWidth='lg'>
             <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>

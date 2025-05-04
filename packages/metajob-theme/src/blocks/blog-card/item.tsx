@@ -12,12 +12,14 @@ const CardItem = ({
    data,
    button_label,
    color,
-   secondary_color
+   secondary_color,
+   show_image
 }: {
    data: ISinglePost
    button_label?: string
    color?: string
    secondary_color?: string
+   show_image?: boolean
 }) => {
    const { theme: mode } = useTheme()
 
@@ -30,7 +32,7 @@ const CardItem = ({
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: (theme) => theme.palette.divider,
-            p: "30px",
+            p: { md: 3.75, xs: 2 },
             borderRadius: 1,
             "&:hover": {
                borderColor: (theme) => theme.palette.primary.main,
@@ -50,33 +52,34 @@ const CardItem = ({
                transition: "all .3s ease-in-out"
             },
             transition: "0.4s",
-            height: image ? "630px" : "330px"
+            height: "100%"
          }}>
-         <Box
-            sx={{
-               display: image ? "flex" : "none",
-               justifyContent: "center",
-               alignItems: "center",
-               overflow: "hidden",
-               borderRadius: 1,
-               position: "relative", // Make sure the container is positioned
-               width: "100%", // Define width and height for the container
-               minHeight: image ? "250px" : "0",
-               mb: "20px"
-            }}
-            component={Link}
-            href={`blog/${slug}`}>
-            <Image
-               // src={image}
-               src={image || "https://placehold.co/300x250/png"}
-               alt={title}
-               style={{
-                  transition: "transform 0.4s ease-in-out"
+         {show_image && (
+            <Box
+               sx={{
+                  display: image ? "flex" : "none",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  overflow: "hidden",
+                  borderRadius: 1,
+                  position: "relative",
+                  height: { xs: 180, sm: 220 },
+                  mb: 2.5
                }}
-               className='image-scale'
-               fill={true}
-            />
-         </Box>
+               component={Link}
+               href={`blog/${slug}`}>
+               <Image
+                  // src={image}
+                  src={image || "https://placehold.co/300x250/png"}
+                  alt={title}
+                  style={{
+                     transition: "transform 0.4s ease-in-out"
+                  }}
+                  className='image-scale'
+                  fill={true}
+               />
+            </Box>
+         )}
          <Stack spacing={1}>
             <Typography
                fontSize={14}
@@ -109,19 +112,19 @@ const CardItem = ({
                {title}
             </Typography>
          </Stack>
-         <Stack sx={{ height: "240px" }} direction={"column"} justifyContent={"space-between"}>
+         <Stack direction={"column"} justifyContent={"space-between"}>
             <Typography
                fontSize={16}
                fontWeight={400}
                sx={{
                   color: (theme) =>
                      mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled,
-                  mb: 3,
-                  mt: 2,
                   display: "-webkit-box",
-                  WebkitLineClamp: 5,
+                  WebkitLineClamp: 4,
                   WebkitBoxOrient: "vertical",
-                  overflow: "hidden"
+                  overflow: "hidden",
+                  height: 100,
+                  mb: 2
                }}>
                {short_description}
             </Typography>
@@ -137,7 +140,7 @@ const CardItem = ({
                   width: "auto",
                   alignSelf: "flex-start",
                   justifyContent: "flex-start",
-                  gap: "20px"
+                  gap: 2.5
                }}
                LinkComponent={Link}
                href={`blog/${slug}`}

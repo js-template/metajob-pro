@@ -26,8 +26,8 @@ export const CategoryCardItem = ({
    const { theme: mode } = useTheme()
 
    //destructure the data
-   const { title, image, description } = data || {}
-   const logo = image?.url || "https://placehold.co/60/png"
+   const { title, icon, description } = data || {}
+   const logo = icon?.url || "https://placehold.co/60/png"
 
    return (
       //@ts-ignore
@@ -37,7 +37,7 @@ export const CategoryCardItem = ({
          sx={{
             p: 4,
             display: "block",
-            height: "180px",
+            height: show_description ? "200px" : "180px",
             textDecoration: "none",
             cursor: "pointer",
             boxShadow: " 0 4px 20px rgba(0, 0, 0, 0.05)",

@@ -1094,6 +1094,12 @@ export interface PluginMetajobBackendJobCategory
           localized: true;
         };
       }>;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -1714,6 +1720,12 @@ export interface PluginPadmaBackendCategory
           localized: true;
         };
       }>;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -2271,6 +2283,11 @@ export interface PluginPadmaBackendPublicPage
         'metajob-block.page-header',
         'metajob-block.public-package',
         'metajob-block.category-filter',
+        'metajob-block.job-category',
+        'metajob-block.job-category-overlay',
+        'metajob-block.job-banner',
+        'metajob-block.job-card',
+        'block.blog-card',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

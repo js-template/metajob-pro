@@ -32,6 +32,7 @@ export type ICategoryOverlayCardBlock = {
    item_count?: number
    show_icon: boolean
    overlay: boolean
+   show_description?: boolean
 }
 
 export type ISingleCategory = {

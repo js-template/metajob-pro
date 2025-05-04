@@ -48,7 +48,10 @@ export type ISingleCategory = {
    createdAt: string
    updatedAt: string
    publishedAt: string
-   image: {
+   image?: {
+      url: string
+   }
+   icon: {
       url: string
    }
 }
