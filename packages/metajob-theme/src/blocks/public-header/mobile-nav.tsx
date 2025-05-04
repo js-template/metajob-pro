@@ -163,7 +163,7 @@ const MobileNav = ({
                </Box>
             )}
             {/* dark-light-theme-toggle  */}
-            {dark_mode && (
+            {/* {dark_mode && (
                <IconButton
                   size='large'
                   color='inherit'
@@ -176,7 +176,7 @@ const MobileNav = ({
                   }}>
                   <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
                </IconButton>
-            )}
+            )} */}
          </Box>
          <Divider />
          {!hide_menu && (

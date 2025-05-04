@@ -17,7 +17,7 @@ const CustomStyled = styled(MDEditor.Markdown)(({ theme }) => ({
    },
    "& h1, h2, h3, h4, h5, h6": {
       fontFamily: theme.typography.fontFamily,
-      fontSize: "20px",
+      fontSize: "20px" + "!important",
       fontWeight: 600,
       color: theme.palette.text.primary,
 

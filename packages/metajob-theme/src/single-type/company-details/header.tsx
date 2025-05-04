@@ -137,18 +137,20 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
    return (
       <Card
          sx={{
+            position: "relative",
             borderRadius: 2,
-            p: 3
+            px: { xs: 1.5, md: 2 },
+            py: { xs: 3, md: 2 }
          }}>
-         <Grid container spacing={4} alignItems={"center"}>
+         <Grid container spacing={{ xs: 2.5, md: 4 }} alignItems={"center"}>
             <Grid item xs={12} sm={8}>
                <Stack
                   direction={{
                      sm: "row",
-                     xs: "column"
+                     xs: "row"
                   }}
-                  alignItems={"center"}
-                  gap={4}>
+                  alignItems={{ xs: "flex-start", sm: "center" }}
+                  gap={{ xs: 2, sm: 4 }}>
                   {/* logo  */}
                   <Stack
                      sx={{
@@ -159,8 +161,8 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
                         src={companyLogo}
                         alt={name || "companyLogo"}
                         sx={{
-                           width: 100,
-                           height: 100,
+                           width: { xs: 70, sm: 80, md: 100 },
+                           height: { xs: 70, sm: 80, md: 100 },
                            fontWeight: 700,
                            fontSize: "30px"
                         }}>
@@ -168,10 +170,10 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
                      </Avatar>
                   </Stack>
                   <Stack spacing={1.5}>
-                     <Stack>
+                     <Stack spacing={{ xs: 0.5, md: 1 }}>
                         {name && (
                            <Typography
-                              variant={"h1"}
+                              variant={"h4"}
                               fontWeight={700}
                               fontSize={20}
                               sx={{
@@ -283,47 +285,55 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
                </Stack>
             </Grid>
             <Grid item xs={12} sm={4}>
-               <Stack display={"flex"} alignItems={"flex-end"} gap={1.5}>
-                  {bookmarkLoading ? (
-                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
-                        <IconButton color='primary'>
-                           <CircularProgress
-                              size={20}
-                              sx={{
-                                 color: (theme) => theme.palette.primary.main
-                              }}
-                           />
-                        </IconButton>
-                     </Stack>
-                  ) : (
-                     <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
-                        {isBookmarked ? (
-                           <IconButton onClick={companyBookmarkHandler} color='primary'>
-                              <CIcon
-                                 icon='mdi:heart'
-                                 size={24}
+               <Stack display={"flex"} alignItems={{ xs: "center", md: "flex-end" }} gap={1.5}>
+                  {/* bookmark button  */}
+                  <Box
+                     sx={{
+                        position: "absolute",
+                        top: 5,
+                        right: 3
+                     }}>
+                     {bookmarkLoading ? (
+                        <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                           <IconButton color='primary'>
+                              <CircularProgress
+                                 size={20}
                                  sx={{
-                                    cursor: "pointer",
-                                    color: "primary.main"
+                                    color: (theme) => theme.palette.primary.main
                                  }}
                               />
                            </IconButton>
-                        ) : (
-                           <IconButton onClick={companyBookmarkHandler} color='primary'>
-                              <CIcon
-                                 icon='mdi:heart-outline'
-                                 size={24}
-                                 color='text.primary'
-                                 sx={{
-                                    color: "primary.main",
-                                    cursor: "pointer"
-                                 }}
-                              />
-                           </IconButton>
-                        )}
-                     </Stack>
-                  )}
-                  <Stack display={"flex"} alignItems={"flex-end"}>
+                        </Stack>
+                     ) : (
+                        <Stack display={"flex"} alignItems={"flex-end"} justifyContent={"flex-start"} gap={1}>
+                           {isBookmarked ? (
+                              <IconButton onClick={companyBookmarkHandler} color='primary'>
+                                 <CIcon
+                                    icon='mdi:heart'
+                                    size={24}
+                                    sx={{
+                                       cursor: "pointer",
+                                       color: "primary.main"
+                                    }}
+                                 />
+                              </IconButton>
+                           ) : (
+                              <IconButton onClick={companyBookmarkHandler} color='primary'>
+                                 <CIcon
+                                    icon='mdi:heart-outline'
+                                    size={24}
+                                    color='text.primary'
+                                    sx={{
+                                       color: "primary.main",
+                                       cursor: "pointer"
+                                    }}
+                                 />
+                              </IconButton>
+                           )}
+                        </Stack>
+                     )}
+                  </Box>
+                  <Stack display={"flex"} alignItems={{ xs: "center", md: "flex-end" }}>
                      {email && (
                         <Typography
                            component={NextLink}

@@ -25,7 +25,7 @@ const RelatedJob = ({ relatedJobsData, block }: Props) => {
             sx={{
                py: 8
             }}>
-            <Stack spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack gap={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                <Stack spacing={1}>
                   <Typography
                      sx={{
@@ -45,7 +45,7 @@ const RelatedJob = ({ relatedJobsData, block }: Props) => {
                            mode === "light" ? header_color || theme.palette.text.primary : theme.palette.text.primary
                      }}
                      fontWeight={700}
-                     fontSize={32}
+                     fontSize={{ xs: 24, sm: 32 }}
                      textAlign={"center"}>
                      {related_jobs_title || "Latest Related Jobs For You"}
                   </Typography>
@@ -62,7 +62,7 @@ const RelatedJob = ({ relatedJobsData, block }: Props) => {
                )} */}
 
                {relatedJobsData && relatedJobsData?.length > 0 && (
-                  <Grid container spacing={2}>
+                  <Grid container spacing={{ xs: 1, md: 2 }}>
                      {relatedJobsData?.slice(0, 4)?.map((item: ISingleJob) => (
                         <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 3} key={item?.id}>
                            <JobItem

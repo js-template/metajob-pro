@@ -79,7 +79,9 @@ const CompanyFilterSection = ({
       <Card
          sx={{
             borderRadius: 2,
-            p: 0
+            p: 0,
+            backgroundColor: "background.paper",
+            boxShadow: 0
          }}>
          <Stack spacing={2} pb={3}>
             <Stack px={3} pt={2} direction={"row"} justifyItems={"center"} justifyContent={"space-between"}>

@@ -27,7 +27,7 @@ export const PageHeader = ({ block }: Props) => {
                backgroundSize: "cover",
                backgroundPosition: "center",
                textAlign: "center",
-               padding: "6rem 2rem",
+               padding: { xs: "1rem 2rem", sm: "3rem 2rem", md: "6rem 2rem" },
                "&::before": {
                   content: '""',
                   position: "absolute",
@@ -47,7 +47,7 @@ export const PageHeader = ({ block }: Props) => {
                }
             }}>
             <Typography
-               fontSize={{ sm: 48, xs: 32 }}
+               fontSize={{ xs: 28, sm: 48 }}
                fontWeight={{ sm: 700, xs: 600 }}
                variant={"h1"}
                sx={{

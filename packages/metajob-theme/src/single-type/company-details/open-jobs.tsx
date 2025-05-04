@@ -23,14 +23,15 @@ const OpenJobs = ({ block, openJobsData }: Props) => {
             fontSize={24}
             sx={{
                color: (theme) =>
-                  mode === "light" ? header_color || theme.palette.primary.main : theme.palette.primary.main
+                  mode === "light" ? header_color || theme.palette.primary.main : theme.palette.primary.main,
+               textAlign: { xs: "center", sm: "left" }
             }}>
             {open_jobs_title || "Open Job"}
          </Typography>
          <Stack>
             {/* {openJobsData && openJobsData?.data?.length > 0 && ( */}
             {openJobsData && openJobsData?.length > 0 && (
-               <Grid container spacing={2}>
+               <Grid container gap={{ xs: 1, md: 2 }}>
                   {openJobsData?.slice(0, 4)?.map((item: ISingleJob) => (
                      <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item.id}>
                         <JobItem

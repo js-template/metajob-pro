@@ -48,14 +48,14 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
                : (theme) => hexToRGBA(backgroundColor || theme.palette.background.paper, bg_overlay || 0.9)
          }>
          <Container maxWidth='lg'>
-            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} gap={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
                {content && (
                   <SectionTitle data={content} color={{ header_color, sub_header_color }} width={header_width} />
                )}
                {/* posts section  */}
                {recentBlogs && recentBlogs?.length > 0 && (
-                  <Grid container spacing={2}>
+                  <Grid container spacing={{ xs: 1, md: 2 }}>
                      {_.map(recentBlogs, (item) => (
                         <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
                            <Box sx={{ height: "100%" }}>

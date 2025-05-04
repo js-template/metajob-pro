@@ -32,7 +32,8 @@ const CardItem = ({
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: (theme) => theme.palette.divider,
-            p: { md: 3.75, xs: 2 },
+            px: { xs: 1.5, sm: 2, md: 4 },
+            py: 2.5,
             borderRadius: 1,
             "&:hover": {
                borderColor: (theme) => theme.palette.primary.main,
@@ -120,7 +121,7 @@ const CardItem = ({
                   color: (theme) =>
                      mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled,
                   display: "-webkit-box",
-                  WebkitLineClamp: 4,
+                  WebkitLineClamp: { xs: 3, md: 5 },
                   WebkitBoxOrient: "vertical",
                   overflow: "hidden",
                   height: 100,
@@ -132,15 +133,15 @@ const CardItem = ({
                variant='contained'
                className='blog-button'
                sx={{
+                  px: { xs: 2, sm: "auto" },
                   bgcolor: (theme) => theme.palette.background.default,
                   color: (theme) => hexToRGBA(theme.palette.text.primary, 0.9),
-                  fontSize: 18,
+                  fontSize: { xs: 14, sm: 14, md: 18 },
                   fontWeight: 500,
                   transition: "transform 0.4s ease-in-out",
-                  width: "auto",
+                  width: { xs: "100%", sm: "auto" },
                   alignSelf: "flex-start",
-                  justifyContent: "flex-start",
-                  gap: 2.5
+                  justifyContent: { xs: "space-between", sm: "flex-start" }
                }}
                LinkComponent={Link}
                href={`blog/${slug}`}
