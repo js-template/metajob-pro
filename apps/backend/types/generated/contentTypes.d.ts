@@ -2256,7 +2256,6 @@ export interface PluginPadmaBackendPublicPage
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
       [
-        'block.banner',
         'block.content-box',
         'block.blog-filter',
         'block.breadcrumbs',
@@ -2271,6 +2270,19 @@ export interface PluginPadmaBackendPublicPage
         'metajob-block.page-header',
         'metajob-block.public-package',
         'metajob-block.category-filter',
+        'block.banner',
+        'block.content-box',
+        'block.blog-card',
+        'block.breadcrumbs',
+        'shared.empty',
+        'block.category-card',
+        'block.review-block',
+        'block.image-carousel',
+        'block.image-gallery',
+        'metajob-block.job-banner',
+        'metajob-block.job-category',
+        'metajob-block.job-card',
+        'metajob-block.job-category-overlay',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
