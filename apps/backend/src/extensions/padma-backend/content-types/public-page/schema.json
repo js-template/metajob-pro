@@ -37,7 +37,6 @@
       },
       "type": "dynamiczone",
       "components": [
-        "block.banner",
         "block.content-box",
         "block.blog-filter",
         "block.breadcrumbs",
@@ -51,7 +50,20 @@
         "metajob-block.candidate-filter",
         "metajob-block.page-header",
         "metajob-block.public-package",
-        "metajob-block.category-filter"
+        "metajob-block.category-filter",
+        "block.banner",
+        "block.content-box",
+        "block.blog-card",
+        "block.breadcrumbs",
+        "shared.empty",
+        "block.category-card",
+        "block.review-block",
+        "block.image-carousel",
+        "block.image-gallery",
+        "metajob-block.job-banner",
+        "metajob-block.job-category",
+        "metajob-block.job-card",
+        "metajob-block.job-category-overlay"
       ]
     },
     "seo": {
