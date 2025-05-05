@@ -1246,19 +1246,26 @@ export interface MetajobSingleTypeLoginDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    button_placeholder: Schema.Attribute.String;
-    email_placeholder: Schema.Attribute.String;
-    or_placeholder: Schema.Attribute.String;
-    password_placeholder: Schema.Attribute.String;
+    button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Sign in'>;
+    email_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Username or Email'>;
+    or_placeholder: Schema.Attribute.String & Schema.Attribute.DefaultTo<'OR'>;
+    password_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Password'>;
     provider_option: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
-    required_placeholder: Schema.Attribute.String;
+    required_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'This field is required'>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
-    signup_helper_placeholder: Schema.Attribute.String;
-    signup_link_placeholder: Schema.Attribute.String;
+    signup_helper_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Not a Member ?'>;
+    signup_link_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Create Account'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Sign in with Email address'>;
   };
 }
 
