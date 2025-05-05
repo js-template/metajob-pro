@@ -668,10 +668,11 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
   attributes: {
     card_button: Schema.Attribute.Component<'config.link', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    result_placeholder: Schema.Attribute.String;
+    result_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Total candidate found'>;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
     upload_resume_button: Schema.Attribute.Component<'config.link', false>;
   };
 }
