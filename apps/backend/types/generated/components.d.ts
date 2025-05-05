@@ -1277,25 +1277,37 @@ export interface MetajobSingleTypeRegisterDetails
     icon: 'arrowRight';
   };
   attributes: {
-    button_placeholder: Schema.Attribute.String;
-    confirm_password_placeholder: Schema.Attribute.String;
-    confirm_password_title: Schema.Attribute.String;
-    email_placeholder: Schema.Attribute.String;
-    email_title: Schema.Attribute.String;
-    login_helper_placeholder: Schema.Attribute.String;
-    login_link_placeholder: Schema.Attribute.String;
-    or_placeholder: Schema.Attribute.String;
-    password_placeholder: Schema.Attribute.String;
-    password_title: Schema.Attribute.String;
+    button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Register'>;
+    confirm_password_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Enter Confirm Password'>;
+    confirm_password_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Confirm Password'>;
+    email_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Your Email'>;
+    email_title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Email'>;
+    login_helper_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Already have account ?'>;
+    login_link_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Login'>;
+    or_placeholder: Schema.Attribute.String & Schema.Attribute.DefaultTo<'OR'>;
+    password_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Enter Password'>;
+    password_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Password'>;
     provider_option: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
-    required_placeholder: Schema.Attribute.String;
+    required_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'This field is required'>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-    username_placeholder: Schema.Attribute.String;
-    username_title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Create an account'>;
+    username_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Enter Username'>;
+    username_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Username'>;
   };
 }
 
