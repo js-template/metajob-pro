@@ -1299,17 +1299,25 @@ export interface MetajobSingleTypeResumeDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    about_placeholder: Schema.Attribute.String;
-    education_placeholder: Schema.Attribute.String;
+    about_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'About Me'>;
+    education_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Education'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    experience_placeholder: Schema.Attribute.String;
-    industry_placeholder: Schema.Attribute.String;
-    member_placeholder: Schema.Attribute.String;
-    open_placeholder: Schema.Attribute.String;
-    portfolio_placeholder: Schema.Attribute.String;
+    experience_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Experience'>;
+    industry_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Industry'>;
+    member_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Member Since'>;
+    open_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Open To Work'>;
+    portfolio_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Portfolio'>;
     show_header: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     styles: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Resume details'>;
   };
 }
 
