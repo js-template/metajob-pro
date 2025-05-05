@@ -642,14 +642,15 @@ export interface MetajobBlockAppliedJobs extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    description: Schema.Attribute.String;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     table_config: Schema.Attribute.Component<
       'metajob-config.table-config',
       false
     >;
     table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -660,14 +661,15 @@ export interface MetajobBlockBookmark extends Struct.ComponentSchema {
     icon: 'bell';
   };
   attributes: {
-    description: Schema.Attribute.String;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     table_config: Schema.Attribute.Component<
       'metajob-config.table-config',
       false
     >;
     table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -737,8 +739,10 @@ export interface MetajobBlockContact extends Struct.ComponentSchema {
     icon: 'phone';
   };
   attributes: {
-    friendlyAddress: Schema.Attribute.String;
-    location: Schema.Attribute.String;
+    friendlyAddress: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Address Here'>;
+    location: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Location Here'>;
   };
 }
 
@@ -750,7 +754,8 @@ export interface MetajobBlockErrorSection extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
-    button_placeholder: Schema.Attribute.String;
+    button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Reload'>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     style: Schema.Attribute.Component<'metajob-config.error-style', false>;
   };
@@ -763,11 +768,13 @@ export interface MetajobBlockExperience extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     endDate: Schema.Attribute.Date;
-    institution: Schema.Attribute.String;
+    institution: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Institution'>;
     startDate: Schema.Attribute.Date;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -903,8 +910,10 @@ export interface MetajobBlockManageCompany extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    add_button_placeholder: Schema.Attribute.String;
-    description: Schema.Attribute.String;
+    add_button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Add Company'>;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     table_config: Schema.Attribute.Component<
@@ -912,7 +921,7 @@ export interface MetajobBlockManageCompany extends Struct.ComponentSchema {
       false
     >;
     table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -923,12 +932,14 @@ export interface MetajobBlockManageJob extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    add_button_placeholder: Schema.Attribute.String;
+    add_button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Add Job'>;
     apply_table_head: Schema.Attribute.Component<
       'metajob-config.meta-data',
       true
     >;
-    description: Schema.Attribute.String;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     table_config: Schema.Attribute.Component<
@@ -936,7 +947,7 @@ export interface MetajobBlockManageJob extends Struct.ComponentSchema {
       false
     >;
     table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -948,10 +959,11 @@ export interface MetajobBlockManagePackages extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    description: Schema.Attribute.String;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -962,7 +974,7 @@ export interface MetajobBlockManageResume extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -996,13 +1008,14 @@ export interface MetajobBlockPortfolio extends Struct.ComponentSchema {
     icon: 'clock';
   };
   attributes: {
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
     link: Schema.Attribute.Component<'config.link', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -1014,10 +1027,11 @@ export interface MetajobBlockPricing extends Struct.ComponentSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'config.link', false>;
-    description: Schema.Attribute.Text;
-    price: Schema.Attribute.String;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
+    price: Schema.Attribute.String & Schema.Attribute.DefaultTo<'00'>;
     table: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
