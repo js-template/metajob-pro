@@ -1554,13 +1554,15 @@ export interface WidgetContactWidget extends Struct.ComponentSchema {
     icon: 'envelop';
   };
   attributes: {
-    description: Schema.Attribute.Text;
-    email: Schema.Attribute.String;
-    location: Schema.Attribute.String;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
+    email: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Email Here'>;
+    location: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Location Here'>;
     logo: Schema.Attribute.Component<'config.logo', false>;
-    phone: Schema.Attribute.String;
+    phone: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Phone Here'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -1572,7 +1574,9 @@ export interface WidgetCopyrightBar extends Struct.ComponentSchema {
     icon: 'copyright';
   };
   attributes: {
-    content: Schema.Attribute.Text & Schema.Attribute.Required;
+    content: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Copyright Text Here'>;
     social_link: Schema.Attribute.Component<'shared.social-medias', true>;
   };
 }
@@ -1586,12 +1590,13 @@ export interface WidgetCountCard extends Struct.ComponentSchema {
   };
   attributes: {
     link: Schema.Attribute.String;
-    subTitle: Schema.Attribute.String;
+    subTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Sub Title Here'>;
     target: Schema.Attribute.Enumeration<
       ['_self', '_blank', '_parent', '_top']
     > &
       Schema.Attribute.DefaultTo<'_self'>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -1628,7 +1633,7 @@ export interface WidgetMenuWidget extends Struct.ComponentSchema {
   attributes: {
     menu_items: Schema.Attribute.Component<'config.link', true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title'>;
   };
 }
 
