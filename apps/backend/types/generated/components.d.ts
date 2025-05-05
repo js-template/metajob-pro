@@ -687,11 +687,14 @@ export interface MetajobBlockCategoryFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
-    card_button: Schema.Attribute.String;
+    card_button: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Find Jobs'>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    icon_type: Schema.Attribute.Enumeration<['Icon Bg', 'Simple']>;
-    search_placeholder: Schema.Attribute.String;
+    icon_type: Schema.Attribute.Enumeration<['Icon Bg', 'Simple']> &
+      Schema.Attribute.DefaultTo<'Icon Bg'>;
+    search_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Search'>;
     show_description: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
