@@ -460,7 +460,6 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<0.6>;
     color: Schema.Attribute.String;
     desktop: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           max: 12;
@@ -468,12 +467,12 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
         },
         number
       > &
-      Schema.Attribute.DefaultTo<12>;
+      Schema.Attribute.DefaultTo<4>;
     header_bg_color: Schema.Attribute.String;
     header_color: Schema.Attribute.String;
-    header_width: Schema.Attribute.Enumeration<['Full', 'Small']>;
+    header_width: Schema.Attribute.Enumeration<['Full', 'Small']> &
+      Schema.Attribute.DefaultTo<'Small'>;
     mobile: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           max: 12;
@@ -496,14 +495,13 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
     >;
     sub_header_color: Schema.Attribute.String;
     tab: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           min: 1;
         },
         number
       > &
-      Schema.Attribute.DefaultTo<12>;
+      Schema.Attribute.DefaultTo<4>;
   };
 }
 
