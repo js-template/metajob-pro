@@ -1101,16 +1101,25 @@ export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    button_placeholder: Schema.Attribute.String;
-    category_placeholder: Schema.Attribute.String;
-    experience_placeholder: Schema.Attribute.String;
-    location_placeholder: Schema.Attribute.String;
-    mobile_filter_placeholder: Schema.Attribute.String;
-    search_placeholder: Schema.Attribute.String;
-    skill_placeholder: Schema.Attribute.String;
-    sort_placeholder: Schema.Attribute.String;
-    title: Schema.Attribute.String;
-    type_placeholder: Schema.Attribute.String;
+    button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Search'>;
+    category_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Category'>;
+    experience_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Experience'>;
+    location_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Location'>;
+    mobile_filter_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Filter'>;
+    search_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Search'>;
+    skill_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Skills'>;
+    sort_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Sort'>;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Search Title'>;
+    type_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Type'>;
   };
 }
 

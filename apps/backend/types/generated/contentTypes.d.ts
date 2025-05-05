@@ -1094,6 +1094,7 @@ export interface PluginMetajobBackendJobCategory
           localized: true;
         };
       }>;
+    icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'bx:smile'>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -2271,6 +2272,11 @@ export interface PluginPadmaBackendPublicPage
         'metajob-block.page-header',
         'metajob-block.public-package',
         'metajob-block.category-filter',
+        'block.blog-card',
+        'metajob-block.job-banner',
+        'metajob-block.job-category',
+        'metajob-block.job-card',
+        'metajob-block.job-category-overlay',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
