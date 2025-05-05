@@ -964,7 +964,7 @@ export interface MetajobBlockPageHeader extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<0.7>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
