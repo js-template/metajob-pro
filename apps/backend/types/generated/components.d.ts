@@ -1179,19 +1179,26 @@ export interface MetajobSingleTypeCompanyDetails
     icon: 'arrowRight';
   };
   attributes: {
-    card_button: Schema.Attribute.String;
+    card_button: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Apply Now'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    industry_placeholder: Schema.Attribute.String;
-    info_placeholder: Schema.Attribute.String;
+    industry_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Industry'>;
+    info_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Company Info'>;
     open_jobs: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
-    open_jobs_title: Schema.Attribute.String;
-    salary_placeholder: Schema.Attribute.String;
+    open_jobs_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Open Job'>;
+    salary_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'AVG. Salary'>;
     show_header: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    size_placeholder: Schema.Attribute.String;
+    size_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Company Size'>;
     styles: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Company details'>;
   };
 }
 
