@@ -1467,7 +1467,7 @@ export interface SingleTypeBlogDetails extends Struct.ComponentSchema {
   };
   attributes: {
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Blog details'>;
   };
 }
 
