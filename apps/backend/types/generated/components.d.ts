@@ -416,8 +416,9 @@ export interface ConfigSectionTitle extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    sub_title: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
+    sub_title: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Sub Title Here'>;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
     variation: Schema.Attribute.Enumeration<['Variation One', 'Variation Two']>;
   };
 }
