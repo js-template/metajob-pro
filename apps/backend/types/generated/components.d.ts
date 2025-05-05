@@ -762,11 +762,14 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'config.link', false>;
-    company_count_placeholder: Schema.Attribute.String;
+    company_count_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Company'>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    job_count_placeholder: Schema.Attribute.String;
-    resume_count_placeholder: Schema.Attribute.String;
+    job_count_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Job Available'>;
+    resume_count_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Employee Available'>;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     show_count: Schema.Attribute.Boolean &
       Schema.Attribute.Required &

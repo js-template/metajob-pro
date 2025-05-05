@@ -22,13 +22,19 @@
       "component": "config.link"
     },
     "job_count_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Job Available"
     },
     "company_count_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Company"
     },
     "resume_count_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Employee Available"
     },
     "show_count": {
       "type": "boolean",
