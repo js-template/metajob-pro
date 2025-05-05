@@ -628,7 +628,8 @@ export interface HeaderTopBar extends Struct.ComponentSchema {
     icon: 'bars';
   };
   attributes: {
-    left_content: Schema.Attribute.Text;
+    left_content: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Text Here'>;
     right_content: Schema.Attribute.Component<'config.link', true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };

@@ -28,10 +28,12 @@
     },
     "hide_menu": {
       "type": "boolean",
+      "required": false,
       "default": false
     },
     "show_search": {
       "type": "boolean",
+      "required": false,
       "default": false
     },
     "main_menu": {
