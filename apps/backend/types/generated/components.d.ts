@@ -301,8 +301,9 @@ export interface ConfigCarouselCard extends Struct.ComponentSchema {
   };
   attributes: {
     image: Schema.Attribute.Media<'images'>;
-    paragraph: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
+    paragraph: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Paragraph Here'>;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -377,10 +378,16 @@ export interface ConfigMenu extends Struct.ComponentSchema {
     disabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'bx:smile'>;
     identifier: Schema.Attribute.String;
-    label: Schema.Attribute.String & Schema.Attribute.Required;
-    link: Schema.Attribute.String & Schema.Attribute.Required;
-    target: Schema.Attribute.Enumeration<['_blank', '_self']>;
-    type: Schema.Attribute.Enumeration<['External', 'Internal']>;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Label'>;
+    link: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#'>;
+    target: Schema.Attribute.Enumeration<['_blank', '_self']> &
+      Schema.Attribute.DefaultTo<'_self'>;
+    type: Schema.Attribute.Enumeration<['External', 'Internal']> &
+      Schema.Attribute.DefaultTo<'Internal'>;
   };
 }
 
@@ -437,8 +444,9 @@ export interface ConfigSinglePage extends Struct.ComponentSchema {
   attributes: {
     collectionModel: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'api/padma-backend/posts'>;
-    singelModel: Schema.Attribute.String;
-    slug: Schema.Attribute.String;
+    singelModel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'api/padma-backend/post-setting'>;
+    slug: Schema.Attribute.String & Schema.Attribute.DefaultTo<'slug'>;
   };
 }
 
@@ -1093,8 +1101,8 @@ export interface MetajobConfigMetaData extends Struct.ComponentSchema {
     icon: 'chartBubble';
   };
   attributes: {
-    key: Schema.Attribute.String;
-    value: Schema.Attribute.String;
+    key: Schema.Attribute.String & Schema.Attribute.DefaultTo<'key'>;
+    value: Schema.Attribute.String & Schema.Attribute.DefaultTo<'value'>;
   };
 }
 
@@ -1160,7 +1168,7 @@ export interface MetajobConfigTableConfig extends Struct.ComponentSchema {
     enable_edit: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
-    enable_search: Schema.Attribute.Boolean;
+    enable_search: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Name'>;
@@ -1368,15 +1376,18 @@ export interface SharedMetaSocial extends Struct.ComponentSchema {
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 65;
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     socialNetwork: Schema.Attribute.Enumeration<['Facebook', 'Twitter']> &
-      Schema.Attribute.Required;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Facebook'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 60;
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -1434,7 +1445,9 @@ export interface SharedSocialMedias extends Struct.ComponentSchema {
     icon: 'earth';
   };
   attributes: {
-    link: Schema.Attribute.String & Schema.Attribute.Required;
+    link: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#'>;
     type: Schema.Attribute.Enumeration<
       [
         'facebook',
