@@ -58,12 +58,15 @@ export interface BlockBlogFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
-    card_button: Schema.Attribute.String;
-    description: Schema.Attribute.Text;
+    card_button: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Read More'>;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    search_placeholder: Schema.Attribute.String;
+    search_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Search'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
