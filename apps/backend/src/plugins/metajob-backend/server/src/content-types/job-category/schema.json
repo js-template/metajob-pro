@@ -35,6 +35,12 @@
         }
       }
     },
+    "icon": {
+      "type": "string",
+      "unique": false,
+      "required": false,
+      "default": "bx:smile"
+    },
     "description": {
       "pluginOptions": {
         "i18n": {
