@@ -816,7 +816,8 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    icon_type: Schema.Attribute.Enumeration<['Icon Bg', 'Simple']>;
+    icon_type: Schema.Attribute.Enumeration<['Icon Bg', 'Simple']> &
+      Schema.Attribute.DefaultTo<'Icon Bg'>;
     item_count: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
@@ -827,7 +828,7 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<12>;
     show_description: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<true>;
+      Schema.Attribute.DefaultTo<false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
