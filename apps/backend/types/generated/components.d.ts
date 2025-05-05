@@ -1202,22 +1202,33 @@ export interface MetajobSingleTypeJobDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    apply_placeholder: Schema.Attribute.String;
-    card_button: Schema.Attribute.String;
-    deadline_placeholder: Schema.Attribute.String;
+    apply_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Apply Now'>;
+    card_button: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Apply Now'>;
+    deadline_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Deadline'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    overview_placeholder: Schema.Attribute.String;
-    posted_placeholder: Schema.Attribute.String;
-    related_jobs_subtitle: Schema.Attribute.String;
-    related_jobs_title: Schema.Attribute.String;
+    overview_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Job Overview'>;
+    posted_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Job Posted'>;
+    related_jobs_subtitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Latest Related Jobs For You'>;
+    related_jobs_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Related Jobs'>;
     related_lists: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    salary_placeholder: Schema.Attribute.String;
-    share_placeholder: Schema.Attribute.String;
+    salary_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Salary'>;
+    share_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Share on'>;
     show_header: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    skill_placeholder: Schema.Attribute.String;
+    skill_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Skills'>;
     styles: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-    type_placeholder: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Job details'>;
+    type_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Job Type'>;
   };
 }
 

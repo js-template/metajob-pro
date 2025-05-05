@@ -12,54 +12,84 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Job details"
     },
     "share_placeholder": {
-      "type": "string"
-    },
-    "skill_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Share on"
     },
     "apply_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Apply Now"
+    },
+    "skill_placeholder": {
+      "type": "string",
+      "required": false,
+      "default": "Skills"
     },
     "overview_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Job Overview"
     },
     "posted_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Job Posted"
     },
     "deadline_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Deadline"
     },
     "type_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Job Type"
     },
     "salary_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Salary"
     },
     "related_jobs_title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Related Jobs"
     },
     "related_jobs_subtitle": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Latest Related Jobs For You"
     },
     "card_button": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Apply Now"
     },
-    "styles": {
-      "type": "component",
-      "repeatable": false,
-      "component": "config.style-section"
+    "related_lists": {
+      "type": "boolean",
+      "required": false,
+      "default": true
+    },
+    "show_header": {
+      "type": "boolean",
+      "required": false,
+      "default": true
     },
     "empty": {
       "type": "component",
       "repeatable": false,
       "component": "shared.empty"
     },
-    "related_lists": {
-      "type": "boolean",
-      "default": true
+    "styles": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
     }
   }
 }
