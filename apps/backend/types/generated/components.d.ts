@@ -314,10 +314,12 @@ export interface ConfigLink extends Struct.ComponentSchema {
   attributes: {
     disabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'bx:smile'>;
-    label: Schema.Attribute.String;
-    link: Schema.Attribute.String;
-    target: Schema.Attribute.Enumeration<['_blank', '_self']>;
-    type: Schema.Attribute.Enumeration<['External', 'Internal']>;
+    label: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Button'>;
+    link: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#'>;
+    target: Schema.Attribute.Enumeration<['_blank', '_self']> &
+      Schema.Attribute.DefaultTo<'_self'>;
+    type: Schema.Attribute.Enumeration<['External', 'Internal']> &
+      Schema.Attribute.DefaultTo<'Internal'>;
   };
 }
 
