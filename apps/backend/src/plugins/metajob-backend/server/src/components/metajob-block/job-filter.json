@@ -10,23 +10,34 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Title Here"
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "required": false,
+      "default": "Description Here"
     },
     "result_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Total job found"
+    },
+    "search": {
+      "type": "component",
+      "repeatable": false,
+      "component": "metajob-config.search-config"
     },
     "card_button": {
       "type": "component",
       "repeatable": false,
       "component": "config.link"
     },
-    "search": {
+    "empty": {
       "type": "component",
       "repeatable": false,
-      "component": "metajob-config.search-config"
+      "component": "shared.empty"
     },
     "style": {
       "type": "component",

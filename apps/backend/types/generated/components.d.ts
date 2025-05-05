@@ -867,11 +867,14 @@ export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
   };
   attributes: {
     card_button: Schema.Attribute.Component<'config.link', false>;
-    description: Schema.Attribute.Text;
-    result_placeholder: Schema.Attribute.String;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    result_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Total job found'>;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
