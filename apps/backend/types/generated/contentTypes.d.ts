@@ -528,12 +528,19 @@ export interface PluginMetajobBackendAppliedJob
   attributes: {
     apply_status: Schema.Attribute.Enumeration<
       ['Shortlisted', 'Selected', 'Pending', 'Rejected']
-    >;
-    cover_letter: Schema.Attribute.RichText;
+    > &
+      Schema.Attribute.DefaultTo<'Pending'>;
+    cover_letter: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Cover Letter Here'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    job: Schema.Attribute.Relation<'manyToMany', 'plugin::metajob-backend.job'>;
+    job: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::metajob-backend.job'
+    > &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -542,7 +549,8 @@ export interface PluginMetajobBackendAppliedJob
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -624,11 +632,15 @@ export interface PluginMetajobBackendAvgSalary
       'plugin::metajob-backend.avg-salary'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'10k'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    value: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    value: Schema.Attribute.UID<'title'> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'10k'>;
   };
 }
 
@@ -667,7 +679,8 @@ export interface PluginMetajobBackendBookmark
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     resume: Schema.Attribute.Relation<
       'oneToOne',
@@ -675,7 +688,7 @@ export interface PluginMetajobBackendBookmark
     >;
     type: Schema.Attribute.Enumeration<['resume', 'job', 'company']> &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'resume'>;
+      Schema.Attribute.DefaultTo<'job'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
