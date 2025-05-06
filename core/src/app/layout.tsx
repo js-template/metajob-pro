@@ -16,6 +16,7 @@ import { find } from "@/lib/strapi"
 import { StyledEngineProvider } from "@mui/material/styles"
 import { getLanguageFromCookie } from "@/utils/language"
 import { GoogleAnalytics } from "@next/third-parties/google"
+import SidebarSetting from "@/components/common/sidebar-setting"
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
    const session = await auth()
@@ -35,6 +36,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       },
       "no-store"
    )
+   const showSettingBar = process.env.NEXT_PUBLIC_SHOW_SETTING_BAR
 
    return (
       <html lang={language} dir={direction} suppressHydrationWarning={true}>
@@ -51,6 +53,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
                               <CssBaseline />
 
                               {props.children}
+                              {showSettingBar && <SidebarSetting />}
                               <Toaster />
                            </NextThemeConfigProvider>
                         </NextThemesProvider>
