@@ -1050,15 +1050,18 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
     category: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.job-category'
-    >;
+    > &
+      Schema.Attribute.Required;
     company: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.company'
-    >;
+    > &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     endDate: Schema.Attribute.Date & Schema.Attribute.Required;
     experience: Schema.Attribute.Relation<
       'oneToOne',
@@ -1076,8 +1079,11 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
-    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    > &
+      Schema.Attribute.Required;
+    price: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'100'>;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     skills: Schema.Attribute.Relation<
@@ -1086,7 +1092,9 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
     >;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     startDate: Schema.Attribute.Date & Schema.Attribute.Required;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Job Title'>;
     type: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.job-type'
@@ -1094,7 +1102,7 @@ export interface PluginMetajobBackendJob extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    vacancy: Schema.Attribute.Integer;
+    vacancy: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<'10'>;
   };
 }
 

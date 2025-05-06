@@ -18,56 +18,17 @@
   "attributes": {
     "title": {
       "type": "string",
-      "required": true
-    },
-    "startDate": {
-      "type": "date",
-      "required": true
-    },
-    "price": {
-      "type": "decimal",
-      "required": true
-    },
-    "description": {
-      "type": "richtext"
-    },
-    "category": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::metajob-backend.job-category"
-    },
-    "type": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::metajob-backend.job-type"
-    },
-    "experience": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::metajob-backend.experience-level"
-    },
-    "vacancy": {
-      "type": "integer"
+      "required": true,
+      "default": "Job Title"
     },
     "slug": {
       "type": "uid",
       "targetField": "title",
       "required": true
     },
-    "company": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::metajob-backend.company"
-    },
-    "job_status": {
-      "type": "enumeration",
-      "enum": ["open", "closed", "draft"],
-      "default": "open",
+    "startDate": {
+      "type": "date",
       "required": true
-    },
-    "is_featured": {
-      "type": "boolean",
-      "default": false
     },
     "endDate": {
       "type": "date",
@@ -76,12 +37,58 @@
     "owner": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "plugin::users-permissions.user",
+      "required": true
+    },
+    "company": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.company",
+      "required": true
+    },
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.job-category",
+      "required": true
+    },
+    "price": {
+      "type": "decimal",
+      "required": true,
+      "default": "100"
+    },
+    "description": {
+      "type": "richtext",
+      "default": "Description Here"
+    },
+    "type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.job-type"
+    },
+    "vacancy": {
+      "type": "integer",
+      "default": "10"
+    },
+    "experience": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.experience-level"
     },
     "skills": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "plugin::metajob-backend.skill"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "job_status": {
+      "type": "enumeration",
+      "enum": ["open", "closed", "draft"],
+      "default": "open",
+      "required": true
     },
     "applications": {
       "type": "relation",
