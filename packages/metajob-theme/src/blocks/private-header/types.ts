@@ -39,6 +39,7 @@ export type IPrivateHeaderBlock = {
       sm_width: number
       md_width: number
    }
+   logo_text?: string
    main_menu: MenuItemProps[]
    side_menu: MenuItemProps[]
    profile_menu: MenuItemProps[]
