@@ -713,7 +713,8 @@ export interface PluginMetajobBackendChat extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    job: Schema.Attribute.Relation<'oneToOne', 'plugin::metajob-backend.job'>;
+    job: Schema.Attribute.Relation<'oneToOne', 'plugin::metajob-backend.job'> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -724,11 +725,13 @@ export interface PluginMetajobBackendChat extends Struct.CollectionTypeSchema {
     receiver: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Schema.Attribute.Required;
     sender: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
