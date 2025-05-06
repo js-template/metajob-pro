@@ -18,6 +18,18 @@
   "attributes": {
     "name": {
       "type": "string",
+      "required": true,
+      "default": "Company"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
       "required": true
     },
     "tagline": {
@@ -29,18 +41,11 @@
     "phone": {
       "type": "string"
     },
-    "website": {
-      "type": "string"
-    },
-    "company_size": {
+    "industry": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::metajob-backend.company-size"
-    },
-    "revenue": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::metajob-backend.revenue"
+      "target": "plugin::metajob-backend.job-category",
+      "required": true
     },
     "logo": {
       "type": "media",
@@ -48,32 +53,34 @@
       "required": false,
       "allowedTypes": ["images", "files", "videos", "audios"]
     },
-    "industry": {
+    "company_size": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::metajob-backend.job-category"
-    },
-    "slug": {
-      "type": "uid",
+      "target": "plugin::metajob-backend.company-size",
       "required": true
     },
-    "owner": {
+    "revenue": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "plugin::metajob-backend.revenue"
+    },
+    "avg_salary": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.avg-salary",
+      "required": true
     },
     "social_links": {
       "type": "component",
       "repeatable": true,
       "component": "shared.social-medias"
     },
-    "about": {
-      "type": "richtext"
+    "website": {
+      "type": "string"
     },
-    "avg_salary": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::metajob-backend.avg-salary"
+    "about": {
+      "type": "richtext",
+      "default": "Company Details Here"
     },
     "seo": {
       "type": "component",

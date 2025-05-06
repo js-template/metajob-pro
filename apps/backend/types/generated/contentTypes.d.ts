@@ -756,15 +756,18 @@ export interface PluginMetajobBackendCompany
     };
   };
   attributes: {
-    about: Schema.Attribute.RichText;
+    about: Schema.Attribute.RichText &
+      Schema.Attribute.DefaultTo<'Company Details Here'>;
     avg_salary: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.avg-salary'
-    >;
+    > &
+      Schema.Attribute.Required;
     company_size: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.company-size'
-    >;
+    > &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -772,18 +775,22 @@ export interface PluginMetajobBackendCompany
     industry: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.job-category'
-    >;
+    > &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.company'
     >;
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Company'>;
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Schema.Attribute.Required;
     phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     revenue: Schema.Attribute.Relation<
@@ -791,7 +798,7 @@ export interface PluginMetajobBackendCompany
       'plugin::metajob-backend.revenue'
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
-    slug: Schema.Attribute.UID & Schema.Attribute.Required;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     social_links: Schema.Attribute.Component<'shared.social-medias', true>;
     tagline: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
