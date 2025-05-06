@@ -9,7 +9,8 @@ module.exports = {
       NEXTAUTH_URL: process.env.NEXTAUTH_URL,
       NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
       STRAPI_AUTH_TOKEN: process.env.STRAPI_AUTH_TOKEN,
-      NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL
+      NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+      NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL
    },
    images: {
       remotePatterns: [
@@ -28,6 +29,10 @@ module.exports = {
          {
             protocol: "https" || "http",
             hostname: "placehold.co"
+         },
+         {
+            protocol: "http",
+            hostname: "localhost"
          }
       ]
    }
