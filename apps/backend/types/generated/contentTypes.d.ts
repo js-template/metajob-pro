@@ -1132,7 +1132,8 @@ export interface PluginMetajobBackendJobCategory
         i18n: {
           localized: true;
         };
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'bx:smile'>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.SetPluginOptions<{
@@ -1158,18 +1159,21 @@ export interface PluginMetajobBackendJobCategory
           localized: true;
         };
       }>;
-    slug: Schema.Attribute.UID &
+    slug: Schema.Attribute.UID<'title'> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
       }>;
     title: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Category'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
