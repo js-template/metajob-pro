@@ -6,19 +6,25 @@
   },
   "options": {},
   "attributes": {
+    "title": {
+      "type": "string",
+      "required": false,
+      "default": "Title Here"
+    },
+    "description": {
+      "type": "text",
+      "required": false,
+      "default": "Description Here"
+    },
+    "price": {
+      "type": "string",
+      "required": false,
+      "default": "00"
+    },
     "button": {
       "type": "component",
       "repeatable": false,
       "component": "config.link"
-    },
-    "price": {
-      "type": "string"
-    },
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
     },
     "table": {
       "type": "component",

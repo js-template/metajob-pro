@@ -12,10 +12,12 @@
   "pluginOptions": {},
   "attributes": {
     "key": {
-      "type": "string"
+      "type": "string",
+      "default": "key"
     },
     "value": {
-      "type": "string"
+      "type": "string",
+      "default": "value"
     }
   }
 }

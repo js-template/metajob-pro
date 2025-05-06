@@ -8,7 +8,8 @@
   "attributes": {
     "left_content": {
       "type": "text",
-      "required": false
+      "required": false,
+      "default": "Text Here"
     },
     "right_content": {
       "type": "component",

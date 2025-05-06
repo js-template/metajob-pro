@@ -16,53 +16,42 @@
     }
   },
   "attributes": {
-    "education": {
-      "type": "component",
-      "repeatable": true,
-      "component": "metajob-block.experience"
-    },
-    "experience": {
-      "type": "component",
-      "repeatable": true,
-      "component": "metajob-block.experience"
-    },
-    "user": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
-    },
-    "portfolio": {
-      "type": "component",
-      "repeatable": true,
-      "component": "metajob-block.portfolio"
-    },
-    "contact": {
-      "type": "component",
-      "repeatable": false,
-      "component": "metajob-block.contact"
-    },
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "default": "Candidate Name"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
     },
     "tagline": {
-      "type": "text"
-    },
-    "about": {
-      "type": "richtext"
-    },
-    "show_profile": {
-      "type": "enumeration",
-      "enum": ["Show", "Hide"]
+      "type": "text",
+      "required": true,
+      "default": "Professional Title"
     },
     "category": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::metajob-backend.job-category"
+      "target": "plugin::metajob-backend.job-category",
+      "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "required": true
     },
     "skills": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "plugin::metajob-backend.skill"
+    },
+    "experience_time": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::metajob-backend.experience-level"
     },
     "salary": {
       "type": "relation",
@@ -73,6 +62,15 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::metajob-backend.salary-type"
+    },
+    "contact": {
+      "type": "component",
+      "repeatable": false,
+      "component": "metajob-block.contact"
+    },
+    "about": {
+      "type": "richtext",
+      "default": "Candidate about"
     },
     "language": {
       "type": "enumeration",
@@ -152,17 +150,28 @@
         "Yiddish",
         "Yoruba",
         "Zulu"
-      ]
+      ],
+      "default": "English"
     },
-    "experience_time": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::metajob-backend.experience-level"
+    "show_profile": {
+      "type": "enumeration",
+      "enum": ["Show", "Hide"],
+      "default": "Show"
     },
-    "slug": {
-      "type": "uid",
-      "targetField": "name",
-      "required": false
+    "education": {
+      "type": "component",
+      "repeatable": true,
+      "component": "metajob-block.experience"
+    },
+    "experience": {
+      "type": "component",
+      "repeatable": true,
+      "component": "metajob-block.experience"
+    },
+    "portfolio": {
+      "type": "component",
+      "repeatable": true,
+      "component": "metajob-block.portfolio"
     },
     "seo": {
       "type": "component",

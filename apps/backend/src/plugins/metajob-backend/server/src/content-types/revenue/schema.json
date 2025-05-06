@@ -17,7 +17,9 @@
   },
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "default": "1-10000"
     },
     "value": {
       "type": "uid",

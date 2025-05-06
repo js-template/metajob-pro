@@ -16,6 +16,9 @@
       "repeatable": false,
       "component": "config.logo"
     },
+    "logo_text": {
+      "type": "string"
+    },
     "dark_mode": {
       "type": "boolean",
       "default": true

@@ -19,10 +19,13 @@
     },
     "search_placeholder": {
       "type": "string",
+      "required": false,
       "default": "Search"
     },
     "enable_search": {
-      "type": "boolean"
+      "type": "boolean",
+      "required": false,
+      "default": true
     },
     "enable_edit": {
       "type": "boolean",

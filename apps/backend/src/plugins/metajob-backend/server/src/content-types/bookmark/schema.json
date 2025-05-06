@@ -19,21 +19,19 @@
     "owner": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "plugin::users-permissions.user",
+      "required": true
     },
     "type": {
       "type": "enumeration",
       "enum": ["resume", "job", "company"],
-      "default": "resume",
+      "default": "job",
       "required": true
     },
     "resume": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::metajob-backend.resume"
-    },
-    "note": {
-      "type": "text"
     },
     "company": {
       "type": "relation",
@@ -44,6 +42,9 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::metajob-backend.job"
+    },
+    "note": {
+      "type": "text"
     }
   }
 }

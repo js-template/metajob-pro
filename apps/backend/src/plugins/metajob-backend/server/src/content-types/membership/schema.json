@@ -15,12 +15,14 @@
     "owner": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "plugin::users-permissions.user",
+      "required": true
     },
     "user_plan": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::metajob-backend.package"
+      "target": "plugin::metajob-backend.package",
+      "required": true
     }
   }
 }

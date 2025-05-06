@@ -58,12 +58,15 @@ export interface BlockBlogFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
-    card_button: Schema.Attribute.String;
-    description: Schema.Attribute.Text;
+    card_button: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Read More'>;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    search_placeholder: Schema.Attribute.String;
+    search_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Search'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -217,7 +220,6 @@ export interface BlockReviewBlock extends Struct.ComponentSchema {
     button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    reviews: Schema.Attribute.Component<'config.review-card', true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     variation: Schema.Attribute.Enumeration<
       ['default', 'compact', 'detailed']
@@ -299,8 +301,9 @@ export interface ConfigCarouselCard extends Struct.ComponentSchema {
   };
   attributes: {
     image: Schema.Attribute.Media<'images'>;
-    paragraph: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
+    paragraph: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Paragraph Here'>;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -314,10 +317,12 @@ export interface ConfigLink extends Struct.ComponentSchema {
   attributes: {
     disabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'bx:smile'>;
-    label: Schema.Attribute.String;
-    link: Schema.Attribute.String;
-    target: Schema.Attribute.Enumeration<['_blank', '_self']>;
-    type: Schema.Attribute.Enumeration<['External', 'Internal']>;
+    label: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Button'>;
+    link: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#'>;
+    target: Schema.Attribute.Enumeration<['_blank', '_self']> &
+      Schema.Attribute.DefaultTo<'_self'>;
+    type: Schema.Attribute.Enumeration<['External', 'Internal']> &
+      Schema.Attribute.DefaultTo<'Internal'>;
   };
 }
 
@@ -373,10 +378,16 @@ export interface ConfigMenu extends Struct.ComponentSchema {
     disabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'bx:smile'>;
     identifier: Schema.Attribute.String;
-    label: Schema.Attribute.String & Schema.Attribute.Required;
-    link: Schema.Attribute.String & Schema.Attribute.Required;
-    target: Schema.Attribute.Enumeration<['_blank', '_self']>;
-    type: Schema.Attribute.Enumeration<['External', 'Internal']>;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Label'>;
+    link: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#'>;
+    target: Schema.Attribute.Enumeration<['_blank', '_self']> &
+      Schema.Attribute.DefaultTo<'_self'>;
+    type: Schema.Attribute.Enumeration<['External', 'Internal']> &
+      Schema.Attribute.DefaultTo<'Internal'>;
   };
 }
 
@@ -416,8 +427,9 @@ export interface ConfigSectionTitle extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    sub_title: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
+    sub_title: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Sub Title Here'>;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
     variation: Schema.Attribute.Enumeration<['Variation One', 'Variation Two']>;
   };
 }
@@ -432,8 +444,9 @@ export interface ConfigSinglePage extends Struct.ComponentSchema {
   attributes: {
     collectionModel: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'api/padma-backend/posts'>;
-    singelModel: Schema.Attribute.String;
-    slug: Schema.Attribute.String;
+    singelModel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'api/padma-backend/post-setting'>;
+    slug: Schema.Attribute.String & Schema.Attribute.DefaultTo<'slug'>;
   };
 }
 
@@ -457,7 +470,6 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<0.6>;
     color: Schema.Attribute.String;
     desktop: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           max: 12;
@@ -465,12 +477,12 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
         },
         number
       > &
-      Schema.Attribute.DefaultTo<12>;
+      Schema.Attribute.DefaultTo<4>;
     header_bg_color: Schema.Attribute.String;
     header_color: Schema.Attribute.String;
-    header_width: Schema.Attribute.Enumeration<['Full', 'Small']>;
+    header_width: Schema.Attribute.Enumeration<['Full', 'Small']> &
+      Schema.Attribute.DefaultTo<'Small'>;
     mobile: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           max: 12;
@@ -493,14 +505,13 @@ export interface ConfigStyleSection extends Struct.ComponentSchema {
     >;
     sub_header_color: Schema.Attribute.String;
     tab: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           min: 1;
         },
         number
       > &
-      Schema.Attribute.DefaultTo<12>;
+      Schema.Attribute.DefaultTo<4>;
   };
 }
 
@@ -552,6 +563,7 @@ export interface HeaderMainMenu extends Struct.ComponentSchema {
         };
       }>;
     light_logo: Schema.Attribute.Component<'config.logo', false>;
+    logoText: Schema.Attribute.String;
     main_menu: Schema.Attribute.Component<'config.menu', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -586,6 +598,7 @@ export interface HeaderPrivateHeader extends Struct.ComponentSchema {
         };
       }>;
     light_logo: Schema.Attribute.Component<'config.logo', false>;
+    logo_text: Schema.Attribute.String;
     main_menu: Schema.Attribute.Component<'config.menu', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -617,7 +630,8 @@ export interface HeaderTopBar extends Struct.ComponentSchema {
     icon: 'bars';
   };
   attributes: {
-    left_content: Schema.Attribute.Text;
+    left_content: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Text Here'>;
     right_content: Schema.Attribute.Component<'config.link', true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
@@ -630,14 +644,15 @@ export interface MetajobBlockAppliedJobs extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    description: Schema.Attribute.String;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     table_config: Schema.Attribute.Component<
       'metajob-config.table-config',
       false
     >;
     table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -648,14 +663,15 @@ export interface MetajobBlockBookmark extends Struct.ComponentSchema {
     icon: 'bell';
   };
   attributes: {
-    description: Schema.Attribute.String;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     table_config: Schema.Attribute.Component<
       'metajob-config.table-config',
       false
     >;
     table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -668,10 +684,11 @@ export interface MetajobBlockCandidateFilter extends Struct.ComponentSchema {
   attributes: {
     card_button: Schema.Attribute.Component<'config.link', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    result_placeholder: Schema.Attribute.String;
+    result_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Total candidate found'>;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
     upload_resume_button: Schema.Attribute.Component<'config.link', false>;
   };
 }
@@ -683,11 +700,14 @@ export interface MetajobBlockCategoryFilter extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
-    card_button: Schema.Attribute.String;
+    card_button: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Find Jobs'>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    icon_type: Schema.Attribute.Enumeration<['Icon Bg', 'Simple']>;
-    search_placeholder: Schema.Attribute.String;
+    icon_type: Schema.Attribute.Enumeration<['Icon Bg', 'Simple']> &
+      Schema.Attribute.DefaultTo<'Icon Bg'>;
+    search_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Search'>;
     show_description: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
@@ -703,12 +723,14 @@ export interface MetajobBlockCompanyFilter extends Struct.ComponentSchema {
   attributes: {
     add_company_button: Schema.Attribute.Component<'config.link', false>;
     card_button: Schema.Attribute.Component<'config.link', false>;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    result_placeholder: Schema.Attribute.String;
+    result_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Total company found'>;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -719,8 +741,10 @@ export interface MetajobBlockContact extends Struct.ComponentSchema {
     icon: 'phone';
   };
   attributes: {
-    friendlyAddress: Schema.Attribute.String;
-    location: Schema.Attribute.String;
+    friendlyAddress: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Address Here'>;
+    location: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Location Here'>;
   };
 }
 
@@ -732,7 +756,8 @@ export interface MetajobBlockErrorSection extends Struct.ComponentSchema {
     icon: 'collapse';
   };
   attributes: {
-    button_placeholder: Schema.Attribute.String;
+    button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Reload'>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     style: Schema.Attribute.Component<'metajob-config.error-style', false>;
   };
@@ -745,11 +770,13 @@ export interface MetajobBlockExperience extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     endDate: Schema.Attribute.Date;
-    institution: Schema.Attribute.String;
+    institution: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Institution'>;
     startDate: Schema.Attribute.Date;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -761,11 +788,14 @@ export interface MetajobBlockJobBanner extends Struct.ComponentSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'config.link', false>;
-    company_count_placeholder: Schema.Attribute.String;
+    company_count_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Company'>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    job_count_placeholder: Schema.Attribute.String;
-    resume_count_placeholder: Schema.Attribute.String;
+    job_count_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Job Available'>;
+    resume_count_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Employee Available'>;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     show_count: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
@@ -812,7 +842,8 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
     card_button: Schema.Attribute.Component<'config.link', false>;
     content: Schema.Attribute.Component<'config.section-title', false>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    icon_type: Schema.Attribute.Enumeration<['Icon Bg', 'Simple']>;
+    icon_type: Schema.Attribute.Enumeration<['Icon Bg', 'Simple']> &
+      Schema.Attribute.DefaultTo<'Icon Bg'>;
     item_count: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
@@ -823,7 +854,7 @@ export interface MetajobBlockJobCategory extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<12>;
     show_description: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<true>;
+      Schema.Attribute.DefaultTo<false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
@@ -863,11 +894,14 @@ export interface MetajobBlockJobFilter extends Struct.ComponentSchema {
   };
   attributes: {
     card_button: Schema.Attribute.Component<'config.link', false>;
-    description: Schema.Attribute.Text;
-    result_placeholder: Schema.Attribute.String;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
+    empty: Schema.Attribute.Component<'shared.empty', false>;
+    result_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Total job found'>;
     search: Schema.Attribute.Component<'metajob-config.search-config', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -878,8 +912,10 @@ export interface MetajobBlockManageCompany extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    add_button_placeholder: Schema.Attribute.String;
-    description: Schema.Attribute.String;
+    add_button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Add Company'>;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     table_config: Schema.Attribute.Component<
@@ -887,7 +923,7 @@ export interface MetajobBlockManageCompany extends Struct.ComponentSchema {
       false
     >;
     table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -898,12 +934,14 @@ export interface MetajobBlockManageJob extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    add_button_placeholder: Schema.Attribute.String;
+    add_button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Add Job'>;
     apply_table_head: Schema.Attribute.Component<
       'metajob-config.meta-data',
       true
     >;
-    description: Schema.Attribute.String;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
     table_config: Schema.Attribute.Component<
@@ -911,7 +949,7 @@ export interface MetajobBlockManageJob extends Struct.ComponentSchema {
       false
     >;
     table_head: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -923,10 +961,11 @@ export interface MetajobBlockManagePackages extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    description: Schema.Attribute.String;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -937,7 +976,7 @@ export interface MetajobBlockManageResume extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -960,7 +999,7 @@ export interface MetajobBlockPageHeader extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<0.7>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -971,13 +1010,14 @@ export interface MetajobBlockPortfolio extends Struct.ComponentSchema {
     icon: 'clock';
   };
   attributes: {
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
     link: Schema.Attribute.Component<'config.link', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -989,10 +1029,11 @@ export interface MetajobBlockPricing extends Struct.ComponentSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'config.link', false>;
-    description: Schema.Attribute.Text;
-    price: Schema.Attribute.String;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
+    price: Schema.Attribute.String & Schema.Attribute.DefaultTo<'00'>;
     table: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -1077,8 +1118,8 @@ export interface MetajobConfigMetaData extends Struct.ComponentSchema {
     icon: 'chartBubble';
   };
   attributes: {
-    key: Schema.Attribute.String;
-    value: Schema.Attribute.String;
+    key: Schema.Attribute.String & Schema.Attribute.DefaultTo<'key'>;
+    value: Schema.Attribute.String & Schema.Attribute.DefaultTo<'value'>;
   };
 }
 
@@ -1100,16 +1141,25 @@ export interface MetajobConfigSearchConfig extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    button_placeholder: Schema.Attribute.String;
-    category_placeholder: Schema.Attribute.String;
-    experience_placeholder: Schema.Attribute.String;
-    location_placeholder: Schema.Attribute.String;
-    mobile_filter_placeholder: Schema.Attribute.String;
-    search_placeholder: Schema.Attribute.String;
-    skill_placeholder: Schema.Attribute.String;
-    sort_placeholder: Schema.Attribute.String;
-    title: Schema.Attribute.String;
-    type_placeholder: Schema.Attribute.String;
+    button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Search'>;
+    category_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Category'>;
+    experience_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Experience'>;
+    location_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Location'>;
+    mobile_filter_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Filter'>;
+    search_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Search'>;
+    skill_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Skills'>;
+    sort_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Sort'>;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Search Title'>;
+    type_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Type'>;
   };
 }
 
@@ -1135,7 +1185,7 @@ export interface MetajobConfigTableConfig extends Struct.ComponentSchema {
     enable_edit: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
-    enable_search: Schema.Attribute.Boolean;
+    enable_search: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Name'>;
@@ -1154,19 +1204,26 @@ export interface MetajobSingleTypeCompanyDetails
     icon: 'arrowRight';
   };
   attributes: {
-    card_button: Schema.Attribute.String;
+    card_button: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Apply Now'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    industry_placeholder: Schema.Attribute.String;
-    info_placeholder: Schema.Attribute.String;
+    industry_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Industry'>;
+    info_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Company Info'>;
     open_jobs: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
-    open_jobs_title: Schema.Attribute.String;
-    salary_placeholder: Schema.Attribute.String;
+    open_jobs_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Open Job'>;
+    salary_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'AVG. Salary'>;
     show_header: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    size_placeholder: Schema.Attribute.String;
+    size_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Company Size'>;
     styles: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Company details'>;
   };
 }
 
@@ -1177,22 +1234,33 @@ export interface MetajobSingleTypeJobDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    apply_placeholder: Schema.Attribute.String;
-    card_button: Schema.Attribute.String;
-    deadline_placeholder: Schema.Attribute.String;
+    apply_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Apply Now'>;
+    card_button: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Apply Now'>;
+    deadline_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Deadline'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    overview_placeholder: Schema.Attribute.String;
-    posted_placeholder: Schema.Attribute.String;
-    related_jobs_subtitle: Schema.Attribute.String;
-    related_jobs_title: Schema.Attribute.String;
+    overview_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Job Overview'>;
+    posted_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Job Posted'>;
+    related_jobs_subtitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Latest Related Jobs For You'>;
+    related_jobs_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Related Jobs'>;
     related_lists: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    salary_placeholder: Schema.Attribute.String;
-    share_placeholder: Schema.Attribute.String;
+    salary_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Salary'>;
+    share_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Share on'>;
     show_header: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    skill_placeholder: Schema.Attribute.String;
+    skill_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Skills'>;
     styles: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-    type_placeholder: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Job details'>;
+    type_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Job Type'>;
   };
 }
 
@@ -1203,19 +1271,26 @@ export interface MetajobSingleTypeLoginDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    button_placeholder: Schema.Attribute.String;
-    email_placeholder: Schema.Attribute.String;
-    or_placeholder: Schema.Attribute.String;
-    password_placeholder: Schema.Attribute.String;
+    button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Sign in'>;
+    email_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Username or Email'>;
+    or_placeholder: Schema.Attribute.String & Schema.Attribute.DefaultTo<'OR'>;
+    password_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Password'>;
     provider_option: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
-    required_placeholder: Schema.Attribute.String;
+    required_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'This field is required'>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
-    signup_helper_placeholder: Schema.Attribute.String;
-    signup_link_placeholder: Schema.Attribute.String;
+    signup_helper_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Not a Member ?'>;
+    signup_link_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Create Account'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Sign in with Email address'>;
   };
 }
 
@@ -1227,25 +1302,37 @@ export interface MetajobSingleTypeRegisterDetails
     icon: 'arrowRight';
   };
   attributes: {
-    button_placeholder: Schema.Attribute.String;
-    confirm_password_placeholder: Schema.Attribute.String;
-    confirm_password_title: Schema.Attribute.String;
-    email_placeholder: Schema.Attribute.String;
-    email_title: Schema.Attribute.String;
-    login_helper_placeholder: Schema.Attribute.String;
-    login_link_placeholder: Schema.Attribute.String;
-    or_placeholder: Schema.Attribute.String;
-    password_placeholder: Schema.Attribute.String;
-    password_title: Schema.Attribute.String;
+    button_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Register'>;
+    confirm_password_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Enter Confirm Password'>;
+    confirm_password_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Confirm Password'>;
+    email_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Your Email'>;
+    email_title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Email'>;
+    login_helper_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Already have account ?'>;
+    login_link_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Login'>;
+    or_placeholder: Schema.Attribute.String & Schema.Attribute.DefaultTo<'OR'>;
+    password_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Enter Password'>;
+    password_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Password'>;
     provider_option: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
-    required_placeholder: Schema.Attribute.String;
+    required_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'This field is required'>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
-    username_placeholder: Schema.Attribute.String;
-    username_title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Create an account'>;
+    username_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Enter Username'>;
+    username_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Username'>;
   };
 }
 
@@ -1256,17 +1343,25 @@ export interface MetajobSingleTypeResumeDetails extends Struct.ComponentSchema {
     icon: 'arrowRight';
   };
   attributes: {
-    about_placeholder: Schema.Attribute.String;
-    education_placeholder: Schema.Attribute.String;
+    about_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'About Me'>;
+    education_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Education'>;
     empty: Schema.Attribute.Component<'shared.empty', false>;
-    experience_placeholder: Schema.Attribute.String;
-    industry_placeholder: Schema.Attribute.String;
-    member_placeholder: Schema.Attribute.String;
-    open_placeholder: Schema.Attribute.String;
-    portfolio_placeholder: Schema.Attribute.String;
+    experience_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Experience'>;
+    industry_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Industry'>;
+    member_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Member Since'>;
+    open_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Open To Work'>;
+    portfolio_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Portfolio'>;
     show_header: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     styles: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Resume details'>;
   };
 }
 
@@ -1298,15 +1393,18 @@ export interface SharedMetaSocial extends Struct.ComponentSchema {
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 65;
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     socialNetwork: Schema.Attribute.Enumeration<['Facebook', 'Twitter']> &
-      Schema.Attribute.Required;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Facebook'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 60;
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -1364,7 +1462,9 @@ export interface SharedSocialMedias extends Struct.ComponentSchema {
     icon: 'earth';
   };
   attributes: {
-    link: Schema.Attribute.String & Schema.Attribute.Required;
+    link: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#'>;
     type: Schema.Attribute.Enumeration<
       [
         'facebook',
@@ -1416,7 +1516,7 @@ export interface SingleTypeBlogDetails extends Struct.ComponentSchema {
   };
   attributes: {
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Blog details'>;
   };
 }
 
@@ -1470,13 +1570,15 @@ export interface WidgetContactWidget extends Struct.ComponentSchema {
     icon: 'envelop';
   };
   attributes: {
-    description: Schema.Attribute.Text;
-    email: Schema.Attribute.String;
-    location: Schema.Attribute.String;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
+    email: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Email Here'>;
+    location: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Location Here'>;
     logo: Schema.Attribute.Component<'config.logo', false>;
-    phone: Schema.Attribute.String;
+    phone: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Phone Here'>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -1488,7 +1590,9 @@ export interface WidgetCopyrightBar extends Struct.ComponentSchema {
     icon: 'copyright';
   };
   attributes: {
-    content: Schema.Attribute.Text & Schema.Attribute.Required;
+    content: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Copyright Text Here'>;
     social_link: Schema.Attribute.Component<'shared.social-medias', true>;
   };
 }
@@ -1502,12 +1606,13 @@ export interface WidgetCountCard extends Struct.ComponentSchema {
   };
   attributes: {
     link: Schema.Attribute.String;
-    subTitle: Schema.Attribute.String;
+    subTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Sub Title Here'>;
     target: Schema.Attribute.Enumeration<
       ['_self', '_blank', '_parent', '_top']
     > &
       Schema.Attribute.DefaultTo<'_self'>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title Here'>;
   };
 }
 
@@ -1544,7 +1649,7 @@ export interface WidgetMenuWidget extends Struct.ComponentSchema {
   attributes: {
     menu_items: Schema.Attribute.Component<'config.link', true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Title'>;
   };
 }
 

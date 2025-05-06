@@ -8,13 +8,18 @@
   "options": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Title Here"
     },
     "subTitle": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Sub Title Here"
     },
     "link": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
     "target": {
       "type": "enumeration",
