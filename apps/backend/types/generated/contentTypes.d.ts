@@ -1225,7 +1225,8 @@ export interface PluginMetajobBackendJobSetting
         i18n: {
           localized: true;
         };
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Job Details'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1259,7 +1260,9 @@ export interface PluginMetajobBackendJobType
       'plugin::metajob-backend.job-type'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Full Time'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1292,7 +1295,8 @@ export interface PluginMetajobBackendMembership
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1300,7 +1304,8 @@ export interface PluginMetajobBackendMembership
     user_plan: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.package'
-    >;
+    > &
+      Schema.Attribute.Required;
   };
 }
 
@@ -1320,7 +1325,8 @@ export interface PluginMetajobBackendMessage
     chat_session: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.chat'
-    >;
+    > &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1334,7 +1340,9 @@ export interface PluginMetajobBackendMessage
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
-    message: Schema.Attribute.RichText & Schema.Attribute.Required;
+    message: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Message Here'>;
     publishedAt: Schema.Attribute.DateTime;
     read: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
@@ -1342,14 +1350,16 @@ export interface PluginMetajobBackendMessage
     receiver: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Schema.Attribute.Required;
     send_notification: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
     sender: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1379,18 +1389,24 @@ export interface PluginMetajobBackendPackage
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Description Here'>;
     feature: Schema.Attribute.Component<'metajob-config.meta-data', true>;
-    frequency: Schema.Attribute.Enumeration<['Monthly', 'Yearly', 'One Time']>;
+    frequency: Schema.Attribute.Enumeration<['Monthly', 'Yearly', 'One Time']> &
+      Schema.Attribute.DefaultTo<'Monthly'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.package'
     > &
       Schema.Attribute.Private;
-    price: Schema.Attribute.Integer;
+    price: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'100'>;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Title Here'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
