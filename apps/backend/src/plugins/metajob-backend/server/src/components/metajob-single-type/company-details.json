@@ -12,35 +12,39 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Company details"
     },
     "info_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Company Info"
     },
     "industry_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Industry"
     },
     "size_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Company Size"
     },
     "salary_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "AVG. Salary"
     },
     "open_jobs_title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Open Job"
     },
     "card_button": {
-      "type": "string"
-    },
-    "styles": {
-      "type": "component",
-      "repeatable": false,
-      "component": "config.style-section"
-    },
-    "empty": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.empty"
+      "type": "string",
+      "required": false,
+      "default": "Apply Now"
     },
     "open_jobs": {
       "type": "boolean",
@@ -49,7 +53,18 @@
     },
     "show_header": {
       "type": "boolean",
+      "required": false,
       "default": true
+    },
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    },
+    "styles": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
     }
   }
 }

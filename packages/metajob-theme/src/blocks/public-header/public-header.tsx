@@ -52,7 +52,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
    const { changeLang } = useChangeLang()
    const { changeDirection } = useChangeDirection()
 
-   const { main_menu, light_logo, dark_logo, style, hide_menu, show_search } = block || {}
+   const { main_menu, light_logo, dark_logo, style, hide_menu, show_search, logo_text } = block || {}
    const { backgroundColor, color, section_padding } = style || {}
 
    const logoData = mode === "light" ? light_logo : dark_logo || {}
@@ -89,7 +89,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                      alignItems: "center",
                      gap: 1
                   }}>
-                  {logo && (
+                  {!logo_text && logo && (
                      <Box
                         sx={{
                            display: { xs: "none", md: "flex" }
@@ -108,6 +108,27 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                               }
                            }}
                         />
+                     </Box>
+                  )}
+                  {logo_text && (
+                     <Box
+                        sx={{
+                           display: { xs: "none", md: "flex" },
+                           textDecoration: "none"
+                        }}
+                        // @ts-ignore
+                        component={NextLink}
+                        href='/'>
+                        <Typography
+                           variant='h3'
+                           component={"p"}
+                           sx={{
+                              fontSize: 34,
+                              textDecoration: "none",
+                              color: theme.palette.primary.main
+                           }}>
+                           {logo_text}
+                        </Typography>
                      </Box>
                   )}
                   {/* mobile menu  */}
@@ -131,7 +152,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                         listLocalesData={listLocalesData}
                      />
                   </Box>
-                  {logo && (
+                  {!logo_text && logo && (
                      <Box
                         component={NextLink}
                         href='/'
@@ -151,6 +172,29 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                               }
                            }}
                         />
+                     </Box>
+                  )}
+                  {logo_text && (
+                     <Box
+                        sx={{
+                           display: { xs: "flex", md: "none" },
+                           flexGrow: 1,
+                           justifyContent: "center",
+                           textDecoration: "none"
+                        }}
+                        // @ts-ignore
+                        component={NextLink}
+                        href='/'>
+                        <Typography
+                           variant='h3'
+                           component={"p"}
+                           sx={{
+                              fontSize: { xs: 24, sm: 30, md: 34 },
+                              textDecoration: "none",
+                              color: theme.palette.primary.main
+                           }}>
+                           {logo_text}
+                        </Typography>
                      </Box>
                   )}
                </Box>

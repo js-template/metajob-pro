@@ -14,14 +14,16 @@
   "pluginOptions": {},
   "attributes": {
     "slug": {
-      "type": "string"
+      "type": "string",
+      "default": "slug"
     },
     "collectionModel": {
       "type": "string",
       "default": "api/padma-backend/posts"
     },
     "singelModel": {
-      "type": "string"
+      "type": "string",
+      "default": "api/padma-backend/post-setting"
     }
   }
 }

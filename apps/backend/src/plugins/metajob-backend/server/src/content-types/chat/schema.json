@@ -15,22 +15,25 @@
     "sender": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "plugin::users-permissions.user",
+      "required": true
     },
     "receiver": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
-    },
-    "chat_blocked": {
-      "type": "boolean",
-      "default": false,
+      "target": "plugin::users-permissions.user",
       "required": true
     },
     "job": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::metajob-backend.job"
+      "target": "plugin::metajob-backend.job",
+      "required": true
+    },
+    "chat_blocked": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     }
   }
 }

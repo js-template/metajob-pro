@@ -110,6 +110,7 @@ const CustomAppBar = ({
       language: langMenu,
       light_logo,
       dark_logo,
+      logo_text,
       dark_mode,
       notification
    } = headerData || {}
@@ -184,7 +185,7 @@ const CustomAppBar = ({
                   }}>
                   <MenuIcon />
                </IconButton>
-               {logo && (
+               {!logo_text && logo && (
                   <Box
                      sx={{
                         display: { xs: "none", md: "flex" }
@@ -202,6 +203,26 @@ const CustomAppBar = ({
                            }
                         }}
                      />
+                  </Box>
+               )}
+               {logo_text && (
+                  <Box
+                     sx={{
+                        display: { xs: "none", md: "flex" },
+                        textDecoration: "none"
+                     }}
+                     component={NextLink}
+                     href={dashboardLink ?? "/"}>
+                     <Typography
+                        variant='h3'
+                        component={"p"}
+                        sx={{
+                           fontSize: { xs: 24, sm: 30, md: 36 },
+                           textDecoration: "none",
+                           color: theme.palette.primary.main
+                        }}>
+                        {logo_text}
+                     </Typography>
                   </Box>
                )}
             </Box>

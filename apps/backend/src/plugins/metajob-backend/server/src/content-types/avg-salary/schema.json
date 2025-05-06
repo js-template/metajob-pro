@@ -17,12 +17,15 @@
   },
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "default": "10k"
     },
     "value": {
       "type": "uid",
       "targetField": "title",
-      "required": true
+      "required": true,
+      "default": "10k"
     }
   }
 }
