@@ -1431,11 +1431,13 @@ export interface PluginMetajobBackendResume
     };
   };
   attributes: {
-    about: Schema.Attribute.RichText;
+    about: Schema.Attribute.RichText &
+      Schema.Attribute.DefaultTo<'Candidate about'>;
     category: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::metajob-backend.job-category'
-    >;
+    > &
+      Schema.Attribute.Required;
     contact: Schema.Attribute.Component<'metajob-block.contact', false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1524,13 +1526,16 @@ export interface PluginMetajobBackendResume
         'Yoruba',
         'Zulu',
       ]
-    >;
+    > &
+      Schema.Attribute.DefaultTo<'English'>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.resume'
     >;
-    name: Schema.Attribute.String;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Candidate Name'>;
     portfolio: Schema.Attribute.Component<'metajob-block.portfolio', true>;
     publishedAt: Schema.Attribute.DateTime;
     salary: Schema.Attribute.Relation<
@@ -1542,20 +1547,24 @@ export interface PluginMetajobBackendResume
       'plugin::metajob-backend.salary-type'
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
-    show_profile: Schema.Attribute.Enumeration<['Show', 'Hide']>;
+    show_profile: Schema.Attribute.Enumeration<['Show', 'Hide']> &
+      Schema.Attribute.DefaultTo<'Show'>;
     skills: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.skill'
     >;
-    slug: Schema.Attribute.UID<'name'>;
-    tagline: Schema.Attribute.Text;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    tagline: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Professional Title'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     user: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Schema.Attribute.Required;
   };
 }
 
