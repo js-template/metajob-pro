@@ -16,15 +16,9 @@
     }
   },
   "attributes": {
-    "role": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "plugin::users-permissions.role",
-      "inversedBy": "users",
-      "configurable": false
-    },
     "title": {
       "type": "string",
+      "default": "Private Page",
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -35,6 +29,13 @@
       "type": "uid",
       "targetField": "title",
       "required": true
+    },
+    "role": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.role",
+      "inversedBy": "users",
+      "configurable": false
     },
     "blocks": {
       "pluginOptions": {

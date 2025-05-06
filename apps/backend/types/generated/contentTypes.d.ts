@@ -1964,8 +1964,10 @@ export interface PluginPadmaBackendPost extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     short_description: Schema.Attribute.Text & Schema.Attribute.Required;
-    slug: Schema.Attribute.UID;
-    title: Schema.Attribute.String;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Post'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2031,13 +2033,15 @@ export interface PluginPadmaBackendPostSetting extends Struct.SingleTypeSchema {
         i18n: {
           localized: true;
         };
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Right Sidebar'>;
     title: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Post Details'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2114,7 +2118,7 @@ export interface PluginPadmaBackendPrivateFrontpage
       }>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     style: Schema.Attribute.Component<'component.grid-container', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Dashboard'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2241,7 +2245,8 @@ export interface PluginPadmaBackendPrivatePage
         i18n: {
           localized: true;
         };
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Private Page'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2296,7 +2301,8 @@ export interface PluginPadmaBackendPublicFrontpage
         i18n: {
           localized: true;
         };
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Home Page Description'>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -2314,7 +2320,8 @@ export interface PluginPadmaBackendPublicFrontpage
         i18n: {
           localized: true;
         };
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Home'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2389,7 +2396,8 @@ export interface PluginPadmaBackendPublicPage
         i18n: {
           localized: true;
         };
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Public Page'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

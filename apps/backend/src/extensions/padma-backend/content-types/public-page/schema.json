@@ -18,6 +18,7 @@
   "attributes": {
     "title": {
       "type": "string",
+      "default": "Public Page",
       "pluginOptions": {
         "i18n": {
           "localized": true
