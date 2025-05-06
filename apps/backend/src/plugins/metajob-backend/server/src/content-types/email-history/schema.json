@@ -11,19 +11,24 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "datetime": {
-      "type": "datetime"
-    },
-    "receiver": {
-      "type": "email"
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "Your History"
     },
     "owner": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "plugin::users-permissions.user",
+      "required": true
     },
-    "title": {
-      "type": "string"
+    "receiver": {
+      "type": "email",
+      "required": true
+    },
+    "datetime": {
+      "type": "datetime",
+      "required": true
     }
   }
 }
