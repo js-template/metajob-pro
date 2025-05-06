@@ -21,7 +21,7 @@ export const JobItem = ({ data, button_label, color, secondary_color, vacancy_pl
    const theme = muiTheme()
 
    const { title, type, company, location, vacancy, publishedAt, price, slug, is_featured } = data || {}
-   const image = company?.logo?.url
+   const image = `${process.env.NEXT_PUBLIC_BACKEND_URL}${company?.logo?.url}` || company?.logo?.url
    const companyName = company?.name
 
    const getTagsColor = (tag: string, theme: any) => {

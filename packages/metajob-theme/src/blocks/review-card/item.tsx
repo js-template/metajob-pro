@@ -20,7 +20,9 @@ const CardItem = ({
 
    const { name, designation, review, avatar } = data || {}
    // const url = avatar?.url || "https://placehold.co/64/png"
-   const url = avatar?.url
+   const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}${avatar.url}` || avatar?.url
+
+   console.log("url", url)
 
    return (
       <Stack

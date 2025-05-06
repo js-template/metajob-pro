@@ -25,7 +25,7 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
    const userId = session?.user?.id
 
    const { documentId, logo, name, email, phone, tagline, website, social_links } = data || {}
-   const companyLogo = logo?.url || ""
+   const companyLogo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${logo.url}` || logo?.url || ""
 
    const facebook = getSocialLink("facebook", social_links)
    const twitter = getSocialLink("twitter", social_links)

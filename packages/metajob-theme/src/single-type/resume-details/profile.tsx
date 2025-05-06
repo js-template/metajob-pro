@@ -26,7 +26,7 @@ export default function ProfileSection({
    const { color, secondary_color } = styles || {}
 
    const { documentId, name, user, tagline, category, experience_time, contact, createdAt } = data || {}
-   const image = user?.avatar?.url || ""
+   const image = `${process.env.NEXT_PUBLIC_BACKEND_URL}${user?.avatar.url}` || user?.avatar?.url || ""
    const industry = category?.title || ""
    const location = contact?.location || ""
 

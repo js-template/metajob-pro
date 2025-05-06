@@ -32,7 +32,7 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
    const userId = session?.user?.id
    const userRole = session?.user?.role?.type
 
-   const logo = companyData?.logo?.url || ""
+   const logo = `${process.env.NEXT_PUBLIC_BACKEND_URL}${companyData?.logo?.url}` || companyData?.logo?.url || ""
 
    const companyName = company?.name || ""
    const categoryName = category?.title || ""

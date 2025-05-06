@@ -22,8 +22,9 @@ const CardItem = ({
    const { theme: mode } = useTheme()
 
    const { title, slug, featuredImage, short_description, publishedAt } = data || {}
-   // const image = featuredImage?.url || "https://placehold.co/300x250/png"
-   const image = featuredImage?.url
+   //   Fearured mage support form clud as well as strapi local upload
+   const finalFeaturedImage = `${process.env.NEXT_PUBLIC_BACKEND_URL}${featuredImage.url}` || featuredImage?.url
+
    return (
       <Stack
          sx={{
@@ -55,21 +56,21 @@ const CardItem = ({
          }}>
          <Box
             sx={{
-               display: image ? "flex" : "none",
+               display: finalFeaturedImage ? "flex" : "none",
                justifyContent: "center",
                alignItems: "center",
                overflow: "hidden",
                borderRadius: 1,
                position: "relative", // Make sure the container is positioned
                width: "100%", // Define width and height for the container
-               minHeight: image ? { xs: "200px", sm: "250px", md: "250px" } : "0",
+               minHeight: finalFeaturedImage ? { xs: "200px", sm: "250px", md: "250px" } : "0",
                mb: "20px"
             }}
             component={Link}
             href={`blog/${slug}`}>
             <Image
                // src={image}
-               src={image || "https://placehold.co/300x250/png"}
+               src={finalFeaturedImage}
                alt={title}
                style={{
                   transition: "transform 0.4s ease-in-out",

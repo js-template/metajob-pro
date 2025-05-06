@@ -22,7 +22,7 @@ const CardItem = ({
    const { theme: mode } = useTheme()
    const { title, slug, featuredImage, short_description, publishedAt } = data || {}
    // const image = featuredImage?.url || "https://placehold.co/300x250/png"
-   const image = featuredImage?.url
+   const image = `${process.env.NEXT_PUBLIC_BACKEND_URL}${featuredImage.url}` || featuredImage?.url
    return (
       <Stack
          sx={{

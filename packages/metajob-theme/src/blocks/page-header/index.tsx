@@ -13,7 +13,7 @@ export const PageHeader = ({ block }: Props) => {
    const { theme: mode } = useTheme()
    const { title, image, style } = block || {}
    const { backgroundColor, color, bg_overlay } = style || {}
-   const bgImage = image?.url
+   const bgImage = `${process.env.NEXT_PUBLIC_BACKEND_URL}${image?.url}` || image?.url
    return (
       <Stack position={"relative"}>
          <Stack

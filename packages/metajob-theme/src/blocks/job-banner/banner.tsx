@@ -56,7 +56,11 @@ export const JobBannerClient = ({ block, categoryData, countData }: Props) => {
    const { label, link, target, disabled } = button || {}
    const { title, sub_title } = content || {}
    const { search_placeholder, location_placeholder, category_placeholder, button_placeholder } = search || {}
-   const bannerBackground = image?.url || ""
+   const bannerBackground = image?.url
+      ? image.url.startsWith("http")
+         ? image.url
+         : `${process.env.NEXT_PUBLIC_BACKEND_URL}${image.url}`
+      : ""
 
    const router = useRouter()
    const [searchText, setSearchText] = useState("")
