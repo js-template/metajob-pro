@@ -1,4 +1,5 @@
 "use client"
+import NextLink from "next/link"
 import { Chip, TableCell, TableRow, Typography, useTheme } from "@mui/material"
 import { Fragment } from "react"
 import { dateFormatter } from "../../lib/date-format"
@@ -29,23 +30,26 @@ const TableItem = ({ application }: { application: IApplyJobData }) => {
             "&:last-child td, &:last-child th": { border: 0 }
          }}>
          <TableCell>
-            <Link href={`/job/${slug}`} target='_blank' passHref>
-               <Typography
-                  variant='body2'
-                  fontWeight={500}
-                  lineHeight={"24px"}
-                  sx={{
-                     color: (theme) => theme.palette.text.primary,
-                     // line clamp 1
-                     display: "-webkit-box",
-                     WebkitBoxOrient: "vertical",
-                     overflow: "hidden",
-                     textOverflow: "ellipsis",
-                     WebkitLineClamp: 1
-                  }}>
-                  {title}
-               </Typography>
-            </Link>
+            <Typography
+               component={NextLink}
+               href={`/job/${slug}`}
+               variant='body1'
+               sx={{
+                  fontSize: { xs: 16, md: 16 },
+                  color: (theme) => theme.palette.text.primary,
+                  textDecoration: "none",
+                  "&:hover": {
+                     color: (theme) => theme.palette.primary.main
+                  },
+                  // line clamp 1
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  WebkitLineClamp: 1
+               }}>
+               {title}
+            </Typography>
          </TableCell>
          <TableCell>{dateFormatter(startDate)}</TableCell>
          <TableCell>{dateFormatter(endDate)}</TableCell>
