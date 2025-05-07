@@ -563,7 +563,7 @@ export interface HeaderMainMenu extends Struct.ComponentSchema {
         };
       }>;
     light_logo: Schema.Attribute.Component<'config.logo', false>;
-    logoText: Schema.Attribute.String;
+    logo_text: Schema.Attribute.String;
     main_menu: Schema.Attribute.Component<'config.menu', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
