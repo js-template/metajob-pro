@@ -185,7 +185,7 @@ const CustomAppBar = ({
                   }}>
                   <MenuIcon />
                </IconButton>
-               {!logo_text && logo && (
+               {logo && (
                   <Box
                      sx={{
                         display: { xs: "flex", md: "flex" }
@@ -205,7 +205,7 @@ const CustomAppBar = ({
                      />
                   </Box>
                )}
-               {logo_text && (
+               {!logo && logo_text && (
                   <Box
                      sx={{
                         display: { xs: "flex", md: "flex" },
