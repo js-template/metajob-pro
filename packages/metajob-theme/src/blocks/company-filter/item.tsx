@@ -3,6 +3,7 @@ import NextLink from "next/link"
 import { useTheme } from "next-themes"
 import { Box, Icon, Stack, Typography, Button, Avatar } from "@mui/material"
 import { ISingleCompany } from "./types"
+import { hexToRGBA } from "../../lib/hex-to-rgba"
 
 type Props = {
    data: ISingleCompany
@@ -48,10 +49,12 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                src={companyLogo}
                alt={name || "companyLogo"}
                sx={{
+                  bgcolor: (theme) =>
+                     mode === "light" ? theme.palette.primary.main : hexToRGBA(theme.palette.primary.main, 0.5),
+                  color: (theme) => theme.palette.primary.contrastText,
+                  fontSize: { xs: 24, md: 30 },
                   width: { xs: "60px", sm: "80px", md: "100px" },
                   height: { xs: "60px", sm: "80px", md: "100px" },
-                  fontWeight: 700,
-                  fontSize: "30px",
                   borderRadius: "12px"
                }}>
                {name?.charAt(0) || ""}

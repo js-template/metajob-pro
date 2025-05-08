@@ -13,16 +13,18 @@ const NavGroupItem = ({ item, open, direction }: { item: MenuItemProps; open: bo
    const [openGroup, setOpenGroup] = useState<boolean>(false)
 
    // *** if pathname matches the link, open the parent menu
-   useEffect(() => {
-      if (pathname === item.link) {
-         setOpenGroup(true)
-      }
+   // useEffect(() => {
+   //    if (pathname === item.link) {
+   //       setOpenGroup(true)
+   //    }
 
-      // *** or item.child find the pathname
-      if (_.find(item.child, { link: pathname })) {
-         setOpenGroup(true)
-      }
-   }, [item.child, item.link, pathname])
+   //    // *** or item.child find the pathname
+   //    if (_.find(item.child, { link: pathname })) {
+   //       setOpenGroup(true)
+   //    }
+   // }, [item.child, item.link, pathname])
+
+   const isItemActive = pathname === item.link || openGroup
 
    return (
       <ListItem sx={{ display: "block", py: 0, mb: openGroup ? 0 : 1, px: 0 }}>
@@ -43,7 +45,7 @@ const NavGroupItem = ({ item, open, direction }: { item: MenuItemProps; open: bo
                      color: theme.palette.primary.contrastText + " !important"
                   }
                },
-               ...(openGroup && {
+               ...(isItemActive && {
                   backgroundColor: theme.palette.primary.main,
                   color: theme.palette.primary.contrastText,
 

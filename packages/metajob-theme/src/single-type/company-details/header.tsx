@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import toast from "react-hot-toast"
 import { createEntry, deleteEntry, find } from "../../lib/strapi"
+import { hexToRGBA } from "../../lib/hex-to-rgba"
 
 type Props = {
    data: ISingleCompany
@@ -161,10 +162,14 @@ const CompanyHeader = ({ data, language, color, secondary_color }: Props) => {
                         src={companyLogo}
                         alt={name || "companyLogo"}
                         sx={{
+                           bgcolor: (theme) =>
+                              mode === "light"
+                                 ? theme.palette.primary.main
+                                 : hexToRGBA(theme.palette.primary.main, 0.5),
+                           color: (theme) => theme.palette.primary.contrastText,
+                           fontSize: { xs: 24, md: 30 },
                            width: { xs: 70, sm: 80, md: 100 },
-                           height: { xs: 70, sm: 80, md: 100 },
-                           fontWeight: 700,
-                           fontSize: "30px"
+                           height: { xs: 70, sm: 80, md: 100 }
                         }}>
                         {name?.charAt(0) || ""}
                      </Avatar>

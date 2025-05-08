@@ -232,7 +232,7 @@ const EducationForm = ({ index, edu, removeHandler, register, errors }: Props) =
                }
             }}
             onClick={() => removeHandler(index)}>
-            <CIcon icon='tabler:plus' />
+            <CIcon icon='tabler:x' />
          </Box>
       </Paper>
    )

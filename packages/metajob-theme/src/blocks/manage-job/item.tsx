@@ -188,10 +188,9 @@ const TableItem = ({
                <Typography
                   component={NextLink}
                   href={`/job/${slug}`}
-                  variant='body2'
-                  fontWeight={500}
-                  lineHeight={"24px"}
+                  variant='body1'
                   sx={{
+                     fontSize: 16,
                      color: (theme) => theme.palette.text.primary,
                      transitionDuration: ".3s",
                      "&:hover": {

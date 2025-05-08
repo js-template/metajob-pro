@@ -19,7 +19,9 @@
       "component": "config.logo"
     },
     "logo_text": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Logo"
     },
     "dark_mode": {
       "type": "boolean",

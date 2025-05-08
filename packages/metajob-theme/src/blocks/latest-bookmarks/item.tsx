@@ -23,7 +23,8 @@ const TableItem = ({
                   color: (theme) => theme.palette.text.secondary
                },
                "& td": {
-                  py: "20px"
+                  py: { xs: 1.5, md: 2.5 },
+                  px: { xs: 1, md: 2 }
                },
                "& td:last-child": {
                   pr: direction === "rtl" ? 0 : 5,
@@ -39,8 +40,8 @@ const TableItem = ({
                      variant='body2'
                      fontWeight={500}
                      fontSize={{
-                        xs: "0.875rem",
-                        sm: "1rem"
+                        xs: 14,
+                        sm: 16
                      }}
                      lineHeight={"24px"}
                      sx={{

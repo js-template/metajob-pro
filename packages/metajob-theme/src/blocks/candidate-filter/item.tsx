@@ -4,6 +4,7 @@ import { Avatar, Box, Button, Icon, Stack, Typography } from "@mui/material"
 import _ from "lodash"
 import { useTheme } from "next-themes"
 import { ISingleCandidate, ISingleCategory } from "./types"
+import { hexToRGBA } from "../../lib/hex-to-rgba"
 
 const CandidateCardItem = ({
    data,
@@ -62,13 +63,16 @@ const CandidateCardItem = ({
                   borderStyle: "solid",
                   borderRadius: "50%",
                   p: 1,
-                  fontWeight: 700,
                   mb: "15px"
                }}>
                <Avatar
                   src={image}
                   alt='avatar'
                   sx={{
+                     bgcolor: (theme) =>
+                        mode === "light" ? theme.palette.primary.main : hexToRGBA(theme.palette.primary.main, 0.5),
+                     color: (theme) => theme.palette.primary.contrastText,
+                     fontSize: { xs: 24, md: 30 },
                      width: 80,
                      height: 80
                   }}>
