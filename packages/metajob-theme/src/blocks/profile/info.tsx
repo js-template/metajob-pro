@@ -467,7 +467,7 @@ export const ProfileInfo = ({ userData: data }: Props) => {
                sx={{
                   display: "flex",
                   justifyContent: "space-between",
-                  px: 4
+                  px: { xs: 2, md: 4 }
                }}>
                {!isEditMode ? (
                   <Button onClick={handleToggleEdit} variant='contained'>
