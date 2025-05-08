@@ -7,6 +7,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes"
 import * as React from "react"
 import { Toaster } from "react-hot-toast"
 import "/public/icon/icon.css"
+import { GoogleAnalytics } from "@next/third-parties/google"
+
 // React Perfect Scrollbar CSS
 import "react-perfect-scrollbar/dist/css/styles.css"
 import { GlobalProvider } from "@/context/store"
@@ -59,6 +61,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
                </GlobalProvider>
             </StyledEngineProvider>
          </body>
+         <GoogleAnalytics gaId='G-G5RJ9XN6JQ' />
       </html>
    )
 }
