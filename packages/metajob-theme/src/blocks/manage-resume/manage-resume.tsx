@@ -345,7 +345,7 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                   }}>
                   <Box
                      sx={{
-                        p: 3,
+                        p: { xs: 2, md: 3 },
                         borderBottom: "1px solid",
                         borderColor: "divider"
                      }}>
@@ -360,8 +360,11 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                         Submit Resume
                      </Typography>
                   </Box>
-                  <Box sx={{ py: 2.5, px: 4 }}>
-                     <Stepper nonLinear activeStep={activeStep} sx={{ mb: 3 }}>
+                  <Box sx={{ py: 2.5, px: { xs: 1, sm: 3, md: 4 } }}>
+                     <Stepper
+                        nonLinear
+                        activeStep={activeStep}
+                        sx={{ mb: 3, overflowX: { xs: "auto", sm: "inherit" } }}>
                         {steps.map((label, index) => (
                            <Step key={label} completed={completed[index]}>
                               <StepButton disabled={isLoading} onClick={handleStep(index)}>
@@ -523,7 +526,15 @@ const ManageResumeClient = ({ block, language, resumeAttributes }: Props) => {
                                     {activeStep === 0 ? "Cancel" : "Back"}
                                  </Button>
                                  <Box sx={{ flex: "1 1 auto" }} />
-                                 <LoadingButton variant='contained' color='primary' loading={loading} type='submit'>
+                                 <LoadingButton
+                                    variant='contained'
+                                    color='primary'
+                                    loading={loading}
+                                    type='submit'
+                                    sx={{
+                                       px: { xs: 2, md: 3 },
+                                       py: { xs: 0.5, md: 1 }
+                                    }}>
                                     {isLastStep() ? "Finish" : "Next"}
                                  </LoadingButton>
                               </Box>
