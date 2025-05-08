@@ -18,6 +18,11 @@
       "repeatable": false,
       "component": "config.logo"
     },
+    "logo_text": {
+      "type": "string",
+      "required": false,
+      "default": "Logo"
+    },
     "dark_mode": {
       "type": "boolean",
       "default": true
@@ -26,13 +31,14 @@
       "type": "boolean",
       "default": true
     },
-    "show_menu": {
+    "hide_menu": {
       "type": "boolean",
-      "default": true,
-      "required": true
+      "required": false,
+      "default": false
     },
     "show_search": {
       "type": "boolean",
+      "required": false,
       "default": false
     },
     "main_menu": {

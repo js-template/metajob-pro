@@ -13,8 +13,10 @@ type Props = {
    button_label?: string
    color?: string
    secondary_color?: string
+   vacancy_placeholder?: string
+   currency?: string
 }
-export const JobItem = ({ data, button_label, color, secondary_color }: Props) => {
+export const JobItem = ({ data, button_label, color, secondary_color, vacancy_placeholder, currency }: Props) => {
    const { theme: mode } = useTheme()
    const theme = muiTheme()
 
@@ -61,57 +63,79 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
    }
    return (
       <Stack
+         direction={"column"}
+         // justifyContent={"space-between"}
          sx={{
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: theme.palette.divider,
-            p: 2,
+            px: { xs: 1.5, sm: 3, md: 4 },
+            py: 2.5,
             borderRadius: 2,
             "&:hover": {
                borderColor: theme.palette.primary.main,
                transition: "all 0.3s ease-in-out"
             },
-            bgcolor: theme.palette.background.paper
-         }}
-         spacing={2}>
-         <Stack direction={"row"} justifyContent={type ? "space-between" : "flex-end"} alignItems={"center"} gap={1}>
-            {type && (
-               <Card
-                  sx={{
-                     bgcolor: getTagsColor(type?.title, theme),
-                     py: 0.5,
-                     px: 1,
-                     borderRadius: 1,
-                     width: "fit-content"
-                  }}>
-                  <Typography fontSize={14} fontWeight={400} color={getTagsLabelColor(type?.title, theme)}>
-                     {type?.title}
-                  </Typography>
-               </Card>
-            )}
-            {is_featured && (
-               <CIcon
-                  icon='ic:round-star'
-                  size={24}
-                  sx={{
-                     color: theme.palette.primary.main
-                  }}
-               />
-            )}
-         </Stack>
+            "&:hover .job-card-button": {
+               color: theme.palette.primary.contrastText,
+               bgcolor: theme.palette.primary.main
+            },
+            "&:hover .hover-scale": {
+               transform: "scale(1.1)"
+            },
+            bgcolor: theme.palette.background.paper,
+            height: "100%",
+            position: "relative"
+         }}>
+         {is_featured && (
+            <CIcon
+               icon='ic:round-star'
+               size={24}
+               sx={{
+                  color: theme.palette.primary.main,
+                  position: "absolute",
+                  right: "20px",
+                  top: { xs: 16, md: 20 }
+               }}
+            />
+         )}
+         {type && (
+            <Card
+               sx={{
+                  bgcolor: getTagsColor(type?.title, theme),
+                  py: 0.5,
+                  px: 1,
+                  borderRadius: 1,
+                  width: "fit-content",
+                  position: "absolute",
+                  left: { xs: 16, md: 20 },
+                  top: { xs: 16, md: 20 }
+               }}>
+               <Typography fontSize={{ xs: 12, md: 14 }} fontWeight={400} color={getTagsLabelColor(type?.title, theme)}>
+                  {type?.title}
+               </Typography>
+            </Card>
+         )}
+
          <Stack
+            className='hover-scale'
             sx={{
                justifyContent: "center",
-               alignItems: "center"
+               alignItems: "center",
+               transition: "0.6s",
+               pt: { xs: 3.5, md: 4 },
+               pb: { xs: 1.5, sm: 2, md: 2.5 }
             }}>
             <Avatar
                src={image}
                alt='avatar'
                sx={{
-                  width: 100,
-                  height: 100,
-                  fontWeight: 700,
-                  fontSize: "30px"
+                  bgcolor: mode === "light" ? theme.palette.primary.main : hexToRGBA(theme.palette.primary.main, 0.5),
+                  color: theme.palette.primary.contrastText,
+                  fontSize: { xs: 24, md: 30 },
+                  width: { xs: "60px", sm: "80px", md: "100px" },
+                  height: { xs: "60px", sm: "80px", md: "100px" },
+                  borderRadius: { xs: "8px", md: "12px" }
                }}>
                {companyName?.charAt(0) || ""}
             </Avatar>
@@ -119,11 +143,11 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
          <Box>
             {title && (
                <Typography
-                  fontSize={18}
                   fontWeight={400}
                   textAlign={"center"}
                   sx={{
-                     mb: 1,
+                     mb: "4px",
+                     fontSize: { xs: 16, md: 18 },
                      color: mode === "light" ? color || theme.palette.text.primary : theme.palette.text.primary,
                      // line clamp 1
                      display: "-webkit-box",
@@ -135,8 +159,10 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
                   {title}
                </Typography>
             )}
-            {location && (
-               <Stack direction={"row"} gap={1} alignItems={"center"} justifyContent={"center"}>
+
+            {/* location */}
+            {/* {location ? (
+               <Stack sx={{ mb: 3 }} direction={"row"} gap={1} alignItems={"center"} justifyContent={"center"}>
                   <Icon
                      fontSize='small'
                      className='icon-map-pin'
@@ -155,12 +181,35 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
                            ? secondary_color || theme.palette.text.secondary
                            : theme.palette.text.secondary
                      }>
-                     {location?.address}
+                     {location}
                   </Typography>
                </Stack>
-            )}
+            ) : (
+               <Stack sx={{ mb: 3 }} direction={"row"} gap={1} alignItems={"center"} justifyContent={"center"}>
+                  <Icon
+                     fontSize='small'
+                     className='icon-map-pin'
+                     sx={{
+                        color:
+                           mode === "light"
+                              ? secondary_color || theme.palette.text.secondary
+                              : theme.palette.text.secondary
+                     }}
+                  />
+                  <Typography
+                     fontSize={14}
+                     fontWeight={400}
+                     color={
+                        mode === "light"
+                           ? secondary_color || theme.palette.text.secondary
+                           : theme.palette.text.secondary
+                     }>
+                     Location not available
+                  </Typography>
+               </Stack>
+            )} */}
          </Box>
-         <Stack spacing={2}>
+         <Stack sx={{ mb: { xs: 2, md: 3 }, mt: { xs: 2, md: 4 } }} gap={{ xs: 1, md: 1.5 }}>
             {vacancy && (
                <Stack direction={"row"} gap={2} alignItems={"center"}>
                   <Icon
@@ -179,8 +228,8 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
                      color={
                         mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled
                      }>
-                     {vacancy}
-                     {/* {vacancy} Vacancy */}
+                     {/* {vacancy} */}
+                     {vacancy} {vacancy_placeholder}
                   </Typography>
                </Stack>
             )}
@@ -202,7 +251,7 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
                      color={
                         mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled
                      }>
-                     {price}
+                     {price} {currency}
                   </Typography>
                </Stack>
             )}
@@ -231,9 +280,11 @@ export const JobItem = ({ data, button_label, color, secondary_color }: Props) =
          </Stack>
 
          <Button
+            className='job-card-button'
             component={NextLink}
             href={`/job/${slug}`}
             sx={{
+               fontSize: { xs: 14, md: 16 },
                bgcolor: theme.palette.background.default,
                color: mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled,
                "&:hover": {

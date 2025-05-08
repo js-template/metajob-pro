@@ -10,10 +10,14 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Title Here"
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Description Here"
     },
     "table_config": {
       "type": "component",

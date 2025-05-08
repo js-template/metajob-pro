@@ -52,7 +52,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
    const { changeLang } = useChangeLang()
    const { changeDirection } = useChangeDirection()
 
-   const { main_menu, light_logo, dark_logo, style, show_menu, show_search } = block || {}
+   const { main_menu, light_logo, dark_logo, style, hide_menu, show_search, logo_text } = block || {}
    const { backgroundColor, color, section_padding } = style || {}
 
    const logoData = mode === "light" ? light_logo : dark_logo || {}
@@ -110,6 +110,27 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                         />
                      </Box>
                   )}
+                  {!logo && logo_text && (
+                     <Box
+                        sx={{
+                           display: { xs: "none", md: "flex" },
+                           textDecoration: "none"
+                        }}
+                        // @ts-ignore
+                        component={NextLink}
+                        href='/'>
+                        <Typography
+                           variant='h3'
+                           component={"p"}
+                           sx={{
+                              fontSize: 34,
+                              textDecoration: "none",
+                              color: theme.palette.primary.main
+                           }}>
+                           {logo_text}
+                        </Typography>
+                     </Box>
+                  )}
                   {/* mobile menu  */}
                   <Box sx={{ flex: "none", display: { xs: "flex", md: "none" } }}>
                      <IconButton
@@ -145,17 +166,40 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                            alt='logo'
                            sx={{
                               width: {
-                                 xs: light_logo?.xs_width ?? "auto",
-                                 sm: light_logo?.sm_width ?? "auto",
-                                 md: light_logo?.md_width ?? "auto"
+                                 xs: logoData?.xs_width ?? "auto",
+                                 sm: logoData?.sm_width ?? "auto",
+                                 md: logoData?.md_width ?? "auto"
                               }
                            }}
                         />
                      </Box>
                   )}
+                  {!logo && logo_text && (
+                     <Box
+                        sx={{
+                           display: { xs: "flex", md: "none" },
+                           flexGrow: 1,
+                           justifyContent: "center",
+                           textDecoration: "none"
+                        }}
+                        // @ts-ignore
+                        component={NextLink}
+                        href='/'>
+                        <Typography
+                           variant='h3'
+                           component={"p"}
+                           sx={{
+                              fontSize: { xs: 24, sm: 30, md: 34 },
+                              textDecoration: "none",
+                              color: theme.palette.primary.main
+                           }}>
+                           {logo_text}
+                        </Typography>
+                     </Box>
+                  )}
                </Box>
                {/* desktop main-menu  */}
-               {show_menu && <DesktopNav main_menu={main_menu} color={color} />}
+               {!hide_menu && <DesktopNav main_menu={main_menu} color={color} />}
 
                {show_search && <NavSearch language={language} />}
 

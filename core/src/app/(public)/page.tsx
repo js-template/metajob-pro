@@ -8,19 +8,14 @@ import { loadActiveTheme } from "config/theme-loader"
 export default async function Home() {
    const language = await getLanguageFromCookie()
 
-   // TODO: Handle Error and Steramline
-   const { data, error } = await find(
-      "api/padma-backend/public-frontpage",
-      {
-         populate: {
-            blocks: {
-               populate: "*"
-            }
-         },
-         locale: language ?? "en"
+   const { data, error } = await find("api/padma-backend/public-frontpage", {
+      populate: {
+         blocks: {
+            populate: "*"
+         }
       },
-      "no-store"
-   )
+      locale: language ?? "en"
+   })
 
    const activeTheme = await loadActiveTheme()
 
@@ -57,17 +52,13 @@ export async function generateMetadata(): Promise<Metadata> {
    // const language = await getLanguageFromCookie()
    // *** fetch seo data
 
-   const product = await find(
-      "api/padma-backend/public-frontpage",
-      {
-         populate: {
-            seo: {
-               populate: "*"
-            }
+   const product = await find("api/padma-backend/public-frontpage", {
+      populate: {
+         seo: {
+            populate: "*"
          }
-      },
-      "force-cache"
-   )
+      }
+   })
 
    return StrapiSeoFormate(product?.data?.data?.seo)
 }

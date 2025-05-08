@@ -9,10 +9,14 @@
   "uid": "metajob-block.portfolio",
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Title Here"
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "required": false,
+      "default": "Description Here"
     },
     "image": {
       "allowedTypes": ["images", "files", "videos", "audios"],

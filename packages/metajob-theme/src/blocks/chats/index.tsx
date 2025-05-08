@@ -31,9 +31,8 @@ export const MessageLayout = ({ block }: Props) => {
                overflow: "hidden",
                width: "100%",
                height: "calc(100vh - 123px)",
-               border: "1px solid",
-               borderColor: "divider",
-               borderRadius: "12px",
+               bgcolor: "background.default",
+
                p: 0
             }}>
             <Suspense

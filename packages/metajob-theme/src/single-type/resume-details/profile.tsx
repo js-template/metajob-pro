@@ -212,10 +212,12 @@ export default function ProfileSection({
                      src={image}
                      alt='avatar'
                      sx={{
+                        bgcolor: (theme) =>
+                           mode === "light" ? theme.palette.primary.main : hexToRGBA(theme.palette.primary.main, 0.5),
+                        color: (theme) => theme.palette.primary.contrastText,
+                        fontSize: { xs: 24, md: 30 },
                         width: 130,
-                        height: 130,
-                        fontWeight: 700,
-                        fontSize: "30px"
+                        height: 130
                      }}>
                      {name?.charAt(0) || ""}
                   </Avatar>

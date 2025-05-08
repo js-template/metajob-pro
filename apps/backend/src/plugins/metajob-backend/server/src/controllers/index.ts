@@ -23,6 +23,7 @@ import RevenueController from "./revenue";
 import JobTypeController from "./job-type";
 import SkillController from "./skill";
 import AuthSettingController from "./auth-setting";
+import ErrorSettingController from "./error-setting";
 
 export default {
   "job-setting": JobSettingController,
@@ -48,6 +49,7 @@ export default {
   "job-type": JobTypeController,
   skill: SkillController,
   "auth-setting": AuthSettingController,
+  "error-setting": ErrorSettingController,
 
   controller,
 };

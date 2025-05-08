@@ -249,13 +249,13 @@ const EditJob = ({ open, language, handleClose, handleMute, jobDocID, jobAttribu
                   Job Details
                </Typography>
             </Box>
-            <Box sx={{ width: "100%", pt: 3, pb: 4, px: 2 }}>
+            <Box sx={{ width: "100%", pt: 3, pb: 4, px: { xs: 1, md: 2 } }}>
                {/* Cancel icon */}
                <Box
                   sx={{
                      position: "absolute",
-                     top: 0,
-                     right: 0
+                     top: 16,
+                     right: 10
                   }}>
                   <IconButton
                      color='error'
@@ -273,7 +273,7 @@ const EditJob = ({ open, language, handleClose, handleMute, jobDocID, jobAttribu
                {/* Form area  */}
                <Box component={"form"} onSubmit={handleSubmit(handleFromSubmit)}>
                   {/* Form area  */}
-                  <Grid container spacing={3} rowSpacing={2.5} px={3} pb={1} sx={{ display: "flex" }}>
+                  <Grid container spacing={3} rowSpacing={2.5} px={{ xs: 1, md: 3 }} pb={1} sx={{ display: "flex" }}>
                      {/* Title  */}
                      <Grid
                         item

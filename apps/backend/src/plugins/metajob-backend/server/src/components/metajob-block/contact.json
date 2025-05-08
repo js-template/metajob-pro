@@ -10,10 +10,14 @@
   "pluginOptions": {},
   "attributes": {
     "friendlyAddress": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Address Here"
     },
     "location": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Location Here"
     }
   }
 }

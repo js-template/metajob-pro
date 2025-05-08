@@ -43,13 +43,16 @@ export const LatestNotifications = async ({
                border: "1px solid",
                borderColor: "divider",
                borderRadius: "12px",
-               p: 0
+               py: { xs: 1, md: 2 },
+               px: { xs: 2, md: 3 }
+               // p: 0
             }}>
             {title && (
                <Box
                   sx={{
                      py: 2,
-                     px: 3,
+                     px: { xs: 2, md: 3 },
+                     mb: 2,
                      borderBottom: "1px solid",
                      borderColor: "divider"
                   }}>
@@ -58,8 +61,8 @@ export const LatestNotifications = async ({
                      variant='h3'
                      fontWeight={700}
                      fontSize={{
-                        xs: "1.1rem",
-                        sm: "1.25rem"
+                        xs: 18,
+                        sm: 20
                      }}
                      lineHeight={"24px"}>
                      {title}

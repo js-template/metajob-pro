@@ -77,7 +77,7 @@ export const ChangePassword = () => {
                sx={{
                   pt: 0,
                   pb: 3,
-                  px: 4
+                  px: { xs: 2, md: 4 }
                }}>
                <Grid container spacing={4}>
                   {/* Old Password */}
@@ -249,9 +249,13 @@ export const ChangePassword = () => {
                            )
                         }}
                      />
-                     <Typography fontSize={14} fontWeight={400} pt={1} sx={{
- color: (theme) => theme.palette.text.disabled,
-}}>
+                     <Typography
+                        fontSize={14}
+                        fontWeight={400}
+                        pt={1}
+                        sx={{
+                           color: (theme) => theme.palette.text.disabled
+                        }}>
                         6 characters or longer. Combine letters and numbers.
                      </Typography>
                   </Grid>

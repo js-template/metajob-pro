@@ -40,7 +40,7 @@ const MobileNav = ({
       dark_mode,
       notification,
       style,
-      show_menu
+      hide_menu
    } = headerData || {}
 
    const toggleTheme = () => {
@@ -163,7 +163,7 @@ const MobileNav = ({
                </Box>
             )}
             {/* dark-light-theme-toggle  */}
-            {dark_mode && (
+            {/* {dark_mode && (
                <IconButton
                   size='large'
                   color='inherit'
@@ -176,10 +176,10 @@ const MobileNav = ({
                   }}>
                   <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
                </IconButton>
-            )}
+            )} */}
          </Box>
          <Divider />
-         {show_menu && (
+         {!hide_menu && (
             <List sx={{ mt: 2, p: 2 }}>{NavItems(headerData?.main_menu, open, theme.direction as any)}</List>
          )}
       </Drawer>

@@ -23,38 +23,30 @@ export default async function Page({ params }: { params: { slug: string } }) {
    const language = await getLanguageFromCookie()
 
    // *** get blog-details data from strapi ***
-   const { data: detailsData, error: detailsErro } = await find(
-      "api/padma-backend/posts",
-      {
-         filters: {
-            slug: {
-               $eq: pageSlug
-            }
-         },
-         populate: "*",
-         publicationState: "live",
-         locale: language ?? "en"
+   const { data: detailsData, error: detailsErro } = await find("api/padma-backend/posts", {
+      filters: {
+         slug: {
+            $eq: pageSlug
+         }
       },
-      "no-store"
-   )
+      populate: "*",
+      publicationState: "live",
+      locale: language ?? "en"
+   })
 
    const pageDetailsData = detailsData?.data?.[0]
 
    // *** get  blogs-details-page data from strapi ***
-   const { data: blogPageData, error: blogPageError } = await find(
-      "api/padma-backend/post-setting",
-      {
-         // populate: "*",
-         populate: {
-            blocks: {
-               populate: "*"
-            }
-         },
-         publicationState: "live",
-         locale: language ?? "en"
+   const { data: blogPageData, error: blogPageError } = await find("api/padma-backend/post-setting", {
+      // populate: "*",
+      populate: {
+         blocks: {
+            populate: "*"
+         }
       },
-      "no-store"
-   )
+      publicationState: "live",
+      locale: language ?? "en"
+   })
 
    const activeTheme = await loadActiveTheme()
    // Define as an empty object by default
@@ -94,22 +86,18 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
    const pageSlug = params?.slug
    const language = await getLanguageFromCookie()
    // *** fetch seo data
-   const { data } = await find(
-      "api/padma-backend/posts",
-      {
-         filters: {
-            slug: {
-               $eq: pageSlug
-            }
-         },
-         populate: {
-            seo: {
-               populate: "*"
-            }
+   const { data } = await find("api/padma-backend/posts", {
+      filters: {
+         slug: {
+            $eq: pageSlug
          }
       },
-      "no-cache"
-   )
+      populate: {
+         seo: {
+            populate: "*"
+         }
+      }
+   })
 
    // if seo is not available, return default data
    if (!data?.data?.[0]?.seo) {

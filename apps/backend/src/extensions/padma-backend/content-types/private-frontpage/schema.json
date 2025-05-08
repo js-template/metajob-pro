@@ -17,7 +17,8 @@
   },
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "default": "Dashboard"
     },
     "role1": {
       "type": "relation",

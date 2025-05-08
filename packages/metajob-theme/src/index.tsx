@@ -33,6 +33,7 @@ import { CopyrightWidget } from "./widgets/copyright-widget"
 import { PageHeader } from "./blocks/page-header"
 import { JobBanner } from "./blocks/job-banner"
 import { JobCategory } from "./blocks/job-category"
+import { JobCategoryOverlay } from "./blocks/job-category-overlay"
 import { JobCard } from "./blocks/job-card"
 import { BlogCard } from "./blocks/blog-card"
 import { ReviewCard } from "./blocks/review-card"
@@ -107,6 +108,7 @@ export const getPublicComponents = {
    "metajob-block.page-header": { component: PageHeader },
    "metajob-block.job-banner": { component: JobBanner },
    "metajob-block.job-category": { component: JobCategory },
+   "metajob-block.job-category-overlay": { component: JobCategoryOverlay },
    "block.category-card": { component: PlaceholderComponent },
    "metajob-block.job-card": { component: JobCard },
    "block.blog-card": { component: BlogCard },

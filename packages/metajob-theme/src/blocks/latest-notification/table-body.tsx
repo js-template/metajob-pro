@@ -3,10 +3,8 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import _ from "lodash"
-
 import { recentActivitiesItemProps, recentActivitiesProps } from "./type"
 import TableItem from "./item"
-
 import { IUserSession } from "../../types/user"
 
 export const NotificationBody = ({
@@ -35,7 +33,7 @@ export const NotificationBody = ({
       <Box sx={{ overflow: "auto" }}>
          <Box
             sx={{
-               maxHeight: "calc(100vh - 271px)",
+               maxHeight: { xs: "calc(70vh - 271px)", md: "calc(100vh - 271px)" },
                maxWidth: {
                   xs: "100vh",
                   sm: "100%"
@@ -43,7 +41,7 @@ export const NotificationBody = ({
             }}>
             <TableContainer component={Box}>
                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                  <TableHead
+                  {/* <TableHead
                      sx={{
                         "& th": {
                            borderBottom: "1px solid",
@@ -78,7 +76,7 @@ export const NotificationBody = ({
                            </Typography>
                         </TableCell>
                      </TableRow>
-                  </TableHead>
+                  </TableHead> */}
                   {isLoading ? (
                      <TableBody>
                         {_.times(5, (index) => (

@@ -19,7 +19,7 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
    const theme = muiTheme()
 
    // destructure the block
-   const { content, empty, style, button, card_button } = block || {}
+   const { content, empty, style, button, card_button, currency, vacancy_placeholder } = block || {}
    const {
       backgroundColor,
       color,
@@ -42,13 +42,13 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
                mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
          }}>
          <Container maxWidth='lg'>
-            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} gap={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
                {content && (
                   <SectionTitle data={content} color={{ header_color, sub_header_color }} width={header_width} />
                )}
                {JobsData && JobsData?.length > 0 && (
-                  <Grid container spacing={2}>
+                  <Grid container spacing={{ xs: 1, sm: 2, md: 2 }}>
                      {_.map(JobsData, (item) => (
                         <Grid key={item?.id} item xs={mobile || 12} sm={tab || 6} md={desktop || 3}>
                            <JobItem
@@ -56,6 +56,8 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
                               button_label={card_label}
                               color={color}
                               secondary_color={secondary_color}
+                              currency={currency}
+                              vacancy_placeholder={vacancy_placeholder}
                            />
                         </Grid>
                      ))}
@@ -98,7 +100,8 @@ export const JobCardClient = ({ block, JobsData }: Props) => {
                         color: "white",
                         "&:hover": {
                            bgcolor: "primary.main"
-                        }
+                        },
+                        borderRadius: "4px"
                      }}>
                      {label || "View All Jobs"}
                   </Button>

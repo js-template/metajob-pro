@@ -11,6 +11,7 @@ export type ICandidateFilterBlock = {
       search_placeholder?: string
       category_placeholder?: string
       button_placeholder?: string
+      mobile_filter_placeholder?: string
    }
    empty?: {
       title: string
@@ -29,6 +30,11 @@ export type ICandidateFilterBlock = {
       header_width: "Full" | "Small"
       section_padding?: number
       sidebar?: "Left Sidebar" | "Right Sidebar" | "No Sidebar"
+   }
+   upload_resume_button?: {
+      label?: string
+      link?: string
+      target?: string
    }
 }
 
@@ -105,14 +111,15 @@ export type ISingleCandidate = {
 }
 
 export type ICandidateFilterProps = {
-   search: string
-   skills: string
-   categories: string
-   rate: string
+   search?: string
+   skills: string[]
+   categories?: string
+   rate?: string
 }
 
 export type ISingleCategory = {
    id: number
    documentId: string
    title: string
+   value: string
 }

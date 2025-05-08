@@ -169,7 +169,7 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
                   }}>
                   <Box
                      sx={{
-                        px: 3,
+                        px: { xs: 2, md: 3 },
                         py: 2,
                         borderBottom: "1px solid",
                         borderColor: "divider",
@@ -180,12 +180,11 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
                      }}>
                      <Typography
                         variant='body1'
-                        fontWeight={700}
+                        fontWeight={600}
                         fontSize={{
-                           xs: "1.25rem",
-                           sm: "1.5rem"
-                        }}
-                        lineHeight={"24px"}>
+                           xs: 18,
+                           sm: 24
+                        }}>
                         {title}
                      </Typography>
                      <Button
@@ -194,13 +193,14 @@ const ManageJobsClient = ({ block, language, jobAttributes }: Props) => {
                         onClick={handleAddList}
                         sx={{
                            display: "flex",
-                           gap: 1,
+                           gap: { xs: 0.5, md: 1 },
+                           fontSize: { xs: 16, md: 18 },
                            justifyContent: "center",
                            alignItems: "center",
                            borderRadius: "8px",
                            textTransform: "capitalize",
                            boxShadow: "none",
-                           px: 1.5,
+                           px: { xs: 1, md: 1.5 },
                            minWidth: "auto",
                            color: (theme) => theme.palette.primary.contrastText + "!important",
                            "& svg": {

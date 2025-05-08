@@ -1,5 +1,7 @@
 "use client"
+import { useEffect } from "react"
 import { useTheme } from "next-themes"
+import { useRouter, useSearchParams } from "next/navigation"
 import _ from "lodash"
 import { Divider, FormControl, MenuItem, Select, Stack, TextField, Typography, Button } from "@mui/material"
 import { Card } from "../../components/common/card"
@@ -29,15 +31,57 @@ const CompanyFilterSection = ({
    color,
    secondary_color
 }: Props) => {
+   const searchParams = useSearchParams()
+   const router = useRouter()
+
    const { theme: mode } = useTheme()
 
    const { title: searchTitle, search_placeholder, category_placeholder, button_placeholder } = search || {}
+
+   // get params data
+   const { search: urlSearch, category: urlCategory } = Object.fromEntries(searchParams.entries())
+
+   // Update state based on URL search params
+   useEffect(() => {
+      setFormData({
+         ...formData,
+         companyName: urlSearch || "",
+         selectedIndustry: urlCategory || ""
+      })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [])
+
+   const handleSearchTextChange = (searchTextValue: string) => {
+      const currentParams = new URLSearchParams(searchParams)
+      if (!searchTextValue) {
+         currentParams.delete("search")
+      } else {
+         currentParams.set("search", searchTextValue)
+      }
+      router.replace(`?${currentParams.toString()}`, { scroll: false })
+      setFormData({ ...formData, companyName: searchTextValue })
+   }
+   const handleJobCategoryChange = (selectValue: string) => {
+      const currentParams = new URLSearchParams(searchParams)
+      if (!selectValue) {
+         currentParams.delete("category")
+      } else {
+         currentParams.set("category", selectValue)
+      }
+      router.replace(`?${currentParams.toString()}`, { scroll: false })
+      setFormData({
+         ...formData,
+         selectedIndustry: selectValue
+      })
+   }
 
    return (
       <Card
          sx={{
             borderRadius: 2,
-            p: 0
+            p: 0,
+            backgroundColor: "background.paper",
+            boxShadow: 0
          }}>
          <Stack spacing={2} pb={3}>
             <Stack px={3} pt={2} direction={"row"} justifyItems={"center"} justifyContent={"space-between"}>
@@ -65,7 +109,8 @@ const CompanyFilterSection = ({
                            ? "block"
                            : "none"
                   }}
-                  onClick={() =>
+                  onClick={() => {
+                     router.replace("?", { scroll: false })
                      setFormData({
                         companyName: "",
                         selectedIndustry: "",
@@ -73,7 +118,7 @@ const CompanyFilterSection = ({
                         selectedAverageSalary: "",
                         selectedRevenue: ""
                      })
-                  }>
+                  }}>
                   Clear
                </Typography>
             </Stack>
@@ -94,7 +139,10 @@ const CompanyFilterSection = ({
                      fullWidth
                      size='small'
                      value={formData?.companyName}
-                     onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                     // onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                     onChange={(e) => {
+                        handleSearchTextChange(e.target.value)
+                     }}
                   />
                )}
                {/* industry-filter  */}
@@ -126,7 +174,10 @@ const CompanyFilterSection = ({
                         variant='outlined'
                         size='small'
                         value={formData.selectedIndustry || ""}
-                        onChange={(e) => setFormData({ ...formData, selectedIndustry: e.target.value })}>
+                        // onChange={(e) => setFormData({ ...formData, selectedIndustry: e.target.value })}
+                        onChange={(e) => {
+                           handleJobCategoryChange(e.target.value)
+                        }}>
                         <MenuItem
                            value=''
                            sx={{

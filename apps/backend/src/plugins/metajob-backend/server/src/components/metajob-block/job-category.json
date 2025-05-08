@@ -15,14 +15,6 @@
       "repeatable": false,
       "component": "config.section-title"
     },
-    "icon_type": {
-      "type": "enumeration",
-      "enum": ["Icon Bg", "Simple"]
-    },
-    "show_description": {
-      "type": "boolean",
-      "default": true
-    },
     "card_button": {
       "type": "component",
       "repeatable": false,
@@ -33,6 +25,22 @@
       "repeatable": false,
       "component": "config.link"
     },
+    "item_count": {
+      "type": "integer",
+      "default": 12,
+      "min": 1,
+      "max": 24
+    },
+    "icon_type": {
+      "type": "enumeration",
+      "enum": ["Icon Bg", "Simple"],
+      "required": false,
+      "default": "Icon Bg"
+    },
+    "show_description": {
+      "type": "boolean",
+      "default": false
+    },
     "empty": {
       "type": "component",
       "repeatable": false,
@@ -42,12 +50,6 @@
       "type": "component",
       "repeatable": false,
       "component": "config.style-section"
-    },
-    "item_count": {
-      "type": "integer",
-      "default": 12,
-      "min": 1,
-      "max": 24
     }
   }
 }

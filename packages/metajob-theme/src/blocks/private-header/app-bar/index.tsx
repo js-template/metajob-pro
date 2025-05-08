@@ -89,6 +89,7 @@ const CustomAppBar = ({
 }) => {
    const theme = useTheme()
    const { data, status } = useSession()
+   const unAssignRoleType = userRole === "authenticated" || userRole === "public" || !userRole
 
    const userAvatar = userData?.avatar?.url || ""
    const userName = data?.user?.name || ""
@@ -109,6 +110,7 @@ const CustomAppBar = ({
       language: langMenu,
       light_logo,
       dark_logo,
+      logo_text,
       dark_mode,
       notification
    } = headerData || {}
@@ -120,8 +122,14 @@ const CustomAppBar = ({
    // filter user-menu based on role
    const candidateProfileMenu = profile_menu?.filter((menu) => menu?.identifier !== "employer")
    const employerProfileMenu = profile_menu?.filter((menu) => menu?.identifier !== "candidate")
-   const user_menu =
-      userRole === "candidate" ? candidateProfileMenu : userRole === "employer" ? employerProfileMenu : profile_menu
+   const logoutProfileMenu = profile_menu?.filter((menu) => menu?.identifier === "logout")
+   const user_menu = unAssignRoleType
+      ? logoutProfileMenu
+      : userRole === "candidate"
+        ? candidateProfileMenu
+        : userRole === "employer"
+          ? employerProfileMenu
+          : profile_menu
 
    // *** Language Menu ***
    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -180,7 +188,7 @@ const CustomAppBar = ({
                {logo && (
                   <Box
                      sx={{
-                        display: { xs: "none", md: "flex" }
+                        display: { xs: "flex", md: "flex" }
                      }}
                      component={NextLink}
                      href={dashboardLink ?? "/"}>
@@ -197,9 +205,29 @@ const CustomAppBar = ({
                      />
                   </Box>
                )}
+               {!logo && logo_text && (
+                  <Box
+                     sx={{
+                        display: { xs: "flex", md: "flex" },
+                        textDecoration: "none"
+                     }}
+                     component={NextLink}
+                     href={dashboardLink ?? "/"}>
+                     <Typography
+                        variant='h3'
+                        component={"p"}
+                        sx={{
+                           fontSize: { xs: 24, sm: 30, md: 36 },
+                           textDecoration: "none",
+                           color: theme.palette.primary.main
+                        }}>
+                        {logo_text}
+                     </Typography>
+                  </Box>
+               )}
             </Box>
 
-            <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 1.5 }}>
+            <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: { xs: 0, sm: 1.5 } }}>
                {!isTablet && (
                   <>
                      {/* language-button  */}
@@ -293,22 +321,13 @@ const CustomAppBar = ({
                            </Menu>
                         </Box>
                      )}
-                     {/* dark-light-theme-toggle  */}
-                     {dark_mode && (
-                        <IconButton
-                           size='large'
-                           color='inherit'
-                           sx={{
-                              display: {
-                                 xs: "none",
-                                 sm: "flex"
-                              }
-                           }}
-                           onClick={toggleTheme}>
-                           <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
-                        </IconButton>
-                     )}
                   </>
+               )}
+               {/* dark-light-theme-toggle  */}
+               {dark_mode && (
+                  <IconButton size='large' color='inherit' onClick={toggleTheme}>
+                     <CIcon icon={mode === "light" ? "ri:moon-fill" : "ri:sun-fill"} />
+                  </IconButton>
                )}
                {/* notification-button  */}
                {notification && <NotificationBar emailHistoryData={emailHistoryData} />}

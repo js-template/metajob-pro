@@ -7,7 +7,7 @@ const JobCardLoader = () => {
    return (
       <Stack sx={{ bgcolor: theme.palette.background.paper }}>
          <Container maxWidth='lg'>
-            <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={8} gap={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
                <Stack spacing={1} direction={"column"}>
                   <Skeleton variant='rectangular' width={330} height={24} />

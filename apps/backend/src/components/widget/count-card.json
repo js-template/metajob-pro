@@ -8,17 +8,23 @@
   "options": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Title Here"
     },
     "subTitle": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Sub Title Here"
     },
-    "enableStats": {
-      "type": "boolean"
+    "link": {
+      "type": "string",
+      "required": false
     },
-    "isLink": {
-      "type": "boolean",
-      "default": false
+    "target": {
+      "type": "enumeration",
+      "enum": ["_self", "_blank", "_parent", "_top"],
+      "default": "_self"
     }
   }
 }

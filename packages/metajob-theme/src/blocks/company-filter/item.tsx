@@ -3,6 +3,7 @@ import NextLink from "next/link"
 import { useTheme } from "next-themes"
 import { Box, Icon, Stack, Typography, Button, Avatar } from "@mui/material"
 import { ISingleCompany } from "./types"
+import { hexToRGBA } from "../../lib/hex-to-rgba"
 
 type Props = {
    data: ISingleCompany
@@ -18,39 +19,49 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
 
    return (
       <Stack
+         justifyContent={"space-between"}
          sx={{
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: (theme) => theme.palette.background.paper,
-            p: 4,
+            px: { xs: 1.5, sm: 3, md: 4 },
+            py: { xs: 2, md: 4 },
             borderRadius: 2,
             "&:hover": {
                borderColor: (theme) => theme.palette.primary.main,
                transition: "all 0.3s ease-in-out"
             },
-            bgcolor: (theme) => theme.palette.background.paper
-         }}
-         spacing={2}>
+            "&:hover .company-button": {
+               color: (theme) => theme.palette.primary.contrastText,
+               bgcolor: (theme) => theme.palette.primary.main
+            },
+            bgcolor: (theme) => theme.palette.background.paper,
+            height: "100%"
+         }}>
          {/* logo  */}
          <Stack
             sx={{
                justifyContent: "center",
-               alignItems: "center"
+               alignItems: "center",
+               mb: { xs: 2, md: 3 }
             }}>
             <Avatar
                src={companyLogo}
                alt={name || "companyLogo"}
                sx={{
-                  width: 100,
-                  height: 100,
-                  fontWeight: 700,
-                  fontSize: "30px"
+                  bgcolor: (theme) =>
+                     mode === "light" ? theme.palette.primary.main : hexToRGBA(theme.palette.primary.main, 0.5),
+                  color: (theme) => theme.palette.primary.contrastText,
+                  fontSize: { xs: 24, md: 30 },
+                  width: { xs: "60px", sm: "80px", md: "100px" },
+                  height: { xs: "60px", sm: "80px", md: "100px" },
+                  borderRadius: "12px"
                }}>
                {name?.charAt(0) || ""}
             </Avatar>
          </Stack>
          {/* name, tags  */}
-         <Box>
+         <Box sx={{ pb: { xs: 2, md: "30px" } }}>
             {name && (
                <Typography
                   fontSize={16}
@@ -77,7 +88,7 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
             )}
          </Box>
          {/* details  */}
-         <Stack spacing={2}>
+         <Stack sx={{ mb: { xs: 2, md: 4 } }} spacing={"12px"}>
             {company_size && (
                <Stack direction={"row"} gap={2} alignItems={"center"}>
                   <Icon
@@ -130,7 +141,10 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                   )}
                </Stack>
             )}
-            {/* {location && (
+
+            {/* location */}
+
+            {/* {location ? (
                <Stack direction={"row"} gap={2} alignItems={"center"}>
                   <Icon
                      fontSize='small'
@@ -143,20 +157,31 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                      {location?.address}
                   </Typography>
                </Stack>
+            ) : (
+               <Stack direction={"row"} gap={2} alignItems={"center"}>
+                  <Icon
+                     fontSize='small'
+                     className='icon-map-pin'
+                     sx={{
+                        color: (theme) => theme.palette.text.disabled
+                     }}
+                  />
+                  <Typography fontSize={14} fontWeight={400} color={(theme) => theme.palette.text.disabled}>
+                     Location not Available
+                  </Typography>
+               </Stack>
             )} */}
          </Stack>
          {/* button  */}
          <Button
+            className='company-button'
             fullWidth
             component={NextLink}
             href={`/company/${slug}`}
             sx={{
+               fontSize: { xs: 14, md: 16 },
                bgcolor: (theme) => theme.palette.background.default,
-               color: (theme) => (mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled),
-               "&:hover": {
-                  color: (theme) => theme.palette.primary.contrastText,
-                  bgcolor: (theme) => theme.palette.primary.main
-               }
+               color: (theme) => (mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled)
             }}>
             {button_label || "See Details"}
          </Button>

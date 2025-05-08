@@ -135,46 +135,50 @@ export default async function DynamicPages({ params }: Props) {
 
 // *** Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-   // ?? Fetch the permalink structure from Strapi
-   const { data } = await find("api/padma-backend/permalink", {
-      populate: "*"
-   })
-
-   // ?? Get the singlePages from the permalink data
-   const singlePages = data?.data?.singlePage || []
-
-   // ?? If no singlePages are found, return an empty array
-   let params: Array<{ slug: string; item: string }> = []
-
-   // ?? Loop through all singlePages and fetch the collectionModel data
-   await Promise.all(
-      singlePages?.map(async (page: { slug: string; collectionModel: string; singelModel: string }) => {
-         // ?? Get the collectionModel API data
-         const { data: collectionData, error: collectionError } = await find(page.collectionModel, {
-            fields: ["slug"],
-            filters: {
-               slug: {
-                  $ne: null
-               }
-            },
-            locale: "en"
-         })
-
-         // ?? Store all slugs in the params array
-         const mappedSlugs = collectionData?.data?.map((single: any) => ({
-            slug: page.slug,
-            item: single?.slug
-         }))
-
-         params = params.concat(mappedSlugs)
+   try {
+      // ?? Fetch the permalink structure from Strapi
+      const { data } = await find("api/padma-backend/permalink", {
+         populate: "*"
       })
-   )
 
-   // ?? Return the params array
-   return params?.map((post: { slug: string; item: string }) => ({
-      slug: post?.slug,
-      item: post?.item
-   }))
+      // ?? Get the singlePages from the permalink data
+      const singlePages = data?.data?.singlePage || []
+
+      // ?? If no singlePages are found, return an empty array
+      let params: Array<{ slug: string; item: string }> = []
+
+      // ?? Loop through all singlePages and fetch the collectionModel data
+      await Promise.all(
+         singlePages?.map(async (page: { slug: string; collectionModel: string; singelModel: string }) => {
+            // ?? Get the collectionModel API data
+            const { data: collectionData, error: collectionError } = await find(page.collectionModel, {
+               fields: ["slug"],
+               filters: {
+                  slug: {
+                     $ne: null
+                  }
+               },
+               locale: "en"
+            })
+
+            // ?? Store all slugs in the params array
+            const mappedSlugs = collectionData?.data?.map((single: any) => ({
+               slug: page.slug,
+               item: single?.slug
+            }))
+
+            params = params.concat(mappedSlugs)
+         })
+      )
+
+      // ?? Return the params array
+      return params?.map((post: { slug: string; item: string }) => ({
+         slug: post?.slug,
+         item: post?.item
+      }))
+   } catch (error) {
+      return []
+   }
 }
 
 // *** generate metadata for the page

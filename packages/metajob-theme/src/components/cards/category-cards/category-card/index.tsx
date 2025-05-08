@@ -5,6 +5,7 @@ import { useTheme } from "next-themes"
 import { Stack, Box, Typography, Card, Icon } from "@mui/material"
 import { ISingleCategory } from "./types"
 import { hexToRGBA } from "../../../../lib/hex-to-rgba"
+import CIcon from "../../../../components/common/icon"
 
 type Props = {
    data: ISingleCategory
@@ -26,8 +27,7 @@ export const CategoryCardItem = ({
    const { theme: mode } = useTheme()
 
    //destructure the data
-   const { title, image, description } = data || {}
-   const logo = image?.url || "https://placehold.co/60/png"
+   const { title, image, description, icon } = data || {}
 
    return (
       //@ts-ignore
@@ -37,8 +37,10 @@ export const CategoryCardItem = ({
          sx={{
             p: 4,
             display: "block",
+            height: "180px",
             textDecoration: "none",
             cursor: "pointer",
+            boxShadow: " 0 4px 20px rgba(0, 0, 0, 0.05)",
             "&:hover .iconBox": {
                transform: "scale(1.2)"
             },
@@ -61,7 +63,17 @@ export const CategoryCardItem = ({
                      width: "fit-content",
                      transition: "transform 0.3s ease-in-out"
                   }}>
-                  {logo && <Image src={logo} alt='icon' height={60} width={60} />}
+                  {icon ? (
+                     <CIcon
+                        icon={icon}
+                        size={60}
+                        sx={{
+                           color: (theme) => theme.palette.primary.main
+                        }}
+                     />
+                  ) : (
+                     <Image src={"https://placehold.co/60/png"} alt='icon' height={60} width={60} />
+                  )}
                </Box>
             </Stack>
          ) : (
@@ -83,13 +95,29 @@ export const CategoryCardItem = ({
                      py: 1.5,
                      transition: "transform 0.3s ease-in-out"
                   }}>
-                  <Image src={logo || "https://placehold.co/60/png"} alt={title} width={40} height={40} />
+                  {icon ? (
+                     <CIcon
+                        icon={icon}
+                        size={36}
+                        sx={{
+                           color: (theme) => theme.palette.primary.main
+                        }}
+                     />
+                  ) : (
+                     <Image
+                        src={"https://placehold.co/30/png"}
+                        alt={title}
+                        width={30}
+                        height={30}
+                        style={{ marginBottom: 0, paddingBottom: 0 }}
+                     />
+                  )}
                </Box>
             </Stack>
          )}
 
          {/*title */}
-         <Stack spacing={1}>
+         <Stack>
             <Typography
                className='category-card-title'
                sx={{
@@ -104,9 +132,6 @@ export const CategoryCardItem = ({
             </Typography>
             {show_description && (
                <Typography
-                  color={(theme) =>
-                     mode === "light" ? secondary_color || theme.palette.text.secondary : theme.palette.text.secondary
-                  }
                   fontWeight={400}
                   fontSize={14}
                   textAlign={"center"}
@@ -116,7 +141,11 @@ export const CategoryCardItem = ({
                      WebkitBoxOrient: "vertical",
                      overflow: "hidden",
                      textOverflow: "ellipsis",
-                     WebkitLineClamp: 2
+                     WebkitLineClamp: 2,
+                     color: (theme) =>
+                        mode === "light"
+                           ? secondary_color || theme.palette.text.secondary
+                           : theme.palette.text.secondary
                   }}>
                   {description}
                </Typography>
@@ -143,12 +172,12 @@ export const CategoryCardItem = ({
                </Box>
             )}
             {/* <Typography
-                   color={(theme) => theme.palette.text.secondary}
-                   fontWeight={400}
-                   fontSize={14}
-                   textAlign={"center"}>
-                   99 Jobs
-                </Typography> */}
+               color={(theme) => theme.palette.text.secondary}
+               fontWeight={400}
+               fontSize={14}
+               textAlign={"center"}>
+               99 Jobs
+            </Typography> */}
          </Stack>
       </Card>
    )

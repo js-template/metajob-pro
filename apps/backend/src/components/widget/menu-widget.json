@@ -7,7 +7,9 @@
   "options": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Title"
     },
     "menu_items": {
       "type": "component",

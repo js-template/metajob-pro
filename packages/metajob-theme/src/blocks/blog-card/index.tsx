@@ -12,23 +12,19 @@ type Props = {
 }
 
 export const BlogCard = async ({ block, data, language }: Props) => {
-   const { data: recentBlogsAll } = await find(
-      "api/padma-backend/posts",
-      {
-         populate: {
-            featuredImage: {
-               fields: ["url"]
-            }
-         },
-         sort: ["createdAt:desc"],
-         pagination: {
-            pageSize: block?.item_count || 3,
-            page: 1
-         },
-         locale: language ?? "en"
+   const { data: recentBlogsAll } = await find("api/padma-backend/posts", {
+      populate: {
+         featuredImage: {
+            fields: ["url"]
+         }
       },
-      "no-store"
-   )
+      sort: ["createdAt:desc"],
+      pagination: {
+         pageSize: block?.item_count || 3,
+         page: 1
+      },
+      locale: language ?? "en"
+   })
 
    return (
       <Suspense fallback={<BlogCardLoader />}>

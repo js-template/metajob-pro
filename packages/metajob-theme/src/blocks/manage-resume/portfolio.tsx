@@ -114,14 +114,14 @@ const PortfolioForm = ({ index, removeHandler, register, errors, setValue, watch
                      color: (theme) => theme.palette.text.primary
                   }}>
                   URL
-                  <Box
+                  {/* <Box
                      component='span'
                      sx={{
                         color: (theme) => theme.palette.error.main,
                         ml: 0.5
                      }}>
                      *
-                  </Box>
+                  </Box> */}
                </Box>
                <TextField
                   fullWidth
@@ -130,9 +130,9 @@ const PortfolioForm = ({ index, removeHandler, register, errors, setValue, watch
                   id={`urls.${index}.url`}
                   type='url'
                   placeholder='https://www.example.com'
-                  {...register(`portfolio.${index}.link.link`, {
-                     required: "URL is required"
-                  })}
+                  // {...register(`portfolio.${index}.link.link`, {
+                  //    required: "URL is required"
+                  // })}
                   error={Boolean(errors.portfolio?.[index]?.link?.link)}
                   onChange={(e) => {
                      setValue(
@@ -175,7 +175,7 @@ const PortfolioForm = ({ index, removeHandler, register, errors, setValue, watch
                }
             }}
             onClick={() => removeHandler(index)}>
-            <CIcon icon='tabler:plus' />
+            <CIcon icon='tabler:x' />
          </Box>
       </Paper>
    )

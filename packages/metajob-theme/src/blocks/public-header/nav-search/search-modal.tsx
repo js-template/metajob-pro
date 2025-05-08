@@ -139,76 +139,73 @@ const SearchModal = ({ open, handleClose, language }: Props) => {
                   sx={{
                      p: 3
                   }}>
-                  {/* Search input */}
-                  <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-                     <Box sx={{ position: "relative", display: "flex", width: { md: "100%" }, maxWidth: "1024px" }}>
-                        <IconButton
-                           sx={{
-                              width: { xs: "42px", md: "60px" },
-                              borderRadius: "50px 0 0 50px",
-                              bgcolor: "primary.main",
-                              color: "background.default",
-                              "&:hover": {
-                                 bgcolor: "primary.main"
-                              }
-                           }}>
-                           <SearchIcon />
-                        </IconButton>
-                        {/* Input Field */}
-                        <TextField
-                           autoFocus
-                           inputRef={searchInputRef}
-                           value={searchTerm || ""}
-                           onChange={(e) => setSearchTerm(e.target.value)}
-                           fullWidth
-                           placeholder='Search'
-                           InputProps={{
-                              sx: {
-                                 borderTopRightRadius: 0,
-                                 borderBottomRightRadius: 0
-                              }
-                           }}
-                           sx={{
-                              "& .MuiOutlinedInput-root": {
-                                 height: "100%",
-                                 borderRadius: "0 50px 50px 0"
-                              }
-                           }}
-                        />
-                        {/* Clear Icon */}
-                        {searchTerm && (
-                           <IconButton
-                              color='inherit'
-                              onClick={handleClearSearch}
-                              edge='start'
-                              sx={{
-                                 height: "42px",
-                                 width: "42px",
-                                 borderRadius: "8px",
-                                 position: "absolute",
-                                 right: 1,
-                                 top: 10
-                              }}>
-                              <CIcon
-                                 icon='oui:cross'
-                                 fontSize={"16px"}
-                                 sx={{
-                                    color: theme.palette.text.primary
-                                 }}
-                              />
-                           </IconButton>
-                        )}
-                     </Box>
-                  </Box>
                   <Box sx={{ minHeight: "70vh", mt: 3 }}>
+                     {/* Search input */}
+                     <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+                        <Box sx={{ position: "relative", display: "flex", width: { md: "100%" }, maxWidth: "1024px" }}>
+                           <IconButton
+                              sx={{
+                                 width: { xs: "42px", md: "60px" },
+                                 borderRadius: "50px 0 0 50px",
+                                 bgcolor: "primary.main",
+                                 color: "background.default",
+                                 "&:hover": {
+                                    bgcolor: "primary.main"
+                                 }
+                              }}>
+                              <SearchIcon />
+                           </IconButton>
+                           {/* Input Field */}
+                           <TextField
+                              autoFocus
+                              inputRef={searchInputRef}
+                              value={searchTerm || ""}
+                              onChange={(e) => setSearchTerm(e.target.value)}
+                              fullWidth
+                              placeholder='Search'
+                              InputProps={{
+                                 sx: {
+                                    borderTopRightRadius: 0,
+                                    borderBottomRightRadius: 0
+                                 }
+                              }}
+                              sx={{
+                                 "& .MuiOutlinedInput-root": {
+                                    height: "100%",
+                                    borderRadius: "0 50px 50px 0"
+                                 }
+                              }}
+                           />
+                           {/* Clear Icon */}
+                           {searchTerm && (
+                              <IconButton
+                                 color='inherit'
+                                 onClick={handleClearSearch}
+                                 edge='start'
+                                 sx={{
+                                    height: "42px",
+                                    width: "42px",
+                                    borderRadius: "8px",
+                                    position: "absolute",
+                                    right: 1,
+                                    top: 10
+                                 }}>
+                                 <CIcon
+                                    icon='oui:cross'
+                                    fontSize={"16px"}
+                                    sx={{
+                                       color: theme.palette.text.primary
+                                    }}
+                                 />
+                              </IconButton>
+                           )}
+                        </Box>
+                     </Box>
+
                      {/* search result items  */}
                      {!searchLoader && searchResults && searchResults?.length > 0 && (
                         <Box sx={{ mt: 6 }}>
-                           <Grid
-                              container
-                              spacing={2}
-                              rowSpacing={4}
-                              columns={{ xs: 12, sm: 12, md: 12, lg: 12, xl: 15 }}>
+                           <Grid container spacing={2} rowSpacing={4}>
                               {searchResults?.map((item, index) => (
                                  <Grid item xs={12} sm={6} md={4} key={index}>
                                     <JobItem
@@ -222,35 +219,36 @@ const SearchModal = ({ open, handleClose, language }: Props) => {
                            </Grid>
                         </Box>
                      )}
-                  </Box>
-                  {/* loader  */}
-                  {searchLoader && (
-                     <Box sx={{ position: "relative", mt: 6 }}>
-                        <Grid container spacing={3} rowSpacing={4} columns={{ xs: 12, sm: 12, md: 12, lg: 12, xl: 15 }}>
-                           {Array.from({ length: 15 }).map((_, index) => (
-                              <Grid item xs={12} sm={6} md={4} key={index}>
-                                 <ListCardLoader />
-                              </Grid>
-                           ))}
-                        </Grid>
-                     </Box>
-                  )}
 
-                  {/* empty data  */}
-                  {!searchLoader &&
-                     debouncedSearchTerm &&
-                     debouncedSearchTerm?.length > 0 &&
-                     searchResults &&
-                     searchResults?.length === 0 && (
-                        <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
-                           <Box sx={{ width: "100%", px: 2, py: 5, textAlign: "center" }}>
-                              <Typography variant='h6'>No data found</Typography>
-                              <Typography variant='body2'>Please try with different words</Typography>
-                           </Box>
+                     {/* loader  */}
+                     {searchLoader && (
+                        <Box sx={{ position: "relative", mt: 6 }}>
+                           <Grid container spacing={3} rowSpacing={4}>
+                              {Array.from({ length: 15 }).map((_, index) => (
+                                 <Grid item xs={12} sm={6} md={4} key={index}>
+                                    <ListCardLoader />
+                                 </Grid>
+                              ))}
+                           </Grid>
                         </Box>
                      )}
+
+                     {/* empty data  */}
+                     {!searchLoader &&
+                        debouncedSearchTerm &&
+                        debouncedSearchTerm?.length > 0 &&
+                        searchResults &&
+                        searchResults?.length === 0 && (
+                           <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
+                              <Box sx={{ width: "100%", px: 2, py: 5, textAlign: "center" }}>
+                                 <Typography variant='h6'>No data found</Typography>
+                                 <Typography variant='body2'>Please try with different words</Typography>
+                              </Box>
+                           </Box>
+                        )}
+                  </Box>
                   {/* Pagination */}
-                  {!searchLoader && totalPage > 0 && (
+                  {!searchLoader && totalPage > 0 && searchResults?.length > 0 && (
                      <Stack
                         sx={{
                            display: "flex",

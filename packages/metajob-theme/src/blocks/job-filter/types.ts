@@ -18,6 +18,7 @@ export type IJobFilterData = {
       sort_placeholder: string
       skill_placeholder: string
       button_placeholder: string
+      mobile_filter_placeholder?: string
    }
    style?: {
       color?: any
@@ -66,4 +67,11 @@ export type ISingleJob = {
          url?: string
       }
    }
+}
+
+export type IFilterAttributes = {
+   categoryData?: ISingleCategory[]
+   jobTypesData?: IJobType[]
+   jobExperienceData?: IJobType[]
+   jobSkillsData?: IJobType[]
 }

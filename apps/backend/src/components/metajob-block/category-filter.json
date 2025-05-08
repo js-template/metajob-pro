@@ -12,14 +12,20 @@
       "component": "config.section-title"
     },
     "search_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Search"
     },
     "card_button": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Find Jobs"
     },
     "icon_type": {
       "type": "enumeration",
-      "enum": ["Icon Bg", "Simple"]
+      "enum": ["Icon Bg", "Simple"],
+      "required": false,
+      "default": "Icon Bg"
     },
     "show_description": {
       "type": "boolean",

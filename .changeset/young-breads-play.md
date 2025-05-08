@@ -4,4 +4,4 @@
 "core": major
 ---
 
-fixed multilingual issue
+responisve issue fixed around the site.

@@ -100,11 +100,12 @@ export const LoginCard = ({
                                     <Typography
                                        fontSize={24}
                                        fontWeight={400}
-                                       color={(theme) =>
-                                          mode === "light"
-                                             ? color || theme.palette.text.primary
-                                             : theme.palette.text.primary
-                                       }>
+                                       sx={{
+                                          color: (theme) =>
+                                             mode === "light"
+                                                ? color || theme.palette.text.primary
+                                                : theme.palette.text.primary
+                                       }}>
                                        {loginTitle || "Sign in with Email address"}
                                     </Typography>
                                  </Box>
@@ -308,27 +309,26 @@ export const LoginCard = ({
                               )}
                               <Typography
                                  variant='body2'
-                                 color={(theme) =>
-                                    mode === "light"
-                                       ? secondary_color || theme.palette.text.secondary
-                                       : theme.palette.text.secondary
-                                 }
                                  fontSize={14}
                                  fontWeight={400}
                                  sx={{
                                     mt: 2,
-                                    textAlign: "center"
+                                    textAlign: "center",
+                                    color: (theme) =>
+                                       mode === "light"
+                                          ? secondary_color || theme.palette.text.secondary
+                                          : theme.palette.text.secondary
                                  }}>
                                  {signup_helper_placeholder || "Not a Member ?"}{" "}
                                  <Typography
                                     component={Link}
                                     href='/register'
-                                    color={(theme) => theme.palette.primary.main}
                                     fontSize={14}
                                     fontWeight={400}
                                     sx={{
                                        textDecoration: "none",
-                                       cursor: "pointer"
+                                       cursor: "pointer",
+                                       color: (theme) => theme.palette.primary.main
                                     }}>
                                     {signup_link_placeholder || "Create Account"}
                                  </Typography>

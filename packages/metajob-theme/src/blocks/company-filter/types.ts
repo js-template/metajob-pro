@@ -7,11 +7,17 @@ export type ICompanyFilterBlockData = {
    card_button?: {
       label?: string
    }
+   add_company_button?: {
+      label?: string
+      link?: string
+      target?: string
+   }
    search: {
       title?: string
       search_placeholder?: string
       category_placeholder?: string
       button_placeholder?: string
+      mobile_filter_placeholder?: string
    }
    empty?: {
       title: string

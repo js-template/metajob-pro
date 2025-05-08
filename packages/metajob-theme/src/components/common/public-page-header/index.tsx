@@ -21,11 +21,14 @@ export default function PageHeader({ title, header_bg_color, header_color }: Pro
                justifyContent: "center",
                alignItems: "center",
                // backgroundImage: "url(/images/jobs/findJob.png)",
-               bgcolor: mode === "light" ? header_bg_color || "primary.main" : theme.palette.background.paper,
+               bgcolor:
+                  mode === "light"
+                     ? header_bg_color || "primary.main"
+                     : hexToRGBA(header_bg_color || theme.palette.primary.main, 0.3),
                backgroundSize: "cover",
                backgroundPosition: "center",
                textAlign: "center",
-               padding: "6rem 2rem",
+               padding: { xs: "1rem 2rem", sm: "3rem 2rem", md: "6rem 2rem" },
                // "&::before": {
                //    content: '""',
                //    position: "absolute",
@@ -45,7 +48,7 @@ export default function PageHeader({ title, header_bg_color, header_color }: Pro
                }
             }}>
             <Typography
-               fontSize={{ sm: 48, xs: 32 }}
+               fontSize={{ xs: 28, sm: 48 }}
                fontWeight={{ sm: 700, xs: 600 }}
                variant={"h1"}
                sx={{

@@ -69,6 +69,8 @@ export const PrivateHeaderComponent = ({
 }: IPrivateHeaderProps) => {
    const { data: session } = useSession()
    const userRole = session?.user?.role?.type
+   const unAssignRoleType = userRole === "authenticated" || userRole === "public" || !userRole
+
    const theme = useTheme()
    const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
@@ -93,7 +95,14 @@ export const PrivateHeaderComponent = ({
    // filter sidebar-menu based on role
    const candidateMenu = side_menu?.filter((menu) => menu?.identifier !== "employer")
    const employerMenu = side_menu?.filter((menu) => menu?.identifier !== "candidate")
-   const sidebarMenu = userRole === "candidate" ? candidateMenu : userRole === "employer" ? employerMenu : side_menu
+   const logoutProfileMenu = side_menu?.filter((menu) => menu?.identifier === "logout")
+   const sidebarMenu = unAssignRoleType
+      ? logoutProfileMenu
+      : userRole === "candidate"
+        ? candidateMenu
+        : userRole === "employer"
+          ? employerMenu
+          : side_menu
 
    useEffect(() => {
       if (isTablet) {
@@ -142,9 +151,9 @@ export const PrivateHeaderComponent = ({
             />
          )}
          {/* Desktop side nav */}
-         {!isTablet && (
+         {!isTablet && !unAssignRoleType && (
             <Drawer anchor={theme.direction === "rtl" ? "right" : "left"} variant='permanent' open={open}>
-               <List sx={{ py: 2, px: 1.5 }}>{NavItems(sidebarMenu, open, theme.direction as any, signOut)}</List>
+               <List sx={{ py: 2, px: 1.5 }}>{NavItems(sidebarMenu || [], open, theme.direction as any, signOut)}</List>
             </Drawer>
          )}
       </Box>

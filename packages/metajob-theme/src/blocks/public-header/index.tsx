@@ -14,41 +14,33 @@ export const PublicHeader = async ({ block, language }: Props) => {
    const session = await auth()
 
    // fetch public header data
-   const { data } = await find(
-      "api/padma-backend/layout",
-      {
-         populate: {
-            header: {
-               on: {
-                  "header.main-menu": {
-                     populate: {
-                        light_logo: {
-                           populate: "*"
-                        },
-                        dark_logo: {
-                           populate: "*"
-                        },
-                        main_menu: {
-                           populate: "*"
-                        }
+   const { data } = await find("api/padma-backend/layout", {
+      populate: {
+         header: {
+            on: {
+               "header.main-menu": {
+                  populate: {
+                     light_logo: {
+                        populate: "*"
+                     },
+                     dark_logo: {
+                        populate: "*"
+                     },
+                     main_menu: {
+                        populate: "*"
                      }
                   }
                }
             }
-         },
-         locale: language ?? "en"
+         }
       },
-      "no-store"
-   )
+      locale: language ?? "en"
+   })
 
    // fetch locales data
-   const { data: listLocalesData } = await find(
-      "api/i18n/locales",
-      {
-         populate: "*"
-      },
-      "no-store"
-   )
+   const { data: listLocalesData } = await find("api/i18n/locales", {
+      populate: "*"
+   })
 
    const combineBlockData = {
       ...block,

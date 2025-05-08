@@ -42,14 +42,14 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
             mode === "light" ? backgroundColor || theme.palette.background.paper : theme.palette.background.paper
          }>
          <Container maxWidth='lg'>
-            <Stack py={section_padding || 8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Stack py={section_padding || 8} gap={5} sx={{ justifyContent: "center", alignItems: "center" }}>
                {/* section-title  */}
                {content && (
                   <SectionTitle data={content} color={{ header_color, sub_header_color }} width={header_width} />
                )}
                {/* posts section  */}
                {recentBlogs && recentBlogs?.length > 0 && (
-                  <Grid container spacing={2}>
+                  <Grid container spacing={{ xs: 1, md: 2 }}>
                      {_.map(recentBlogs, (item) => (
                         <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
                            <CardItem
@@ -70,8 +70,7 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
                            display: "flex",
                            flexDirection: "column",
                            alignItems: "center",
-                           gap: 0.5,
-                           py: 4
+                           gap: 0.5
                         }}>
                         <Typography variant='body1' sx={{ color: theme.palette.text.secondary }}>
                            {empty?.title || "No data found"}
@@ -83,26 +82,26 @@ export const BlogCardClient = ({ block, recentBlogs }: Props) => {
                   )}
                </Grid>
 
-               <Box>
-                  {button && (
-                     <Button
-                        sx={{
-                           bgcolor: (theme) =>
-                              mode === "dark"
-                                 ? theme.palette.background.paper
-                                 : hexToRGBA(theme.palette.secondary.main, 0.7),
-                           color: "white",
-                           "&:hover": {
-                              bgcolor: "primary.main"
-                           }
-                        }}
-                        // @ts-ignore
-                        LinkComponent={Link}
-                        href={link || "/career-advice"}>
-                        {label || "See All Blogs"}
-                     </Button>
-                  )}
-               </Box>
+               {button && (
+                  <Button
+                     sx={{
+                        bgcolor: (theme) =>
+                           mode === "dark"
+                              ? theme.palette.background.paper
+                              : hexToRGBA(theme.palette.secondary.main, 0.7),
+                        color: "white",
+                        "&:hover": {
+                           bgcolor: "primary.main"
+                        },
+                        borderRadius: "4px",
+                        marginTop: "0 !important"
+                     }}
+                     // @ts-ignore
+                     LinkComponent={Link}
+                     href={link || "/career-advice"}>
+                     {label || "See All Blogs"}
+                  </Button>
+               )}
             </Stack>
          </Container>
       </Stack>
