@@ -33,7 +33,7 @@ export const NotificationBody = ({
       <Box sx={{ overflow: "auto" }}>
          <Box
             sx={{
-               maxHeight: "calc(100vh - 271px)",
+               maxHeight: { xs: "calc(70vh - 271px)", md: "calc(100vh - 271px)" },
                maxWidth: {
                   xs: "100vh",
                   sm: "100%"

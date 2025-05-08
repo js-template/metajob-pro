@@ -68,10 +68,13 @@ const BookmarkTableItem = ({
                component={NextLink}
                href={itemUrl || "#"}
                variant='body1'
-               fontWeight={500}
-               lineHeight={"24px"}
                sx={{
+                  fontSize: { xs: 16, md: 16 },
                   color: (theme) => theme.palette.text.primary,
+                  textDecoration: "none",
+                  "&:hover": {
+                     color: (theme) => theme.palette.primary.main
+                  },
                   // line clamp 1
                   display: "-webkit-box",
                   WebkitBoxOrient: "vertical",

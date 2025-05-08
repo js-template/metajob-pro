@@ -1,5 +1,5 @@
 "use client"
-import { Box, Skeleton, TableCell, TableRow, Typography, useTheme } from "@mui/material"
+import { Box, Skeleton, Stack, TableCell, TableRow, Typography, useTheme } from "@mui/material"
 import CIcon from "../../components/common/icon"
 import { Fragment } from "react"
 import { recentActivitiesItemProps } from "./type"
@@ -19,7 +19,8 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
                   color: (theme) => theme.palette.text.secondary
                },
                "& td": {
-                  py: "10px"
+                  py: { xs: 1, md: 1.5 },
+                  px: { xs: 1, md: 2 }
                },
                "&:last-child td, &:last-child th": { border: 0 }
             }}>
@@ -28,7 +29,7 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
                   sx={{
                      display: "flex",
                      alignItems: "center",
-                     gap: 2
+                     gap: { xs: 1, md: 2 }
                   }}>
                   <Box
                      sx={{
@@ -69,8 +70,8 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
                               icon='material-symbols-light:notification-add-sharp'
                               sx={{
                                  fontSize: {
-                                    xs: "1.5rem",
-                                    sm: "1.75rem"
+                                    xs: 24,
+                                    sm: 28
                                  },
                                  color: theme.palette.primary.main
                               }}
@@ -88,7 +89,7 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
                            <Skeleton variant='text' width='100%' height={24} />
                         </>
                      ) : (
-                        <>
+                        <Stack gap={{ xs: 0, sm: 0.5 }}>
                            <Typography
                               variant='subtitle2'
                               sx={{
@@ -100,7 +101,7 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
                               variant='body1'
                               sx={{
                                  color: (theme) => theme.palette.text.primary,
-                                 mb: "5px",
+                                 fontSize: { xs: 16, md: 18 },
                                  lineClamp: 1,
                                  display: "-webkit-box",
                                  overflow: "hidden",
@@ -110,7 +111,7 @@ const TableItem = ({ item, isLoading }: { item?: recentActivitiesItemProps; isLo
                               }}>
                               {title}
                            </Typography>
-                        </>
+                        </Stack>
                      )}
                   </Box>
                </Box>

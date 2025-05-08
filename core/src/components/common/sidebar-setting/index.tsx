@@ -106,6 +106,10 @@ const SidebarSetting = () => {
                      backgroundColor: theme.palette.background.default
                   }
                }
+            }}
+            sx={{
+               position: "fixed",
+               zIndex: 99999
             }}>
             {/* heading  */}
             <Box display='flex' justifyContent='space-between' alignItems='center'>

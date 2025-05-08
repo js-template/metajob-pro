@@ -130,6 +130,9 @@ export const JobItem = ({ data, button_label, color, secondary_color, vacancy_pl
                src={image}
                alt='avatar'
                sx={{
+                  bgcolor: mode === "light" ? theme.palette.primary.main : hexToRGBA(theme.palette.primary.main, 0.5),
+                  color: theme.palette.primary.contrastText,
+                  fontSize: { xs: 24, md: 30 },
                   width: { xs: "60px", sm: "80px", md: "100px" },
                   height: { xs: "60px", sm: "80px", md: "100px" },
                   borderRadius: { xs: "8px", md: "12px" }

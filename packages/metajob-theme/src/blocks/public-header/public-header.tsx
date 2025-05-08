@@ -89,7 +89,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                      alignItems: "center",
                      gap: 1
                   }}>
-                  {!logo_text && logo && (
+                  {logo && (
                      <Box
                         sx={{
                            display: { xs: "none", md: "flex" }
@@ -110,7 +110,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                         />
                      </Box>
                   )}
-                  {logo_text && (
+                  {!logo && logo_text && (
                      <Box
                         sx={{
                            display: { xs: "none", md: "flex" },
@@ -152,7 +152,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                         listLocalesData={listLocalesData}
                      />
                   </Box>
-                  {!logo_text && logo && (
+                  {logo && (
                      <Box
                         component={NextLink}
                         href='/'
@@ -174,7 +174,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                         />
                      </Box>
                   )}
-                  {logo_text && (
+                  {!logo && logo_text && (
                      <Box
                         sx={{
                            display: { xs: "flex", md: "none" },
