@@ -22,7 +22,7 @@ export const MyProfileClient = ({ block, language, userData }: Props) => {
    const [activeMenu, setActiveMenu] = useState("profile-info")
 
    return (
-      <Stack spacing={4} mb={5}>
+      <Stack spacing={{ xs: 3, md: 4 }} mb={5}>
          <ProfileHeader activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
          {activeMenu === "profile-info" && <ProfileInfo userData={userData} />}
          {activeMenu === "security" && <ChangePassword />}
