@@ -188,7 +188,7 @@ const CustomAppBar = ({
                {!logo_text && logo && (
                   <Box
                      sx={{
-                        display: { xs: "none", md: "flex" }
+                        display: { xs: "flex", md: "flex" }
                      }}
                      component={NextLink}
                      href={dashboardLink ?? "/"}>
@@ -208,7 +208,7 @@ const CustomAppBar = ({
                {logo_text && (
                   <Box
                      sx={{
-                        display: { xs: "none", md: "flex" },
+                        display: { xs: "flex", md: "flex" },
                         textDecoration: "none"
                      }}
                      component={NextLink}
@@ -227,7 +227,7 @@ const CustomAppBar = ({
                )}
             </Box>
 
-            <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 1.5 }}>
+            <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: { xs: 0, sm: 1.5 } }}>
                {!isTablet && (
                   <>
                      {/* language-button  */}
