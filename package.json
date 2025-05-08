@@ -1,7 +1,7 @@
 {
   "name": "metajob-pro",
   "version": "2.0.0",
-  "description": "Full Stacj Job Portal Solution using Nextjs and Strapi",
+  "description": "Full Stack Job Portal Solution using Nextjs and Strapi",
   "main": "index.js",
   "scripts": {
     "build": "turbo build",
