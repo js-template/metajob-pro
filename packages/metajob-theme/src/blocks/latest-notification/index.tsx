@@ -61,8 +61,8 @@ export const LatestNotifications = async ({
                      variant='h3'
                      fontWeight={700}
                      fontSize={{
-                        xs: "1.1rem",
-                        sm: "1.25rem"
+                        xs: 18,
+                        sm: 20
                      }}
                      lineHeight={"24px"}>
                      {title}
