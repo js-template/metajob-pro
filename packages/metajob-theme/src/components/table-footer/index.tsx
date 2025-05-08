@@ -24,7 +24,7 @@ export const TableFooterPagination = ({ per_page_placeholder, pagination, setPag
       <Box
          sx={{
             py: 2.5,
-            px: 3,
+            px: { xs: 2, md: 3 },
             borderTop: "1px solid",
             borderColor: "divider",
             display: "flex",
