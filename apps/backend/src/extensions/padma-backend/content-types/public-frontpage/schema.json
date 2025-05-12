@@ -22,7 +22,8 @@
           "localized": true
         }
       },
-      "type": "string"
+      "type": "string",
+      "default": "Home"
     },
     "description": {
       "pluginOptions": {
@@ -30,7 +31,8 @@
           "localized": true
         }
       },
-      "type": "text"
+      "type": "text",
+      "default": "Home Page Description"
     },
     "blocks": {
       "pluginOptions": {

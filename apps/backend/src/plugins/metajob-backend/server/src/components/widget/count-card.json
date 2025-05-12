@@ -11,29 +11,18 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
-    },
-    "count": {
-      "type": "biginteger"
-    },
-    "dynamicCount": {
-      "type": "boolean"
+      "type": "string",
+      "required": false,
+      "default": "Title Here"
     },
     "subTitle": {
-      "type": "string"
-    },
-    "enableStats": {
-      "type": "boolean"
-    },
-    "model": {
-      "type": "string"
-    },
-    "isLink": {
-      "type": "boolean",
-      "default": false
+      "type": "string",
+      "required": false,
+      "default": "Sub Title Here"
     },
     "link": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
     "target": {
       "type": "enumeration",

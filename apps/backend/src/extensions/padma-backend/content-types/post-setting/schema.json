@@ -22,7 +22,8 @@
           "localized": true
         }
       },
-      "type": "string"
+      "type": "string",
+      "default": "Post Details"
     },
     "sidebar": {
       "pluginOptions": {
@@ -31,7 +32,8 @@
         }
       },
       "type": "enumeration",
-      "enum": ["Left Sidebar", "Right Sidebar", "Both Sidebar", "No Sidebar"]
+      "enum": ["Left Sidebar", "Right Sidebar", "Both Sidebar", "No Sidebar"],
+      "default": "Right Sidebar"
     },
     "blocks": {
       "pluginOptions": {

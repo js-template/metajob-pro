@@ -7,6 +7,7 @@ import {
    IconButton,
    Menu,
    MenuItem,
+   Stack,
    Table,
    TableBody,
    TableCell,
@@ -65,7 +66,7 @@ const NotificationBar = ({ emailHistoryData }: Props) => {
                mt: "54px",
                "& .MuiPaper-root": {
                   minWidth: "180px",
-                  maxHeight: { xs: "500px", md: "400px" },
+                  maxHeight: { xs: "400px", md: "400px" },
                   maxWidth: { xs: "100%", md: "500px" },
                   overflowY: "auto",
                   border: "1px solid",
@@ -86,7 +87,6 @@ const NotificationBar = ({ emailHistoryData }: Props) => {
                         maxWidth: "500px",
                         color: theme.palette.text.primary,
                         px: 2,
-                        gap: 1.5,
                         textAlign: "left",
                         ":hover": {
                            background: theme.palette.background.default,
@@ -106,7 +106,8 @@ const NotificationBar = ({ emailHistoryData }: Props) => {
                                           color: (theme) => theme.palette.text.secondary
                                        },
                                        "& td": {
-                                          py: "10px"
+                                          py: { xs: 1, md: 1.5 },
+                                          px: { xs: 1, md: 2 }
                                        }
                                     }}>
                                     <TableCell>
@@ -114,7 +115,7 @@ const NotificationBar = ({ emailHistoryData }: Props) => {
                                           sx={{
                                              display: "flex",
                                              alignItems: "center",
-                                             gap: 2
+                                             gap: { xs: 1, md: 2 }
                                           }}>
                                           <Box
                                              sx={{
@@ -137,13 +138,13 @@ const NotificationBar = ({ emailHistoryData }: Props) => {
                                                    justifyContent: "center"
                                                 }}>
                                                 <CIcon
-                                                   icon='tabler:bell-filled'
+                                                   icon='material-symbols-light:notification-add-sharp'
                                                    sx={{
                                                       fontSize: {
-                                                         xs: "1.5rem",
-                                                         sm: "1.75rem"
+                                                         xs: 24,
+                                                         sm: 28
                                                       },
-                                                      color: theme.palette.text.primary + "80"
+                                                      color: theme.palette.primary.main
                                                    }}
                                                 />
                                              </Box>
@@ -152,7 +153,7 @@ const NotificationBar = ({ emailHistoryData }: Props) => {
                                              sx={{
                                                 width: "100%"
                                              }}>
-                                             <>
+                                             <Stack gap={{ xs: 0, sm: 0.5 }}>
                                                 <Typography
                                                    variant='subtitle2'
                                                    sx={{
@@ -163,8 +164,8 @@ const NotificationBar = ({ emailHistoryData }: Props) => {
                                                 <Typography
                                                    variant='body1'
                                                    sx={{
+                                                      fontSize: { xs: 16, md: 18 },
                                                       color: (theme) => theme.palette.text.primary,
-                                                      mb: "5px",
                                                       lineClamp: 1,
                                                       display: "-webkit-box",
                                                       overflow: "hidden",
@@ -174,7 +175,7 @@ const NotificationBar = ({ emailHistoryData }: Props) => {
                                                    }}>
                                                    {historyItem?.title}
                                                 </Typography>
-                                             </>
+                                             </Stack>
                                           </Box>
                                        </Box>
                                     </TableCell>

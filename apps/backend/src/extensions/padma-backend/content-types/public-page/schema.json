@@ -18,6 +18,7 @@
   "attributes": {
     "title": {
       "type": "string",
+      "default": "Public Page",
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -51,7 +52,12 @@
         "metajob-block.candidate-filter",
         "metajob-block.page-header",
         "metajob-block.public-package",
-        "metajob-block.category-filter"
+        "metajob-block.category-filter",
+        "block.blog-card",
+        "metajob-block.job-banner",
+        "metajob-block.job-category",
+        "metajob-block.job-card",
+        "metajob-block.job-category-overlay"
       ]
     },
     "seo": {

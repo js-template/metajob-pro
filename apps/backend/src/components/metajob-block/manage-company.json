@@ -7,10 +7,19 @@
   "options": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Title Here"
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Description Here"
+    },
+    "add_button_placeholder": {
+      "type": "string",
+      "required": false,
+      "default": "Add Company"
     },
     "table_config": {
       "type": "component",
@@ -31,9 +40,6 @@
       "type": "component",
       "repeatable": false,
       "component": "config.style-section"
-    },
-    "add_button_placeholder": {
-      "type": "string"
     }
   }
 }

@@ -21,7 +21,10 @@ export default function PageHeader({ title, header_bg_color, header_color }: Pro
                justifyContent: "center",
                alignItems: "center",
                // backgroundImage: "url(/images/jobs/findJob.png)",
-               bgcolor: mode === "light" ? header_bg_color || "primary.main" : theme.palette.background.paper,
+               bgcolor:
+                  mode === "light"
+                     ? header_bg_color || "primary.main"
+                     : hexToRGBA(header_bg_color || theme.palette.primary.main, 0.3),
                backgroundSize: "cover",
                backgroundPosition: "center",
                textAlign: "center",

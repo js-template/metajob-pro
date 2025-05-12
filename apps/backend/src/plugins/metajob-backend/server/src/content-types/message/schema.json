@@ -14,16 +14,19 @@
     "sender": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "plugin::users-permissions.user",
+      "required": true
     },
     "receiver": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "plugin::users-permissions.user",
+      "required": true
     },
     "message": {
       "type": "richtext",
-      "required": true
+      "required": true,
+      "default": "Message Here"
     },
     "medias": {
       "type": "media",
@@ -44,7 +47,8 @@
     "chat_session": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::metajob-backend.chat"
+      "target": "plugin::metajob-backend.chat",
+      "required": true
     }
   }
 }

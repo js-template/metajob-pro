@@ -105,13 +105,14 @@ export const ManagePackage = ({ block, language }: Props) => {
             borderColor: "divider",
             borderRadius: "12px",
             height: "100%",
-            px: 3,
+            px: { xs: 1, md: 3 },
             py: 3
          }}>
          <Box
             sx={{
                display: "flex",
                flexDirection: "column",
+               px: { xs: 2, md: 0 },
                gap: {
                   xs: 1,
                   md: 2
@@ -135,9 +136,9 @@ export const ManagePackage = ({ block, language }: Props) => {
                {description}
             </Typography>
          </Box>
-         <Stack py={8} spacing={5} sx={{ justifyContent: "center", alignItems: "center" }}>
+         <Stack py={{ xs: 5, md: 8 }} gap={{ xs: 5, md: 8 }} sx={{ justifyContent: "center", alignItems: "center" }}>
             {packageData && packageData?.length > 0 && (
-               <Grid container spacing={2}>
+               <Grid container gap={{ xs: 2, md: 3 }}>
                   {_.map(packageData, (item, index) => (
                      <Grid key={index} item xs={mobile || 12} sm={tab || 6} lg={desktop || 3}>
                         <PackageItem

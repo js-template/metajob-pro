@@ -18,22 +18,23 @@
   "attributes": {
     "title": {
       "type": "string",
+      "required": true,
+      "default": "Category",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
     },
-    "icon": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": ["images", "files", "videos", "audios"],
+    "slug": {
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "type": "uid",
+      "targetField": "title",
+      "required": true
     },
     "image": {
       "type": "media",
@@ -52,7 +53,8 @@
           "localized": true
         }
       },
-      "type": "text"
+      "type": "text",
+      "default": "Description here"
     },
     "link": {
       "type": "component",
@@ -63,14 +65,6 @@
         }
       },
       "component": "config.link"
-    },
-    "slug": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "uid"
     },
     "seo": {
       "type": "component",

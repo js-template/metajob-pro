@@ -44,7 +44,7 @@ const ResumePreviewBox = ({ handleEdit, data, isLoading }: Props) => {
                      {/* about-section  */}
                      <CardContent
                         sx={{
-                           p: 4,
+                           p: { xs: 3, md: 4 },
                            display: "flex",
                            flexDirection: "column",
                            gap: 4

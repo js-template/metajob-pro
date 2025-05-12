@@ -99,7 +99,14 @@ const ManageCompaniesTableItem = ({
                   }}>
                   <Image src={imageUrl} alt='company logo' width={50} height={50} />
                   <Box dir={direction}>
-                     <Typography variant='body1' dir={direction}>
+                     <Typography
+                        variant='body1'
+                        sx={{
+                           fontSize: 16,
+                           fontWeight: 500,
+                           color: (theme) => theme.palette.text.primary
+                        }}
+                        dir={direction}>
                         {name}
                      </Typography>
                      {email && (

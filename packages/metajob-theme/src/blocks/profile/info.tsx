@@ -156,7 +156,7 @@ export const ProfileInfo = ({ userData: data }: Props) => {
                      {/* top-portion  */}
                      <Box
                         sx={{
-                           padding: 3
+                           p: { xs: 2, md: 3 }
                         }}>
                         {/* User Details Portion */}
                         <Box
@@ -276,7 +276,7 @@ export const ProfileInfo = ({ userData: data }: Props) => {
                </Paper>
             ) : (
                //edit-mode
-               <Stack spacing={4} px={4}>
+               <Stack spacing={4} px={{ xs: 2, md: 4 }}>
                   <Box>
                      <Grid container spacing={4}>
                         {/* avatar  */}
@@ -467,7 +467,7 @@ export const ProfileInfo = ({ userData: data }: Props) => {
                sx={{
                   display: "flex",
                   justifyContent: "space-between",
-                  px: 4
+                  px: { xs: 2, md: 4 }
                }}>
                {!isEditMode ? (
                   <Button onClick={handleToggleEdit} variant='contained'>

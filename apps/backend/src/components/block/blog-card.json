@@ -17,25 +17,15 @@
       "repeatable": false,
       "component": "config.section-title"
     },
-    "empty": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.empty"
-    },
-    "button": {
-      "type": "component",
-      "repeatable": false,
-      "component": "config.link"
-    },
     "card_button": {
       "type": "component",
       "repeatable": false,
       "component": "config.link"
     },
-    "style": {
+    "button": {
       "type": "component",
       "repeatable": false,
-      "component": "config.style-section"
+      "component": "config.link"
     },
     "item_count": {
       "type": "integer",
@@ -43,9 +33,15 @@
       "min": 1,
       "max": 24
     },
-    "show_image": {
-      "type": "boolean",
-      "default": true
+    "empty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.empty"
+    },
+    "style": {
+      "type": "component",
+      "repeatable": false,
+      "component": "config.style-section"
     }
   }
 }

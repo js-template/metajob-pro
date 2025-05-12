@@ -13,7 +13,9 @@
       "component": "config.section-title"
     },
     "button_placeholder": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Reload"
     },
     "style": {
       "type": "component",

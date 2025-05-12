@@ -77,7 +77,7 @@ export const ChangePassword = () => {
                sx={{
                   pt: 0,
                   pb: 3,
-                  px: 4
+                  px: { xs: 2, md: 4 }
                }}>
                <Grid container spacing={4}>
                   {/* Old Password */}

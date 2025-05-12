@@ -25,6 +25,7 @@ export type IPublicHeaderBlock = {
       sm_width: number
       md_width: number
    }
+   logo_text?: string
    main_menu: MenuItemProps[]
    language: MenuItemProps[]
    profile_menu: MenuItemProps[]

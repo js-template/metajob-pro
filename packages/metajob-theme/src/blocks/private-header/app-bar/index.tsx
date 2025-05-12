@@ -110,6 +110,7 @@ const CustomAppBar = ({
       language: langMenu,
       light_logo,
       dark_logo,
+      logo_text,
       dark_mode,
       notification
    } = headerData || {}
@@ -187,7 +188,7 @@ const CustomAppBar = ({
                {logo && (
                   <Box
                      sx={{
-                        display: { xs: "none", md: "flex" }
+                        display: { xs: "flex", md: "flex" }
                      }}
                      component={NextLink}
                      href={dashboardLink ?? "/"}>
@@ -204,9 +205,29 @@ const CustomAppBar = ({
                      />
                   </Box>
                )}
+               {!logo && logo_text && (
+                  <Box
+                     sx={{
+                        display: { xs: "flex", md: "flex" },
+                        textDecoration: "none"
+                     }}
+                     component={NextLink}
+                     href={dashboardLink ?? "/"}>
+                     <Typography
+                        variant='h3'
+                        component={"p"}
+                        sx={{
+                           fontSize: { xs: 24, sm: 30, md: 36 },
+                           textDecoration: "none",
+                           color: theme.palette.primary.main
+                        }}>
+                        {logo_text}
+                     </Typography>
+                  </Box>
+               )}
             </Box>
 
-            <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 1.5 }}>
+            <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: { xs: 0, sm: 1.5 } }}>
                {!isTablet && (
                   <>
                      {/* language-button  */}

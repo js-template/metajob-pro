@@ -28,6 +28,12 @@
       "repeatable": false,
       "component": "config.link"
     },
+    "item_count": {
+      "type": "integer",
+      "default": 12,
+      "min": 1,
+      "max": 24
+    },
     "empty": {
       "type": "component",
       "repeatable": false,
@@ -37,12 +43,6 @@
       "type": "component",
       "repeatable": false,
       "component": "config.style-section"
-    },
-    "item_count": {
-      "type": "integer",
-      "default": 12,
-      "min": 1,
-      "max": 24
     }
   }
 }

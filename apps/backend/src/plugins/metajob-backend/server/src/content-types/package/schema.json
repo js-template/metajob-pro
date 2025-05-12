@@ -13,22 +13,28 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "default": "Title Here"
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "default": "Description Here"
+    },
+    "price": {
+      "type": "integer",
+      "required": true,
+      "default": "100"
+    },
+    "frequency": {
+      "type": "enumeration",
+      "enum": ["Monthly", "Yearly", "One Time"],
+      "default": "Monthly"
     },
     "feature": {
       "type": "component",
       "repeatable": true,
       "component": "metajob-config.meta-data"
-    },
-    "price": {
-      "type": "integer"
-    },
-    "frequency": {
-      "type": "enumeration",
-      "enum": ["Monthly", "Yearly", "One Time"]
     },
     "button": {
       "type": "component",

@@ -17,13 +17,18 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "default": "Name Here"
     },
     "designation": {
-      "type": "string"
+      "type": "string",
+      "default": "Designation Here"
     },
     "review": {
-      "type": "text"
+      "type": "text",
+      "required": true,
+      "default": "Review Text Here"
     },
     "avatar": {
       "type": "media",

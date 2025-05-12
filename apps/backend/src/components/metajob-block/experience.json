@@ -7,10 +7,14 @@
   "options": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Title Here"
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "required": false,
+      "default": "Description Here"
     },
     "startDate": {
       "type": "date"
@@ -19,7 +23,9 @@
       "type": "date"
     },
     "institution": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "default": "Institution"
     }
   }
 }

@@ -13,7 +13,8 @@
   "attributes": {
     "content": {
       "type": "text",
-      "required": true
+      "required": true,
+      "default": "Copyright Text Here"
     },
     "social_link": {
       "type": "component",
