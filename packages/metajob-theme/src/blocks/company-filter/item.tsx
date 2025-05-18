@@ -53,15 +53,15 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                      mode === "light" ? theme.palette.primary.main : hexToRGBA(theme.palette.primary.main, 0.5),
                   color: (theme) => theme.palette.primary.contrastText,
                   fontSize: { xs: 24, md: 30 },
-                  width: { xs: "60px", sm: "80px", md: "100px" },
-                  height: { xs: "60px", sm: "80px", md: "100px" },
+                  width: { xs: 60, sm: 80, md: 100 },
+                  height: { xs: 60, sm: 80, md: 100 },
                   borderRadius: "12px"
                }}>
                {name?.charAt(0) || ""}
             </Avatar>
          </Stack>
          {/* name, tags  */}
-         <Box sx={{ pb: { xs: 2, md: "30px" } }}>
+         <Box sx={{ pb: { xs: 2, md: 3.5 } }}>
             {name && (
                <Typography
                   fontSize={16}
@@ -90,7 +90,7 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
          {/* details  */}
          <Stack sx={{ mb: { xs: 2, md: 4 } }} spacing={"12px"}>
             {company_size && (
-               <Stack direction={"row"} gap={2} alignItems={"center"}>
+               <Stack direction={"row"} gap={{ xs: 1, sm: 2 }} alignItems={"center"}>
                   <Icon
                      fontSize='small'
                      className='icon-users'
@@ -102,7 +102,7 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                      }}
                   />
                   <Typography
-                     fontSize={14}
+                     fontSize={{ xs: 12, sm: 14 }}
                      fontWeight={400}
                      sx={{
                         color: (theme) =>
@@ -115,7 +115,7 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                </Stack>
             )}
             {revenue && (
-               <Stack direction={"row"} gap={2} alignItems={"center"}>
+               <Stack direction={"row"} gap={{ xs: 1, sm: 2 }} alignItems={"center"}>
                   <Icon
                      fontSize='small'
                      className='icon-dollar-sign'
@@ -128,7 +128,7 @@ const CompanyCardItem = ({ data, button_label, color, secondary_color }: Props) 
                   />
                   {revenue && (
                      <Typography
-                        fontSize={14}
+                        fontSize={{ xs: 12, sm: 14 }}
                         fontWeight={400}
                         sx={{
                            color: (theme) =>
