@@ -1,10 +1,15 @@
-export default {
+const plugin = {
+  name: pluginId,
   register(app: any) {
     app.addMenuLink({
-      to: '/plugins/metajob-backend/theme-settings',
-      icon: 'brush',
+      to: `/plugins/${pluginId}/theme-settings`,
+      icon: "brush",
       intlLabel: {
-        id: 'metajob-backend.theme-settings',
-        defaultMessage: 'Theme Settings',
+        id: `${pluginId}.theme.settings`,
+        defaultMessage: "Theme Settings",
+      },
+      Component: async () => {
+        const component = await import("./pages/theme-settings");
+        return component;
       },
     });
