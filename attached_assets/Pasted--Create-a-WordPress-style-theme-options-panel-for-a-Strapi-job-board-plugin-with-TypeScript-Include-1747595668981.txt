@@ -1,0 +1,29 @@
+"Create a WordPress-style theme options panel for a Strapi job board plugin with TypeScript. Include vertical tab navigation on the left side with a dark background."
+
+"Build a Strapi plugin called 'Metajob' with comprehensive theme settings functionality for a job marketplace. Include tabs for General Settings, Styles, Typography, Job Types, Skills, Experience Levels, and Membership."
+
+"I need a Strapi theme settings plugin with job-specific features. Use lowercase folder naming (theme-settings, tabs/general-tab.tsx, etc.). Include features for managing job types with colors."
+
+"Create a TypeScript Strapi plugin that handles theme customization similar to WordPress. Focus on a dark sidebar with vertical navigation, CRUD operations for job types, and clean form layouts."
+
+"Write a WordPress-style Strapi plugin for job marketplace configuration. Follow lowercase file naming convention. Include color pickers for job types and membership plan management."
+
+"Develop a Strapi plugin for theme customization with these key components: site identity settings, color scheme management, typography options, job type configuration with color coding, and membership plan setup."
+
+"Build a Metajob Theme Settings plugin for Strapi that follows WordPress UI conventions (dark sidebar, vertical tabs) with settings for appearance and job marketplace features. Use TypeScript and lowercase file naming."
+
+"Create a comprehensive Strapi plugin for theme settings with React components. Include proper TypeScript interfaces for settings objects. Focus on job marketplace features like job types, skills, and experience levels."
+
+"Develop a Strapi admin panel extension for theme customization with job marketplace features. Include vertical tab navigation, proper state management, and API integration using Strapi's plugin store."
+
+"Write a Strapi plugin with a WordPress-style UI for job marketplace settings. Include comprehensive CRUD operations for job types, skills, experience levels, and membership plans. Use TypeScript and follow lowercase kebab-case file naming."
+
+Each prompt includes the key aspects of the plugin:
+
+WordPress-style interface
+Dark sidebar with vertical tabs
+Lowercase file naming
+JobTypes/Skills/Experience levels functionality
+Theme customization features
+TypeScript implementation
+When using these prompts, you might want to specify which tab component you need the most detail on, or ask for specific code snippets for parts you're implementing first.

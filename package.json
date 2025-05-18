@@ -13,8 +13,7 @@
   "author": "JS Template",
   "license": "EULA",
   "dependencies": {
-    "@changesets/cli": "^2.28.1",
-    "@jstemplate/metajob-theme": "1.0.0"
+    "@changesets/cli": "^2.28.1"
   },
   "devDependencies": {
     "prettier": "latest",
