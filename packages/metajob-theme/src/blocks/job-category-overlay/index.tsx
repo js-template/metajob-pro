@@ -17,6 +17,9 @@ export const JobCategoryOverlay = async ({ block, language }: Props) => {
       populate: {
          image: {
             fields: ["url"]
+         },
+         icon: {
+            fields: ["url"]
          }
       },
       pagination: {

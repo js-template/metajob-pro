@@ -20,9 +20,13 @@ export const ContactWidget = ({ block }: Props) => {
                md: 4
             }}>
             {title && (
-               <Typography fontSize={24} fontWeight={700}  sx={{
-                  color: (theme) => theme.palette.primary.contrastText
-               }}>
+               <Typography
+                  fontSize={24}
+                  fontWeight={700}
+                  sx={{
+                     color: (theme) => theme.palette.primary.contrastText,
+                     textAlign: { xs: "center", sm: "left" }
+                  }}>
                   {title}
                </Typography>
             )}
@@ -31,16 +35,19 @@ export const ContactWidget = ({ block }: Props) => {
                   fontSize={18}
                   fontWeight={400}
                   sx={{
-                     color: (theme) => hexToRGBA(theme.palette.primary.contrastText, 0.5)
-                  }}
-                  >
+                     color: (theme) => hexToRGBA(theme.palette.primary.contrastText, 0.5),
+                     textAlign: { xs: "center", sm: "left" }
+                  }}>
                   {description}
                </Typography>
             )}
             {location && (
-               <Stack direction='row' gap={2} alignItems={"center"}>
+               <Stack direction={{ xs: "column", sm: "row" }} gap={2} alignItems={"center"} justifyContent={"center"}>
                   <CIcon icon={"mynaui:location"} color='primary.main' />
-                  <Typography fontSize={18} fontWeight={400} 
+                  <Typography
+                     textAlign={{ xs: "center", sm: "left" }}
+                     fontSize={18}
+                     fontWeight={400}
                      sx={{
                         color: (theme) => theme.palette.primary.contrastText
                      }}>
@@ -49,7 +56,7 @@ export const ContactWidget = ({ block }: Props) => {
                </Stack>
             )}
             {phone && (
-               <Stack direction='row' gap={2} alignItems={"center"}>
+               <Stack direction={{ xs: "column", sm: "row" }} gap={2} alignItems={"center"}>
                   <CIcon icon={"mdi:phone-outline"} color='primary.main' />
 
                   <Typography
