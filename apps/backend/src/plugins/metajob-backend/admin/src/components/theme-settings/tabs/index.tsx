@@ -14,12 +14,11 @@ interface ThemeSettingsTabsProps {
 
 const tabs: Tab[] = [
   { id: 'general', label: 'General Settings' },
-  { id: 'styles', label: 'Styles' },
-  { id: 'typography', label: 'Typography' },
+  { id: 'colors', label: 'Color Settings' },
+  { id: 'layout', label: 'Layout Settings' },
   { id: 'job-types', label: 'Job Types' },
   { id: 'skills', label: 'Skills' },
   { id: 'experience', label: 'Experience Levels' },
-  { id: 'membership', label: 'Membership' },
 ];
 
 const ThemeSettingsTabs: React.FC<ThemeSettingsTabsProps> = ({ activeTab, setActiveTab }) => {
