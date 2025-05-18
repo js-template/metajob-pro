@@ -10,18 +10,16 @@ const CandidateCardItem = ({
    data,
    button_label,
    color,
-   secondary_color,
-   skillsData
+   secondary_color
 }: {
    data: ISingleCandidate
    button_label?: string
    color?: string
    secondary_color?: string
-   skillsData?: ISingleCategory[]
 }) => {
    const { theme: mode } = useTheme()
 
-   const { name, tagline, contact, slug, user } = data || {}
+   const { name, tagline, contact, slug, user, skills } = data || {}
    const { location } = contact || {}
    const image = user?.avatar?.url || ""
 
@@ -137,9 +135,9 @@ const CandidateCardItem = ({
             )}
          </Stack>
          <Stack direction={"column"} justifyContent={"space-between"} height={"100%"}>
-            {skillsData && skillsData?.length > 0 ? (
+            {skills && skills?.length > 0 ? (
                <Stack sx={{ mb: "20px" }} direction={"row"} gap={1} flexWrap={"wrap"} justifyContent={"center"}>
-                  {_.map(skillsData?.length >= 5 ? skillsData.slice(0, 5) : skillsData, (item, index) => (
+                  {_.map(skills?.slice(0, 5), (item, index) => (
                      <Typography
                         key={index}
                         sx={{
@@ -156,7 +154,6 @@ const CandidateCardItem = ({
                         fontWeight={400}
                         fontSize={14}>
                         {item?.title}
-                        {/* {item} */}
                      </Typography>
                   ))}
                </Stack>

@@ -12,7 +12,6 @@ type CandidateRightSectionProps = {
    block: ICandidateFilterBlock
    color?: string
    secondary_color?: string
-   skillsData?: ISingleCategory[]
 }
 
 export default function CandidateLists({
@@ -21,8 +20,7 @@ export default function CandidateLists({
    error,
    block,
    color,
-   secondary_color,
-   skillsData
+   secondary_color
 }: CandidateRightSectionProps) {
    const { card_button } = block || {}
 
@@ -59,7 +57,6 @@ export default function CandidateLists({
                      button_label={card_button?.label}
                      color={color}
                      secondary_color={secondary_color}
-                     skillsData={skillsData}
                   />
                </Grid>
             ))}
