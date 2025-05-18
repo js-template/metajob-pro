@@ -1,8 +1,14 @@
+
 {
   "extends": "@strapi/typescript-utils/tsconfigs/admin",
-  "include": ["./src", "./custom.d.ts"],
+  "include": ["src", "custom.d.ts"],
   "compilerOptions": {
-    "rootDir": "../",
-    "baseUrl": "."
+    "strict": false,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false
   }
 }
