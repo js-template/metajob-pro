@@ -13,12 +13,19 @@ export const MenuWidget = ({ block }: Props) => {
    const { title, menu_items, style } = block || {}
 
    return (
-      <Grid item xs={style?.mobile || 12} sm={style?.tab || 6} md={style?.desktop || 3}>
+      <Grid
+         item
+         xs={style?.mobile || 12}
+         sm={style?.tab || 6}
+         md={style?.desktop || 3}
+         textAlign={{ xs: "center", sm: "left" }}>
          <Stack gap={2}>
-            <Typography fontSize={24} fontWeight={700}
+            <Typography
+               fontSize={24}
+               fontWeight={700}
                sx={{
-                  color:(theme) => theme.palette.primary.contrastText,
-                 }}>
+                  color: (theme) => theme.palette.primary.contrastText
+               }}>
                {title}
             </Typography>
             <Stack gap={2}>

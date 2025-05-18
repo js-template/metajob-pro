@@ -32,6 +32,7 @@ export type IPostBlock = {
       label?: string
    }
    item_count?: number
+   show_image?: boolean
 }
 
 export type ISinglePost = {

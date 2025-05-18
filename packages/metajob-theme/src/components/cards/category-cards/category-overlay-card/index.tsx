@@ -2,7 +2,7 @@
 import Image from "next/image"
 import NextLink from "next/link"
 import { useTheme } from "next-themes"
-import { Stack, Box, Typography, Card, Icon } from "@mui/material"
+import { Stack, Box, Typography, Card, Icon, Theme } from "@mui/material"
 import { ISingleCategory } from "./types"
 import { hexToRGBA } from "../../../../lib/hex-to-rgba"
 import AdUnitsOutlinedIcon from "@mui/icons-material/AdUnitsOutlined"
@@ -14,15 +14,29 @@ type Props = {
    backgroundColor?: string
    show_icon?: boolean
    overlay?: boolean
+   show_description?: boolean
 }
-export const CategoryOverlayCardItem = ({ data, button_label, color, backgroundColor, show_icon, overlay }: Props) => {
+export const CategoryOverlayCardItem = ({
+   data,
+   button_label,
+   color,
+   backgroundColor,
+   show_icon,
+   overlay,
+   show_description
+}: Props) => {
    const { theme: mode } = useTheme()
    //destructure the data
    const { title, description, image, icon } = data || {}
    const logo = image?.url || "https://placehold.co/60/png"
-   const topValue = overlay ? "10%" : "48%"
-   const spacing = overlay ? "8px 8px 2px 8px" : "10px 10px 3px 10px"
-   const titleTop = show_icon ? "20px" : "0px"
+   const iconData = icon?.url || "https://placehold.co/60/png"
+   const topValue = overlay ? "10%" : show_description ? "53%" : "58%"
+   const spacing = (theme: Theme) =>
+      overlay
+         ? `${theme.spacing(1)} ${theme.spacing(1)} ${theme.spacing(0.25)} ${theme.spacing(1)}`
+         : `${theme.spacing(1.25)} ${theme.spacing(1.25)} ${theme.spacing(0.375)} ${theme.spacing(1.25)}`
+
+   const titleTop = (theme: Theme) => (show_icon ? theme.spacing(2.5) : 0)
 
    return (
       //@ts-ignore
@@ -93,15 +107,23 @@ export const CategoryOverlayCardItem = ({ data, button_label, color, backgroundC
                   left: "20px",
                   top: topValue,
                   bgcolor: (theme) =>
-                     mode === "light" ? color || theme.palette.success.main : theme.palette.success.main
+                     mode === "light" ? color || theme.palette.primary.light : theme.palette.primary.light,
+                  borderRadius: "6px"
                }}>
-               <AdUnitsOutlinedIcon
+               <Image
+                  src={iconData || "https://placehold.co/60/png"}
+                  alt={title}
+                  width={30}
+                  height={30}
+                  style={{ marginBottom: 0, paddingBottom: 0 }}
+               />
+               {/* <AdUnitsOutlinedIcon
                   sx={{
                      color: (theme) =>
                         mode === "light" ? color || theme.palette.primary.contrastText : theme.palette.text.primary,
                      fontSize: "50px"
                   }}
-               />
+               /> */}
             </Box>
          )}
          {/*  title or description */}
@@ -134,7 +156,7 @@ export const CategoryOverlayCardItem = ({ data, button_label, color, backgroundC
             <Stack
                sx={{
                   padding: "20px",
-                  height: "150px",
+                  height: show_description ? "150px" : show_icon ? "110px" : "80px",
                   backgroundColor: (theme) =>
                      mode === "light" ? color || theme.palette.background.default : theme.palette.background.paper
                }}
@@ -154,7 +176,7 @@ export const CategoryOverlayCardItem = ({ data, button_label, color, backgroundC
                   noWrap>
                   {title}
                </Typography>
-               {description && (
+               {description && show_description ? (
                   <Typography
                      fontWeight={400}
                      fontSize={16}
@@ -169,6 +191,8 @@ export const CategoryOverlayCardItem = ({ data, button_label, color, backgroundC
                      }}>
                      {description}
                   </Typography>
+               ) : (
+                  ""
                )}
             </Stack>
          )}

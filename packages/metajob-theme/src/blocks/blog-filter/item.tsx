@@ -43,7 +43,7 @@ const CardItem = ({
                color: (theme) => theme.palette.primary.contrastText
             },
             bgcolor: (theme) => theme.palette.background.paper,
-            height: { xs: "auto", sm: "630px" }
+            height: "100%"
          }}
          spacing={2}>
          <Box
@@ -55,7 +55,7 @@ const CardItem = ({
                borderRadius: 1.5,
                position: "relative", // Make sure the container is positioned
                width: "100%", // Define width and height for the container
-               minHeight: image ? { xs: "200px", md: "250px" } : 0
+               minHeight: image ? { xs: "150px", sm: "250px" } : 0
             }}
             component={Link}
             href={`blog/${slug}`}>

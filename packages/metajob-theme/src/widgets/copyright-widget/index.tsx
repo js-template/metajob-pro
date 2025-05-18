@@ -23,20 +23,18 @@ export const CopyrightWidget = ({ block }: Props) => {
                my: 4
             }}
          />
-         <Stack direction={"row"} justifyContent={"space-between"}>
+         <Stack direction={{ xs: "column", sm: "row" }} justifyContent={"space-between"} gap={{ xs: 2, sm: 0 }}>
             <Typography
                fontSize={16}
                fontWeight={400}
-              
                textAlign='center'
                sx={{
-                  color:(theme) => theme.palette.primary.contrastText
-               }}
-               >
+                  color: (theme) => theme.palette.primary.contrastText
+               }}>
                {content}
             </Typography>
             {social_link && social_link?.length > 0 && (
-               <Stack direction={"row"} gap={2}>
+               <Stack direction={"row"} gap={2} justifyContent={"center"}>
                   {facebook && (
                      <IconButton
                         component={Link}
