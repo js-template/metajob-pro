@@ -42,7 +42,7 @@ export default function CandidateLists({
             <Stack>
                <Grid container spacing={2}>
                   {_.times(6, (index) => (
-                     <Grid item xs={12} sm={6} md={4} key={index}>
+                     <Grid item xs={6} sm={4} md={4} key={index}>
                         <CandidateCardLoader />
                      </Grid>
                   ))}
@@ -51,7 +51,7 @@ export default function CandidateLists({
          )}
          <Grid container spacing={3}>
             {_.map(data, (item) => (
-               <Grid item xs={12} sm={6} md={4} key={item?.id}>
+               <Grid item xs={6} sm={4} md={4} key={item?.id}>
                   <CandidateCardItem
                      data={item}
                      button_label={card_button?.label}
