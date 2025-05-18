@@ -11,6 +11,42 @@ externalPort = 3000
 [[ports]]
 localPort = 5173
 externalPort = 5173
+
+[workflows]
+runButton = "Build and Dev"
+
+[[workflows.workflow]]
+name = "Build and Dev"
+author = 8708332
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd apps/backend"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm install"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd src/plugins/metajob-backend"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm install"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm build"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd ../../.."
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm dev"
 # modules = ["nodejs-20", "web"]
 # run = "npm run dev"
 
