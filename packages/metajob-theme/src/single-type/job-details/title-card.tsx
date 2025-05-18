@@ -291,7 +291,7 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                                  variant={"h4"}
                                  fontWeight={700}
                                  sx={{
-                                    maxWidth: "200px",
+                                    maxWidth: { xs: "200px", sm: "100%" },
                                     fontSize: { xs: 20, md: 24 },
                                     color: (theme) =>
                                        mode === "light"
