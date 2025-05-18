@@ -47,4 +47,3 @@ yarn-error.log*
 .DS_Store
 *.pem
 .tmp
-packages/metajob-theme/tsconfig.tsbuildinfo
