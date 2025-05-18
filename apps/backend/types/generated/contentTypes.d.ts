@@ -1768,6 +1768,155 @@ export interface PluginMetajobBackendTestimonial
   };
 }
 
+export interface PluginMetajobBackendThemeSetting
+  extends Struct.SingleTypeSchema {
+  collectionName: 'theme_setting';
+  info: {
+    description: '';
+    displayName: 'Theme Setting';
+    pluralName: 'theme-settings';
+    singularName: 'theme-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dark_background_default: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    dark_background_paper: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    dark_divider: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    dark_primary_light: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    dark_primary_main: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    dark_secondary: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    dark_text_primary: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    dark_text_secondary: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    font_family: Schema.Attribute.Enumeration<['Jost', 'Roboto', 'Inter']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Jost'>;
+    light_background_default: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    light_background_paper: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    light_divider: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    light_primary_light: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    light_primary_main: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<'#1CAF57'>;
+    light_secondary: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    light_text_primary: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    light_text_secondary: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::metajob-backend.theme-setting'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginPadmaBackendCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
@@ -2805,6 +2954,7 @@ declare module '@strapi/strapi' {
       'plugin::metajob-backend.salary-type': PluginMetajobBackendSalaryType;
       'plugin::metajob-backend.skill': PluginMetajobBackendSkill;
       'plugin::metajob-backend.testimonial': PluginMetajobBackendTestimonial;
+      'plugin::metajob-backend.theme-setting': PluginMetajobBackendThemeSetting;
       'plugin::padma-backend.category': PluginPadmaBackendCategory;
       'plugin::padma-backend.layout': PluginPadmaBackendLayout;
       'plugin::padma-backend.permalink': PluginPadmaBackendPermalink;

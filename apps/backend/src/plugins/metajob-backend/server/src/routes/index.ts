@@ -22,6 +22,7 @@ import JobTypeRoute from "./job-type";
 import SkillRoute from "./skill";
 import AuthSettingRoute from "./auth-setting";
 import ErrorSettingRoute from "./error-setting";
+import ThemeSettingRoute from "./theme-setting";
 
 export default {
   "job-setting": JobSettingRoute,
@@ -48,4 +49,5 @@ export default {
   skill: SkillRoute,
   "auth-setting": AuthSettingRoute,
   "error-setting": ErrorSettingRoute,
+  "theme-setting": ThemeSettingRoute,
 };
