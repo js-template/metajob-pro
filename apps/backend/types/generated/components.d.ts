@@ -46,7 +46,6 @@ export interface BlockBlogCard extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<12>;
-    show_image: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     style: Schema.Attribute.Component<'config.style-section', false>;
   };
 }
