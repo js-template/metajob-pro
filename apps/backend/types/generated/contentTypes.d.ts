@@ -1780,136 +1780,52 @@ export interface PluginMetajobBackendThemeSetting
   options: {
     draftAndPublish: true;
   };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     dark_background_default: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     dark_background_paper: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     dark_divider: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     dark_primary_light: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     dark_primary_main: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     dark_secondary: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     dark_text_primary: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     dark_text_secondary: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     font_family: Schema.Attribute.Enumeration<['Jost', 'Roboto', 'Inter']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Jost'>;
     light_background_default: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     light_background_paper: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     light_divider: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     light_primary_light: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     light_primary_main: Schema.Attribute.String &
       Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }> &
       Schema.Attribute.DefaultTo<'#1CAF57'>;
     light_secondary: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     light_text_primary: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     light_text_secondary: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    locale: Schema.Attribute.String;
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::metajob-backend.theme-setting'
-    >;
+    > &
+      Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
