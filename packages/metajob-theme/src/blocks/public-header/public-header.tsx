@@ -81,7 +81,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                disableGutters
                sx={{
                   justifyContent: "space-between",
-                  gap: 2
+                  gap: { xs: 1, md: 2 }
                }}>
                <Box
                   sx={{
@@ -123,7 +123,7 @@ export const PublicHeaderComponent = ({ block, language, userData, listLocalesDa
                            variant='h3'
                            component={"p"}
                            sx={{
-                              fontSize: 34,
+                              fontSize: { xs: 24, sm: 34 },
                               textDecoration: "none",
                               color: theme.palette.primary.main
                            }}>

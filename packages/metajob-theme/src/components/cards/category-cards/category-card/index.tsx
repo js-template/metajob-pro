@@ -37,7 +37,7 @@ export const CategoryCardItem = ({
          sx={{
             p: 4,
             display: "block",
-            height: "180px",
+            height: show_description ? "200px" : "180px",
             textDecoration: "none",
             cursor: "pointer",
             boxShadow: " 0 4px 20px rgba(0, 0, 0, 0.05)",

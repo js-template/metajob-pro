@@ -24,13 +24,19 @@ const CardItem = ({
 
    return (
       <Stack
-         sx={{
+         sx={(theme) => ({
             bgcolor: "background.paper",
-            padding: "30px 40px",
+            px: {
+               xs: theme.spacing(2),
+               sm: theme.spacing(4)
+            },
+            py: {
+               xs: theme.spacing(2),
+               sm: theme.spacing(4)
+            },
             borderRadius: 1.5,
-            mx: 1.5,
-            height: "270px"
-         }}>
+            mx: 1.5
+         })}>
          <Stack gap={2}>
             <Stack direction={"row"} spacing={"20px"} alignItems={"center"}>
                {url && (

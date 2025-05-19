@@ -103,7 +103,7 @@ const SideItems = ({ block, language, userData, listLocalesData }: Props) => {
          {status === "loading" && <LoadingButton loading variant='text'></LoadingButton>}
          {/* before login  */}
          {status === "unauthenticated" && (
-            <Stack direction={"row"} gap={1.5}>
+            <Stack direction={"row"} gap={{ xs: 0.75, md: 1.5 }}>
                {/* language-theme buttons  */}
                {!isTablet && (
                   <>
@@ -267,8 +267,8 @@ const SideItems = ({ block, language, userData, listLocalesData }: Props) => {
                         size='small'
                         sx={{
                            py: 0.5,
-                           px: 1.5,
-                           fontSize: 15
+                           px: 1,
+                           fontSize: 13
                         }}
                         variant='contained'
                         component={NextLink}
