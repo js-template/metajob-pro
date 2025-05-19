@@ -1,4 +1,5 @@
-import { ThemeOptions } from "@mui/material"
+import { getFontFamily } from "@/lib/fonts"
+import { ThemeOptions, Theme } from "@mui/material"
 
 type IThemeSettings = {
    light_primary_main?: string
@@ -22,7 +23,7 @@ type IThemeSettings = {
 type IKey = keyof IThemeSettings
 
 export const mergeThemeSettings = (
-   baseTheme: ThemeOptions,
+   baseTheme: Theme,
    backendTheme: IThemeSettings,
    mode: "light" | "dark"
 ): ThemeOptions => {
@@ -58,6 +59,28 @@ export const mergeThemeSettings = (
 
    // Inject updated palette
    updatedTheme.palette = palette
+
+   // Inject updated font family
+   if (backendTheme?.font_family) {
+      const fontFamily = getFontFamily(backendTheme.font_family)
+      updatedTheme.typography = {
+         ...baseTheme.typography,
+         fontFamily: fontFamily,
+         h1: { ...baseTheme?.typography?.h1, fontFamily },
+         h2: { ...baseTheme?.typography?.h2, fontFamily },
+         h3: { ...baseTheme?.typography?.h3, fontFamily },
+         h4: { ...baseTheme?.typography?.h4, fontFamily },
+         h5: { ...baseTheme?.typography?.h5, fontFamily },
+         h6: { ...baseTheme?.typography?.h6, fontFamily },
+         subtitle1: { ...baseTheme?.typography?.subtitle1, fontFamily },
+         subtitle2: { ...baseTheme?.typography?.subtitle2, fontFamily },
+         body1: { ...baseTheme?.typography?.body1, fontFamily },
+         body2: { ...baseTheme?.typography?.body2, fontFamily },
+         button: { ...baseTheme?.typography?.button, fontFamily },
+         caption: { ...baseTheme?.typography?.caption, fontFamily },
+         overline: { ...baseTheme?.typography?.overline, fontFamily }
+      }
+   }
 
    return updatedTheme
 }
