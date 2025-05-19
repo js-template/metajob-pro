@@ -407,7 +407,7 @@ export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props)
                         <Stack>
                            <Grid container spacing={2}>
                               {_.times(6, (index) => (
-                                 <Grid key={index} item xs={mobile || 12} sm={tab || 6} md={desktop || 4}>
+                                 <Grid key={index} item xs={mobile || 6} sm={tab || 4} md={desktop || 4}>
                                     <ListCardLoader />
                                  </Grid>
                               ))}

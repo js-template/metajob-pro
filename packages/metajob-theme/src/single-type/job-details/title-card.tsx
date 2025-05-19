@@ -270,7 +270,7 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                         xs: "row"
                      }}
                      alignItems={{ xs: "flex-start", sm: "center" }}
-                     gap={{ xs: 1, sm: 4 }}>
+                     gap={{ xs: 0.5, sm: 4 }}>
                      {logo && (
                         <Avatar
                            src={logo}
@@ -291,6 +291,7 @@ const JobTitleCard = ({ data, companyData, block, language }: Props) => {
                                  variant={"h4"}
                                  fontWeight={700}
                                  sx={{
+                                    maxWidth: { xs: "200px", sm: "100%" },
                                     fontSize: { xs: 20, md: 24 },
                                     color: (theme) =>
                                        mode === "light"

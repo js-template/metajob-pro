@@ -10,18 +10,16 @@ const CandidateCardItem = ({
    data,
    button_label,
    color,
-   secondary_color,
-   skillsData
+   secondary_color
 }: {
    data: ISingleCandidate
    button_label?: string
    color?: string
    secondary_color?: string
-   skillsData?: ISingleCategory[]
 }) => {
    const { theme: mode } = useTheme()
 
-   const { name, tagline, contact, slug, user } = data || {}
+   const { name, tagline, contact, slug, user, skills } = data || {}
    const { location } = contact || {}
    const image = user?.avatar?.url || ""
 
@@ -31,10 +29,8 @@ const CandidateCardItem = ({
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: (theme) => theme.palette.background.paper,
-            pt: { xs: 2, sm: 4.375 },
-            pr: { xs: 1, sm: 3.75 },
-            pb: { xs: 2, sm: 3.75 },
-            pl: { xs: 1, sm: 3.75 },
+            py: { xs: 2, sm: 3.375 },
+            px: { xs: 1, sm: 3.75 },
             borderRadius: 2,
             "&:hover": {
                borderColor: (theme) => theme.palette.primary.main,
@@ -140,9 +136,9 @@ const CandidateCardItem = ({
             )}
          </Stack>
          <Stack direction={"column"} justifyContent={"space-between"} height={"100%"}>
-            {skillsData && skillsData?.length > 0 ? (
+            {skills && skills?.length > 0 ? (
                <Stack sx={{ mb: 2.5 }} direction={"row"} gap={1} flexWrap={"wrap"} justifyContent={"center"}>
-                  {_.map(skillsData?.length >= 5 ? skillsData.slice(0, 5) : skillsData, (item, index) => (
+                  {_.map(skills?.slice(0, 5), (item, index) => (
                      <Typography
                         key={index}
                         sx={{
@@ -159,7 +155,6 @@ const CandidateCardItem = ({
                         fontWeight={400}
                         fontSize={{ xs: 12, md: 14 }}>
                         {item?.title}
-                        {/* {item} */}
                      </Typography>
                   ))}
                </Stack>
@@ -173,7 +168,7 @@ const CandidateCardItem = ({
                      borderRadius: 1,
                      py: 1,
                      px: 2,
-                     mb: "20px",
+                     mb: 2.5,
                      textAlign: "center",
                      color: (theme) => theme.palette.text.disabled
                   }}
