@@ -1,0 +1,87 @@
+
+{
+  "kind": "collectionType",
+  "collectionName": "listings",
+  "info": {
+    "singularName": "listing",
+    "pluralName": "listings",
+    "displayName": "Listing",
+    "description": "Marketplace listings"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "description": {
+      "type": "richtext",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne", 
+      "target": "plugin::metaads-backend.category",
+      "inversedBy": "listings"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::metaads-backend.location",
+      "inversedBy": "listings"
+    },
+    "seller": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "listings"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["active", "sold", "expired"],
+      "default": "active"
+    },
+    "condition": {
+      "type": "enumeration", 
+      "enum": ["new", "like_new", "good", "fair", "poor"],
+      "required": true
+    },
+    "views": {
+      "type": "integer",
+      "default": 0
+    },
+    "favorites": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "favorite_listings"
+    }
+  }
+}
