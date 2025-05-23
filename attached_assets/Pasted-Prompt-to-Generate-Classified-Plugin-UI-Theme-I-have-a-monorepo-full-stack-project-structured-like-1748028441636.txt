@@ -1,0 +1,77 @@
+Prompt to Generate Classified Plugin & UI Theme
+I have a monorepo full stack project structured like this:
+
+bash
+Copy
+Edit
+apps/
+└── backend/                      # Main Strapi backend
+    └── src/plugins/
+        └── metajob-backend/     # Plugin for job board (APIs and logic)
+
+packages/
+└── metajob-theme/               # Frontend UI using MUI for job board
+Now I want to build a new solution for a Classified Ads marketplace. Follow the same structure, logic, and component design as the existing metajob setup.
+
+🧩 Backend Plugin: classifieds-backend
+Create a new Strapi plugin inside apps/backend/src/plugins/classifieds-backend
+
+Follow the same folder structure, code style, and naming conventions as metajob-backend
+
+Create all necessary collections and APIs for a Classified Ads site, such as:
+
+listings (title, price, description, location, category, images, user, etc.)
+
+categories (for organizing listings)
+
+messages (for user-to-user communication)
+
+favorites (user bookmarks)
+
+locations (cities or regions)
+
+user profiles
+
+listing stats endpoint (e.g., total ads, ads per category, etc.)
+
+Make it modular and scoped within the plugin, with clean services and controllers like in metajob-backend.
+
+🎨 UI Theme: classifieds-theme
+Create a new UI package inside packages/classifieds-theme
+
+Clone the structure of metajob-theme, but adapt it for classified ads
+
+Use MUI (Material UI) for components, consistent with the job board
+
+Include reusable components for:
+
+Listing Cards
+
+Filters Sidebar (location, category, price)
+
+Listing Details Page
+
+Submit Listing Form
+
+Search & Sorting
+
+Chat / Messaging UI
+
+Dashboard for managing user listings and favorites
+
+Make sure theme works as a standalone installable package like metajob-theme
+
+❌ Do Not Modify:
+The core backend or frontend
+
+Existing plugins or themes
+
+Just create a new plugin (classifieds-backend) and theme (classifieds-theme) in the correct locations
+
+Make sure all code is:
+
+Well-organized
+
+Production-ready
+
+Follows the same conventions as metajob solution
