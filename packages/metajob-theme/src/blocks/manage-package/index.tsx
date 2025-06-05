@@ -199,21 +199,7 @@ export const ManagePackage = ({ block, language }: Props) => {
             )}
          </Stack>
 
-         {/* stripe element load  */}
-         {/* {modalOn && (
-            <Box sx={{ maxWidth: "380px" }}>
-               <Elements options={options} stripe={stripePromise}>
-                  <StripeForm
-                     userId={userId}
-                     newPackageDocId={newPackageId}
-                     membershipData={membershipData}
-                     handleMute={handleMute}
-                  />
-               </Elements>
-            </Box>
-         )} */}
-
-         {/* Search Modal  */}
+         {/* Payment Option modal  */}
          <PaymentOptionsModal
             //   --data-props--
             selectedPackageData={selectedPackageData}
