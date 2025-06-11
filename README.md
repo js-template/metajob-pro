@@ -1,7 +1,7 @@
 # Metajob- Job Board App with Nextjs & Strapi
 
 <a href="https://metajob.vercel.app/" target="_blank">
-    <img src="(https://github.com/user-attachments/assets/5396285f-d4ac-43f4-b257-2fba3509f048" alt="thumbspng" />
+    <img src="https://github.com/user-attachments/assets/5396285f-d4ac-43f4-b257-2fba3509f048" alt="thumbspng" />
 </a>
 
 ### Get the Production license from [Metajob- Job Board App with Nextjs & Strapi](https://jstemplate.net/item/job-board-app-with-nextjs-strapi?utm_source=github&utm_medium=social&utm_campaign=job_board_app)
