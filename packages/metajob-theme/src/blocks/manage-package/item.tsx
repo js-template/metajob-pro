@@ -1,6 +1,4 @@
 "use client"
-import { useState } from "react"
-import toast from "react-hot-toast"
 import {
    Box,
    Card,
@@ -16,26 +14,40 @@ import {
 import { LoadingButton } from "@mui/lab"
 import CIcon from "../../components/common/icon"
 import { IMemberShip, IPackageData } from "./types"
+import { useState } from "react"
 import { createEntry, updateOne } from "../../lib/strapi"
+import toast from "react-hot-toast"
 
 type Props = {
    data?: IPackageData
    isLoader?: boolean
    membershipLoading?: boolean
+   membershipData?: IMemberShip | null
+   setSelectedPackageData?: ({ packageId, packagePrice }) => void
+   handleOpenPayment?: () => void
    userId?: boolean
    handleMute?: () => void
-   membershipData?: IMemberShip | null
 }
-export const PackageItem = ({ data, isLoader, membershipData, userId, handleMute, membershipLoading }: Props) => {
-   const theme = useTheme()
 
-   const [loading, setLoading] = useState(false)
+export const PackageItem = ({
+   data,
+   isLoader,
+   membershipData,
+   membershipLoading,
+   setSelectedPackageData,
+   handleOpenPayment,
+   userId,
+   handleMute
+}: Props) => {
+   const theme = useTheme()
 
    const { title, description, price, frequency, feature, button } = data || {}
    const { documentId: membershipDocId, user_plan } = membershipData || {}
    const { documentId: packageDocId } = user_plan || {}
 
-   // *** package change handler
+   const [loading, setLoading] = useState(false)
+
+   // *** package change handler (when price = 0, it will create a free package)
    const changePackageHandler = async (newPackageDocId: string) => {
       try {
          setLoading(true) // Start loading
@@ -225,8 +237,15 @@ export const PackageItem = ({ data, isLoader, membershipData, userId, handleMute
                      color='primary'
                      variant='contained'
                      onClick={() => {
-                        if (data?.documentId) {
+                        if (data?.documentId && data?.price === 0) {
                            changePackageHandler(data?.documentId)
+                        }
+                        if (data?.documentId && handleOpenPayment && data?.price && data?.price > 0) {
+                           setSelectedPackageData?.({
+                              packageId: data?.documentId,
+                              packagePrice: data?.price
+                           })
+                           handleOpenPayment()
                         }
                      }}
                      sx={{

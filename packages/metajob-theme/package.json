@@ -1,6 +1,6 @@
 {
    "name": "@jstemplate/metajob-theme",
-   "version": "1.0.0",
+   "version": "1.0.1",
    "private": true,
    "main": "dist/index.js",
    "keywords": [
@@ -30,6 +30,8 @@
       "@react-google-maps/api": "^2.20.6",
       "@strapi/blocks-react-renderer": "^1.0.2",
       "@strapi/design-system": "^2.0.0-rc.12",
+      "@stripe/react-stripe-js": "^3.7.0",
+      "@stripe/stripe-js": "^7.3.1",
       "@types/react-copy-to-clipboard": "^5.0.7",
       "@types/react-slick": "^0.23.13",
       "@uiw/react-md-editor": "^4.0.5",
@@ -53,6 +55,7 @@
       "react-share": "^5.2.2",
       "react-slick": "^0.30.3",
       "slick-carousel": "^1.8.1",
+      "stripe": "^18.2.1",
       "swr": "^2.3.3",
       "yet-another-react-lightbox": "^3.21.8"
    },

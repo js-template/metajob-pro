@@ -1,12 +1,12 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
-import _ from "lodash"
 import { Box, Grid, Paper, Stack, Typography } from "@mui/material"
 import { IManagePackageBock, IMemberShip, IPackageData } from "./types"
 import { AccessError } from "../../shared/error-table"
 import { PackageItem } from "./item"
 import { find } from "../../lib/strapi"
+import PaymentOptionsModal from "./payment-options"
 
 type Props = {
    block: IManagePackageBock
@@ -96,6 +96,18 @@ export const ManagePackage = ({ block, language }: Props) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [userId, isMute])
 
+   const [selectedPackageData, setSelectedPackageData] = useState({
+      packageId: "",
+      packagePrice: 0
+   })
+
+   const [openPayment, setOpenPayment] = useState(false)
+   // Payment popup handler
+   const handleOpenPayment = () => setOpenPayment(true)
+   const handleClosePayment = () => {
+      setOpenPayment(false)
+   }
+
    return role === "employer" ? (
       <Paper
          elevation={0}
@@ -139,14 +151,16 @@ export const ManagePackage = ({ block, language }: Props) => {
          <Stack py={{ xs: 5, md: 8 }} gap={{ xs: 5, md: 8 }} sx={{ justifyContent: "center", alignItems: "center" }}>
             {packageData && packageData?.length > 0 && (
                <Grid container gap={{ xs: 2, md: 3 }}>
-                  {_.map(packageData, (item, index) => (
+                  {packageData?.map((item, index) => (
                      <Grid key={index} item xs={mobile || 12} sm={tab || 6} lg={desktop || 3}>
                         <PackageItem
                            data={item}
                            membershipData={membershipData}
+                           membershipLoading={membershipLoading}
+                           handleOpenPayment={handleOpenPayment}
+                           setSelectedPackageData={setSelectedPackageData}
                            userId={userId}
                            handleMute={handleMute}
-                           membershipLoading={membershipLoading}
                         />
                      </Grid>
                   ))}
@@ -155,7 +169,7 @@ export const ManagePackage = ({ block, language }: Props) => {
             {/* loader */}
             {packageIsLoading && (
                <Grid container spacing={2}>
-                  {_.map([1, 2, 3], (item, index) => (
+                  {[1, 2, 3]?.map((item, index) => (
                      <Grid key={index} item xs={mobile || 12} sm={tab || 6} md={desktop || 3}>
                         <PackageItem isLoader={true} />
                      </Grid>
@@ -184,6 +198,17 @@ export const ManagePackage = ({ block, language }: Props) => {
                </Grid>
             )}
          </Stack>
+
+         {/* Payment Option modal  */}
+         <PaymentOptionsModal
+            //   --data-props--
+            selectedPackageData={selectedPackageData}
+            membershipData={membershipData}
+            handleMute={handleMute}
+            //   --modal-props--
+            open={openPayment}
+            handleClose={handleClosePayment}
+         />
       </Paper>
    ) : (
       <AccessError />
