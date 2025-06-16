@@ -24,6 +24,7 @@ import JobTypeService from "./job-type";
 import SkillService from "./skill";
 import AuthSettingService from "./auth-setting";
 import ErrorSettingService from "./error-setting";
+import ThemeSettingService from "./theme-setting";
 
 export default {
   service,
@@ -52,4 +53,5 @@ export default {
   skill: SkillService,
   "auth-setting": AuthSettingService,
   "error-setting": ErrorSettingService,
+  "theme-setting": ThemeSettingService,
 };

@@ -1,0 +1,118 @@
+{
+  "kind": "singleType",
+  "collectionName": "theme_setting",
+  "info": {
+    "singularName": "theme-setting",
+    "pluralName": "theme-settings",
+    "displayName": "Theme Setting",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "light_primary_main": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+      "default": "#1CAF57"
+    },
+    "light_primary_light": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "light_secondary": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "light_text_primary": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "light_text_secondary": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "light_divider": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "light_background_default": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "light_background_paper": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "dark_primary_main": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "dark_primary_light": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "dark_secondary": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "dark_text_primary": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "dark_text_secondary": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "dark_divider": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "dark_background_default": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "dark_background_paper": {
+      "type": "customField",
+      "required": false,
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "font_family": {
+      "type": "enumeration",
+      "enum": ["Jost", "Roboto", "Inter"],
+      "required": true,
+      "default": "Jost"
+    }
+  }
+}

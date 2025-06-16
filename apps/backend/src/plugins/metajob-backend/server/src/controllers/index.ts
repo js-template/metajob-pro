@@ -24,6 +24,7 @@ import JobTypeController from "./job-type";
 import SkillController from "./skill";
 import AuthSettingController from "./auth-setting";
 import ErrorSettingController from "./error-setting";
+import ThemeSettingController from "./theme-setting";
 
 export default {
   "job-setting": JobSettingController,
@@ -50,6 +51,7 @@ export default {
   skill: SkillController,
   "auth-setting": AuthSettingController,
   "error-setting": ErrorSettingController,
+  "theme-setting": ThemeSettingController,
 
   controller,
 };

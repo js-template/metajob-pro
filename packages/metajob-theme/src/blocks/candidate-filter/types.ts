@@ -99,6 +99,10 @@ export type ISingleCandidate = {
       friendlyAddress: null //this field will be updated
       location: null
    }
+   skills?: {
+      title: string
+      value: string
+   }[]
    user: {
       id: number
       documentId: string
