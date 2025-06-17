@@ -107,6 +107,9 @@ const CandidateFilterClient = ({ block, language, categoryData, skillsData }: Pr
                            fields: ["url"]
                         }
                      }
+                  },
+                  skills: {
+                     populate: "*"
                   }
                },
                // populate: {
@@ -312,7 +315,6 @@ const CandidateFilterClient = ({ block, language, categoryData, skillsData }: Pr
                            block={block}
                            color={color}
                            secondary_color={secondary_color}
-                           skillsData={skillsData}
                         />
                      </Stack>
                      {/* pagination */}

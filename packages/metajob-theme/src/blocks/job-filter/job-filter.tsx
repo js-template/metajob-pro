@@ -407,7 +407,7 @@ export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props)
                         <Stack>
                            <Grid container spacing={2}>
                               {_.times(6, (index) => (
-                                 <Grid key={index} item xs={mobile || 12} sm={tab || 6} md={desktop || 4}>
+                                 <Grid key={index} item xs={mobile || 6} sm={tab || 4} md={desktop || 4}>
                                     <ListCardLoader />
                                  </Grid>
                               ))}
@@ -419,7 +419,7 @@ export const JobFilterClient = ({ block, language, jobFilterAttributes }: Props)
                         <Stack>
                            <Grid container spacing={{ xs: 1, sm: 2, md: 2 }}>
                               {_.map(jobsData, (item: ISingleJob, index: number) => (
-                                 <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={index}>
+                                 <Grid item xs={mobile || 6} sm={tab || 4} md={desktop || 4} key={index}>
                                     <JobItem
                                        data={item}
                                        button_label={card_button?.label}

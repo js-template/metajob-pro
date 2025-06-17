@@ -10,18 +10,16 @@ const CandidateCardItem = ({
    data,
    button_label,
    color,
-   secondary_color,
-   skillsData
+   secondary_color
 }: {
    data: ISingleCandidate
    button_label?: string
    color?: string
    secondary_color?: string
-   skillsData?: ISingleCategory[]
 }) => {
    const { theme: mode } = useTheme()
 
-   const { name, tagline, contact, slug, user } = data || {}
+   const { name, tagline, contact, slug, user, skills } = data || {}
    const { location } = contact || {}
    const image = user?.avatar?.url || ""
 
@@ -31,7 +29,8 @@ const CandidateCardItem = ({
             borderWidth: 1,
             borderStyle: "solid",
             borderColor: (theme) => theme.palette.background.paper,
-            padding: "35px 30px 30px 30px",
+            py: { xs: 2, sm: 3.375 },
+            px: { xs: 1, sm: 3.75 },
             borderRadius: 2,
             "&:hover": {
                borderColor: (theme) => theme.palette.primary.main,
@@ -47,7 +46,7 @@ const CandidateCardItem = ({
                bgcolor: (theme) => theme.palette.primary.main
             },
             bgcolor: (theme) => theme.palette.background.paper,
-            height: "390px"
+            height: "100%"
          }}>
          <Stack
             sx={{
@@ -63,7 +62,7 @@ const CandidateCardItem = ({
                   borderStyle: "solid",
                   borderRadius: "50%",
                   p: 1,
-                  mb: "15px"
+                  mb: 2
                }}>
                <Avatar
                   src={image}
@@ -80,7 +79,7 @@ const CandidateCardItem = ({
                </Avatar>
             </Box>
          </Stack>
-         <Stack spacing={1} sx={{ mb: "20px" }}>
+         <Stack spacing={1} sx={{ mb: 2.5 }}>
             {/* name - tagline  */}
             <Stack spacing={0.5}>
                <Typography
@@ -137,9 +136,9 @@ const CandidateCardItem = ({
             )}
          </Stack>
          <Stack direction={"column"} justifyContent={"space-between"} height={"100%"}>
-            {skillsData && skillsData?.length > 0 ? (
-               <Stack sx={{ mb: "20px" }} direction={"row"} gap={1} flexWrap={"wrap"} justifyContent={"center"}>
-                  {_.map(skillsData?.length >= 5 ? skillsData.slice(0, 5) : skillsData, (item, index) => (
+            {skills && skills?.length > 0 ? (
+               <Stack sx={{ mb: 2.5 }} direction={"row"} gap={1} flexWrap={"wrap"} justifyContent={"center"}>
+                  {_.map(skills?.slice(0, 5), (item, index) => (
                      <Typography
                         key={index}
                         sx={{
@@ -149,14 +148,13 @@ const CandidateCardItem = ({
                            borderStyle: "solid",
                            borderRadius: 1,
                            py: 0.5,
-                           px: 2,
+                           px: { xs: 0.5, md: 2 },
                            color: (theme) => theme.palette.text.disabled
                         }}
                         variant={"body1"}
                         fontWeight={400}
-                        fontSize={14}>
+                        fontSize={{ xs: 12, md: 14 }}>
                         {item?.title}
-                        {/* {item} */}
                      </Typography>
                   ))}
                </Stack>
@@ -170,7 +168,7 @@ const CandidateCardItem = ({
                      borderRadius: 1,
                      py: 1,
                      px: 2,
-                     mb: "20px",
+                     mb: 2.5,
                      textAlign: "center",
                      color: (theme) => theme.palette.text.disabled
                   }}
@@ -186,7 +184,9 @@ const CandidateCardItem = ({
                href={`/resume/${slug}`}
                sx={{
                   bgcolor: (theme) => theme.palette.background.default,
-                  color: (theme) => (mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled)
+                  color: (theme) =>
+                     mode === "dark" ? theme.palette.primary.contrastText : theme.palette.text.disabled,
+                  fontSize: { xs: 12, sm: 14 }
                }}>
                {button_label || "View Candidate"}
             </Button>

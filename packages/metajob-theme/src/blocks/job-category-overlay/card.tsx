@@ -18,7 +18,7 @@ export const JobCategoryOverlayCard = ({ block, categoryOverlayData }: Props) =>
    const { theme: mode } = useTheme()
 
    // destructure the block
-   const { content, empty, style, button, card_button, show_icon, overlay } = block || {}
+   const { content, empty, style, button, card_button, show_icon, overlay, show_description } = block || {}
    const { desktop, tab, mobile, backgroundColor } = style || {}
    const { label, link } = button || {}
    const { variation } = content || {}
@@ -40,6 +40,7 @@ export const JobCategoryOverlayCard = ({ block, categoryOverlayData }: Props) =>
                         <Grid item xs={mobile || 12} sm={4} md={tab || 3} lg={desktop || 2} key={ctg.id}>
                            <CategoryOverlayCardItem
                               show_icon={show_icon}
+                              show_description={show_description}
                               overlay={overlay}
                               data={ctg}
                               button_label={card_button?.label}

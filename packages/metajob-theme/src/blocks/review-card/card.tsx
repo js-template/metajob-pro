@@ -100,7 +100,9 @@ export const ReviewCardClient = ({ block, testimonialData }: Props) => {
                   {testimonialData && testimonialData?.length > 1 && (
                      <Slider {...settings} ref={slider}>
                         {_.map(testimonialData, (review, index) => (
-                           <CardItem key={index} data={review} color={color} secondary_color={secondary_color} />
+                           <Box key={index} sx={{ height: "100%" }}>
+                              <CardItem data={review} color={color} secondary_color={secondary_color} />
+                           </Box>
                         ))}
                      </Slider>
                   )}

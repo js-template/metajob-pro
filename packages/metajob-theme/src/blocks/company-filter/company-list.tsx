@@ -19,7 +19,7 @@ const CompanyList = ({ companies, loading, error, block }: Props) => {
          {loading && (
             <Grid container spacing={2}>
                {[...Array(6)].map((_, index) => (
-                  <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={index}>
+                  <Grid item xs={mobile || 6} sm={tab || 6} md={desktop || 4} key={index}>
                      <CompanyCardLoader />
                   </Grid>
                ))}
@@ -28,7 +28,7 @@ const CompanyList = ({ companies, loading, error, block }: Props) => {
          {companies && companies?.length > 0 && (
             <Grid container spacing={{ xs: 1, md: 2 }}>
                {companies?.map((item: any) => (
-                  <Grid item xs={mobile || 12} sm={tab || 6} md={desktop || 4} key={item?.id}>
+                  <Grid item xs={mobile || 6} sm={tab || 4} md={desktop || 4} key={item?.id}>
                      <CompanyCardItem
                         data={item}
                         button_label={card_button?.label}

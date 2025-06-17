@@ -12,12 +12,14 @@ const CardItem = ({
    data,
    button_label,
    color,
-   secondary_color
+   secondary_color,
+   show_image
 }: {
    data: ISinglePost
    button_label?: string
    color?: string
    secondary_color?: string
+   show_image?: boolean
 }) => {
    const { theme: mode } = useTheme()
 
@@ -53,32 +55,32 @@ const CardItem = ({
             transition: "0.4s",
             height: "100%"
          }}>
-         <Box
-            sx={{
-               display: image ? "flex" : "none",
-               justifyContent: "center",
-               alignItems: "center",
-               overflow: "hidden",
-               borderRadius: 1,
-               position: "relative", // Make sure the container is positioned
-               width: "100%", // Define width and height for the container
-               minHeight: image ? { xs: "200px", sm: "250px", md: "250px" } : "0",
-               mb: "20px"
-            }}
-            component={Link}
-            href={`blog/${slug}`}>
-            <Image
-               // src={image}
-               src={image || "https://placehold.co/300x250/png"}
-               alt={title}
-               style={{
-                  transition: "transform 0.4s ease-in-out",
-                  objectFit: "cover"
+         {show_image && (
+            <Box
+               sx={{
+                  display: image ? "flex" : "none",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  overflow: "hidden",
+                  borderRadius: 1,
+                  position: "relative",
+                  height: { xs: 180, sm: 220 },
+                  mb: 2.5
                }}
-               className='image-scale'
-               fill={true}
-            />
-         </Box>
+               component={Link}
+               href={`blog/${slug}`}>
+               <Image
+                  // src={image}
+                  src={image || "https://placehold.co/300x250/png"}
+                  alt={title}
+                  style={{
+                     transition: "transform 0.4s ease-in-out"
+                  }}
+                  className='image-scale'
+                  fill={true}
+               />
+            </Box>
+         )}
          <Stack spacing={1}>
             <Typography
                fontSize={14}
@@ -118,12 +120,12 @@ const CardItem = ({
                sx={{
                   color: (theme) =>
                      mode === "light" ? secondary_color || theme.palette.text.disabled : theme.palette.text.disabled,
-                  mb: 3,
-                  mt: 2,
                   display: "-webkit-box",
                   WebkitLineClamp: { xs: 3, md: 5 },
                   WebkitBoxOrient: "vertical",
-                  overflow: "hidden"
+                  overflow: "hidden",
+                  height: 100,
+                  mb: 2
                }}>
                {short_description}
             </Typography>
