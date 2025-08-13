@@ -17,7 +17,7 @@ scripts
 .env
 license.txt
 exports
-pnpm-lock.yaml
+
 .strapi
 dist
 build
