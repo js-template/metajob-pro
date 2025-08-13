@@ -24,7 +24,7 @@
         }
       },
       "start": {
-        "cmd": "pnpm -F backend start"
+        "cmd": "if [ \"$IMPORT_DEMO_DATA\" = \"true\" ]; then pnpm -F backend import-demo && pnpm -F backend start; else pnpm -F backend start; fi"
       }
     }
   },
