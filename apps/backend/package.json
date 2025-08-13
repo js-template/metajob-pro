@@ -8,7 +8,8 @@
     "deploy": "strapi deploy",
     "dev": "strapi develop",
     "start": "strapi start",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "import-demo": "strapi import -f metajob-import.tar.gz --force --exlude files"
   },
   "dependencies": {
     "@jstemplate/metajob-backend": "0.0.15",
