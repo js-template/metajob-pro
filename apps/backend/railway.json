@@ -2,25 +2,34 @@
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "npm install && npm run build",
-    "startCommand": "npm run start",
     "nixpacksPlan": {
       "phases": {
-        "npm:config": {
+        "setup": {
+          "nixPkgs": ["nodejs", "pnpm"]
+        },
+        "pnpm:config": {
           "dependsOn": ["setup"],
           "cmds": [
-            "npm config set @jstemplate:registry https://api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts",
-            "npm config set //api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/:_authToken=$NPM_TOKEN"
+            "pnpm config set @jstemplate:registry https://api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts",
+            "pnpm config set //api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/:_authToken=$NPM_TOKEN"
           ]
         },
         "install": {
-          "dependsOn": ["setup", "npm:config"]
+          "dependsOn": ["setup", "pnpm:config"],
+          "cmds": ["pnpm install --frozen-lockfile"]
+        },
+        "build": {
+          "dependsOn": ["install"],
+          "cmds": ["pnpm run build"]
         }
+      },
+      "start": {
+        "cmd": "pnpm run start"
       }
     }
   },
   "deploy": {
-    "healthcheckPath": "/",
+    "healthcheckPath": "/admin",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
