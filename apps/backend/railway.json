@@ -20,7 +20,7 @@
         },
         "build": {
           "dependsOn": ["install"],
-          "cmds": ["pnpm build"]
+          "cmds": ["pnpm build --debug"]
         }
       },
       "start": {
