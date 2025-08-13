@@ -16,7 +16,7 @@
         },
         "install": {
           "dependsOn": ["setup", "pnpm:config"],
-          "cmds": ["pnpm install"]
+          "cmds": ["pnpm install --no-frozen-lockfile"]
         },
         "build": {
           "dependsOn": ["install"],
