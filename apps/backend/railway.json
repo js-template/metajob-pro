@@ -20,11 +20,11 @@
         },
         "build": {
           "dependsOn": ["install"],
-          "cmds": ["pnpm build"]
+          "cmds": ["pnpm -F backend build"]
         }
       },
       "start": {
-        "cmd": "pnpm start"
+        "cmd": "pnpm -F backend start"
       }
     }
   },
