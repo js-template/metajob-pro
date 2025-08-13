@@ -16,20 +16,20 @@
         },
         "install": {
           "dependsOn": ["setup", "pnpm:config"],
-          "cmds": ["pnpm install --frozen-lockfile"]
+          "cmds": ["pnpm install"]
         },
         "build": {
           "dependsOn": ["install"],
-          "cmds": ["pnpm -F core build"]
+          "cmds": ["pnpm -F backend build"]
         }
       },
       "start": {
-        "cmd": "pnpm -F core start"
+        "cmd": "pnpm -F backend start"
       }
     }
   },
   "deploy": {
-    "healthcheckPath": "/",
+    "healthcheckPath": "/admin",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
