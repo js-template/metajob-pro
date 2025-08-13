@@ -24,7 +24,7 @@
         }
       },
       "start": {
-        "cmd": ["pnpm -F backend start", "pnpm -F core start"]
+        "cmd": ["pnpm -F backend start"]
       }
     }
   },
