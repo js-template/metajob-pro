@@ -16,15 +16,15 @@
         },
         "install": {
           "dependsOn": ["setup", "pnpm:config"],
-          "cmds": ["pnpm install --frozen-lockfile"]
+          "cmds": ["pnpm install"]
         },
         "build": {
           "dependsOn": ["install"],
-          "cmds": ["pnpm -F backend build", "pnpm -F core build"]
+          "cmds": ["pnpm -F core build"]
         }
       },
       "start": {
-        "cmd": "pnpm -F backend start & pnpm -F core start"
+        "cmd": "pnpm -F core start"
       }
     }
   },
