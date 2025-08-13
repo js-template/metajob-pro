@@ -27,11 +27,5 @@
         "cmd": "pnpm -F backend start"
       }
     }
-  },
-  "deploy": {
-    "healthcheckPath": "/admin",
-    "healthcheckTimeout": 300,
-    "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 10
   }
 }
