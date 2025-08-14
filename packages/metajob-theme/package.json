@@ -1,7 +1,6 @@
 {
-   "name": "@jstemplate/metajob-theme",
+   "name": "@metajob/metajob-theme",
    "version": "1.1.0",
-   "private": true,
    "main": "dist/index.js",
    "keywords": [
       "strapi",
@@ -9,14 +8,15 @@
       "metajob"
    ],
    "license": "EULA",
+   "publishConfig": {
+      "access": "public"
+   },
    "scripts": {
       "build": "tsc",
       "dev": "tsc --watch",
       "lint": "eslint .",
       "format": "prettier --write . --ignore-path .prettierignore",
-      "publish:pack": "npm pack --pack-destination dist",
-      "publish:upload": "node scripts/publish.js",
-      "publish": "npm run publish:pack && npm run publish:upload"
+      "publish": "npm run build && npm publish"
    },
    "dependencies": {
       "@emotion/react": "^11.14.0",
