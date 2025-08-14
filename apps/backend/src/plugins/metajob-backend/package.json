@@ -11,15 +11,15 @@
     "plugin",
     "metajob"
   ],
-  "homepage": "https://github.com/js-template/metajob",
+  "homepage": "https://github.com/js-template/metajob-pro",
   "bugs": {
-    "url": "https://github.com/js-template/metajob/issues/"
+    "url": "https://github.com/js-template/metajob-pro/issues/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/js-template/metajob"
+    "url": "https://github.com/js-template/metajob-pro"
   },
-  "author": "https://github.com/js-template/metajob",
+  "author": "https://github.com/js-template/metajob-pro",
   "type": "commonjs",
   "exports": {
     "./package.json": "./package.json",
