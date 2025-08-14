@@ -1,7 +1,10 @@
 {
-  "name": "@jstemplate/metajob-backend",
+  "name": "@metajob/metajob-backend",
   "version": "0.0.15",
   "description": "Metajob Backend",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "EULA",
   "keywords": [
     "strapi",
@@ -45,9 +48,7 @@
     "verify": "strapi-plugin verify",
     "test:ts:front": "run -T tsc -p admin/tsconfig.json",
     "test:ts:back": "run -T tsc -p server/tsconfig.json",
-    "publish:pack": "npm pack --pack-destination dist",
-    "publish:upload": "node scripts/publish.js",
-    "publish": "npm run publish:pack && npm run publish:upload"
+    "publish": "strapi-plugin build && npm publish"
   },
   "dependencies": {
     "@strapi/design-system": "^2.0.0-rc.12",
