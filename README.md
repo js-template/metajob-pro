@@ -1,10 +1,25 @@
 # Metajob- Job Board App with Nextjs & Strapi
 
 <a href="https://metajob.vercel.app/" target="_blank">
-    <img src="https://github.com/user-attachments/assets/5396285f-d4ac-43f4-b257-2fba3509f048" alt="thumbspng" />
+    <img src="https://github.com/user-attachments/assets/5396285f-d4ac-43f4-b257-2fba3509f048" alt="MetaJob Screenshot" />
 </a>
 
-### Get the Production license from [Metajob- Job Board App with Nextjs & Strapi](https://jstemplate.net/item/job-board-app-with-nextjs-strapi?utm_source=github&utm_medium=social&utm_campaign=job_board_app)
+## 🎉 Now Available on GitHub!
+
+**MetaJob** is a full-stack job board application built with **Next.js** and **Strapi CMS**.
+
+### 📋 License Information:
+
+- ✅ **FREE for Personal Use** - Learning, development, personal projects
+- 💼 **Commercial License Required** - Business use, client projects, revenue-generating apps
+
+**Get Commercial License:** [MetaJob Commercial License](https://jstemplate.net/item/job-board-app-with-nextjs-strapi?utm_source=github&utm_medium=social&utm_campaign=job_board_app)
+
+### 🚀 Quick Deploy Backend to Railway:
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/your-template-id)
+
+*One-click Strapi backend deployment with PostgreSQL database*
 
 ## **Getting Started:**
 
@@ -27,23 +42,18 @@ npm install -g pnpm
 
 ## Step-by-Step Guide
 
-### Step 1: Download Code
+### Step 1: Clone Repository
 
-When you purchase the license, you will receive the codebase and an activation token in your email. 2. **Open the project** in your preferred code editor (e.g., [VS Code](https://code.visualstudio.com/))
+```bash
+git clone https://github.com/your-username/metajob-pro.git
+cd metajob-pro
+```
 
 ### Step 2: Configure Environment Variables
 
-2. **Rename these files** to `.env`:
-   - `apps/backend/.env.example` → `apps/backend/.env`
-
-```bash
-export LICENSE_TOKEN='You will recive license on confirmation email'
-```
-
-```bash
- @jstemplate:registry=https://api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/
- //api.keygen.sh/v1/accounts/88de7a21-b541-48e5-8727-f992ebeb43fa/artifacts/:_authToken=$LICENSE_TOKEN
-```
+**Rename these files** to `.env`:
+- `apps/backend/.env.example` → `apps/backend/.env`
+- `example.env` → `.env`
 
 ### Step 3: Install Dependencies
 
@@ -53,23 +63,29 @@ From the root of your project directory, run the following command to install al
 pnpm install
 ```
 
-### Step 4: Run the Frontend
+### Step 4: Run the Backend
 
-1. In a new terminal, run the frontend application:
+1. In a new terminal, run the backend application:
    ```bash
-   pnpm -F @padma/frontend dev
+   pnpm -F backend dev
    ```
-2. **Next.js frontend** will be running at `http://localhost:3000`.
+2. **Strapi backend** will be running at `http://localhost:1337`.
 
----
+### Step 5: Run the Frontend
 
-### Step 5: Run the Backend
-
-1. Navigate to the root directory and run the backend using the following command:
+1. Navigate to the root directory and run the frontend using the following command:
    ```bash
-   pnpm -F @padma/backend dev
+   pnpm -F core dev
    ```
-2. **Strapi backend** will now be running at `http://localhost:1337`.
+2. **Next.js frontend** will now be running at `http://localhost:3000`.
+
+### Step 6: Import Demo Data (Optional)
+
+1. Place `metajob-import.tar.gz` in the `apps/backend/` directory
+2. Run the import command:
+   ```bash
+   pnpm -F backend import-demo
+   ```
 
 ## 📩 Support
 
