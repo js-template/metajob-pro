@@ -88,7 +88,3 @@ For any questions or support, contact us at **[info@jstemplate.net](mailto:info@
 ## 📖 Documentation
 
 Find the complete installation and setup guide here: **[MetaJob Documentation](https://docs.jstemplate.net/metajob/get-started/intro/)**
-
-## 🔗 Product Link
-
-[Visit the Product Page](#) (Replace with the actual product link)
