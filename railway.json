@@ -27,11 +27,5 @@
         "cmd": "if [ \"$IMPORT_DEMO_DATA\" = \"true\" ]; then pnpm -F backend import-demo && pnpm -F backend start; else pnpm -F backend start; fi"
       }
     }
-  },
-  "deploy": {
-    "healthcheckPath": "/admin",
-    "healthcheckTimeout": 300,
-    "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 10
   }
 }
