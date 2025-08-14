@@ -16,8 +16,9 @@ scripts
 .env.production.local
 .env
 license.txt
+pnpm-lock.yaml
 exports
-
+.yarn
 .strapi
 dist
 build
