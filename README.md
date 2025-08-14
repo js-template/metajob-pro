@@ -15,12 +15,6 @@
 
 **Get Commercial License:** [MetaJob Commercial License](https://jstemplate.net/item/job-board-app-with-nextjs-strapi?utm_source=github&utm_medium=social&utm_campaign=job_board_app)
 
-### 🚀 Quick Deploy Backend to Railway:
-
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/your-template-id)
-
-*One-click Strapi backend deployment with PostgreSQL database*
-
 ## **Getting Started:**
 
 Here’s the complete documentation in markdown format for easy copying and pasting:
@@ -94,7 +88,3 @@ For any questions or support, contact us at **[info@jstemplate.net](mailto:info@
 ## 📖 Documentation
 
 Find the complete installation and setup guide here: **[MetaJob Documentation](https://docs.jstemplate.net/metajob/get-started/intro/)**
-
-## 🔗 Product Link
-
-[Visit the Product Page](#) (Replace with the actual product link)
