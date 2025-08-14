@@ -1,8 +1,8 @@
 export const settings = {
-  activeTheme: "@jstemplate/metajob-theme", // Default active theme
+  activeTheme: "@metajob/metajob-theme", // Default active theme
 };
 
 export const themeResolver: Record<string, () => Promise<any>> = {
   // @ts-ignore
-  "@jstemplate/metajob-theme": () => import("@jstemplate/metajob-theme"),
+  "@metajob/metajob-theme": () => import("@metajob/metajob-theme"),
 };
