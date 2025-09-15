@@ -75,10 +75,14 @@ pnpm install
 
 ### Step 6: Import Demo Data (Optional)
 
-1. Place `metajob-import.tar.gz` in the `apps/backend/` directory
+1. Make sure `metajob-import.tar.gz` is in the `apps/backend/` directory
 2. Run the import command:
    ```bash
-   pnpm -F backend import-demo
+    pnpm strapi import -f  metajob-import.tar.gz --exclude files 
+   ```
+3. Run the backend application:
+   ```bash
+   pnpm -F backend dev
    ```
 
 ## 📩 Support
