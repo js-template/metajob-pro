@@ -74,12 +74,7 @@ pnpm install
 2. **Next.js frontend** will now be running at `http://localhost:3000`.
 
 ### Step 6: Import Demo Data (Optional)
-
-1. Place `metajob-import.tar.gz` in the `apps/backend/` directory
-2. Run the import command:
-   ```bash
-   pnpm -F backend import-demo
-   ```
+Check Docs for Demo import- https://docs.jstemplate.net/metajob/get-started/installation/
 
 ## 📩 Support
 
