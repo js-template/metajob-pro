@@ -11,23 +11,29 @@ type Props = {
 }
 
 export const JobCategory = async ({ block, language }: Props) => {
-   const { data: categoryData } = await find("api/metajob-backend/job-categories", {
-      populate: {
-         image: {
-            fields: ["url"]
+   const { data: categoryData, error: categoryError } = await find(
+      "api/metajob-backend/job-categories",
+      {
+         populate: {
+            image: {
+               fields: ["url"]
+            }
          },
-         icon: {
-            fields: ["url"]
-         }
+         pagination: {
+            pageSize: block?.item_count || 12,
+            page: 1
+         },
+         fields: ["title", "description", "icon"],
+         locale: language ?? "en"
       },
-      pagination: {
-         pageSize: block?.item_count || 12,
-         page: 1
-      },
-      fields: ["title", "description", "icon"],
-      publicationState: "live",
-      locale: language ?? "en"
-   })
+      "no-store"
+   )
+
+   console.log("categoryData", categoryData, "categoryError", categoryError)
+
+   if (categoryError) {
+      return <div>Error loading categories: {categoryError.message}</div>
+   }
 
    return (
       <Suspense fallback={<JobCategoryLoader />}>
