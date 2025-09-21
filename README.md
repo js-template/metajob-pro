@@ -69,7 +69,7 @@ pnpm install
 
 1. Navigate to the root directory and run the frontend using the following command:
    ```bash
-   pnpm -F core dev
+   pnpm -F frontend dev
    ```
 2. **Next.js frontend** will now be running at `http://localhost:3000`.
 
